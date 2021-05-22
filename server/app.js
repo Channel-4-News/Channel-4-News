@@ -14,13 +14,15 @@ app.use(express.json());
 
 app.get('/', (req, res, next) => {
   try {
-    res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+    res
+      .status(200)
+      .sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   } catch (err) {
     next(err);
   }
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.log(err);
   res.status(err.statusCode || 500).send({ error: err.message });
 });
