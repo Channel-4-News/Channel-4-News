@@ -39,9 +39,9 @@ const WishList = db.define('wishList', {
       notEmpty: true,
     },
   },
-  userId: {
-    type: DataTypes.INTEGER,
-  },
+  //   userId: {
+  //     type: DataTypes.INTEGER,
+  //   },
 });
 
 module.exports = WishList;
