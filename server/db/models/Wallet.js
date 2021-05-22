@@ -3,7 +3,8 @@ const db = require('../db');
 
 const Wallet = db.define('wallet', {
   balance: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
+    defaultValue: 0,
   },
   userId: {
     type: DataTypes.INTEGER,
@@ -12,3 +13,5 @@ const Wallet = db.define('wallet', {
     type: DataTypes.INTEGER,
   },
 });
+
+module.exports = Wallet;
