@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - stable
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database channel_4_news_db;' -U postgres
+env:
+  - JWT=12345
