@@ -5,6 +5,6 @@ import ReactDOM from 'react-dom';
 // import App from './components/App';
 
 ReactDOM.render(
-  /*<Provider store={store}>*/ <App /> /*</Provider>*/,
+  /*<Provider store={store}>*/ <hr/> /*</Provider>*/,
   document.getElementById('root')
 );
