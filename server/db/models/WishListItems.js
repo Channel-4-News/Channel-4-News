@@ -1,7 +1,7 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const db = require('../db');
 
-const WishList = db.define('wishList', {
+const WishListItems = db.define('wishListItems', {
   itemName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -39,9 +39,12 @@ const WishList = db.define('wishList', {
       notEmpty: true,
     },
   },
-  userId: {
-    type: DataTypes.INTEGER,
+  categories: {
+    type: DataTypes.ENUM([
+      'Electronics, Clothing, Entertainment, Toys, Food, Miscellaneous',
+    ]),
+    defaultValue: 'Miscellaneous',
   },
 });
 
-module.exports = WishList;
+module.exports = WishListItems;

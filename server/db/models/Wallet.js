@@ -6,12 +6,6 @@ const Wallet = db.define('wallet', {
     type: DataTypes.FLOAT,
     defaultValue: 0,
   },
-  userId: {
-    type: DataTypes.INTEGER,
-  },
-  allowanceId: {
-    type: DataTypes.INTEGER,
-  },
 });
 
 module.exports = Wallet;
