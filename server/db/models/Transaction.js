@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db');
 
+const TransactionHistory = db.define('transaction history');
+
 const Transaction = db.define('transaction', {
   cost: {
     type: DataTypes.FLOAT,
@@ -22,4 +24,4 @@ const Transaction = db.define('transaction', {
   },
 });
 
-module.exports = Transaction;
+module.exports = { Transaction, TransactionHistory };
