@@ -41,9 +41,14 @@ const WishListItems = db.define('wishListItems', {
       notEmpty: true,
     },
   },
-  categories: {
+  category: {
     type: DataTypes.ENUM([
-      'Electronics, Clothing, Entertainment, Toys, Food, Miscellaneous',
+      'Electronics',
+      'Clothing',
+      'Entertainment',
+      'Toys',
+      'Food',
+      'Miscellaneous',
     ]),
     defaultValue: 'Miscellaneous',
   },

@@ -22,11 +22,14 @@ ChoreList.hasMany(Chore);
 Chore.belongsTo(ChoreList);
 ChoreList.belongsTo(Family);
 Family.hasOne(ChoreList);
+Chore.belongsTo(User);
+User.hasMany(Chore);
 
-Transaction.belongsTo(User);
-User.hasMany(Transaction);
+// Transaction.belongsTo(User);
+// User.hasMany(Transaction);
 Transaction.belongsTo(TransactionHistory);
 TransactionHistory.hasMany(Transaction);
+TransactionHistory.belongsTo(User);
 
 //export models
 module.exports = {
