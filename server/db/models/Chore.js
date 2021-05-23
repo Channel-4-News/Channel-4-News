@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db');
 
+const ChoreList = db.define('chore list');
+
 const Chore = db.define('chore', {
   id: {
     type: DataTypes.INTEGER,
@@ -44,4 +46,4 @@ const Chore = db.define('chore', {
   },
 });
 
-module.exports = Chore;
+module.exports = { Chore, ChoreList };

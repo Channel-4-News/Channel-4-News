@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db');
 
+const WishList = db.define('wishList');
+
 const WishListItems = db.define('wishListItems', {
   itemName: {
     type: DataTypes.STRING,
@@ -47,4 +49,4 @@ const WishListItems = db.define('wishListItems', {
   },
 });
 
-module.exports = WishListItems;
+module.exports = { WishListItems, WishList };
