@@ -31,8 +31,9 @@ Transaction.belongsTo(TransactionHistory);
 TransactionHistory.hasMany(Transaction);
 TransactionHistory.belongsTo(User);
 
-//export models
+//export models and db
 module.exports = {
+  db,
   models: {
     Transaction,
     TransactionHistory,
