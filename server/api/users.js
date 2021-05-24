@@ -6,6 +6,7 @@ const {
 
 router.use(json());
 
+//get all users
 router.get('/', async (req, res, next) => {
   try {
     res.send(await User.findAll());
@@ -14,6 +15,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//get single user by id
 router.get('/:id', async (req, res, next) => {
   try {
     res.send(await User.findByPk(req.params.id));
@@ -37,7 +39,7 @@ router.post('/', async (req, res, next) => {
         lastName,
         status,
         isAdmin,
-        wishlist: [],
+        wishList: {},
       },
       {
         include: [
@@ -57,7 +59,6 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const userToDelete = await User.findByPk(req.params.id);
-    console.log(userToDelete);
     await userToDelete.destroy();
     res.sendStatus(204);
   } catch (err) {

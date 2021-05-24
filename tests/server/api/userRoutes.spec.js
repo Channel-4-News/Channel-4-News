@@ -41,7 +41,7 @@ describe('User Routes', () => {
     done();
   });
 
-  test('POST /api/users creates new user', async (done) => {
+  test('POST /api/users creates new user and wishlist', async (done) => {
     const newUser = {
       username: 'michelleO',
       email: 'mobama@gmail.com',
@@ -49,6 +49,7 @@ describe('User Routes', () => {
     };
     let response = (await request.post('/api/users').send(newUser)).body;
     expect(response.username).toBe(newUser.username);
+    expect(response.wishList.userId).toBe(response.id);
     done();
   });
 
