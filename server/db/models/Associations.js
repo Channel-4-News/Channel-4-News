@@ -1,4 +1,3 @@
-const db = require('../db');
 const User = require('./User');
 const Family = require('./Family');
 const Allowance = require('./Allowance');
