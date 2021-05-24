@@ -14,15 +14,23 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    res.send(await User.findByPk(req.params.id));
+  } catch (err) {
+    next(err);
+  }
+});
+
 //create new user with wishlist
 router.post('/', async (req, res, next) => {
   try {
-    const { userName, email, password, firstName, lastName, status, isAdmin } =
+    const { username, email, password, firstName, lastName, status, isAdmin } =
       req.body;
     User.WishList = User.hasOne(WishList);
     const newUser = await User.create(
       {
-        userName,
+        username,
         email,
         password,
         firstName,
@@ -48,8 +56,9 @@ router.post('/', async (req, res, next) => {
 //delete user
 router.delete('/:id', async (req, res, next) => {
   try {
-    const userToDelete = User.findByPk();
-    (await userToDelete).destroy();
+    const userToDelete = await User.findByPk(req.params.id);
+    console.log(userToDelete);
+    await userToDelete.destroy();
     res.sendStatus(204);
   } catch (err) {
     next(err);
@@ -60,10 +69,10 @@ router.delete('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const userToUpdate = await User.findByPk(req.params.id);
-    const { userName, email, password, firstName, lastName, status, isAdmin } =
+    const { username, email, password, firstName, lastName, status, isAdmin } =
       req.body;
     await userToUpdate.update({
-      userName,
+      username,
       email,
       password,
       firstName,
