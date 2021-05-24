@@ -9,7 +9,7 @@ const {
   models: { Family },
 } = require('../../../server/db/models/associations');
 
-describe('User Routes', () => {
+describe('Family Routes', () => {
   const families = [
     {
       name: 'Smiths',
