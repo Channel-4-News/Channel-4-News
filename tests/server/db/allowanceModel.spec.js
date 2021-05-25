@@ -3,7 +3,7 @@
 
 const {
   models: { Allowance },
-} = require('../../../server/db/models/Associations');
+} = require('../../../server/db/models/associations');
 const { db, initDB } = require('../../../server/db/db');
 
 let allowance;
