@@ -22,7 +22,6 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const singleItem = await WishListItem.findByPk(id);
-    console.log(typeof (singleItem.cost * 1));
     res.send(singleItem);
   } catch (err) {
     next(err);
