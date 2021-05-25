@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+
 const { db } = require('../db');
 
 const WishList = db.define('wishList');
