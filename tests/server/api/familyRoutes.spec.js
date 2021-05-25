@@ -42,13 +42,14 @@ describe('Family Routes', () => {
     done();
   });
 
-  test('POST /api/families creates family', async (done) => {
+  test('POST /api/families creates family and empty chorelist', async (done) => {
     const newFamily = {
       name: 'Rodriguez',
       familySecret: 'password123',
     };
     let response = (await request.post('/api/families').send(newFamily)).body;
     expect(response.name).toBe(newFamily.name);
+    expect(response.choreList.familyId).toBe(response.id);
     done();
   });
 

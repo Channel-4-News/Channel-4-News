@@ -1,27 +1,39 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const router = Router();
 const {
-  models: { Chore },
+  models: { Chore, ChoreList },
 } = require('../db/models/associations');
 
 //chorelist get by id
-//chorelist create when family is created
-//get chores by chorelist id
-
-//get all chores
-router.get('/', async (req, res, next) => {
+router.get('/chorelist/:id', async (req, res, next) => {
   try {
-    res.send(await Chore.findAll());
+    res.send(await ChoreList.findByPk(req.params.id));
   } catch (err) {
-    next.err;
+    next(err);
+  }
+});
+
+//get all chores by chorelist id
+router.get('/chores/:id', async (req, res, next) => {
+  try {
+    res.send(await Chore.findAll({ where: { choreListId: req.params.id } }));
+  } catch (err) {
+    next(err);
   }
 });
 
 //create new chore
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, amount, due, isRecurring, recurringInterval } =
-      req.body;
+    const {
+      name,
+      description,
+      amount,
+      due,
+      isRecurring,
+      recurringInterval,
+      choreListId,
+    } = req.body;
     const newChore = await Chore.create({
       name,
       description,
@@ -29,6 +41,7 @@ router.post('/', async (req, res, next) => {
       due,
       isRecurring,
       recurringInterval,
+      choreListId,
     });
     res.status(201).send(newChore);
   } catch (err) {

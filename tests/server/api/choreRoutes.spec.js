@@ -32,12 +32,6 @@ describe('Chore Routes', () => {
     await db.close();
   });
 
-  test('GET /api/chores returns all chores', async (done) => {
-    const response = await request.get('/api/chores');
-    expect(response.body.length).toBe(2);
-    done();
-  });
-
   test('POST /api/chores creates chore', async (done) => {
     const newChore = {
       name: 'make bed',

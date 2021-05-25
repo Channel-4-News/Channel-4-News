@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db');
 
-const ChoreList = db.define('chore list');
+const ChoreList = db.define('choreList');
 
 const Chore = db.define('chore', {
   id: {

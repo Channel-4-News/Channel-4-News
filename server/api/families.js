@@ -1,7 +1,7 @@
 const { Router, json } = require('express');
 const router = Router();
 const {
-  models: { Family },
+  models: { Family, ChoreList },
 } = require('../db/models/associations');
 
 //get all families
@@ -26,10 +26,21 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const { name, familySecret } = req.body;
-    const newFamily = await Family.create({
-      name,
-      familySecret,
-    });
+    Family.ChoreList = Family.hasOne(ChoreList);
+    const newFamily = await Family.create(
+      {
+        name,
+        familySecret,
+        choreList: {},
+      },
+      {
+        include: [
+          {
+            association: Family.ChoreList,
+          },
+        ],
+      }
+    );
     res.status(201).send(newFamily);
   } catch (err) {
     next(err);
