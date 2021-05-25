@@ -14,14 +14,14 @@ describe('Chore Routes', () => {
     {
       name: 'fold laundry',
       description: 'fold laundry after dry cycle finishes',
-      reward: '$5',
-      due: '2021-05-11 10:45:20',
+      amount: 5.0,
+      due: '2021-05-11',
     },
     {
       name: 'walk dog',
       description: 'walk dog when you get home from school',
-      reward: '$3',
-      due: '2021-07-10 12:00:00',
+      amount: 3.0,
+      due: '2021-07-10',
     },
   ];
   beforeAll(async () => {
@@ -42,17 +42,17 @@ describe('Chore Routes', () => {
     const newChore = {
       name: 'make bed',
       description: 'make bed before you leave to school',
-      reward: '$1',
+      amount: 1.0,
     };
     let response = (await request.post('/api/chores').send(newChore)).body;
-    expect(response.reward).toBe(newChore.reward);
+    expect(response.amount * 1).toBe(newChore.amount);
     done();
   });
 
   test('PUT /api/chores/:id updates a chore', async (done) => {
-    const response = (await request.put('/api/chores/1').send({ reward: '$4' }))
+    const response = (await request.put('/api/chores/1').send({ amount: 4.0 }))
       .body;
-    expect(response.reward).toBe('$4');
+    expect(response.amount).toBe(4.0);
     done();
   });
 

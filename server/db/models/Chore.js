@@ -24,15 +24,13 @@ const Chore = db.define('chore', {
     allowNull: false,
     defaultValue: false,
   },
-  reward: {
-    type: DataTypes.STRING,
+  amount: {
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    defaultValue: 0,
   },
   due: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
   },
   isRecurring: {
     type: DataTypes.BOOLEAN,
@@ -40,7 +38,7 @@ const Chore = db.define('chore', {
     defaultValue: false,
   },
   recurringInterval: {
-    type: DataTypes.TIME,
+    type: DataTypes.INTEGER,
     defaultValue: null,
     allowNull: true,
   },

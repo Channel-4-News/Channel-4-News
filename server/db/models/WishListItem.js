@@ -3,7 +3,7 @@ const db = require('../db');
 
 const WishList = db.define('wishList');
 
-const WishListItems = db.define('wishListItems', {
+const WishListItem = db.define('wishListItems', {
   itemName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -54,4 +54,4 @@ const WishListItems = db.define('wishListItems', {
   },
 });
 
-module.exports = { WishListItems, WishList };
+module.exports = { WishListItem, WishList };
