@@ -4,7 +4,9 @@ const {
   models: { Chore },
 } = require('../db/models/associations');
 
-router.use(json());
+//chorelist get by id
+//chorelist create when family is created
+//get chores by chorelist id
 
 //get all chores
 router.get('/', async (req, res, next) => {

@@ -4,8 +4,6 @@ const {
   models: { User },
 } = require('../db/models/associations');
 
-router.use(json());
-
 router.post('/', async (req, res, next) => {
   try {
     const { username, password } = req.body;

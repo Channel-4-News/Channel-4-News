@@ -4,8 +4,6 @@ const {
   models: { Family },
 } = require('../db/models/associations');
 
-router.use(json());
-
 //get all families
 router.get('/', async (req, res, next) => {
   try {

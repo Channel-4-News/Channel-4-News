@@ -4,8 +4,6 @@ const {
   models: { User, WishList },
 } = require('../db/models/associations');
 
-router.use(json());
-
 //get all users
 router.get('/', async (req, res, next) => {
   try {
