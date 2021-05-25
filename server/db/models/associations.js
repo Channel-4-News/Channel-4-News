@@ -4,7 +4,7 @@ const Family = require('./Family');
 const Allowance = require('./Allowance');
 const { Chore, ChoreList } = require('./Chore');
 const { Transaction, TransactionHistory } = require('./Transaction');
-const { WishListItems, WishList } = require('./WishListItems');
+const { WishListItem, WishList } = require('./WishListItem');
 
 //associations
 User.belongsTo(Family);
@@ -12,8 +12,8 @@ Family.hasMany(User);
 
 User.hasOne(WishList);
 WishList.belongsTo(User);
-WishListItems.belongsTo(WishList);
-WishList.hasMany(WishListItems);
+WishListItem.belongsTo(WishList);
+WishList.hasMany(WishListItem);
 
 Allowance.belongsTo(User);
 User.hasOne(Allowance);
@@ -43,6 +43,6 @@ module.exports = {
     User,
     Allowance,
     WishList,
-    WishListItems,
+    WishListItem,
   },
 };
