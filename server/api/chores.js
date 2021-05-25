@@ -18,12 +18,12 @@ router.get('/', async (req, res, next) => {
 //create new chore
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, reward, due, isRecurring, recurringInterval } =
+    const { name, description, amount, due, isRecurring, recurringInterval } =
       req.body;
     const newChore = await Chore.create({
       name,
       description,
-      reward,
+      amount,
       due,
       isRecurring,
       recurringInterval,
@@ -38,12 +38,12 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const choreToUpdate = await Chore.findByPk(req.params.id);
-    const { name, description, reward, due, isRecurring, recurringInterval } =
+    const { name, description, amount, due, isRecurring, recurringInterval } =
       req.body;
     await choreToUpdate.update({
       name,
       description,
-      reward,
+      amount,
       due,
       isRecurring,
       recurringInterval,
