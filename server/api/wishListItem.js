@@ -64,15 +64,7 @@ router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateItem = await WishListItem.findByPk(id);
-    const {
-      itemName,
-      description,
-      imgUrl,
-      cost,
-      linkUrl,
-      category,
-      wishListId,
-    } = req.body;
+    const { itemName, description, imgUrl, cost, linkUrl, category } = req.body;
 
     await updateItem.update({
       itemName,

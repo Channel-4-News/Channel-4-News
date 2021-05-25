@@ -27,11 +27,9 @@ const WishListItem = db.define('wishListItem', {
     },
   },
   cost: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    defaultValue: 0,
   },
   linkUrl: {
     type: DataTypes.TEXT,
