@@ -7,7 +7,7 @@ const request = supertest(app);
 const {
   db,
   models: { User },
-} = require('../../../server/db/models/associations');
+} = require('../../../server/db/models/Associations');
 
 describe('User Routes', () => {
   const users = [

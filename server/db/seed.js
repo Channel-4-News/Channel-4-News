@@ -1,11 +1,10 @@
-const db = require('./db');
-const { WishListItems } = require('./models/Associations');
+const { db } = require('./db');
+const { WishListItem } = require('./models/Associations');
 
 const syncAndSeed = async () => {
   db.sync({ force: true });
 
   //   try {
-  //     await db.sync({ force: true });
 
   //     const fakeItems = [
   //       {
