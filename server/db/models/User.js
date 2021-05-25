@@ -1,6 +1,10 @@
 const { db } = require('../db');
 const { DataTypes } = require('sequelize');
 
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+
 const User = db.define('user', {
   username: {
     type: DataTypes.STRING,
@@ -46,6 +50,46 @@ const User = db.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+});
+
+//authenticates user
+User.authenticate = async (creds) => {
+  try {
+    const { username, password } = creds;
+    const user = await User.findOne({
+      where: {
+        username,
+      },
+    });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return jwt.sign({ id: user.id }, process.env.JWT);
+    }
+  } catch (err) {
+    const error = Error('bad credentials');
+    error.status = 401;
+    throw error;
+  }
+};
+
+User.byToken = async (token) => {
+  try {
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    //get the user id and return user
+    const user = await User.findByPk(id);
+    if (user) return user;
+  } catch (err) {
+    const error = Error('bad credentials');
+    error.status = 401;
+    throw error;
+  }
+};
+
+//hashes password
+User.addHook('beforeSave', async (user) => {
+  if (user.changed('password')) {
+    user.password = await bcrypt.hash(user.password, 7);
+  }
 });
 
 module.exports = User;
