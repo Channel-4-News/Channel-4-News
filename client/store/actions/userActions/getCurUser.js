@@ -31,4 +31,4 @@ const getCurrentUser = (user) => {
   };
 };
 
-export { GET_CURRENT_USER, getCurrentUser, authUser, attemptLogin };
+export { GET_CURRENT_USER, authUser, attemptLogin };

@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+var validator = require('email-validator');
+
 const User = db.define('user', {
   username: {
     type: DataTypes.STRING,
@@ -55,12 +57,24 @@ const User = db.define('user', {
 //authenticates user
 User.authenticate = async (creds) => {
   try {
+    let user;
     const { username, password } = creds;
-    const user = await User.findOne({
-      where: {
-        username,
-      },
-    });
+
+    //check if user logs in with email or username
+    if (validator.validate(username)) {
+      user = await User.findOne({
+        where: {
+          email: username,
+        },
+      });
+    } else {
+      user = await User.findOne({
+        where: {
+          username,
+        },
+      });
+    }
+
     if (user && (await bcrypt.compare(password, user.password))) {
       return jwt.sign({ id: user.id }, process.env.JWT);
     }
