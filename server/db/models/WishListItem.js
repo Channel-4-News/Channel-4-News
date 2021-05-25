@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const db = require('../db');
+const { db } = require('../db');
 
 const WishList = db.define('wishList');
 
@@ -27,11 +27,9 @@ const WishListItem = db.define('wishListItems', {
     },
   },
   cost: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    defaultValue: 0,
   },
   linkUrl: {
     type: DataTypes.TEXT,
