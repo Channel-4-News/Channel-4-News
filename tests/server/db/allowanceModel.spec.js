@@ -1,5 +1,4 @@
 /* eslint no-undef: 'off' */
-/* eslint no-console: 'off' */
 
 const {
   models: { Allowance },
