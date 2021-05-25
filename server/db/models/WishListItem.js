@@ -1,9 +1,10 @@
 const { DataTypes } = require('sequelize');
-const db = require('../db');
+
+const { db } = require('../db');
 
 const WishList = db.define('wishList');
 
-const WishListItem = db.define('wishListItem', {
+const WishListItem = db.define('wishListItems', {
   itemName: {
     type: DataTypes.STRING,
     allowNull: false,

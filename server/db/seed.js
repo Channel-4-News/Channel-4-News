@@ -1,4 +1,4 @@
-const db = require('./db');
+const { db } = require('./db');
 const {
   models: { WishListItem },
 } = require('./models/associations');
@@ -77,6 +77,7 @@ const syncAndSeed = async () => {
   } catch (err) {
     console.log(err);
   }
+
 };
 
 module.exports = syncAndSeed;

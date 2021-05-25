@@ -1,11 +1,12 @@
 const { DataTypes } = require('sequelize');
-const db = require('../db');
+const { db } = require('../db');
 
 const TransactionHistory = db.define('transaction history');
 
 const Transaction = db.define('transaction', {
-  cost: {
-    type: DataTypes.FLOAT,
+  amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
     defaultValue: 0,
   },
   category: {
@@ -18,9 +19,6 @@ const Transaction = db.define('transaction', {
       'Food',
     ]),
     defaultValue: 'Miscellaneous',
-  },
-  allowanceId: {
-    type: DataTypes.INTEGER,
   },
 });
 
