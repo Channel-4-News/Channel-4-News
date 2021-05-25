@@ -4,8 +4,6 @@ const {
   models: { Allowance },
 } = require('../db/models/associations');
 
-router.use(json());
-
 //get all allowances
 router.get('/', async (req, res, next) => {
   try {
