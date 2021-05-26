@@ -31,8 +31,15 @@ router.get('/:id', async (req, res, next) => {
 //Add Item To WishList
 router.post('/', async (req, res, next) => {
   try {
-    const { itemName, description, imgUrl, cost, linkUrl, category } = req.body;
-
+    const {
+      itemName,
+      description,
+      imgUrl,
+      cost,
+      linkUrl,
+      category,
+      wishListId,
+    } = req.body;
     const newItem = await WishListItem.create({
       itemName,
       description,
@@ -40,6 +47,7 @@ router.post('/', async (req, res, next) => {
       cost,
       linkUrl,
       category,
+      wishListId,
     });
     res.status(201).send(newItem);
   } catch (err) {

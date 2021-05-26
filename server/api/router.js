@@ -7,6 +7,6 @@ router.use('/chores', require('./chores'));
 router.use('/allowance', require('./allowance'));
 router.use('/auth', require('./auth'));
 router.use('/wishlistItem', require('./wishListItem'));
-// router.use('/transactions', require('./transactions'));
+router.use('/transaction', require('./transaction'));
 
 module.exports = router;

@@ -1,13 +1,13 @@
 /* eslint no-undef: 'off' */
 
 const supertest = require('supertest');
-const { app } = require('../../server/app');
+const { app } = require('../../../server/app');
 
 const request = supertest(app);
 const {
   db,
   models: { WishListItem },
-} = require('../../server/db/models/associations');
+} = require('../../../server/db/models/associations');
 
 describe('WishListItem Routes', () => {
   const wishListItems = [
