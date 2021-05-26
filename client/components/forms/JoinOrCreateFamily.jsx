@@ -21,8 +21,8 @@ const JoinOrCreateFamily = (props) => {
   };
 
   return (
-    <>
-      <form id="createFamily" onSubmit={submitFamily}>
+    <div id="createJoinFamily">
+      <form className="createJoin" onSubmit={submitFamily}>
         <h3>Create Family</h3>
         <label>Family Name</label>
         <input name="familyName" />
@@ -33,17 +33,17 @@ const JoinOrCreateFamily = (props) => {
           name="confirmSecret"
           type={passwordShown ? 'text' : 'password'}
         />
-        <button>Submit</button>
+        <button>Create Family</button>
       </form>
-      <form id="joinFamily" onSubmit={submitFamily}>
+      <form className="createJoin" onSubmit={submitFamily}>
         <h3>Join Family</h3>
         <label>Family Name</label>
         <input name="familyName" />
         <label>Family Secret</label>
         <input name="familySecret" type={passwordShown ? 'text' : 'password'} />
-        <button>Submit</button>
+        <button>Join Family</button>
       </form>
-    </>
+    </div>
   );
 };
 
