@@ -3,17 +3,17 @@ import axios from 'axios';
 const GET_CURRENT_USER = 'GET_CURRENT_USER';
 
 const authUser = async (creds) => {
-  let response = (await axios.post('/api/auth', creds)).data;
+  let response = (await axios.post('/api/auth/user', creds)).data;
   const { token } = response;
-  window.localStorage.setItem('token', token);
+  window.localStorage.setItem('userToken', token);
 };
 
 const attemptLogin = () => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('userToken');
     if (token) {
       const user = (
-        await axios.get('/api/auth', {
+        await axios.get('/api/auth/user', {
           headers: {
             authorization: token,
           },
