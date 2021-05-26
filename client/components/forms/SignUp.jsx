@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { createUser } from '../../store/actions/userActions/createUser';
@@ -8,6 +8,8 @@ import {
 } from '../../store/actions/userActions/getCurUser';
 
 const SignUp = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const submitNewUser = async (e) => {
     e.preventDefault();
 
@@ -27,21 +29,32 @@ const SignUp = (props) => {
   };
 
   return (
-    <form id="signup" onSubmit={submitNewUser}>
-      <label>Username</label>
-      <input name="username" />
-      <label>Email Address</label>
-      <input name="email" />
-      <label>First Name</label>
-      <input name="firstName" />
-      <label>Last Name</label>
-      <input name="lastName" />
-      <label>Password</label>
-      <input name="password" />
-      <label>Confirm Password</label>
-      <input name="confirmPassword" />
-      <button>Submit</button>
-    </form>
+    <div id="signup-wrapper">
+      <form id="signup" onSubmit={submitNewUser}>
+        <label>Username</label>
+        <input name="username" />
+        <label>Email Address</label>
+        <input name="email" />
+        <div id="firstLastSignup">
+          <div>
+            <label>First Name</label>
+            <input name="firstName" />
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input name="lastName" />
+          </div>
+        </div>
+        <label>Password</label>
+        <input name="password" type={passwordShown ? 'text' : 'password'} />
+        <label>Confirm Password</label>
+        <input
+          name="confirmPassword"
+          type={passwordShown ? 'text' : 'password'}
+        />
+        <button>Next</button>
+      </form>
+    </div>
   );
 };
 

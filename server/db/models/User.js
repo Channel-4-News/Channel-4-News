@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-var validator = require('email-validator');
+const validator = require('email-validator');
 
 const User = db.define('user', {
   username: {

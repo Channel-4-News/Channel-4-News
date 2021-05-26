@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -8,6 +8,8 @@ import {
 import { logout } from '../../store/actions/userActions/logoutUser';
 
 const LogIn = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const submitUser = async (e) => {
     e.preventDefault();
 
@@ -18,22 +20,23 @@ const LogIn = (props) => {
   };
 
   return (
-    <>
-      <form id="signup" onSubmit={submitUser}>
+    <div id="login-wrapper">
+      <form id="login" onSubmit={submitUser}>
         <label>Email or Username</label>
         <input name="username" />
         <label>Password</label>
-        <input name="password" />
-        <button>Submit</button>
+        <input name="password" type={passwordShown ? 'text' : 'password'} />
+        <button>Login</button>
+        {/* delete logout button below when we have logout in navbar */}
+        <button
+          onClick={() => {
+            props.logout();
+          }}
+        >
+          LogOutTest
+        </button>
       </form>
-      <button
-        onClick={() => {
-          props.logout();
-        }}
-      >
-        LogOutTest
-      </button>
-    </>
+    </div>
   );
 };
 
