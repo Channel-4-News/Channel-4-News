@@ -20,22 +20,23 @@ const LogIn = (props) => {
   };
 
   return (
-    <>
-      <form id="signup" onSubmit={submitUser}>
+    <div id="login-wrapper">
+      <form id="login" onSubmit={submitUser}>
         <label>Email or Username</label>
         <input name="username" />
         <label>Password</label>
         <input name="password" type={passwordShown ? 'text' : 'password'} />
-        <button>Submit</button>
+        <button>Login</button>
+        {/* delete logout button below when we have logout in navbar */}
+        <button
+          onClick={() => {
+            props.logout();
+          }}
+        >
+          LogOutTest
+        </button>
       </form>
-      <button
-        onClick={() => {
-          props.logout();
-        }}
-      >
-        LogOutTest
-      </button>
-    </>
+    </div>
   );
 };
 
