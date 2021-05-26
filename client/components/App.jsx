@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import LogIn from './forms/LogIn';
+import SignUp from './forms/SignUp';
 
 class App extends Component {
   constructor() {
@@ -10,7 +12,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>TEST</div>
+        <div>Our App!</div>
+        <Switch>
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/login" component={LogIn} />
+        </Switch>
       </Router>
     );
   }
