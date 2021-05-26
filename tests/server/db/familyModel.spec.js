@@ -22,6 +22,6 @@ afterAll(() => {
 });
 
 it('Family model exists', (done) => {
-  expect(family.familySecret).toEqual('Coke>Pepsi');
+  expect(family.name).toEqual('Litovskaya');
   done();
 });
