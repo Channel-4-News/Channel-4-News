@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -8,6 +8,8 @@ import {
 import { logout } from '../../store/actions/userActions/logoutUser';
 
 const LogIn = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const submitUser = async (e) => {
     e.preventDefault();
 
@@ -23,7 +25,7 @@ const LogIn = (props) => {
         <label>Email or Username</label>
         <input name="username" />
         <label>Password</label>
-        <input name="password" />
+        <input name="password" type={passwordShown ? 'text' : 'password'} />
         <button>Submit</button>
       </form>
       <button

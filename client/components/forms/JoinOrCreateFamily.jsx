@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createFamily } from '../../store/actions/familyActions/createFamily';
 import { authFamily } from '../../store/actions/familyActions/joinFamily';
 
 const JoinOrCreateFamily = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const submitFamily = async (e) => {
     e.preventDefault();
 
@@ -25,9 +27,12 @@ const JoinOrCreateFamily = (props) => {
         <label>Family Name</label>
         <input name="familyName" />
         <label>Family Secret</label>
-        <input name="familySecret" />
+        <input name="familySecret" type={passwordShown ? 'text' : 'password'} />
         <label>Confirm Family Secret</label>
-        <input name="confirmSecret" />
+        <input
+          name="confirmSecret"
+          type={passwordShown ? 'text' : 'password'}
+        />
         <button>Submit</button>
       </form>
       <form id="joinFamily" onSubmit={submitFamily}>
@@ -35,7 +40,7 @@ const JoinOrCreateFamily = (props) => {
         <label>Family Name</label>
         <input name="familyName" />
         <label>Family Secret</label>
-        <input name="familySecret" />
+        <input name="familySecret" type={passwordShown ? 'text' : 'password'} />
         <button>Submit</button>
       </form>
     </>
