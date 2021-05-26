@@ -1,6 +1,6 @@
 const { db } = require('./db');
 const {
-  models: { WishListItem },
+  models: { WishListItem, Transaction },
 } = require('./models/associations');
 
 const syncAndSeed = async () => {
