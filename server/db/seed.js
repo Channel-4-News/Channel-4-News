@@ -170,6 +170,22 @@ const syncAndSeed = async () => {
         name: 'The Oswaldos',
         familySecret: 'password123',
       },
+      {
+        name: 'Weiss',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Sanchez',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Outar',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Litovskaya',
+        familySecret: 'password123',
+      },
     ];
     await Promise.all(
       families.map((family) => {
