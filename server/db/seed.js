@@ -2,6 +2,8 @@ const { db } = require('./db');
 const {
   models: { WishListItem, Transaction },
 } = require('./models/associations');
+const Family = require('./models/Family');
+const User = require('./models/User');
 
 const syncAndSeed = async () => {
   try {
@@ -72,6 +74,122 @@ const syncAndSeed = async () => {
     await Promise.all(
       fakeItems.map((item) => {
         WishListItem.create(item);
+      })
+    );
+
+    const users = [
+      {
+        username: 'verykeri',
+        email: 'keri@test.com',
+        password: 'password123',
+        firstName: 'Keri',
+        lastName: 'Weiss',
+        status: 'Parent',
+      },
+      {
+        username: 'annabanana',
+        email: 'anna@test.com',
+        password: 'password123',
+        firstName: 'Anna',
+        lastName: 'Litovskaya',
+        status: 'Parent',
+      },
+      {
+        username: 'hugohugo',
+        email: 'hugo@test.com',
+        password: 'password123',
+        firstName: 'Hugo',
+        lastName: 'Sanchez',
+        status: 'Parent',
+      },
+      {
+        username: 'aviandamien',
+        email: 'damien@test.com',
+        password: 'password123',
+        firstName: 'Damien',
+        lastName: 'Outar',
+        status: 'Parent',
+      },
+      {
+        username: 'littlejoe',
+        email: 'joe@test.com',
+        password: 'password123',
+        firstName: 'Joe',
+        lastName: 'Kid',
+      },
+      {
+        username: 'funnyfrancis',
+        email: 'franny@test.com',
+        password: 'password123',
+        firstName: 'Francis',
+        lastName: 'Haha',
+      },
+      {
+        username: 'angryarchie',
+        email: 'archie@test.com',
+        password: 'password123',
+        firstName: 'Archie',
+        lastName: 'Ismadder',
+      },
+      {
+        username: 'tiredtalia',
+        email: 'talia@test.com',
+        password: 'password123',
+        firstName: 'Talia',
+        lastName: 'Asleep',
+      },
+    ];
+    await Promise.all(
+      users.map((user) => {
+        User.create(user);
+      })
+    );
+
+    const families = [
+      {
+        name: 'Birdie',
+        familySecret: 'password123',
+      },
+      {
+        name: 'The Jacksons',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Harris',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Zimmerman',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Frankenstein',
+        familySecret: 'password123',
+      },
+      {
+        name: 'The Oswaldos',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Weiss',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Sanchez',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Outar',
+        familySecret: 'password123',
+      },
+      {
+        name: 'Litovskaya',
+        familySecret: 'password123',
+      },
+    ];
+    await Promise.all(
+      families.map((family) => {
+        Family.create(family);
       })
     );
   } catch (err) {
