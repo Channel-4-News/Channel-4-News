@@ -25,7 +25,11 @@ const LogIn = (props) => {
         <label>Email or Username</label>
         <input name="username" />
         <label>Password</label>
-        <input name="password" type={passwordShown ? 'text' : 'password'} />
+        <input
+          className="passwordInput"
+          name="password"
+          type={passwordShown ? 'text' : 'password'}
+        />
         <button>Login</button>
         {/* delete logout button below when we have logout in navbar */}
         <button

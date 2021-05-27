@@ -8,19 +8,26 @@ const notValid = (reason) => {
 
 //check if passwords match
 const passwordsMatch = (pw1, pw2) => {
-  if (pw1 === pw2) return true;
-  notValid('Passwords must match.');
+  if (pw1 === pw2.value) {
+    pw2.setCustomValidity('');
+    return;
+  }
+  pw2.setCustomValidity('Passwords must match.');
   return false;
 };
 
 //check if password is valid password
 const passwordValid = (pw) => {
   const nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-  const length = pw.length > 4 && pw.length < 51;
-  const hasNum = nums.some((num) => pw.includes(num));
-  if (hasNum && length) return true;
-  notValid('Passwords must be at least 5 characters and include a number.');
-  return false;
+  const length = pw.value.length > 4 && pw.value.length < 51;
+  const hasNum = nums.some((num) => pw.value.includes(num));
+  if (hasNum && length) {
+    pw.setCustomValidity('');
+    return;
+  }
+  pw.setCustomValidity(
+    'Passwords must be at least 5 characters and include a number.'
+  );
 };
 
 //check if family secret is valid secret
@@ -46,16 +53,17 @@ const validEmail = async (email) => {
 
 //check if username is valid
 const validUsername = async (username) => {
-  const length = username.length > 4 && username.length < 41;
+  const length = username.value.length > 4 && username.value.length < 41;
   if (!length) {
-    notValid('Username must be 4 characters long.');
-    return false;
+    username.setCustomValidity('Username must be 4 characters long.');
+    return;
   }
-  const users = await axios.get('/api/users');
-  if (users.some((user) => user.username === username)) {
-    notValid('Username already exists.');
-    return false;
+  const users = (await axios.get('/api/users')).data;
+  if (users.some((user) => user.username === username.value)) {
+    username.setCustomValidity('Username already exists.');
+    return;
   }
+  username.setCustomValidity('');
   return true;
 };
 
@@ -68,4 +76,4 @@ const systemsGo = (signUpInput) => {
   return pwMatch && pwValid && emailValid && usernameValid ? true : false;
 };
 
-export default systemsGo;
+export { systemsGo, validUsername, passwordValid, passwordsMatch };

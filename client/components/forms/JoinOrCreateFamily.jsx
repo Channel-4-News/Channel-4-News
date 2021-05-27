@@ -27,9 +27,14 @@ const JoinOrCreateFamily = (props) => {
         <label>Family Name</label>
         <input name="familyName" />
         <label>Family Secret</label>
-        <input name="familySecret" type={passwordShown ? 'text' : 'password'} />
+        <input
+          className="passwordInput"
+          name="familySecret"
+          type={passwordShown ? 'text' : 'password'}
+        />
         <label>Confirm Family Secret</label>
         <input
+          className="passwordInput"
           name="confirmSecret"
           type={passwordShown ? 'text' : 'password'}
         />
@@ -40,7 +45,11 @@ const JoinOrCreateFamily = (props) => {
         <label>Family Name</label>
         <input name="familyName" />
         <label>Family Secret</label>
-        <input name="familySecret" type={passwordShown ? 'text' : 'password'} />
+        <input
+          className="passwordInput"
+          name="familySecret"
+          type={passwordShown ? 'text' : 'password'}
+        />
         <button>Join Family</button>
       </form>
     </div>
