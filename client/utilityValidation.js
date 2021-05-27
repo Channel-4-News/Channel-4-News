@@ -36,7 +36,6 @@ const secretValid = (secret) => {
     secret.setCustomValidity('');
     return;
   }
-  console.log(secret.value);
   secret.setCustomValidity('Family secret must be at least 4 characters.');
 };
 

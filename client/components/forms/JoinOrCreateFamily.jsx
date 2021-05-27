@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { createFamily } from '../../store/actions/familyActions/createFamily';
 import { authFamily } from '../../store/actions/familyActions/joinFamily';
 
-import { passwordsMatch, secretValid, validUsername } from '../../utility';
+import {
+  passwordsMatch,
+  secretValid,
+  validUsername,
+} from '../../utilityValidation';
 
 const JoinOrCreateFamily = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -20,10 +24,12 @@ const JoinOrCreateFamily = (props) => {
       familySecret: familySecret.value,
     };
 
-    if (confirmSecret) await props.createFamily(familyValues);
-    const didJoin = await props.joinFamily(familyValues, props.currUser.id);
-
-    if (!didJoin) setJoin('Invalid family name or family secret.');
+    if (confirmSecret) {
+      await props.createFamily(familyValues);
+    } else {
+      const didJoin = await props.joinFamily(familyValues, props.currUser.id);
+      if (!didJoin) setJoin('Invalid family name or family secret.');
+    }
   };
 
   return (

@@ -12,7 +12,7 @@ import {
   passwordValid,
   passwordsMatch,
   validEmail,
-} from '../../utility';
+} from '../../utilityValidation';
 
 const SignUp = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
