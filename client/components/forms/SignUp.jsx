@@ -7,7 +7,12 @@ import {
   authUser,
 } from '../../store/actions/userActions/getCurUser';
 
-import { validUsername, passwordValid, passwordsMatch } from '../../utility';
+import {
+  validUsername,
+  passwordValid,
+  passwordsMatch,
+  validEmail,
+} from '../../utility';
 
 const SignUp = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -42,7 +47,13 @@ const SignUp = (props) => {
           }}
         />
         <label>Email Address</label>
-        <input name="email" type="email" />
+        <input
+          name="email"
+          type="email"
+          onChange={(e) => {
+            validEmail(e.target);
+          }}
+        />
         <div id="firstLastSignup">
           <div>
             <label>First Name</label>

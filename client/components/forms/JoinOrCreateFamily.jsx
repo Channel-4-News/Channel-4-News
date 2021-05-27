@@ -3,8 +3,12 @@ import { connect } from 'react-redux';
 import { createFamily } from '../../store/actions/familyActions/createFamily';
 import { authFamily } from '../../store/actions/familyActions/joinFamily';
 
+import { passwordsMatch, secretValid, validUsername } from '../../utility';
+
 const JoinOrCreateFamily = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [familySecret, setFamilySecret] = useState('');
+  const [join, setJoin] = useState('');
 
   const submitFamily = async (e) => {
     e.preventDefault();
@@ -17,7 +21,9 @@ const JoinOrCreateFamily = (props) => {
     };
 
     if (confirmSecret) await props.createFamily(familyValues);
-    props.joinFamily(familyValues, props.currUser.id);
+    const didJoin = await props.joinFamily(familyValues, props.currUser.id);
+
+    if (!didJoin) setJoin('Invalid family name or family secret.');
   };
 
   return (
@@ -25,18 +31,30 @@ const JoinOrCreateFamily = (props) => {
       <form className="createJoin" onSubmit={submitFamily}>
         <h3>Create Family</h3>
         <label>Family Name</label>
-        <input name="familyName" />
+        <input
+          name="familyName"
+          onChange={(e) => {
+            validUsername(e.target, 'Family name');
+          }}
+        />
         <label>Family Secret</label>
         <input
           className="passwordInput"
           name="familySecret"
           type={passwordShown ? 'text' : 'password'}
+          onChange={(e) => {
+            secretValid(e.target);
+            setFamilySecret(e.target.value);
+          }}
         />
         <label>Confirm Family Secret</label>
         <input
           className="passwordInput"
           name="confirmSecret"
           type={passwordShown ? 'text' : 'password'}
+          onChange={(e) => {
+            passwordsMatch(familySecret, e.target, 'Secrets');
+          }}
         />
         <button>Create Family</button>
       </form>
@@ -51,6 +69,7 @@ const JoinOrCreateFamily = (props) => {
           type={passwordShown ? 'text' : 'password'}
         />
         <button>Join Family</button>
+        <small>{join}</small>
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import { logout } from '../../store/actions/userActions/logoutUser';
 
 const LogIn = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [loggedIn, setLoggedIn] = useState('');
 
   const submitUser = async (e) => {
     e.preventDefault();
@@ -16,7 +17,9 @@ const LogIn = (props) => {
     const { username, password } = e.target;
 
     await authUser({ username: username.value, password: password.value });
-    props.attemptLogin();
+    const login = await props.attemptLogin();
+
+    if (!login) setLoggedIn('Invalid username or password.');
   };
 
   return (
@@ -39,6 +42,7 @@ const LogIn = (props) => {
         >
           LogOutTest
         </button>
+        <small>{loggedIn}</small>
       </form>
     </div>
   );
