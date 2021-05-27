@@ -10,16 +10,21 @@ const authUser = async (creds) => {
 
 const attemptLogin = () => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem('userToken');
-    if (token) {
-      const user = (
-        await axios.get('/api/auth/user', {
-          headers: {
-            authorization: token,
-          },
-        })
-      ).data;
-      dispatch(getCurrentUser(user));
+    try {
+      const token = window.localStorage.getItem('userToken');
+      if (token) {
+        const user = (
+          await axios.get('/api/auth/user', {
+            headers: {
+              authorization: token,
+            },
+          })
+        ).data;
+        dispatch(getCurrentUser(user));
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
     }
   };
 };

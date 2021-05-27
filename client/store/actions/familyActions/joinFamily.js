@@ -20,6 +20,7 @@ const authFamily = (creds, userId) => {
       dispatch(_joinFamily(user));
     } catch (err) {
       console.log(err);
+      return false;
     }
   };
 };
