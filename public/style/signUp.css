@@ -1,7 +1,9 @@
 #signup-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  align-items: center;
   background-color: lightgray;
   height: 100%;
 }
@@ -13,6 +15,26 @@
   padding: 20px;
   width: 40%;
   background-color: white;
+}
+
+#signup h5 {
+  align-self: center;
+}
+
+#signupProgress {
+  width: 15%;
+}
+
+#signupOne {
+  display: inline-block;
+  border-bottom: 3px white solid;
+  width: 50%;
+}
+
+#signupTwo {
+  display: inline-block;
+  border-bottom: 3px black solid;
+  width: 50%;
 }
 
 #signup input {
@@ -29,6 +51,7 @@
 #signup label {
   color: rgb(153, 147, 147);
   margin-left: 10px;
+  font-size: large;
 }
 
 #signup button {

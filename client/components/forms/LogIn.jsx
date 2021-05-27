@@ -35,15 +35,15 @@ const LogIn = (props) => {
         />
         <button>Login</button>
         {/* delete logout button below when we have logout in navbar */}
-        <button
-          onClick={() => {
-            props.logout();
-          }}
-        >
-          LogOutTest
-        </button>
         <small>{loggedIn}</small>
       </form>
+      <button
+        onClick={() => {
+          props.logout();
+        }}
+      >
+        LogOutTest
+      </button>
     </div>
   );
 };
