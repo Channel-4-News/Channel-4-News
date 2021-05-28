@@ -2,22 +2,27 @@ const { Router, json } = require('express');
 const router = Router();
 
 const {
-  models: { WishListItem },
+  models: { WishListItem, WishList },
 } = require('../db/models/associations');
 
 router.use(json());
 
-//All Items
-router.get('/', async (req, res, next) => {
+//Get all Wish List items in a wish list by id
+router.get('/:id', async (req, res, next) => {
   try {
-    const allItems = await WishListItem.findAll();
-    res.send(allItems);
+    const { id } = req.params;
+    const allWishListItems = await WishList.findByPk(id, {
+      include: {
+        model: WishListItem,
+      },
+    });
+    res.send(allWishListItems);
   } catch (err) {
     next(err);
   }
 });
 
-//Single Item
+// Single Item
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;

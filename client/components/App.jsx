@@ -6,6 +6,7 @@ import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
+import WishList from './childComponents/WishList';
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,11 @@ class App extends Component {
           <Route exact path="/signup" component={Register} />
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/createfamily" component={JoinOrCreateFamily} />
+          <Route
+            exact
+            path="/wishlist"
+            component={() => <WishList user={this.state.user} />}
+          />
         </Switch>
       </Router>
     );

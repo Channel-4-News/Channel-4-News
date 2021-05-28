@@ -8,6 +8,7 @@ require('dotenv').config();
 const validator = require('email-validator');
 
 const { NotificationList } = require('./Notification');
+const { WishList } = require('./WishListItem');
 
 const User = db.define('user', {
   username: {
@@ -108,10 +109,14 @@ User.addHook('beforeSave', async (user) => {
 });
 
 //Adds a Notification List to the user
+//Adds a Wish List to the user
 User.addHook('afterCreate', async (user) => {
   const notificationList = await NotificationList.create();
   notificationList.userId = user.id;
   await notificationList.save();
+  const wishList = await WishList.create();
+  wishList.userId = user.id;
+  await wishList.save();
 });
 
 module.exports = User;
