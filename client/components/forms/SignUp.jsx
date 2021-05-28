@@ -14,7 +14,7 @@ import {
   validEmail,
 } from '../../utilityValidation';
 
-const SignUpno = (props) => {
+const SignUp = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [password, setPassword] = useState('');
 
@@ -40,10 +40,6 @@ const SignUpno = (props) => {
 
   return (
     <div id="signup-wrapper">
-      {/* <div id="signupProgress">
-        <span id="signupOne" />
-        <span id="signupTwo" />
-      </div> */}
       <form id="signup" onSubmit={submitNewUser}>
         <h5>Enter details</h5>
         <label>Username</label>
@@ -55,6 +51,7 @@ const SignUpno = (props) => {
         />
         <label>Email Address</label>
         <input
+          id="inputEmail"
           name="email"
           type="email"
           onChange={(e) => {
@@ -103,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignUpno);
+export default connect(null, mapDispatchToProps)(SignUp);

@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { attemptLogin } from '../store/actions/userActions/getCurUser';
 import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+    };
+  }
+
+  async componentDidMount() {
+    await this.props.attemptLogin();
+    await this.setState({ ...this.state, user: this.props.currUser });
   }
 
   render() {
@@ -25,4 +34,16 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+    currUser: state.currUser,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    attemptLogin: () => dispatch(attemptLogin()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

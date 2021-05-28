@@ -22,6 +22,7 @@ const attemptLogin = () => {
         ).data;
         dispatch(getCurrentUser(user));
       }
+      return true;
     } catch (err) {
       console.log(err);
       return false;
