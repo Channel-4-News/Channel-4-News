@@ -6,7 +6,6 @@ const createUser = (user) => {
   return async (dispatch) => {
     try {
       const newUser = (await axios.post('/api/users', user)).data;
-      console.log(newUser);
       dispatch(_createUser(newUser));
     } catch (err) {
       console.log(err);

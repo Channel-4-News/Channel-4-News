@@ -18,7 +18,11 @@ const Register = (props) => {
         <span id={page === 1 ? 'signupOne' : 'signupTwo'} />
         <span id={page === 2 ? 'signupOne' : 'signupTwo'} />
       </div>
-      {page === 1 ? <SignUp setPage={setPage} /> : <JoinOrCreateFamily />}
+      {page === 1 ? (
+        <SignUp setPage={setPage} />
+      ) : (
+        <JoinOrCreateFamily history={props.history} />
+      )}
     </div>
   );
 };

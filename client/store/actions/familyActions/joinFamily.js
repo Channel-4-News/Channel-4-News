@@ -18,6 +18,7 @@ const authFamily = (creds, userId) => {
         await axios.put(`/api/users/${userId}`, { familyId: family.id })
       ).data;
       dispatch(_joinFamily(user));
+      return true;
     } catch (err) {
       console.log(err);
       return false;
