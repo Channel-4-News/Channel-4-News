@@ -27,10 +27,12 @@ const JoinOrCreateFamily = (props) => {
 
     if (confirmSecret) {
       await props.createFamily(familyValues);
-      props.history.push('/');
-    } else {
       const didJoin = await props.joinFamily(familyValues, props.currUser.id);
-      if (!didJoin) setJoin('Invalid family name or family secret.');
+      if (!didJoin) {
+        setJoin('Invalid family name or family secret.');
+      } else {
+        props.history.push('/');
+      }
     }
   };
 
