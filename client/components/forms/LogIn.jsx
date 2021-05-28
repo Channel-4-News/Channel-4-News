@@ -18,7 +18,6 @@ const LogIn = (props) => {
 
     await authUser({ username: username.value, password: password.value });
     const login = await props.attemptLogin();
-    console.log(login);
 
     if (!login) setLoggedIn('Invalid username or password.');
   };

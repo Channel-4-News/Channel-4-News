@@ -10,10 +10,14 @@ import NavBar from './NavBar';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: {},
+    };
   }
 
   async componentDidMount() {
     await this.props.attemptLogin();
+    await this.setState({ ...this.state, user: this.props.currUser });
   }
 
   render() {
@@ -30,10 +34,16 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currUser: state.currUser,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
