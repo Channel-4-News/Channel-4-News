@@ -20,10 +20,16 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
   }
 
+  componentDidUpdate() {
+    if (this.props.currUser.status !== this.state.user.status) {
+      this.setState({ ...this.state, user: this.props.currUser });
+    }
+  }
+
   render() {
     return (
       <Router>
-        <NavBar />
+        <NavBar user={this.state.user} />
         <Switch>
           <Route exact path="/signup" component={Register} />
           <Route exact path="/login" component={LogIn} />

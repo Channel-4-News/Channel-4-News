@@ -1,0 +1,11 @@
+#navbar-wrapper {
+  width: 100%;
+}
+
+#navbar {
+  background-color: hotpink;
+}
+
+#navbar-links-wrapper {
+  margin-left: auto;
+}
