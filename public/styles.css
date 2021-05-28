@@ -2,6 +2,7 @@
 @import url('./style/login.css');
 @import url('./style/joinCreateFamily.css');
 @import url('./style/navbar.css');
+@import url('./style/chores.css');
 
 @font-face {
   font-family: main;

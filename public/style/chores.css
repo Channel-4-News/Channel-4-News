@@ -1,0 +1,21 @@
+.choreIcon {
+  width: 5%;
+}
+
+#choreCard {
+  border: 1px black solid;
+  padding: 10px;
+  width: 70%;
+  align-self: center;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#choresView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
