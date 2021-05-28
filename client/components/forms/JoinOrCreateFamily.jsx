@@ -7,7 +7,7 @@ import {
   passwordsMatch,
   secretValid,
   validUsername,
-} from '../../utilityValidation';
+} from '../../utilities/utilityValidation';
 
 const JoinOrCreateFamily = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);

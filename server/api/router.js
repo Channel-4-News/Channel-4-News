@@ -8,5 +8,6 @@ router.use('/allowance', require('./allowance'));
 router.use('/auth', require('./auth'));
 router.use('/wishlistItem', require('./wishListItem'));
 router.use('/transaction', require('./transaction'));
+router.use('/notification', require('./notification'));
 
 module.exports = router;

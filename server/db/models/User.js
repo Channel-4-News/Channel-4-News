@@ -7,6 +7,8 @@ require('dotenv').config();
 
 const validator = require('email-validator');
 
+const { NotificationList } = require('./Notification');
+
 const User = db.define('user', {
   username: {
     type: DataTypes.STRING,
@@ -103,6 +105,13 @@ User.addHook('beforeSave', async (user) => {
   if (user.changed('password')) {
     user.password = await bcrypt.hash(user.password, 7);
   }
+});
+
+//Adds a Notification List to the user
+User.addHook('afterCreate', async (user) => {
+  const notificationList = await NotificationList.create();
+  notificationList.userId = user.id;
+  await notificationList.save();
 });
 
 module.exports = User;

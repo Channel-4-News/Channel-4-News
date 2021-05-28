@@ -26,6 +26,20 @@ const NavBar = () => {
     >
       <NavItem href="/#/signup">Sign Up</NavItem>
       <NavItem href="/#/login">Log In</NavItem>
+      {/* {user === 'anonymous' ? <NavItem href="/#/signup">Sign Up</NavItem> : ''}
+      {user === 'anonymous' ? <NavItem href="/#/login">Log In</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Notifications</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Chores</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Chat</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Siblings</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Settings</NavItem> : ''}
+      {user === 'parent' ? <NavItem href="/#/">Sign Out</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Wish List</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Chores</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Chat</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Siblings</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Settings</NavItem> : ''}
+      {user === 'child' ? <NavItem href="/#/">Sign Out</NavItem> : ''} */}
     </Navbar>
   );
 };
