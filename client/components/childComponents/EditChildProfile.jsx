@@ -23,13 +23,15 @@ class EditChildProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: props.username,
-      firstName: props.firstName,
-      lastName: props.lastName,
-      email: props.email,
+      username: this.props.username,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
+      email: this.props.email,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.reset = this.reset.bind(this);
   }
+
   handleChange(ev) {
     this.setState({
       ...this.state,
@@ -38,15 +40,21 @@ class EditChildProfile extends Component {
   }
 
   reset() {
-    const { close } = this.props;
-    console.log(close);
+    const { close, firstName, lastName, username, email } = this.props;
     close();
+    setTimeout(() => {
+      this.setState({
+        firstName,
+        lastName,
+        username,
+        email,
+      });
+    }, 100);
   }
 
   render() {
     const { submit, close, open } = this.props;
     const { firstName, lastName, email, username } = this.state;
-
     return (
       <div id="profile-toggle">
         <Dialog open={open} onClose={close} fullWidth>
@@ -55,7 +63,7 @@ class EditChildProfile extends Component {
           <Avatar
             className="avatar"
             alt="test"
-            src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+            src="https://wallpaperaccess.com/full/2213427.jpg"
           />
           <FiEdit className="edit-pencil" />
           <DialogContent>
@@ -66,7 +74,7 @@ class EditChildProfile extends Component {
               type="name"
               name="firstName"
               fullWidth
-              value={firstName}
+              value={firstName || ''}
               onChange={this.handleChange}
             />
           </DialogContent>
@@ -78,7 +86,7 @@ class EditChildProfile extends Component {
               label="Last Name"
               type="name"
               name="lastName"
-              value={lastName}
+              value={lastName || ''}
               fullWidth
               onChange={this.handleChange}
             />
@@ -91,7 +99,7 @@ class EditChildProfile extends Component {
               label="Email Address"
               type="email"
               name="email"
-              value={email}
+              value={email || ''}
               fullWidth
               onChange={this.handleChange}
             />
@@ -104,13 +112,13 @@ class EditChildProfile extends Component {
               label="Username"
               type="username"
               name="username"
-              value={username}
+              value={username || ''}
               fullWidth
               onChange={this.handleChange}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={close}>Close</Button>
+            <Button onClick={this.reset}>Close</Button>
             <Button
               onClick={() => submit(firstName, lastName, email, username)}
             >

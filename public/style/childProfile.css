@@ -1,18 +1,7 @@
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: lightseagreen;
+.editProfile-form > .card-container {
+  margin: 5rem;
+  width: 440px;
 }
-#avatar {
-  height: 150px;
-  width: 150px;
-}
-p {
-  font-size: 20px;
-  text-indent: 5rem;
-  color: white;
-}
-div > .button {
-  background-color: white;
+.editProfile-form > .profile-img {
+  height: 10px;
 }
