@@ -10,6 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 
 //Style Import
 import '../../../public/style/childProfile.css';
+
+//Component Import
 import EditChildProfile from './EditChildProfile';
 
 class ChildProfile extends Component {
@@ -39,7 +41,7 @@ class ChildProfile extends Component {
 
   handleSubmit(firstName, lastName, email, username, imgUrl) {
     const { updateUser } = this.props;
-    const { id } = this.props.user;
+    const { id } = this.props.currUser;
 
     updateUser({ id, firstName, lastName, username, email, imgUrl });
     this.handleClose();
@@ -51,35 +53,38 @@ class ChildProfile extends Component {
     const { firstName, lastName, email, username, imgUrl } = currUser;
 
     return (
-      <div className="profile-container">
-        <h3>{firstName}s Profile!</h3>
-        <Avatar id="avatar" alt="current user pic" src={imgUrl} />
-        <div>
-          <h6>First Name:</h6>
-          <p>{firstName}</p>
-          <h6>Last Name:</h6>
-          <p>{lastName}</p>
-          <h6>Email:</h6>
-          <p>{email}</p>
-          <h6>Username:</h6>
-          <p>{username}</p>
-        </div>
-        <Button
-          className="button"
-          variant="outlined"
-          color="primary"
-          onClick={this.handleOpen}
-        >
-          Edit Profile!
-        </Button>
+      <React.Fragment>
+        <div className="profile-container">
+          <h3>{firstName}s Profile!</h3>
+          <Avatar id="avatar" alt="current user pic" src={imgUrl} />
+          <form onSubmit={this.handleSubmit}>
+            <h6>First Name:</h6>
+            <p>{firstName}</p>
+            <h6>Last Name:</h6>
+            <p>{lastName}</p>
+            <h6>Email:</h6>
+            <p>{email}</p>
+            <h6>Username:</h6>
+            <p>{username}</p>
+          </form>
 
-        <EditChildProfile
-          open={dialogueOpen}
-          close={this.handleClose}
-          submit={this.handleSubmit}
-          {...currUser}
-        />
-      </div>
+          <Button
+            className="button"
+            variant="outlined"
+            color="primary"
+            onClick={this.handleOpen}
+          >
+            Edit Profile!
+          </Button>
+
+          <EditChildProfile
+            open={dialogueOpen}
+            close={this.handleClose}
+            submit={this.handleSubmit}
+            {...currUser}
+          />
+        </div>
+      </React.Fragment>
     );
   }
 }

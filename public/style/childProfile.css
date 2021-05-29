@@ -11,6 +11,7 @@
 p {
   font-size: 20px;
   text-indent: 5rem;
+  color: white;
 }
 div > .button {
   background-color: white;
