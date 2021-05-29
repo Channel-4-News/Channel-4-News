@@ -128,9 +128,7 @@ const syncAndSeed = async () => {
       lastName: 'Kid',
       familyId: myFamily.id,
     });
-    const myChildsWishList = await WishList.create();
-    myChildsWishList.userId = myChild.id;
-    await myChildsWishList.save();
+
     const wishListItems = [
       {
         itemName: 'Nintendo Switch',
@@ -142,7 +140,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/Nintendo-Switch-Console-with-Neon-Blue-Red-Joy-Con/709776123',
         category: 'Electronics',
-        wishListId: myChildsWishList.id,
+        userId: myChild.id,
       },
       {
         itemName: 'Mongoose bike',
@@ -154,7 +152,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/Mongoose-Excursion-Mountain-Bike-24-inch-wheel-21-speeds-black-yellow/567158280',
         category: 'Miscellaneous',
-        wishListId: myChildsWishList.id,
+        userId: myChild.id,
       },
       {
         itemName: 'JBL wireless headphones',
@@ -166,7 +164,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/JBL-T500BT-On-Ear-Wireless-Bluetooth-Headphone-Black/324029525',
         category: 'Electronics',
-        wishListId: myChildsWishList.id,
+        userId: myChild.id,
       },
       {
         itemName: 'Insignia Mini Fridge',
@@ -178,7 +176,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.bestbuy.com/site/insignia-2-6-cu-ft-mini-fridge-black/6145102.p?skuId=6145102',
         category: 'Miscellaneous',
-        wishListId: myChildsWishList.id,
+        userId: myChild.id,
       },
       {
         itemName: 'Gucci web slide sandal',
@@ -190,7 +188,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.gucci.com/us/en/pr/men/shoes-for-men/slides-sandals/web-slide-sandal-p-429469GIB109079?gclid=Cj0KCQjw16KFBhCgARIsALB0g8JepxFx4-E3Sz7VhlOU8JpTPQjIyOThMUK8zV4VpWzR74aqaQZe1RcaAspLEALw_wcB',
         category: 'Clothing',
-        wishListId: myChildsWishList.id,
+        userId: myChild.id,
       },
     ];
     await Promise.all(

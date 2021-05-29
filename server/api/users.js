@@ -16,7 +16,8 @@ router.get('/', async (req, res, next) => {
 //get single user by id
 router.get('/:id', async (req, res, next) => {
   try {
-    res.send(await User.findByPk(req.params.id));
+    const { id } = req.params;
+    res.send(await User.findByPk(id));
   } catch (err) {
     next(err);
   }

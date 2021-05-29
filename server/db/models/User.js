@@ -110,12 +110,12 @@ User.addHook('beforeSave', async (user) => {
 
 //Adds a Notification List to the user
 //Adds a Wish List to the user
-User.addHook('afterCreate', async (user) => {
+User.addHook('afterCreate', async () => {
   const notificationList = await NotificationList.create();
-  notificationList.userId = user.id;
+  notificationList.userId = notificationList.id;
   await notificationList.save();
   const wishList = await WishList.create();
-  wishList.userId = user.id;
+  wishList.userId = wishList.id;
   await wishList.save();
 });
 

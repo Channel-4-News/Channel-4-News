@@ -7,14 +7,12 @@ const {
 
 router.use(json());
 
-//Get all Wish List items in a wish list by id
+//Get all Wish List items by id
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const allWishListItems = await WishList.findByPk(id, {
-      include: {
-        model: WishListItem,
-      },
+    const allWishListItems = await WishListItem.findAll({
+      where: { userId: id },
     });
     res.send(allWishListItems);
   } catch (err) {
