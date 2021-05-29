@@ -4,6 +4,7 @@
 
 #navbar {
   background-color: hotpink;
+  position: fixed;
 }
 
 #navbar-links-wrapper {

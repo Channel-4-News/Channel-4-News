@@ -2,6 +2,7 @@
 @import url('./style/login.css');
 @import url('./style/joinCreateFamily.css');
 @import url('./style/navbar.css');
+@import url('./style/wishList.css');
 
 @font-face {
   font-family: main;
@@ -32,4 +33,10 @@ body {
 
 .passwordInput {
   font-family: helvetica;
+}
+
+#content {
+  margin-top: 4rem;
+  height: 100%;
+  width: 100%;
 }

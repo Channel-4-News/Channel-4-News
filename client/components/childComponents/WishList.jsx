@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getWishList } from '../../store/actions/childActions/getWishList';
+import WishListCard from './WishListCard';
 
 class WishList extends Component {
   constructor(props) {
@@ -15,11 +16,12 @@ class WishList extends Component {
 
   render() {
     if (this.props.wishList.length) {
-      console.log(this.props);
       return (
         <div id="wishListWrapper">
           {this.props.wishList.map((wishListItem) => {
-            return <p key={wishListItem.id}>This is a wishlist Item</p>;
+            return (
+              <WishListCard key={wishListItem.id} wishListItem={wishListItem} />
+            );
           })}
         </div>
       );
