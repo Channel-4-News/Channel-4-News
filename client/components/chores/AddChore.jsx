@@ -37,12 +37,12 @@ const AddChore = (props) => {
       }}
     >
       <FormControl>
-        <InputLabel htmlFor="age-native-simple">Category</InputLabel>
+        <InputLabel htmlFor="categoryInputAdd">Category</InputLabel>
         <Select
           native
           inputProps={{
             name: 'category',
-            id: 'age-native-simple',
+            id: 'categoryInputAdd',
           }}
           onChange={(e) =>
             setChoreValues({
