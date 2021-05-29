@@ -104,7 +104,6 @@ const AddChore = (props) => {
           </Select>
         </FormControl>
         <TextField
-          // className="addChoreInput"
           id="addChoreInput"
           label="Amount"
           variant="outlined"

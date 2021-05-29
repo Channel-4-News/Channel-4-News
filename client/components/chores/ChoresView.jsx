@@ -11,12 +11,12 @@ const Chores = (props) => {
   const [expiredChores, setExpiredChores] = useState([]);
   const [choresUpdated, setUpdated] = useState(1);
   const [addChore, setAddChore] = useState(false);
+  const [updateClicked, setUpdateClicked] = useState(false);
 
   const handleClose = () => {
     setAddChore(false);
+    setUpdateClicked(false);
   };
-
-  console.log(props.chores);
 
   useEffect(() => {
     if (props.currUser.id) {
@@ -72,6 +72,15 @@ const Chores = (props) => {
             </Modal>
           </div>
         ) : null}
+        <Modal
+          id="addChoreModal"
+          open={updateClicked}
+          onClose={() => {
+            handleClose();
+          }}
+        >
+          <AddChore kids={kids} familyId={props.currUser.familyId} />
+        </Modal>
         {kids.length > 1 && props.currUser.status === 'Parent' ? (
           <div id="childDropdown">
             <button id="childDropButton">Choose child</button>
@@ -105,6 +114,7 @@ const Chores = (props) => {
             chore={chore}
             key={`${chore.id}chore`}
             isParent={props.currUser.status === 'Parent'}
+            updateClicked={setUpdateClicked}
           />
         ))}
         {expiredChores.map((chore) => (
@@ -112,6 +122,7 @@ const Chores = (props) => {
             chore={chore}
             key={`${chore.id}chore`}
             isParent={props.currUser.status === 'Parent'}
+            updateClicked={setUpdateClicked}
           />
         ))}
       </div>

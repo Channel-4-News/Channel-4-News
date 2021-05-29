@@ -4,6 +4,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { HashRouter as Link } from 'react-router-dom';
+import { logout } from '../store/actions/userActions/logoutUser';
+import { connect } from 'react-redux';
 
 const NavBar = (props) => {
   const user = props.user.status;
@@ -33,7 +35,13 @@ const NavBar = (props) => {
 
             {/* USER IS A CHILD */}
             {user === 'Child' ? <Button color="inherit">Wish List</Button> : ''}
-            {user === 'Child' ? <Button color="inherit">Chores</Button> : ''}
+            {user === 'Child' ? (
+              <Button color="inherit" href="/#/chores">
+                Chores
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Child' ? <Button color="inherit">Chat</Button> : ''}
             {user === 'Child' ? <Button color="inherit">Settings</Button> : ''}
             {user === 'Child' ? <Button color="inherit">Sign Out</Button> : ''}
@@ -44,10 +52,28 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Parent' ? <Button color="inherit">Chores</Button> : ''}
+            {user === 'Parent' ? (
+              <Button color="inherit" href="/#/chores">
+                Chores
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Parent' ? <Button color="inherit">Chat</Button> : ''}
             {user === 'Parent' ? <Button color="inherit">Settings</Button> : ''}
-            {user === 'Parent' ? <Button color="inherit">Sign Out</Button> : ''}
+            {user === 'Parent' ? (
+              <Button
+                color="inherit"
+                onClick={() => {
+                  props.signOut();
+                }}
+                href="/"
+              >
+                Sign Out
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
         </Toolbar>
       </AppBar>
@@ -55,4 +81,8 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+const mapDispatchToProps = (dispatch) => {
+  return { signOut: () => dispatch(logout()) };
+};
+
+export default connect(null, mapDispatchToProps)(NavBar);
