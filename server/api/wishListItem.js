@@ -2,7 +2,7 @@ const { Router, json } = require('express');
 const router = Router();
 
 const {
-  models: { WishListItem, WishList },
+  models: { WishListItem },
 } = require('../db/models/associations');
 
 router.use(json());
@@ -21,15 +21,15 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // Single Item
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const singleItem = await WishListItem.findByPk(id);
-    res.send(singleItem);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const singleItem = await WishListItem.findByPk(id);
+//     res.send(singleItem);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //Add Item To WishList
 router.post('/', async (req, res, next) => {
