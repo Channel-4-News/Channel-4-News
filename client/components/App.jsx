@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import { attemptLogin } from '../store/actions/userActions/getCurUser';
+import ChildProfile from './child components/ChildProfile';
 import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
@@ -36,11 +37,12 @@ class App extends Component {
             <Route exact path="/signup" component={Register} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/createfamily" component={JoinOrCreateFamily} />
+            <Route exact path="/childprofile" component={ChildProfile} />
             <Route
               exact
               path="/wishlist"
               component={() => <WishList user={this.state.user} />}
-            />
+            />          
           </Switch>
         </div>
       </Router>
