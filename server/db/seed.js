@@ -41,20 +41,6 @@ const syncAndSeed = async () => {
         firstName: 'Francis',
         lastName: 'Haha',
       },
-      {
-        username: 'angryarchie',
-        email: 'archie@test.com',
-        password: 'password123',
-        firstName: 'Archie',
-        lastName: 'Ismadder',
-      },
-      {
-        username: 'tiredtalia',
-        email: 'talia@test.com',
-        password: 'password123',
-        firstName: 'Talia',
-        lastName: 'Asleep',
-      },
     ];
     await Promise.all(
       users.map((user) => {
@@ -108,15 +94,24 @@ const syncAndSeed = async () => {
 
     // Anna's testing family
     const myFamily = await Family.create({
-      name: 'Litovskaya',
+      name: 'Beach',
       familySecret: 'password123',
     });
-    const myUser = await User.create({
-      username: 'annabanana',
-      email: 'anna@test.com',
+    const myParent = await User.create({
+      username: 'sunnybeach',
+      email: 'sunny@test.com',
       password: 'password123',
-      firstName: 'Anna',
-      lastName: 'Litovskaya',
+      firstName: 'Sunny',
+      lastName: 'Beach',
+      status: 'Parent',
+      familyId: myFamily.id,
+    });
+    const myParent1 = await User.create({
+      username: 'sandybeach',
+      email: 'sandy@test.com',
+      password: 'password123',
+      firstName: 'Sandy',
+      lastName: 'Beach',
       status: 'Parent',
       familyId: myFamily.id,
     });
@@ -125,7 +120,23 @@ const syncAndSeed = async () => {
       email: 'joe@test.com',
       password: 'password123',
       firstName: 'Joe',
-      lastName: 'Kid',
+      lastName: 'Beach',
+      familyId: myFamily.id,
+    });
+    const myChild1 = await User.create({
+      username: 'angryarchie',
+      email: 'archie@test.com',
+      password: 'password123',
+      firstName: 'Archie',
+      lastName: 'Ismadder',
+      familyId: myFamily.id,
+    });
+    const myChild2 = await User.create({
+      username: 'tiredtalia',
+      email: 'talia@test.com',
+      password: 'password123',
+      firstName: 'Talia',
+      lastName: 'Asleep',
       familyId: myFamily.id,
     });
 
