@@ -4,7 +4,7 @@ const GET_CHORES = 'GET_CHORES';
 
 const getChores = (id) => {
   return async (dispatch) => {
-    const chores = (await axios.get(`/chores/chores/${id}`)).data;
+    const chores = (await axios.get(`/api/chores/family/${id}`)).data;
     dispatch(_getChores(chores));
   };
 };
