@@ -17,7 +17,7 @@ class CalculatorButton extends Component {
       calculatorOpen: false,
       howMuch: 0,
       howOften: 0,
-      howLong: 0,
+      howLong: '',
       dropDownValue: '',
     };
     this.onCalculatorOpen = this.onCalculatorOpen.bind(this);
@@ -41,8 +41,26 @@ class CalculatorButton extends Component {
 
   calculate(ev) {
     ev.preventDefault();
-    const howLong =
+    let howLong =
       (this.props.wishListItem.cost / this.state.howMuch) * this.state.howOften;
+    const getHowLong = (days) => {
+      let months, weeks;
+      days = Math.ceil(days);
+      if (days >= 30) {
+        months = parseInt(days / 30);
+        days = days - months * 30;
+      }
+      if (days >= 7) {
+        weeks = parseInt(days / 7);
+        days = days - weeks * 7;
+      }
+      return (
+        (months > 0 ? months + ' month' + (months > 1 ? 's, ' : ', ') : '') +
+        (weeks > 0 ? weeks + ' week' + (weeks > 1 ? 's, ' : ', ') : '') +
+        (days > 0 ? days + ' day' + (days > 1 ? 's, ' : ', ') : '')
+      );
+    };
+    howLong = getHowLong(howLong);
     this.setState({ howLong });
   }
 
