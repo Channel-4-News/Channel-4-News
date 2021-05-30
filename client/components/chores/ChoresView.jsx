@@ -4,6 +4,7 @@ import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily'
 import ChoreCard from './ChoreCard';
 import Modal from '@material-ui/core/Modal';
 import AddChore from './AddChore';
+import UpdateChore from './UpdateChore';
 
 const Chores = (props) => {
   const [kids, setKids] = useState([]);
@@ -12,6 +13,7 @@ const Chores = (props) => {
   const [choresUpdated, setUpdated] = useState(1);
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
+  const [choreToUpdate, setChoreToUpdate] = useState({});
 
   const handleClose = () => {
     setAddChore(false);
@@ -79,7 +81,11 @@ const Chores = (props) => {
             handleClose();
           }}
         >
-          <AddChore kids={kids} familyId={props.currUser.familyId} />
+          <UpdateChore
+            chore={choreToUpdate}
+            kids={kids}
+            setClicked={setUpdateClicked}
+          />
         </Modal>
         {kids.length > 1 && props.currUser.status === 'Parent' ? (
           <div id="childDropdown">
@@ -115,6 +121,7 @@ const Chores = (props) => {
             key={`${chore.id}chore`}
             isParent={props.currUser.status === 'Parent'}
             updateClicked={setUpdateClicked}
+            setChore={setChoreToUpdate}
           />
         ))}
         {expiredChores.map((chore) => (
@@ -123,6 +130,7 @@ const Chores = (props) => {
             key={`${chore.id}chore`}
             isParent={props.currUser.status === 'Parent'}
             updateClicked={setUpdateClicked}
+            setChore={setChoreToUpdate}
           />
         ))}
       </div>

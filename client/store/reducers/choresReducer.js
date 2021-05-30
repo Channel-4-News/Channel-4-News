@@ -9,6 +9,9 @@ const choresReducer = (state = [], action) => {
   if (action.type === ADD_CHORE) {
     return (state = action.chores);
   }
+  if (action.type === UPDATE_CHORE) {
+    return (state = action.chores);
+  }
   return state;
 };
 

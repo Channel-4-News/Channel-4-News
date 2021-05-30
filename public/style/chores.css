@@ -4,7 +4,7 @@
 }
 
 .editChore img {
-  width: 30%;
+  width: 20px;
 }
 
 #choreCard {
@@ -130,7 +130,7 @@
   outline: 0px solid transparent;
 }
 
-/* ADD EDIT CHORE FORM */
+/* ADD CHORE FORM */
 
 #addChoreForm {
   display: flex;
@@ -169,4 +169,24 @@
 
 #addChoreInput {
   width: 40%;
+}
+
+/* UPDATE CHORE */
+
+.choreUpdateField {
+  background-color: white;
+}
+
+#updateChore {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 30%;
+  margin-top: 10%;
+  width: 40%;
+  align-self: center;
+  background-color: white;
+}
+
+#updateChore div {
 }
