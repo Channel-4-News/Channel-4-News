@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db');
 
-const TransactionHistory = db.define('transaction history');
-
 const Transaction = db.define('transaction', {
   amount: {
     type: DataTypes.DECIMAL(10, 2),
@@ -22,4 +20,9 @@ const Transaction = db.define('transaction', {
   },
 });
 
-module.exports = { Transaction, TransactionHistory };
+// Transaction.addHook('afterCreate', async (transaction) => {
+//   transaction.userId = 5;
+//   console.log(transaction);
+//   // await transaction.save();
+// });
+module.exports = { Transaction };

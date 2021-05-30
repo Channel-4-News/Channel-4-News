@@ -7,6 +7,12 @@
   width: 20px;
 }
 
+.editChore {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 #choreCard {
   padding: 10px;
   width: 100%;
@@ -24,7 +30,7 @@
   width: 100%;
   align-self: center;
   display: inline-grid;
-  grid-template-columns: 10% 12% 51% 10% 10% 7%;
+  grid-template-columns: 8% 10% 48% 10% 10% 14%;
   align-items: center;
   margin: 20px;
   background-color: white;

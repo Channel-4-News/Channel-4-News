@@ -44,7 +44,7 @@ const Chore = db.define('chore', {
   },
   icon: {
     type: DataTypes.STRING,
-    defaultValue: 'public/images/choreIcons/clean.png',
+    defaultValue: 'public/images/choreIcons/misc.png',
   },
 });
 

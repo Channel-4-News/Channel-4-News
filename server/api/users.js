@@ -1,9 +1,11 @@
 const { Router, json } = require('express');
+const Allowance = require('../db/models/Allowance');
 const router = Router();
 const {
   models: { User },
 } = require('../db/models/associations');
 const Family = require('../db/models/Family');
+const { Transaction } = require('../db/models/Transaction');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -19,7 +21,11 @@ router.get('/:id', async (req, res, next) => {
   try {
     res.send(
       await User.findByPk(req.params.id, {
-        include: [{ model: Family, include: [User] }],
+        include: [
+          { model: Transaction },
+          { model: Allowance },
+          { model: Family, include: [User] },
+        ],
       })
     );
   } catch (err) {
