@@ -3,6 +3,7 @@ const router = Router();
 const {
   models: { User },
 } = require('../db/models/associations');
+const Family = require('../db/models/Family');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -16,8 +17,11 @@ router.get('/', async (req, res, next) => {
 //get single user by id
 router.get('/:id', async (req, res, next) => {
   try {
-    const { id } = req.params;
-    res.send(await User.findByPk(id));
+    res.send(
+      await User.findByPk(req.params.id, {
+        include: [{ model: Family, include: [User] }],
+      })
+    );
   } catch (err) {
     next(err);
   }

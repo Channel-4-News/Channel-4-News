@@ -60,7 +60,6 @@ const JoinOrCreateFamily = (props) => {
           />
           <label>Family Secret</label>
           <input
-            className="passwordInput"
             name="familySecret"
             type={passwordShown ? 'text' : 'password'}
             onChange={(e) => {
@@ -86,6 +85,7 @@ const JoinOrCreateFamily = (props) => {
           <input name="familyName" />
           <label>Family Secret</label>
           <input
+            id="test"
             className="passwordInput"
             name="familySecret"
             type={passwordShown ? 'text' : 'password'}

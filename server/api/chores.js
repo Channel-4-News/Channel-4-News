@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {
-  models: { Chore, ChoreList },
+  models: { User, Chore, ChoreList },
 } = require('../db/models/associations');
 
 //chorelist get by id
@@ -22,10 +22,26 @@ router.get('/chores/:id', async (req, res, next) => {
   }
 });
 
+//get chores by family id
+router.get('/family/:id', async (req, res, next) => {
+  try {
+    const chores = await Chore.findAll({
+      where: { familyId: req.params.id },
+      include: [User],
+      order: [['createdAt', 'DESC']],
+    });
+    res.send(chores);
+  } catch (err) {
+    next(err);
+  }
+});
+
 //create new chore
 router.post('/', async (req, res, next) => {
+  Chore.User = Chore.belongsTo(User);
   try {
     const {
+      icon,
       name,
       description,
       amount,
@@ -33,8 +49,11 @@ router.post('/', async (req, res, next) => {
       isRecurring,
       recurringInterval,
       choreListId,
+      userId,
+      familyId,
     } = req.body;
     const newChore = await Chore.create({
+      icon,
       name,
       description,
       amount,
@@ -42,6 +61,8 @@ router.post('/', async (req, res, next) => {
       isRecurring,
       recurringInterval,
       choreListId,
+      userId,
+      familyId,
     });
     res.status(201).send(newChore);
   } catch (err) {
@@ -53,8 +74,15 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const choreToUpdate = await Chore.findByPk(req.params.id);
-    const { name, description, amount, due, isRecurring, recurringInterval } =
-      req.body;
+    const {
+      name,
+      description,
+      amount,
+      due,
+      isRecurring,
+      recurringInterval,
+      isComplete,
+    } = req.body;
     await choreToUpdate.update({
       name,
       description,
@@ -62,6 +90,7 @@ router.put('/:id', async (req, res, next) => {
       due,
       isRecurring,
       recurringInterval,
+      isComplete,
     });
     res.status(200).send(choreToUpdate);
   } catch (err) {
