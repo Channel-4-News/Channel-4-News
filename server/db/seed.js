@@ -4,7 +4,9 @@ const {
 } = require('./models/associations');
 const { Chore } = require('./models/Chore');
 const Family = require('./models/Family');
+const { Transaction } = require('./models/Transaction');
 const User = require('./models/User');
+const Allowance = require('./models/Allowance');
 
 const syncAndSeed = async () => {
   try {
@@ -363,6 +365,22 @@ const syncAndSeed = async () => {
         WishListItem.create(item);
       })
     );
+    const transactions = [
+      { amount: 50, category: 'Electronics', userId: 5 },
+      { amount: 100, category: 'Clothing', userId: 5 },
+      { amount: 100, category: 'Entertainment', userId: 5 },
+      { amount: 100, category: 'Toys', userId: 5 },
+      { amount: 100, category: 'Miscellaneous', userId: 5 },
+      { amount: 100, category: 'Food', userId: 5 },
+    ];
+
+    await Promise.all(
+      transactions.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
+    // await Allowance.create()
   } catch (err) {
     console.log(err);
   }

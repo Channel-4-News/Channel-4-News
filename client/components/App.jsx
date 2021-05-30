@@ -44,7 +44,7 @@ class App extends Component {
               exact
               path="/wishlist"
               component={() => <WishList user={this.state.user} />}
-            />          
+            />
           </Switch>
         </div>
       </Router>

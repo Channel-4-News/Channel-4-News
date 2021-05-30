@@ -3,7 +3,7 @@ const User = require('./User');
 const Family = require('./Family');
 const Allowance = require('./Allowance');
 const { Chore, ChoreList } = require('./Chore');
-const { Transaction, TransactionHistory } = require('./Transaction');
+const { Transaction } = require('./Transaction');
 const { WishListItem, WishList } = require('./WishListItem');
 const { Notification, NotificationList } = require('./Notification');
 
@@ -33,18 +33,18 @@ User.hasMany(Chore);
 Chore.belongsTo(Family);
 Family.hasMany(Chore);
 
+Transaction.belongsTo(User);
+User.hasMany(Transaction);
 // Transaction.belongsTo(User);
-// User.hasMany(Transaction);
-Transaction.belongsTo(TransactionHistory);
-TransactionHistory.hasMany(Transaction);
-TransactionHistory.belongsTo(User);
+// TransactionHistory.hasMany(Transaction);
+// TransactionHistory.belongsTo(User);
 
 //export models and db
 module.exports = {
   db,
   models: {
     Transaction,
-    TransactionHistory,
+    // TransactionHistory,
     ChoreList,
     Chore,
     Family,

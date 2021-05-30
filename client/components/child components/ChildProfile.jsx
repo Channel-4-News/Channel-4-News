@@ -11,6 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 //Style Import
 import '../../../public/style/childProfile.css';
 import EditChildProfile from './EditChildProfile';
+import SpendingGraph from '../SpendingGraph';
 
 class ChildProfile extends Component {
   constructor(props) {
@@ -48,21 +49,41 @@ class ChildProfile extends Component {
   render() {
     const { currUser } = this.props;
     const { dialogueOpen } = this.state;
-    const { firstName, lastName, email, username, imgUrl } = currUser;
+    const {
+      firstName,
+      lastName,
+      email,
+      username,
+      imgUrl,
+      transactions,
+      balance,
+      allowance,
+    } = currUser;
 
-    return (
+    return allowance ? (
       <div className="profile-container">
-        <h3>{firstName}s Profile!</h3>
-        <Avatar id="avatar" alt="current user pic" src={imgUrl} />
-        <div>
-          <h6>First Name:</h6>
-          <p>{firstName}</p>
-          <h6>Last Name:</h6>
-          <p>{lastName}</p>
-          <h6>Email:</h6>
-          <p>{email}</p>
-          <h6>Username:</h6>
-          <p>{username}</p>
+        <h3>Hello {firstName}!</h3>
+        <div className="graphics">
+          <div>
+            <Avatar id="avatar" alt="current user pic" src={imgUrl} />
+            <h6>First Name:</h6>
+            <p>{firstName}</p>
+            <h6>Last Name:</h6>
+            <p>{lastName}</p>
+            <h6>Email:</h6>
+            <p>{email}</p>
+            <h6>Username:</h6>
+            <p>{username}</p>
+          </div>
+          <div>
+            <div>Money made this month:</div>
+            <div>Next Allowance Payment:${allowance.amount}</div>
+            <div>Balance: ${balance}</div>
+          </div>
+          <div>
+            Spending History
+            <SpendingGraph transactions={transactions} />
+          </div>
         </div>
         <Button
           className="button"
@@ -80,6 +101,8 @@ class ChildProfile extends Component {
           {...currUser}
         />
       </div>
+    ) : (
+      ''
     );
   }
 }
