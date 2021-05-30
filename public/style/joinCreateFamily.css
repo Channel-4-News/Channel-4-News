@@ -25,7 +25,8 @@
   margin: 10px;
 }
 
-.createJoin input {
+.createJoin input,
+.passwordInput {
   margin-bottom: 20px;
   border: 1px black solid;
   padding: 10px;
@@ -34,7 +35,20 @@
   font-size: large;
   margin: 10px;
   width: auto;
+  height: auto;
 }
+
+/* #test {
+  margin-bottom: 20px;
+  border: 1px black solid;
+  padding: 10px;
+  outline: none;
+  color: black;
+  font-size: large;
+  margin: 10px;
+  width: auto;
+  height: auto;
+} */
 
 .createJoin label {
   color: rgb(153, 147, 147);

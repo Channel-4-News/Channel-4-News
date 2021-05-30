@@ -42,6 +42,10 @@ const Chore = db.define('chore', {
     defaultValue: null,
     allowNull: true,
   },
+  icon: {
+    type: DataTypes.STRING,
+    defaultValue: 'public/images/choreIcons/clean.png',
+  },
 });
 
 module.exports = { Chore, ChoreList };

@@ -55,6 +55,10 @@ const User = db.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  balance: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
+  },
 });
 
 //authenticates user

@@ -20,7 +20,8 @@ const attemptLogin = () => {
             },
           })
         ).data;
-        dispatch(getCurrentUser(user));
+        const userWithFamily = (await axios.get(`/api/users/${user.id}`)).data;
+        dispatch(getCurrentUser(userWithFamily));
       }
       return true;
     } catch (err) {

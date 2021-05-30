@@ -24,12 +24,14 @@ NotificationList.hasMany(Notification);
 Allowance.belongsTo(User);
 User.hasOne(Allowance);
 
-ChoreList.hasMany(Chore);
+// ChoreList.hasMany(Chore);
 Chore.belongsTo(ChoreList);
-ChoreList.belongsTo(Family);
+// ChoreList.belongsTo(Family);
 Family.hasOne(ChoreList);
 Chore.belongsTo(User);
 User.hasMany(Chore);
+Chore.belongsTo(Family);
+Family.hasMany(Chore);
 
 // Transaction.belongsTo(User);
 // User.hasMany(Transaction);
