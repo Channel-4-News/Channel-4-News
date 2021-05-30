@@ -51,21 +51,21 @@ class ChildProfile extends Component {
     const { firstName, lastName, email, username, imgUrl } = currUser;
 
     return (
-      <div className="profile-container">
+      <div className="child-profile-container">
         <h3>{firstName}s Profile!</h3>
         <Avatar id="avatar" alt="current user pic" src={imgUrl} />
         <div>
           <h6>First Name:</h6>
-          <p>{firstName}</p>
+          <p className="child-profile-p">{firstName}</p>
           <h6>Last Name:</h6>
-          <p>{lastName}</p>
+          <p className="child-profile-p">{lastName}</p>
           <h6>Email:</h6>
-          <p>{email}</p>
+          <p className="child-profile-p">{email}</p>
           <h6>Username:</h6>
-          <p>{username}</p>
+          <p className="child-profile-p">{username}</p>
         </div>
         <Button
-          className="button"
+          className="edit-profile-button"
           variant="outlined"
           color="primary"
           onClick={this.handleOpen}

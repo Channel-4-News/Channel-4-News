@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { editWishListCard } from '../../store/actions/childActions/editWishListCard';
+import { editWishListCard } from '../../store/actions/wishListActions/editWishListCard';
 
 class EditWishListCard extends Component {
   constructor(props) {
