@@ -6,10 +6,17 @@ const { app } = require('../../../server/app');
 const request = supertest(app);
 const {
   db,
-  models: { WishListItem },
+  models: { WishListItem, User },
 } = require('../../../server/db/models/associations');
 
 describe('WishListItem Routes', () => {
+  const user = {
+    username: 'angryarchie',
+    email: 'archie@test.com',
+    password: 'password123',
+    firstName: 'Archie',
+    lastName: 'Ismadder',
+  };
   const wishListItems = [
     {
       itemName: 'test',
@@ -18,6 +25,7 @@ describe('WishListItem Routes', () => {
       cost: 4.0,
       linkUrl: 'test-link',
       category: 'Miscellaneous',
+      userId: 1,
     },
     {
       itemName: 'Tv',
@@ -26,18 +34,20 @@ describe('WishListItem Routes', () => {
       cost: 100.0,
       linkUrl: 'tv-link',
       category: 'Electronics',
+      userId: 1,
     },
   ];
   beforeAll(async () => {
     await db.sync({ force: true });
+    await User.create(user);
     await WishListItem.bulkCreate(wishListItems);
   });
   afterAll(async () => {
     await db.close();
   });
 
-  test('GET /api/wishListItem returns all items', async (done) => {
-    const response = await request.get('/api/wishListItem');
+  test('GET /api/wishListItem/:id returns all items', async (done) => {
+    const response = await request.get('/api/wishListItem/1');
     expect(response.body.length).toBe(2);
     done();
   });

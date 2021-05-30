@@ -7,26 +7,29 @@ const {
 
 router.use(json());
 
-//All Items
-router.get('/', async (req, res, next) => {
+//Get all Wish List items by id
+router.get('/:id', async (req, res, next) => {
   try {
-    const allItems = await WishListItem.findAll();
-    res.send(allItems);
+    const { id } = req.params;
+    const allWishListItems = await WishListItem.findAll({
+      where: { userId: id },
+    });
+    res.send(allWishListItems);
   } catch (err) {
     next(err);
   }
 });
 
-//Single Item
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const singleItem = await WishListItem.findByPk(id);
-    res.send(singleItem);
-  } catch (err) {
-    next(err);
-  }
-});
+// Single Item
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const singleItem = await WishListItem.findByPk(id);
+//     res.send(singleItem);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //Add Item To WishList
 router.post('/', async (req, res, next) => {

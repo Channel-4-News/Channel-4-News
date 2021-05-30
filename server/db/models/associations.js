@@ -11,10 +11,10 @@ const { Notification, NotificationList } = require('./Notification');
 User.belongsTo(Family);
 Family.hasMany(User);
 
-User.hasOne(WishList);
-WishList.belongsTo(User);
-WishListItem.belongsTo(WishList);
-WishList.hasMany(WishListItem);
+User.hasMany(WishListItem);
+WishListItem.belongsTo(User);
+// WishListItem.belongsTo(WishList);
+// WishList.hasMany(WishListItem);
 
 User.hasOne(NotificationList);
 NotificationList.belongsTo(User);
