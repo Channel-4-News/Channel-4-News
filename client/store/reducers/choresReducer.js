@@ -4,7 +4,6 @@ import { GET_CHORES } from '../actions/choreActions/fetchChoresByFamily';
 import { UPDATE_CHORE } from '../actions/choreActions/updateChore';
 
 const choresReducer = (state = [], action) => {
-  console.log(action);
   if (action.type === GET_CHORES) {
     return (state = action.chores);
   }
