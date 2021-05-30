@@ -3,10 +3,10 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import CalculatorButton from './CalculatorButton';
 
 const WishListCard = (props) => {
   const item = props.wishListItem;
-  console.log(props);
   return (
     <Card id="wishListCardWrapper">
       <Typography className="title" gutterBottom variant="h5" component="h2">
@@ -45,10 +45,14 @@ const WishListCard = (props) => {
         </div>
       </div>
       <div id="buttonRow">
-        <Button variant="contained">Calculator</Button>
-        <Button variant="contained">Purchase</Button>
-        <Button variant="contained">Edit</Button>
-        <Button color="secondary" variant="contained">
+        <CalculatorButton wishListItem={item} />
+        <Button size="large" variant="contained">
+          Purchase
+        </Button>
+        <Button size="large" variant="contained">
+          Edit
+        </Button>
+        <Button size="large" color="secondary" variant="contained">
           Delete
         </Button>
       </div>
