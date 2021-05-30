@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getWishList } from '../../store/actions/childActions/getWishList';
+import { getWishList } from '../../store/actions/wishListActions/getWishList';
 import WishListCard from './WishListCard';
 
 class WishList extends Component {

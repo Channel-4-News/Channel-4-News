@@ -54,7 +54,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const deleteItem = await WishListItem.findByPk(id);
-    (await deleteItem).destroy();
+    await deleteItem.destroy();
     res.sendStatus(204);
   } catch (err) {
     next(err);

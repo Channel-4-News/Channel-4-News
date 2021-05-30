@@ -86,7 +86,7 @@ class ChildProfile extends Component {
           </div>
         </div>
         <Button
-          className="button"
+          className="edit-profile-button"
           variant="outlined"
           color="primary"
           onClick={this.handleOpen}

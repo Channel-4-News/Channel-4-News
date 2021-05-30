@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <Router>
         <NavBar user={this.state.user} />
-        <div id="content">
+        <div id="mainAppContent">
           <Switch>
             <Route exact path="/signup" component={Register} />
             <Route exact path="/login" component={LogIn} />

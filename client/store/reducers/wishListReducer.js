@@ -1,5 +1,6 @@
-import { GET_WISH_LIST } from '../actions/childActions/getWishList';
-import { EDIT_WISH_LIST_CARD } from '../actions/childActions/editWishListCard';
+import { GET_WISH_LIST } from '../actions/wishListActions/getWishList';
+import { EDIT_WISH_LIST_CARD } from '../actions/wishListActions/editWishListCard';
+import { DELETE_WISH_LIST_CARD } from '../actions/wishListActions/deleteWishListCard';
 
 const wishListReducer = (state = [], action) => {
   if (action.type === GET_WISH_LIST) {
@@ -11,6 +12,10 @@ const wishListReducer = (state = [], action) => {
     );
     const newState = [...sameItems, action.wishListItem];
     return newState;
+  }
+  if (action.type === DELETE_WISH_LIST_CARD) {
+    const leftoverItems = state.filter((item) => item.id !== action.id.id);
+    return [...leftoverItems];
   }
   return state;
 };

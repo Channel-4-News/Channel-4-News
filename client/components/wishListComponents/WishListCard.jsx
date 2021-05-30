@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import CalculatorButton from './CalculatorButton';
 import EditWishListCard from './EditWishListCard';
+import { deleteWishListCard } from '../../store/actions/wishListActions/deleteWishListCard';
 
 const WishListCard = (props) => {
   const [edit, setEdit] = useState(false);
-  useEffect(() => setEdit(edit), [edit]);
   const item = props.wishListItem;
+  console.log(props);
   if (edit === false) {
     return (
       <Card id="wishListCardWrapper">
@@ -60,7 +63,12 @@ const WishListCard = (props) => {
           >
             Edit
           </Button>
-          <Button size="large" color="secondary" variant="contained">
+          <Button
+            onClick={() => props.deleteWishListCard(item.id)}
+            size="large"
+            color="secondary"
+            variant="contained"
+          >
             Delete
           </Button>
         </div>
@@ -78,4 +86,10 @@ const WishListCard = (props) => {
   }
 };
 
-export default WishListCard;
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    deleteWishListCard: (id) => dispatch(deleteWishListCard(id, history)),
+  };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(WishListCard));
