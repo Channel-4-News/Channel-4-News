@@ -8,7 +8,7 @@ import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
-import WishList from './childComponents/WishList';
+import WishList from './wishListComponents/WishList';
 
 class App extends Component {
   constructor(props) {
