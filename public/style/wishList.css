@@ -115,3 +115,17 @@ body
 #calculatorButtons * {
   width: 120px;
 }
+
+.wishListFormInput {
+  width: 100%;
+  border: none;
+}
+
+#changeWishListTitle {
+  font-size: large;
+  width: 400px;
+}
+
+#wishListTextAreaEdit {
+  height: 234px;
+}
