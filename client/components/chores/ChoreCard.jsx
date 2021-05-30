@@ -34,6 +34,7 @@ const ChoreCard = (props) => {
             src="public/images/icons/edit.png"
             onClick={() => {
               props.updateClicked(true);
+              props.setChore(props.chore);
             }}
           />
         </div>

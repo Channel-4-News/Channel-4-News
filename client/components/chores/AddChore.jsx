@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { updateChore } from '../../store/actions/choreActions/updateChore';
-import { InputLabel, FormControl, Select, TextField } from '@material-ui/core';
+import {
+  InputLabel,
+  FormControl,
+  Select,
+  TextField,
+  Button,
+} from '@material-ui/core';
+import {
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 import { addChore } from '../../store/actions/choreActions/addChore';
 
 const AddChore = (props) => {
@@ -15,7 +26,7 @@ const AddChore = (props) => {
   });
 
   const icons = [
-    { name: 'Miscellaneous', file: 'clean' },
+    { name: 'Miscellaneous', file: 'misc' },
     { name: 'Bed', file: 'beds' },
     { name: 'Car', file: 'car' },
     { name: 'Clothing', file: 'clean-clothes-2' },
@@ -28,22 +39,30 @@ const AddChore = (props) => {
     { name: 'Plants', file: 'watering-plants' },
   ];
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    assigneeAmount: { width: '48%' },
+    divWrap: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      margin: theme.spacing(1),
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <form
-      id="addChoreForm"
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.addChore(choreValues);
-      }}
-    >
-      <FormControl>
+    <form className={classes.root} id="addChoreForm">
+      <FormControl variant="outlined" className={classes.root}>
         <InputLabel htmlFor="categoryInputAdd">Category</InputLabel>
         <Select
           native
-          inputProps={{
-            name: 'category',
-            id: 'categoryInputAdd',
-          }}
+          label="Category"
+          color="secondary"
           onChange={(e) =>
             setChoreValues({
               ...choreValues,
@@ -62,8 +81,8 @@ const AddChore = (props) => {
         </Select>
       </FormControl>
       <TextField
+        className={classes.root}
         value={choreValues.name}
-        className="addChoreInput"
         label="Chore Name"
         variant="outlined"
         onChange={(e) =>
@@ -71,24 +90,19 @@ const AddChore = (props) => {
         }
       />
       <TextField
-        className="addChoreInput"
+        className={classes.root}
         label="Description"
         variant="outlined"
         onChange={(e) =>
           setChoreValues({ ...choreValues, description: e.target.value })
         }
       />
-      <div id="amountAndAsignee">
-        <FormControl id="addAssignee" variant="outlined">
-          <InputLabel htmlFor="choreAssigneeAdd" id="testest">
-            Assignee
-          </InputLabel>
+      <div id="amountAndAsignee" className={classes.divWrap}>
+        <FormControl variant="outlined" className={classes.assigneeAmount}>
+          <InputLabel htmlFor="choreAssigneeAdd">Assignee</InputLabel>
           <Select
             native
-            inputProps={{
-              name: 'category',
-              id: 'choreAssigneeAdd',
-            }}
+            label="Assignee"
             onChange={(e) =>
               setChoreValues({ ...choreValues, userId: e.target.value * 1 })
             }
@@ -104,7 +118,7 @@ const AddChore = (props) => {
           </Select>
         </FormControl>
         <TextField
-          // className="addChoreInput"
+          className={classes.assigneeAmount}
           id="addChoreInput"
           label="Amount"
           variant="outlined"
@@ -113,7 +127,19 @@ const AddChore = (props) => {
           }
         />
       </div>
-      <button>Add Chore</button>
+      {/* <button>Add Chore</button> */}
+      <Button
+        className={classes.root}
+        variant="contained"
+        color="secondary"
+        onClick={async (e) => {
+          e.preventDefault();
+          await props.addChore(choreValues);
+          props.setAddChore(false);
+        }}
+      >
+        Add Chore
+      </Button>
     </form>
   );
 };
