@@ -70,7 +70,11 @@ const Chores = (props) => {
                 handleClose();
               }}
             >
-              <AddChore kids={kids} familyId={props.currUser.familyId} />
+              <AddChore
+                kids={kids}
+                familyId={props.currUser.familyId}
+                setAddChore={setAddChore}
+              />
             </Modal>
           </div>
         ) : null}

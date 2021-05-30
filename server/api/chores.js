@@ -75,6 +75,7 @@ router.put('/:id', async (req, res, next) => {
   try {
     const choreToUpdate = await Chore.findByPk(req.params.id);
     const {
+      icon,
       name,
       description,
       amount,
@@ -82,8 +83,10 @@ router.put('/:id', async (req, res, next) => {
       isRecurring,
       recurringInterval,
       isComplete,
+      userId,
     } = req.body;
     await choreToUpdate.update({
+      icon,
       name,
       description,
       amount,
@@ -91,6 +94,7 @@ router.put('/:id', async (req, res, next) => {
       isRecurring,
       recurringInterval,
       isComplete,
+      userId,
     });
     res.status(200).send(choreToUpdate);
   } catch (err) {

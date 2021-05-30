@@ -18,7 +18,7 @@ const UpdateChore = (props) => {
   const [updateValues, setUpdateValues] = useState({});
 
   const icons = [
-    { name: 'Miscellaneous', file: 'clean' },
+    { name: 'Miscellaneous', file: 'misc' },
     { name: 'Bed', file: 'beds' },
     { name: 'Car', file: 'car' },
     { name: 'Clothing', file: 'clean-clothes-2' },
@@ -30,6 +30,14 @@ const UpdateChore = (props) => {
     { name: 'Cooking', file: 'soup' },
     { name: 'Plants', file: 'watering-plants' },
   ];
+
+  const filteredKids = props.kids.filter(
+    (kid) => kid.firstName !== props.chore.user.firstName
+  );
+
+  const filteredIcons = icons.filter(
+    (icon) => !props.chore.icon.includes(icon.file)
+  );
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,7 +68,7 @@ const UpdateChore = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <form id="updateChore" className={classes.root}>
+      <form id="updateChore" className={classes.root} onSubmit={() => {}}>
         <FormControl variant="outlined">
           <InputLabel htmlFor="updateCategory" color="secondary">
             Category
@@ -73,7 +81,10 @@ const UpdateChore = (props) => {
             label="Category"
             color="secondary"
             onChange={(e) =>
-              setUpdateValues({ ...updateValues, icon: e.target.value })
+              setUpdateValues({
+                ...updateValues,
+                icon: `/public/images/choreIcons/${e.target.value}.png`,
+              })
             }
           >
             {icons.map((icon) => {
@@ -132,10 +143,13 @@ const UpdateChore = (props) => {
             label="Assignee"
             color="secondary"
             onChange={(e) =>
-              setUpdateValues({ ...updateValues, userId: e.target.value })
+              setUpdateValues({ ...updateValues, userId: e.target.value * 1 })
             }
           >
-            {props.kids.map((kid) => {
+            <option key={props.chore.user.firstName}>
+              {props.chore.user.firstName}
+            </option>
+            {filteredKids.map((kid) => {
               return (
                 <option key={kid.firstName} value={kid.id}>
                   {kid.firstName}
