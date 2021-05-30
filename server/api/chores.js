@@ -70,7 +70,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-//update chore
+//update chores
 router.put('/:id', async (req, res, next) => {
   try {
     const choreToUpdate = await Chore.findByPk(req.params.id);
