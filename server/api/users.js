@@ -1,7 +1,7 @@
 const { Router, json } = require('express');
 const router = Router();
 const {
-  models: { User, WishList },
+  models: { User },
 } = require('../db/models/associations');
 const Family = require('../db/models/Family');
 
@@ -27,31 +27,20 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-//create new user with wishlist
+//create new user
 router.post('/', async (req, res, next) => {
   try {
     const { username, email, password, firstName, lastName, status, isAdmin } =
       req.body;
-    User.WishList = User.hasOne(WishList);
-    const newUser = await User.create(
-      {
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
-        status,
-        isAdmin,
-        wishList: {},
-      },
-      {
-        include: [
-          {
-            association: User.WishList,
-          },
-        ],
-      }
-    );
+    const newUser = await User.create({
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      status,
+      isAdmin,
+    });
     res.status(201).send(newUser);
   } catch (err) {
     next(err);

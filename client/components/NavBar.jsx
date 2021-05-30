@@ -17,7 +17,8 @@ const NavBar = (props) => {
             Channel-4-News
           </IconButton>
           <div id="navbar-links-wrapper">
-            {/* USER IS NOT SIGNED IN */}
+            {/*--------- USER IS NOT SIGNED IN ----------*/}
+
             {user === undefined ? (
               <Button color="inherit" href="/#/login">
                 Log In
@@ -34,7 +35,13 @@ const NavBar = (props) => {
             )}
 
             {/* USER IS A CHILD */}
-            {user === 'Child' ? <Button color="inherit">Wish List</Button> : ''}
+            {user === 'Child' ? (
+              <Button color="inherit" href="/#/wishlist">
+                Wish List
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/chores">
                 Chores
@@ -58,7 +65,8 @@ const NavBar = (props) => {
               ''
             )}
 
-            {/* USER IS A PARENT */}
+            {/*----------- USER IS A PARENT --------------*/}
+
             {user === 'Parent' ? (
               <Button color="inherit">Notifications</Button>
             ) : (

@@ -1,0 +1,18 @@
+#wishListWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: lightgray;
+}
+#wishListCardWrapper {
+  width: 45%;
+  height: 600px;
+  margin-top: 3rem;
+  padding: 1rem;
+}
+#wishListCardWrapper img {
+  object-fit: contain;
+  height: 400px;
+  width: 400px;
+}
