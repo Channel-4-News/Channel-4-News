@@ -2,6 +2,7 @@ const { db } = require('./db');
 const {
   models: { WishListItem, WishList },
 } = require('./models/associations');
+const { Chore } = require('./models/Chore');
 const Family = require('./models/Family');
 const User = require('./models/User');
 
@@ -34,12 +35,33 @@ const syncAndSeed = async () => {
         lastName: 'Outar',
         status: 'Parent',
       },
+      // {
+      //   username: 'littlejoe',
+      //   email: 'joe@test.com',
+      //   password: 'password123',
+      //   firstName: 'Joe',
+      //   lastName: 'Kid',
+      // },
+      // {
+      //   username: 'funnyfrancis',
+      //   email: 'franny@test.com',
+      //   password: 'password123',
+      //   firstName: 'Francis',
+      //   lastName: 'Haha',
+      // },
+      // {
+      //   username: 'angryarchie',
+      //   email: 'archie@test.com',
+      //   password: 'password123',
+      //   firstName: 'Archie',
+      //   lastName: 'Ismadder',
+      // },
       {
-        username: 'funnyfrancis',
-        email: 'franny@test.com',
+        username: 'tiredtalia',
+        email: 'talia@test.com',
         password: 'password123',
-        firstName: 'Francis',
-        lastName: 'Haha',
+        firstName: 'Talia',
+        lastName: 'Asleep',
       },
     ];
     await Promise.all(
@@ -92,52 +114,186 @@ const syncAndSeed = async () => {
       })
     );
 
-    // Anna's testing family
-    const myFamily = await Family.create({
-      name: 'Beach',
+    const myFam = await Family.create({
+      name: 'Bird',
       familySecret: 'password123',
     });
-    const myParent = await User.create({
-      username: 'sunnybeach',
-      email: 'sunny@test.com',
-      password: 'password123',
-      firstName: 'Sunny',
-      lastName: 'Beach',
-      status: 'Parent',
-      familyId: myFamily.id,
-    });
-    const myParent1 = await User.create({
-      username: 'sandybeach',
-      email: 'sandy@test.com',
-      password: 'password123',
-      firstName: 'Sandy',
-      lastName: 'Beach',
-      status: 'Parent',
-      familyId: myFamily.id,
-    });
-    const myChild = await User.create({
+
+    const kid1 = await User.create({
       username: 'littlejoe',
       email: 'joe@test.com',
       password: 'password123',
       firstName: 'Joe',
-      lastName: 'Beach',
-      familyId: myFamily.id,
+      lastName: 'Kid',
+      familyId: myFam.id,
     });
-    const myChild1 = await User.create({
+
+    const kid2 = await User.create({
+      username: 'funnyfrancis',
+      email: 'franny@test.com',
+      password: 'password123',
+      firstName: 'Francis',
+      lastName: 'Haha',
+      familyId: myFam.id,
+    });
+
+    const kid3 = await User.create({
       username: 'angryarchie',
       email: 'archie@test.com',
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Ismadder',
-      familyId: myFamily.id,
+      familyId: myFam.id,
     });
-    const myChild2 = await User.create({
-      username: 'tiredtalia',
-      email: 'talia@test.com',
+
+    const parent1 = await User.create({
+      username: 'mamama',
+      email: 'mom@test.com',
       password: 'password123',
-      firstName: 'Talia',
-      lastName: 'Asleep',
-      familyId: myFamily.id,
+      firstName: 'Mommie',
+      lastName: 'Momster',
+      familyId: myFam.id,
+      status: 'Parent',
+    });
+
+    Chore.create({
+      name: 'Water plants.',
+      description: 'Water the plants in the living room and kitchen.',
+      amount: 5,
+      isRecurring: true,
+      recurringInterval: 7,
+      icon: '/public/images/choreIcons/watering-plants.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+      isComplete: true,
+    });
+    Chore.create({
+      name: 'Fold clothes.',
+      description: 'Take clothes out of dryer and fold.',
+      amount: 3,
+      isRecurring: false,
+      due: '2022-01-20',
+      icon: '/public/images/choreIcons/clean-clothes-2.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+      isComplete: true,
+    });
+    Chore.create({
+      name: 'Empty dishwasher.',
+      description: 'Empty dishwasher before dinner.',
+      amount: 5,
+      isRecurring: true,
+      recurringInterval: 3,
+      icon: '/public/images/choreIcons/dish-2.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+    });
+    Chore.create({
+      name: 'Feed dog.',
+      description: 'Load dog bowl and water bowl before you leave to school.',
+      amount: 2,
+      isRecurring: true,
+      recurringInterval: 1,
+      icon: '/public/images/choreIcons/pets-2.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+    });
+    Chore.create({
+      name: 'Clean kitty litter.',
+      description: 'Clean litter box into garbage.',
+      amount: 4,
+      isRecurring: true,
+      recurringInterval: 5,
+      icon: '/public/images/choreIcons/pets-2.png',
+      familyId: myFam.id,
+      userId: kid2.id,
+      isComplete: true,
+    });
+    Chore.create({
+      name: 'Make bed.',
+      description:
+        'Make bed every morning before you leave to school. Weekends not included.',
+      amount: 7,
+      isRecurring: true,
+      recurringInterval: 7,
+      icon: '/public/images/choreIcons/beds.png',
+      familyId: myFam.id,
+      userId: kid2.id,
+      isComplete: true,
+    });
+    Chore.create({
+      name: 'Wash car.',
+      description:
+        'Help mom wash the car on saturday. You are in charge of the hose. Do not spray mom!!',
+      amount: 5,
+      isRecurring: false,
+      due: '2020-10-08',
+      icon: '/public/images/choreIcons/car.png',
+      familyId: myFam.id,
+      userId: kid2.id,
+    });
+    Chore.create({
+      name: 'Make a snack for your baby sister.',
+      description: 'Help prepare guacomole for Lucy on Thursday after school.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-05-03',
+      icon: '/public/images/choreIcons/babysitter.png',
+      familyId: myFam.id,
+      userId: kid2.id,
+      isComplete: true,
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family movie night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-08-16',
+      familyId: myFam.id,
+      userId: kid2.id,
+    });
+    Chore.create({
+      name: 'Take out trash.',
+      description:
+        'When the bins are full, take trash to the trash cans in the garage.',
+      amount: 2,
+      isRecurring: true,
+      recurringInterval: 3,
+      familyId: myFam.id,
+      userId: kid3.id,
+      icon: '/public/images/choreIcons/delete.png',
+    });
+    Chore.create({
+      name: 'Wash windows.',
+      description: 'Wash the windows in your room. Dad will help.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-09-11',
+      icon: '/public/images/choreIcons/window-cleaning.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+    });
+    Chore.create({
+      name: 'Cook dinner.',
+      description: 'Help mom prepare the marinade for the salmon.',
+      amount: 3,
+      isRecurring: false,
+      due: '2020-06-13',
+      icon: '/public/images/choreIcons/soup.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+    });
+    Chore.create({
+      name: 'Wash clothes.',
+      description:
+        'Load clothes into washing machine and start cycle. Ask dad if you need help.',
+      amount: 3,
+      isRecurring: false,
+      due: '2022-07-01',
+      icon: '/public/images/choreIcons/clean-clothes-2.png',
+      familyId: myFam.id,
+      userId: kid3.id,
     });
 
     const wishListItems = [
@@ -151,7 +307,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/Nintendo-Switch-Console-with-Neon-Blue-Red-Joy-Con/709776123',
         category: 'Electronics',
-        userId: myChild.id,
+        userId: kid1.id,
       },
       {
         itemName: 'Mongoose bike',
@@ -163,7 +319,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/Mongoose-Excursion-Mountain-Bike-24-inch-wheel-21-speeds-black-yellow/567158280',
         category: 'Miscellaneous',
-        userId: myChild.id,
+        userId: kid1.id,
       },
       {
         itemName: 'JBL wireless headphones',
@@ -175,7 +331,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.walmart.com/ip/JBL-T500BT-On-Ear-Wireless-Bluetooth-Headphone-Black/324029525',
         category: 'Electronics',
-        userId: myChild.id,
+        userId: kid1.id,
       },
       {
         itemName: 'Insignia Mini Fridge',
@@ -187,7 +343,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.bestbuy.com/site/insignia-2-6-cu-ft-mini-fridge-black/6145102.p?skuId=6145102',
         category: 'Miscellaneous',
-        userId: myChild.id,
+        userId: kid1.id,
       },
       {
         itemName: 'Gucci web slide sandal',
@@ -199,7 +355,7 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.gucci.com/us/en/pr/men/shoes-for-men/slides-sandals/web-slide-sandal-p-429469GIB109079?gclid=Cj0KCQjw16KFBhCgARIsALB0g8JepxFx4-E3Sz7VhlOU8JpTPQjIyOThMUK8zV4VpWzR74aqaQZe1RcaAspLEALw_wcB',
         category: 'Clothing',
-        userId: myChild.id,
+        userId: kid1.id,
       },
     ];
     await Promise.all(

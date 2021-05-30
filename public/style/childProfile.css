@@ -1,0 +1,17 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightseagreen;
+}
+#avatar {
+  height: 150px;
+  width: 150px;
+}
+p {
+  font-size: 20px;
+  text-indent: 5rem;
+}
+div > .button {
+  background-color: white;
+}
