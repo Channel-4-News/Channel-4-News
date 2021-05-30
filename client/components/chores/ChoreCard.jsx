@@ -30,7 +30,12 @@ const ChoreCard = (props) => {
       </div>
       {props.isParent ? (
         <div className="editChore">
-          <img src="public/images/icons/edit.png" onClick={() => {}} />
+          <img
+            src="public/images/icons/edit.png"
+            onClick={() => {
+              props.updateClicked(true);
+            }}
+          />
         </div>
       ) : null}
     </div>
