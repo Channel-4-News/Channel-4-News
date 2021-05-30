@@ -2,27 +2,25 @@ const { Router, json } = require('express');
 const router = Router();
 
 const {
-  models: { Transaction, TransactionHistory },
+  models: { Transaction },
 } = require('../db/models/associations');
 
 router.use(json());
 
-//Get all transactions in transaction history
+//Get all transactions by userId
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const transactionHistory = await TransactionHistory.findByPk(id, {
-      include: {
-        model: Transaction,
-      },
+    const transactions = await Transaction.findAll({
+      where: { userId: id },
     });
-    res.send(transactionHistory.transactions);
+    res.send(transactions);
   } catch (err) {
     next(err);
   }
 });
 
-//Add item to transaction history
+//Add item to userId
 router.post('/:id', async (req, res, next) => {
   try {
     const { amount, category } = req.body;
@@ -30,7 +28,7 @@ router.post('/:id', async (req, res, next) => {
     const newItem = await Transaction.create({
       amount,
       category,
-      transactionHistoryId: id,
+      userId: id,
     });
     res.status(201).send(newItem);
   } catch (err) {
