@@ -72,6 +72,7 @@ router.delete('/:id', async (req, res, next) => {
 //update user
 router.put('/:id', async (req, res, next) => {
   try {
+    console.log(req.body);
     const userToUpdate = await User.findByPk(req.params.id);
     const {
       username,

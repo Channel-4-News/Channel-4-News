@@ -8,10 +8,10 @@
   height: 150px;
   width: 150px;
 }
-p {
+.profile-container p {
   font-size: 20px;
   text-indent: 5rem;
 }
-div > .button {
+.profile-container div > .button {
   background-color: white;
 }

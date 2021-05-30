@@ -90,6 +90,8 @@ const AddChore = (props) => {
         }
       />
       <TextField
+        multiline
+        rowsMax={4}
         className={classes.root}
         label="Description"
         variant="outlined"
