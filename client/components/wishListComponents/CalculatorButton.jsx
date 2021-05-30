@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -33,7 +32,7 @@ class CalculatorButton extends Component {
   }
 
   onCalculatorClose() {
-    this.setState({ calculatorOpen: false });
+    this.setState({ calculatorOpen: false, howLong: 0 });
   }
 
   onTextChange(ev) {
@@ -163,4 +162,4 @@ class CalculatorButton extends Component {
   }
 }
 
-export default withRouter(CalculatorButton);
+export default CalculatorButton;
