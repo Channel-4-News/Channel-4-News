@@ -3,7 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { HashRouter as Link } from 'react-router-dom';
 
 const NavBar = (props) => {
   const user = props.user.status;
@@ -15,7 +14,8 @@ const NavBar = (props) => {
             Channel-4-News
           </IconButton>
           <div id="navbar-links-wrapper">
-            {/* USER IS NOT SIGNED IN */}
+            {/*--------- USER IS NOT SIGNED IN ----------*/}
+
             {user === undefined ? (
               <Button color="inherit" href="/#/login">
                 Log In
@@ -31,14 +31,22 @@ const NavBar = (props) => {
               ''
             )}
 
-            {/* USER IS A CHILD */}
-            {user === 'Child' ? <Button color="inherit">Wish List</Button> : ''}
+            {/* ----------USER IS A CHILD----------- */}
+
+            {user === 'Child' ? (
+              <Button color="inherit" href="/#/wishlist">
+                Wish List
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Child' ? <Button color="inherit">Chores</Button> : ''}
             {user === 'Child' ? <Button color="inherit">Chat</Button> : ''}
             {user === 'Child' ? <Button color="inherit">Settings</Button> : ''}
             {user === 'Child' ? <Button color="inherit">Sign Out</Button> : ''}
 
-            {/* USER IS A PARENT */}
+            {/*----------- USER IS A PARENT --------------*/}
+
             {user === 'Parent' ? (
               <Button color="inherit">Notifications</Button>
             ) : (
