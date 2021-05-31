@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getWishList } from '../../store/actions/wishListActions/getWishList';
 import WishListCard from './WishListCard';
+import SortAndFilterWishList from './SortAndFilterWishList';
+import WithdrawMoneyDialog from './WithdrawMoneyDialog';
+import CreateNewWish from './CreateNewWish';
 
 class WishList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sort: '',
+      filter: '',
+    };
+    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
@@ -14,19 +22,33 @@ class WishList extends Component {
     }
   }
 
+  changeSort(sort) {
+    this.setState({ sort });
+  }
+
+  componentDidUpdate() {}
+
   render() {
+    const { changeSort } = this;
     if (this.props.wishList.length) {
       return (
-        <div id="wishListWrapper">
-          {this.props.wishList.map((wishListItem) => {
-            return (
-              <WishListCard
-                user={this.props.user}
-                key={wishListItem.id}
-                wishListItem={wishListItem}
-              />
-            );
-          })}
+        <div id="wishListContent">
+          <div id="wishListTopBar">
+            <SortAndFilterWishList sort={changeSort} />
+            <WithdrawMoneyDialog />
+            <CreateNewWish />
+          </div>
+          <div id="wishListWrapper">
+            {this.props.wishList.map((wishListItem) => {
+              return (
+                <WishListCard
+                  user={this.props.user}
+                  key={wishListItem.id}
+                  wishListItem={wishListItem}
+                />
+              );
+            })}
+          </div>
         </div>
       );
     } else {
