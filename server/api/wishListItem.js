@@ -66,13 +66,15 @@ router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateItem = await WishListItem.findByPk(id);
-    const { itemName, description, imgUrl, cost, category } = req.body;
+    const { itemName, description, imgUrl, cost, category, purchased } =
+      req.body;
     await updateItem.update({
       itemName,
       description,
       imgUrl,
       cost,
       category,
+      purchased,
     });
     res.status(200).send(updateItem);
   } catch (err) {

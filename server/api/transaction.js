@@ -23,12 +23,14 @@ router.get('/:id', async (req, res, next) => {
 //Add item to userId
 router.post('/:id', async (req, res, next) => {
   try {
-    const { amount, category } = req.body;
+    const { cost, category, itemName, linkUrl } = req.body;
     const { id } = req.params;
     const newItem = await Transaction.create({
-      amount,
+      cost,
       category,
       userId: id,
+      itemName,
+      linkUrl,
     });
     res.status(201).send(newItem);
   } catch (err) {

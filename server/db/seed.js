@@ -366,12 +366,12 @@ const syncAndSeed = async () => {
       })
     );
     const transactions = [
-      { amount: 50, category: 'Electronics', userId: 5 },
-      { amount: 100, category: 'Clothing', userId: 5 },
-      { amount: 100, category: 'Entertainment', userId: 5 },
-      { amount: 100, category: 'Toys', userId: 5 },
-      { amount: 100, category: 'Miscellaneous', userId: 5 },
-      { amount: 100, category: 'Food', userId: 5 },
+      { cost: 299.99, category: 'Electronics', userId: kid1.id },
+      { cost: 25.0, category: 'Clothing', userId: kid1.id },
+      { cost: 15.5, category: 'Entertainment', userId: kid1.id },
+      { cost: 68.99, category: 'Toys', userId: kid1.id },
+      { cost: 20, category: 'Miscellaneous', userId: kid1.id },
+      { cost: 114.87, category: 'Food', userId: kid1.id },
     ];
 
     await Promise.all(
