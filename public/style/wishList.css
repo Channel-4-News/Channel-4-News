@@ -129,3 +129,8 @@ body
 #wishListTextAreaEdit {
   height: 234px;
 }
+
+#purchased-tag {
+  margin-left: 3rem;
+  color: indianred;
+}

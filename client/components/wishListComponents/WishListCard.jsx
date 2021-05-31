@@ -8,16 +8,20 @@ import Button from '@material-ui/core/Button';
 import CalculatorButton from './CalculatorButton';
 import EditWishListCard from './EditWishListCard';
 import { deleteWishListCard } from '../../store/actions/wishListActions/deleteWishListCard';
+import { purchaseOrWithdraw } from '../../store/actions/wishListActions/purchaseOrWithdraw';
+import PurchaseButton from './PurchaseButton';
 
 const WishListCard = (props) => {
   const [edit, setEdit] = useState(false);
+  const [purchased, setPurchased] = useState(props.wishListItem.purchased);
   const item = props.wishListItem;
-  console.log(props);
+  const { id } = props.user;
   if (edit === false) {
     return (
       <Card id="wishListCardWrapper">
         <Typography className="title" gutterBottom variant="h5" component="h2">
           {item.itemName}
+          <span id="purchased-tag">{purchased ? 'Purchased!' : ''}</span>
         </Typography>
         <div id="itemRow">
           <Paper id="itemImage" variant="outlined">
@@ -53,9 +57,11 @@ const WishListCard = (props) => {
         </div>
         <div id="buttonRow">
           <CalculatorButton wishListItem={item} />
-          <Button size="large" variant="contained">
-            Purchase
-          </Button>
+          <PurchaseButton
+            purchaseOrWithdraw={() => props.purchaseOrWithdraw(id, item)}
+            setPurchased={() => setPurchased(true)}
+            item={item}
+          />
           <Button
             size="large"
             onClick={() => setEdit(true)}
@@ -89,6 +95,8 @@ const WishListCard = (props) => {
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     deleteWishListCard: (id) => dispatch(deleteWishListCard(id, history)),
+    purchaseOrWithdraw: (id, transaction) =>
+      dispatch(purchaseOrWithdraw(id, transaction)),
   };
 };
 

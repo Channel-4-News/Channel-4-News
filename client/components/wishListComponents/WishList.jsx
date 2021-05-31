@@ -20,7 +20,11 @@ class WishList extends Component {
         <div id="wishListWrapper">
           {this.props.wishList.map((wishListItem) => {
             return (
-              <WishListCard key={wishListItem.id} wishListItem={wishListItem} />
+              <WishListCard
+                user={this.props.user}
+                key={wishListItem.id}
+                wishListItem={wishListItem}
+              />
             );
           })}
         </div>
