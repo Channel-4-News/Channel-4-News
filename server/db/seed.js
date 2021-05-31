@@ -85,6 +85,7 @@ const syncAndSeed = async () => {
         firstName: 'Keri',
         lastName: 'Weiss',
         status: 'Parent',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'annabanana',
@@ -93,6 +94,7 @@ const syncAndSeed = async () => {
         firstName: 'Anna',
         lastName: 'Litovskaya',
         status: 'Parent',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'hugohugo',
@@ -101,6 +103,7 @@ const syncAndSeed = async () => {
         firstName: 'Hugo',
         lastName: 'Sanchez',
         status: 'Parent',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'aviandamien',
@@ -109,6 +112,7 @@ const syncAndSeed = async () => {
         firstName: 'Damien',
         lastName: 'Outar',
         status: 'Parent',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'littlejoe',
@@ -116,6 +120,7 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Joe',
         lastName: 'Kid',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'funnyfrancis',
@@ -123,6 +128,7 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Francis',
         lastName: 'Haha',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'angryarchie',
@@ -130,6 +136,7 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Archie',
         lastName: 'Ismadder',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
       {
         username: 'tiredtalia',
@@ -137,6 +144,7 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Talia',
         lastName: 'Asleep',
+        imgUrl: 'https://wallpaperaccess.com/full/2213427.jpg',
       },
     ];
     await Promise.all(

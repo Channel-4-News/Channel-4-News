@@ -54,6 +54,14 @@ const User = db.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  imgUrl: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    defaultValue: 'default-img.jpg',
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
 
 //authenticates user

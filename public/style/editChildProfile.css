@@ -1,8 +1,11 @@
+.mid-section-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #koala {
-  height: 50px;
-  width: 50px;
-  color: gray;
-  right: 10px;
+  width: 40px;
+  height: 40px;
 }
 #avatar-container {
   display: flex;
@@ -10,14 +13,7 @@
   align-items: center;
 }
 
-div > .avatar {
-  height: 150px;
-  width: 150px;
-  position: relative;
-}
-
-div > .edit-pencil {
-  align-self: center;
+.mid-section-profile > .edit-pencil {
   color: green;
   height: 25px;
   width: 25px;

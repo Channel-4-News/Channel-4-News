@@ -6,9 +6,7 @@ import { updateChildProfileThunk } from '../../store/actions/userActions/editChi
 
 //Material UI Imports
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -18,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import '../../../public/style/childProfile.css';
 
 //Component Import
-import EditChildProfile from './EditChildProfile';
+import EditChildProfile from './editProfile/EditChildProfile';
 
 class ChildProfile extends Component {
   constructor(props) {
@@ -65,13 +63,13 @@ class ChildProfile extends Component {
 
     return (
       <React.Fragment>
-        <form className="editProfile-form" onSubmit={this.handleSubmit}>
+        <form className="childProfile-form" onSubmit={this.handleSubmit}>
           <Card className="card-container">
             <CardMedia
               component="img"
               height="140"
               className="profile-img"
-              image="https://wallpaperaccess.com/full/2213427.jpg"
+              image={imgUrl}
             />
             <CardContent>
               <Typography className="detail-text" variant="h5">
@@ -87,7 +85,6 @@ class ChildProfile extends Component {
               </Typography>
               <Typography variant="h6">{email}</Typography>
               <Typography className="detail-text" variant="h5">
-                {' '}
                 Username:
               </Typography>
               <Typography variant="h6">{username}</Typography>
@@ -107,10 +104,12 @@ class ChildProfile extends Component {
             open={dialogueOpen}
             close={this.handleClose}
             submit={this.handleSubmit}
-            firstName={firstName}
-            lastName={lastName}
-            email={email}
-            username={username}
+            {...currUser}
+            // firstName={firstName}
+            // lastName={lastName}
+            // email={email}
+            // username={username}
+            // imgUrl={imgUrl}
           />
         </form>
       </React.Fragment>

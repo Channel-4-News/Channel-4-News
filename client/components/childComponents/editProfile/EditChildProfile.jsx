@@ -7,7 +7,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Avatar from '@material-ui/core/Avatar';
 
 //React Icons
 import { FiEdit } from 'react-icons/fi';
@@ -17,7 +16,10 @@ import { GiKoala } from 'react-icons/gi';
 import { connect } from 'react-redux';
 
 //Style Import
-import '../../../public/style/editChildProfile.css';
+import '../../../../public/style/editChildProfile.css';
+
+//Component Import
+import ChooseFile from './ChooseFile';
 
 class EditChildProfile extends Component {
   constructor(props) {
@@ -27,6 +29,7 @@ class EditChildProfile extends Component {
       firstName: this.props.firstName,
       lastName: this.props.lastName,
       email: this.props.email,
+      imgUrl: this.props.imgUrl,
     };
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
@@ -40,7 +43,7 @@ class EditChildProfile extends Component {
   }
 
   reset() {
-    const { close, firstName, lastName, username, email } = this.props;
+    const { close, firstName, lastName, username, email, imgUrl } = this.props;
     close();
     setTimeout(() => {
       this.setState({
@@ -48,24 +51,28 @@ class EditChildProfile extends Component {
         lastName,
         username,
         email,
+        imgUrl,
       });
     }, 100);
   }
 
   render() {
     const { submit, close, open } = this.props;
-    const { firstName, lastName, email, username } = this.state;
+    const { firstName, lastName, email, username, imgUrl } = this.state;
     return (
       <div id="profile-toggle">
         <Dialog open={open} onClose={close} fullWidth>
           <DialogTitle>Edit Your Profile!</DialogTitle>
-          <GiKoala id="koala" />
-          <Avatar
-            className="avatar"
-            alt="test"
-            src="https://wallpaperaccess.com/full/2213427.jpg"
+          <div className="mid-section-profile">
+            <GiKoala id="koala" />
+            <FiEdit className="edit-pencil" />
+          </div>
+          <ChooseFile
+            id={this.props.id}
+            imgUrl={imgUrl}
+            value={imgUrl || ''}
+            photoChange={this.handleChange}
           />
-          <FiEdit className="edit-pencil" />
           <DialogContent>
             <TextField
               margin="dense"
@@ -80,7 +87,6 @@ class EditChildProfile extends Component {
           </DialogContent>
           <DialogContent>
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Last Name"
@@ -93,7 +99,6 @@ class EditChildProfile extends Component {
           </DialogContent>
           <DialogContent>
             <TextField
-              autoFocus
               margin="dense"
               id="email"
               label="Email Address"
@@ -106,7 +111,6 @@ class EditChildProfile extends Component {
           </DialogContent>
           <DialogContent>
             <TextField
-              autoFocus
               margin="dense"
               id="username"
               label="Username"
@@ -120,7 +124,9 @@ class EditChildProfile extends Component {
           <DialogActions>
             <Button onClick={this.reset}>Close</Button>
             <Button
-              onClick={() => submit(firstName, lastName, email, username)}
+              onClick={() =>
+                submit(firstName, lastName, email, username, imgUrl)
+              }
             >
               Save Changes
             </Button>
