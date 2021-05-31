@@ -51,8 +51,9 @@ const SortAndFilterWishList = (props) => {
   const classes = useStyles();
   const [sort, setSort] = React.useState('');
   const handleChange = (event) => {
+    props.sort(event.target.value);
+    props.sortToggle();
     setSort(event.target.value);
-    props.sort(sort);
   };
   return (
     <div id="wishListSelector">

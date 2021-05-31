@@ -5,6 +5,11 @@ import WishListCard from './WishListCard';
 import SortAndFilterWishList from './SortAndFilterWishList';
 import WithdrawMoneyDialog from './WithdrawMoneyDialog';
 import CreateNewWish from './CreateNewWish';
+import { orderBy } from 'lodash';
+import {
+  sortByMostExpensive,
+  sortByLeastExpensive,
+} from '../../utilities/wishListSort';
 
 class WishList extends Component {
   constructor(props) {
@@ -12,12 +17,15 @@ class WishList extends Component {
     this.state = {
       sort: '',
       filter: '',
+      wishList: [],
+      sorted: false,
     };
     this.changeSort = this.changeSort.bind(this);
+    this.sortToggle = this.sortToggle.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.user.id) {
+    if (this.props.user.id && this.state.wishList.length === 0) {
       this.props.getWishList(this.props.user.id);
     }
   }
@@ -26,20 +34,49 @@ class WishList extends Component {
     this.setState({ sort });
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.sorted === false &&
+      this.props.wishList !== this.state.wishList
+    ) {
+      const { wishList } = this.props;
+      this.setState({ wishList });
+    }
+    if (prevState.sort !== this.state.sort) {
+      if (this.state.sort === 'most expensive') {
+        const mostExpensive = sortByMostExpensive(this.state.wishList);
+        this.setState({ wishList: mostExpensive, sorted: true });
+      } else if (this.state.sort === 'least expensive') {
+        const leastExpensive = sortByLeastExpensive(this.state.wishList);
+        this.setState({ wishList: leastExpensive, sorted: true });
+      } else if (this.state.sort === 'alphabetically') {
+        const alphabetically = orderBy(
+          this.state.wishList,
+          ['itemName'],
+          ['asc']
+        );
+        this.setState({ wishList: alphabetically, sorted: true });
+      }
+    }
+  }
+
+  sortToggle() {
+    this.setState({ sorted: false });
+  }
 
   render() {
-    const { changeSort } = this;
+    const { changeSort, sortToggle } = this;
+    console.log(this.state);
     if (this.props.wishList.length) {
       return (
         <div id="wishListContent">
           <div id="wishListTopBar">
-            <SortAndFilterWishList sort={changeSort} />
+            <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
             <WithdrawMoneyDialog />
             <CreateNewWish />
           </div>
           <div id="wishListWrapper">
-            {this.props.wishList.map((wishListItem) => {
+            {this.state.wishList.map((wishListItem) => {
               return (
                 <WishListCard
                   user={this.props.user}
