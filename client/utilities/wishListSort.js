@@ -33,13 +33,13 @@ const sortByLeastExpensive = (wishList) => {
   //puts the wishList copy with numbers in order
   const orderedWishListCopy = orderBy(numbered, ['cost'], ['asc']);
   //create new wishList array with sorted wishList
-  let mostExpensive = [];
+  let leastExpensive = [];
   orderedWishListCopy.forEach((sortedName) => {
     for (let item of wishList) {
-      sortedName.itemName === item.itemName ? mostExpensive.push(item) : null;
+      sortedName.itemName === item.itemName ? leastExpensive.push(item) : null;
     }
   });
-  return mostExpensive;
+  return leastExpensive;
 };
 
 export { sortByMostExpensive, sortByLeastExpensive };

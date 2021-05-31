@@ -15,7 +15,7 @@ class WishList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sort: '',
+      sort: 'alphabetically',
       filter: '',
       wishList: [],
       sorted: false,
@@ -24,9 +24,25 @@ class WishList extends Component {
     this.sortToggle = this.sortToggle.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.user.id && this.state.wishList.length === 0) {
-      this.props.getWishList(this.props.user.id);
+      await this.props.getWishList(this.props.user.id);
+      if (this.state.wishList.length > 0) {
+        if (this.state.sort === 'most expensive') {
+          const mostExpensive = sortByMostExpensive(this.state.wishList);
+          this.setState({ wishList: mostExpensive, sorted: true });
+        } else if (this.state.sort === 'least expensive') {
+          const leastExpensive = sortByLeastExpensive(this.state.wishList);
+          this.setState({ wishList: leastExpensive, sorted: true });
+        } else if (this.state.sort === 'alphabetically') {
+          const alphabetically = orderBy(
+            this.state.wishList,
+            ['itemName'],
+            ['asc']
+          );
+          this.setState({ wishList: alphabetically, sorted: true });
+        }
+      }
     }
   }
 
@@ -66,13 +82,13 @@ class WishList extends Component {
 
   render() {
     const { changeSort, sortToggle } = this;
-    console.log(this.state);
     if (this.props.wishList.length) {
       return (
         <div id="wishListContent">
           <div id="wishListTopBar">
             <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
-            <WithdrawMoneyDialog />
+
+            <WithdrawMoneyDialog user={this.props.user} />
             <CreateNewWish />
           </div>
           <div id="wishListWrapper">
