@@ -9,8 +9,21 @@ import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
 
+  const today = new Date();
+  let expired;
+  if (props.chore.due && new Date(props.chore.due) < today) expired = true;
   return (
-    <div id={props.isParent ? 'choreCardParent' : 'choreCard'}>
+    <div
+      className={
+        props.isParent && !expired
+          ? 'choreCardParent'
+          : !expired
+            ? 'choreCard'
+            : props.isParent && expired
+              ? 'choreCardParent expiredCard'
+              : 'choreCard expiredCard'
+      }
+    >
       <input
         type="checkbox"
         className="choreCompletedCheck"

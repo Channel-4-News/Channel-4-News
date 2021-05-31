@@ -13,31 +13,35 @@
   justify-content: space-around;
 }
 
-#choreCard {
+.choreCard {
   padding: 10px;
   width: 100%;
   align-self: center;
   display: inline-grid;
   grid-template-columns: 10% 12% 58% 10% 10%;
   align-items: center;
-  margin: 20px;
+  margin: 6px;
   background-color: white;
   border-radius: 15px;
 }
 
-#choreCardParent {
+.choreCardParent {
   padding: 10px;
   width: 100%;
   align-self: center;
   display: inline-grid;
   grid-template-columns: 8% 10% 48% 10% 10% 14%;
   align-items: center;
-  margin: 20px;
+  margin: 6px;
   background-color: white;
   border-radius: 15px;
 }
 
-#choreCard small {
+.expiredCard {
+  opacity: 40%;
+}
+
+.choreCard small {
   margin-top: 10px;
   color: rgb(175, 175, 175);
 }
@@ -100,31 +104,46 @@
   position: relative;
   align-self: left;
   z-index: 1;
-}
-
-#childDropButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 6px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 #childDropdownContent {
   position: absolute;
   display: none;
-  background-color: white;
-  padding: 10px 40px;
+  /* background-color: white; */
+  padding: 10px;
+  border-radius: 3px;
+  margin-top: 1px;
+  /* padding-left: 20px; */
+  width: 100%;
+  background-color: rgb(107, 107, 107);
+  color: white;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
 
 #childDropdownContent div {
-  padding: 8px;
+  padding: 15px;
+  padding-left: 20px;
   cursor: pointer;
+  margin: -10px;
 }
 
-#childDropdown:hover #childDropdownContent {
+#chooseChildHover {
+  position: relative;
+}
+
+#chooseChildHover:hover #childDropdownContent {
   display: block;
 }
 
-#childDropdown button {
-  font-size: large;
-  border: none;
-  padding: 10px;
+#childDropdownContent div:hover {
+  background-color: rgb(158, 158, 158);
 }
 
 #choreCardContainer {

@@ -17,11 +17,7 @@ import {
   Button,
   FormHelperText,
 } from '@material-ui/core';
-import {
-  makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { updateUser } from '../../store/actions/userActions/updateUser';
 
 const JoinOrCreateFamily = (props) => {
