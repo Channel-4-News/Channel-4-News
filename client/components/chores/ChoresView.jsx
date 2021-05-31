@@ -5,6 +5,7 @@ import ChoreCard from './ChoreCard';
 import Modal from '@material-ui/core/Modal';
 import AddChore from './AddChore';
 import UpdateChore from './UpdateChore';
+import { Button, Popover } from '@material-ui/core';
 
 const Chores = (props) => {
   const [kids, setKids] = useState([]);
@@ -62,7 +63,6 @@ const Chores = (props) => {
       <div id="choreCardContainer">
         {props.currUser.status === 'Parent' ? (
           <div>
-            <p onClick={() => setAddChore(true)}>Add Chore</p>
             <Modal
               id="addChoreModal"
               open={addChore}
@@ -93,30 +93,44 @@ const Chores = (props) => {
         </Modal>
         {kids.length > 1 && props.currUser.status === 'Parent' ? (
           <div id="childDropdown">
-            <button id="childDropButton">Choose child</button>
-            <div id="childDropdownContent">
-              {kids.map((user) => {
-                return (
-                  <div
-                    key={`${user.id}familyChild`}
-                    onClick={() => {
-                      setChores(
-                        props.chores.filter((chore) => chore.userId === user.id)
-                      );
-                    }}
-                  >
-                    {user.firstName}
-                  </div>
-                );
-              })}
-              <div
-                onClick={() => {
-                  setChores(props.chores);
-                }}
-              >
-                All
+            <div id="chooseChildHover">
+              <Button id="childDropButton" variant="contained">
+                Choose child
+              </Button>
+              <div id="childDropdownContent">
+                {kids.map((user) => {
+                  return (
+                    <div
+                      key={`${user.id}familyChild`}
+                      onClick={() => {
+                        setChores(
+                          props.chores.filter(
+                            (chore) => chore.userId === user.id
+                          )
+                        );
+                        setExpiredChores(
+                          expiredChores.filter(
+                            (chore) => chore.userId === user.id
+                          )
+                        );
+                      }}
+                    >
+                      {user.firstName}
+                    </div>
+                  );
+                })}
+                <div
+                  onClick={() => {
+                    setChores(props.chores);
+                  }}
+                >
+                  All
+                </div>
               </div>
             </div>
+            <Button variant="contained" onClick={() => setAddChore(true)}>
+              Add Chore
+            </Button>
           </div>
         ) : null}
         {chores.map((chore) => (

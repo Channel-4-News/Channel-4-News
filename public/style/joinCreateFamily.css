@@ -25,20 +25,8 @@
   margin: 10px;
 }
 
-.createJoin input,
+/* .createJoin input,
 .passwordInput {
-  margin-bottom: 20px;
-  border: 1px black solid;
-  padding: 10px;
-  outline: none;
-  color: black;
-  font-size: large;
-  margin: 10px;
-  width: auto;
-  height: auto;
-}
-
-/* #test {
   margin-bottom: 20px;
   border: 1px black solid;
   padding: 10px;
@@ -50,17 +38,17 @@
   height: auto;
 } */
 
-.createJoin label {
+/* .createJoin label {
   color: rgb(153, 147, 147);
   margin-left: 10px;
   font-size: large;
-}
+} */
 
 #switchToJoinFamily:hover {
   color: rgb(255, 119, 119);
   cursor: pointer;
 }
 
-.createJoin h6 {
+/* .createJoin h6 {
   padding: 10px;
-}
+} */

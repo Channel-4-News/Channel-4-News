@@ -35,16 +35,8 @@ const LogIn = (props) => {
           type={passwordShown ? 'text' : 'password'}
         />
         <button>Login</button>
-        {/* delete logout button below when we have logout in navbar */}
         <small>{loggedIn}</small>
       </form>
-      <button
-        onClick={() => {
-          props.logout();
-        }}
-      >
-        LogOutTest
-      </button>
     </div>
   );
 };
