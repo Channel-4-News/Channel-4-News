@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 const EditChildProfile = () => {
-  return <div></div>;
+  return '';
 };
 
 export default connect()(EditChildProfile);

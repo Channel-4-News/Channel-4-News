@@ -129,15 +129,15 @@ const Chores = (props) => {
                   </div>
                 </div>
               </div>
-              <div id="sortChoresHover">
+              {/* <div id="sortChoresHover">
                 <Button variant="contained" id="sortChores">
                   Sort By
                 </Button>
-                {/* <div id="dropDownSortContent">
+                <div id="dropDownSortContent">
                   <div>Amount ↑</div>
                   <div>Amount ↓</div>
-                </div> */}
-              </div>
+                </div>
+              </div> */}
             </div>
             <Button variant="contained" onClick={() => setAddChore(true)}>
               Add Chore

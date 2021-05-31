@@ -49,7 +49,6 @@ describe('User Routes', () => {
     };
     let response = (await request.post('/api/users').send(newUser)).body;
     expect(response.username).toBe(newUser.username);
-    expect(response.wishList.userId).toBe(response.id);
     done();
   });
 
