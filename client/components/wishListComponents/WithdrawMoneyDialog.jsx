@@ -69,7 +69,6 @@ const StyledButton = withStyles({
 })(Button);
 
 const WithdrawMoneyDialog = (props) => {
-  console.log(props);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(0);
