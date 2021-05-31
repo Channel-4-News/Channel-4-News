@@ -1,17 +1,24 @@
-.profile-container {
+.child-profile-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   background-color: lightseagreen;
+  height: 100%;
+}
+.graphics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 #avatar {
   height: 150px;
   width: 150px;
 }
-.profile-container p {
+
+.child-profile-p {
   font-size: 20px;
   text-indent: 5rem;
 }
-.profile-container div > .button {
+div > .edit-profile-button {
   background-color: white;
 }

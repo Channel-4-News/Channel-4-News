@@ -7,39 +7,34 @@ const {
 
 router.use(json());
 
-//All Items
-router.get('/', async (req, res, next) => {
+//Get all Wish List items by id
+router.get('/:id', async (req, res, next) => {
   try {
-    const allItems = await WishListItem.findAll();
-    res.send(allItems);
+    const { id } = req.params;
+    const allWishListItems = await WishListItem.findAll({
+      where: { userId: id },
+    });
+    res.send(allWishListItems);
   } catch (err) {
     next(err);
   }
 });
 
-//Single Item
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const singleItem = await WishListItem.findByPk(id);
-    res.send(singleItem);
-  } catch (err) {
-    next(err);
-  }
-});
+// Single Item
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const singleItem = await WishListItem.findByPk(id);
+//     res.send(singleItem);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //Add Item To WishList
 router.post('/', async (req, res, next) => {
   try {
-    const {
-      itemName,
-      description,
-      imgUrl,
-      cost,
-      linkUrl,
-      category,
-      wishListId,
-    } = req.body;
+    const { itemName, description, imgUrl, cost, linkUrl, category } = req.body;
     const newItem = await WishListItem.create({
       itemName,
       description,
@@ -47,7 +42,6 @@ router.post('/', async (req, res, next) => {
       cost,
       linkUrl,
       category,
-      wishListId,
     });
     res.status(201).send(newItem);
   } catch (err) {
@@ -60,7 +54,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const deleteItem = await WishListItem.findByPk(id);
-    (await deleteItem).destroy();
+    await deleteItem.destroy();
     res.sendStatus(204);
   } catch (err) {
     next(err);
@@ -72,14 +66,12 @@ router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateItem = await WishListItem.findByPk(id);
-    const { itemName, description, imgUrl, cost, linkUrl, category } = req.body;
-
+    const { itemName, description, imgUrl, cost, category } = req.body;
     await updateItem.update({
       itemName,
       description,
       imgUrl,
       cost,
-      linkUrl,
       category,
     });
     res.status(200).send(updateItem);

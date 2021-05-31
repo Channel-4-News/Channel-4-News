@@ -6,7 +6,7 @@ const { app } = require('../../../server/app');
 const request = supertest(app);
 const {
   db,
-  models: { Transaction, TransactionHistory },
+  models: { Transaction, User },
 } = require('../../../server/db/models/associations');
 
 describe('Transaction Routes', () => {
@@ -14,17 +14,23 @@ describe('Transaction Routes', () => {
     {
       amount: 29.99,
       category: 'Electronics',
-      transactionHistoryId: 1,
+      userId: 1,
     },
     {
       amount: 5.0,
       category: 'Food',
-      transactionHistoryId: 1,
+      userId: 1,
     },
   ];
   beforeAll(async () => {
     await db.sync({ force: true });
-    await TransactionHistory.create();
+    await User.create({
+      username: 'littlejoe',
+      email: 'joe@test.com',
+      password: 'password123',
+      firstName: 'Joe',
+      lastName: 'Kid',
+    });
     await Transaction.bulkCreate(transactions);
   });
   afterAll(async () => {
@@ -41,7 +47,7 @@ describe('Transaction Routes', () => {
     const newItem = {
       amount: 5.0,
       category: 'Food',
-      transactionHistoryId: 1,
+      userId: 1,
     };
     let response = (await request.post('/api/transaction/1').send(newItem))
       .body;

@@ -1,0 +1,131 @@
+#wishListWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: lightgray;
+}
+
+#wishListCardWrapper {
+  width: 650px;
+  height: 600px;
+  margin-top: 3rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+#wishListCardWrapper .title {
+  margin-bottom: 1rem;
+}
+
+#wishListCardWrapper img {
+  object-fit: contain;
+  height: 400px;
+  width: 400px;
+}
+
+#itemImage {
+  align-self: flex-start;
+}
+
+#itemRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0;
+  height: 400px;
+  margin-bottom: 3rem;
+}
+
+#itemInfo {
+  width: 30%;
+  height: 400px;
+}
+
+.itemValues {
+  padding: 5px;
+}
+
+#itemDescriptionWrapper {
+  height: 247px;
+  overflow-y: auto;
+}
+
+#buttonRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wishListFormBox {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogContent-root
+  > form
+  > div:nth-child(2),
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogContent-root
+  > form
+  > div:nth-child(4),
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogContent-root
+  > form
+  > div:nth-child(6),
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogContent-root
+  > form
+  > button,
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogContent-root
+  > div {
+  margin-bottom: 1rem;
+}
+
+#calculatorButtons {
+  display: flex;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+#calculatorButtons * {
+  width: 120px;
+}
+
+.wishListFormInput {
+  width: 100%;
+  border: none;
+}
+
+#changeWishListTitle {
+  font-size: large;
+  width: 400px;
+}
+
+#wishListTextAreaEdit {
+  height: 234px;
+}
