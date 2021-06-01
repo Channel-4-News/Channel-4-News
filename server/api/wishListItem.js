@@ -13,6 +13,7 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
     const allWishListItems = await WishListItem.findAll({
       where: { userId: id },
+      order: [['itemName', 'ASC']],
     });
     res.send(allWishListItems);
   } catch (err) {
