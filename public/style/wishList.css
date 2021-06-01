@@ -134,3 +134,32 @@ body
   margin-left: 3rem;
   color: indianred;
 }
+
+#wishListTopBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 2rem;
+}
+
+#wishListContent {
+  background-color: lightgray;
+}
+
+#sortWishList {
+  align-self: center;
+}
+
+#wishListSelector {
+  display: flex;
+  align-items: center;
+}
+
+#wishListSelector span {
+  font-size: larger;
+}
+
+#withdrawBoxItems {
+  display: flex;
+  flex-direction: column;
+}
