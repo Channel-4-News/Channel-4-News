@@ -51,6 +51,10 @@ const WishListItem = db.define('wishListItems', {
     ]),
     defaultValue: 'Miscellaneous',
   },
+  purchased: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = { WishListItem, WishList };

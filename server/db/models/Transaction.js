@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const { db } = require('../db');
 
 const Transaction = db.define('transaction', {
-  amount: {
+  cost: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     defaultValue: 0,
@@ -17,6 +17,12 @@ const Transaction = db.define('transaction', {
       'Food',
     ]),
     defaultValue: 'Miscellaneous',
+  },
+  itemName: {
+    type: DataTypes.STRING,
+  },
+  linkUrl: {
+    type: DataTypes.STRING,
   },
 });
 

@@ -12,12 +12,12 @@ const {
 describe('Transaction Routes', () => {
   const transactions = [
     {
-      amount: 29.99,
+      cost: 29.99,
       category: 'Electronics',
       userId: 1,
     },
     {
-      amount: 5.0,
+      cost: 5.0,
       category: 'Food',
       userId: 1,
     },
@@ -45,7 +45,7 @@ describe('Transaction Routes', () => {
 
   test('POST /api/transaction/:id adds an item to history', async (done) => {
     const newItem = {
-      amount: 5.0,
+      cost: 5.0,
       category: 'Food',
       userId: 1,
     };
