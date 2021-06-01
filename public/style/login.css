@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+#login-wrapper h4 {
+  text-align: center;
+}
+
 #login {
   display: flex;
   flex-direction: column;
