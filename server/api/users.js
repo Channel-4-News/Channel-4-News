@@ -1,8 +1,11 @@
 const { Router, json } = require('express');
+const Allowance = require('../db/models/Allowance');
 const router = Router();
 const {
-  models: { User, WishList },
+  models: { User },
 } = require('../db/models/associations');
+const Family = require('../db/models/Family');
+const { Transaction } = require('../db/models/Transaction');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -16,37 +19,34 @@ router.get('/', async (req, res, next) => {
 //get single user by id
 router.get('/:id', async (req, res, next) => {
   try {
-    res.send(await User.findByPk(req.params.id));
+    res.send(
+      await User.findByPk(req.params.id, {
+        include: [
+          { model: Transaction },
+          { model: Allowance },
+          { model: Family, include: [User] },
+        ],
+      })
+    );
   } catch (err) {
     next(err);
   }
 });
 
-//create new user with wishlist
+//create new user
 router.post('/', async (req, res, next) => {
   try {
     const { username, email, password, firstName, lastName, status, isAdmin } =
       req.body;
-    User.WishList = User.hasOne(WishList);
-    const newUser = await User.create(
-      {
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
-        status,
-        isAdmin,
-        wishList: {},
-      },
-      {
-        include: [
-          {
-            association: User.WishList,
-          },
-        ],
-      }
-    );
+    const newUser = await User.create({
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      status,
+      isAdmin,
+    });
     res.status(201).send(newUser);
   } catch (err) {
     next(err);
@@ -67,6 +67,7 @@ router.delete('/:id', async (req, res, next) => {
 //update user
 router.put('/:id', async (req, res, next) => {
   try {
+    console.log(req.body);
     const userToUpdate = await User.findByPk(req.params.id);
     const {
       username,

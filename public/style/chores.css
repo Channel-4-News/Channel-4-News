@@ -1,0 +1,232 @@
+.choreIcon {
+  width: 90%;
+  padding: 5px;
+}
+
+.editChore img {
+  width: 20px;
+}
+
+.editChore {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.choreCard {
+  padding: 10px;
+  width: 100%;
+  align-self: center;
+  display: inline-grid;
+  grid-template-columns: 10% 12% 58% 10% 10%;
+  align-items: center;
+  margin: 6px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.choreCardParent {
+  padding: 10px;
+  width: 100%;
+  align-self: center;
+  display: inline-grid;
+  grid-template-columns: 8% 10% 48% 10% 10% 14%;
+  align-items: center;
+  margin: 6px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.expiredCard {
+  opacity: 40%;
+}
+
+.choreCard small {
+  margin-top: 10px;
+  color: rgb(175, 175, 175);
+}
+
+#choresView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(238, 238, 238);
+  height: 100vh;
+}
+
+.assignmentContainer,
+.cardChoreInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardChoreInfo {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.choreCompletedCheck {
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #cacece;
+  padding: 9px;
+  border-radius: 0;
+  display: inline-block;
+  position: relative;
+  font-family: helvetic;
+  width: 21px;
+  height: 21px;
+  justify-self: center;
+}
+
+.choreCompletedCheck:checked {
+  text-align: center;
+  background-color: orange;
+  border: 1px solid white;
+}
+
+.choreCompletedCheck:checked:after {
+  content: '';
+  position: absolute;
+  text-align: center;
+  left: 5px;
+  top: 2.5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#childDropdown {
+  position: relative;
+  align-self: left;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 6px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#childDropdownContent {
+  position: absolute;
+  display: none;
+  /* background-color: white; */
+  padding: 10px;
+  border-radius: 3px;
+  margin-top: 1px;
+  /* padding-left: 20px; */
+  width: 100%;
+  background-color: rgb(107, 107, 107);
+  color: white;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+#childDropdownContent div {
+  padding: 15px;
+  padding-left: 20px;
+  cursor: pointer;
+  margin: -10px;
+}
+
+#chooseChildHover {
+  position: relative;
+}
+
+#chooseChildHover:hover #childDropdownContent {
+  display: block;
+}
+
+#childDropdownContent div:hover {
+  background-color: rgb(158, 158, 158);
+}
+
+#choreCardContainer {
+  align-self: center;
+  width: 60%;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+}
+
+#childDropdownContent div {
+  padding: 15px;
+  padding-left: 20px;
+  cursor: pointer;
+  margin: -10px;
+}
+#filterAndSortChores {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#sortChores {
+  margin-left: 20px;
+}
+
+#sortChoresHover {
+  position: relative;
+  align-self: left;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 6px;
+  /* margin-top: 20px;
+  margin-bottom: 10px; */
+}
+
+#dropDownSortContent {
+  position: absolute;
+  /* display: none; */
+  /* background-color: white; */
+  /* padding: 10px;
+  border-radius: 3px;
+  margin-top: 1px; */
+  /* padding-left: 20px; */
+  width: 100%;
+  background-color: rgb(107, 107, 107);
+  color: white;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+/* ADD CHORE FORM */
+
+#addChoreForm {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 30%;
+  margin-top: 10%;
+  width: 40%;
+  align-self: center;
+  background-color: white;
+}
+
+/* UPDATE CHORE */
+
+.choreUpdateField {
+  background-color: white;
+}
+
+#updateChore {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 30%;
+  margin-top: 10%;
+  width: 40%;
+  align-self: center;
+  background-color: white;
+}
+
+#updateChore div {
+}
