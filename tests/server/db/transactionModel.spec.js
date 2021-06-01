@@ -12,7 +12,7 @@ beforeAll(async () => {
   await initDB();
 
   transaction = await Transaction.create({
-    amount: 29.99,
+    cost: 29.99,
     category: 'Entertainment',
   });
 });
@@ -22,6 +22,6 @@ afterAll(() => {
 });
 
 it('Transaction model exists', (done) => {
-  expect(transaction.amount).toEqual('29.99');
+  expect(transaction.cost).toEqual('29.99');
   done();
 });
