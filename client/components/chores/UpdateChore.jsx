@@ -139,7 +139,6 @@ const UpdateChore = (props) => {
             native
             placeholder={props.chore.user.firstName}
             defaultValue={props.chore.user.firstName}
-            //   value={state.age}
             label="Assignee"
             color="secondary"
             onChange={(e) =>

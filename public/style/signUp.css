@@ -17,7 +17,7 @@
   background-color: white;
 }
 
-#signup h5 {
+#signup h4 {
   align-self: center;
 }
 
@@ -38,7 +38,7 @@
 }
 
 #signup input {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px;
   border: 1px black solid;
   padding: 10px;
   outline: none;
@@ -46,16 +46,16 @@
   font-size: large;
   margin: 10px;
   width: auto;
-  height: auto;
+  height: auto; */
 }
 
-#signup label {
+/* #signup label {
   color: rgb(153, 147, 147);
   margin-left: 10px;
   font-size: large;
-}
+} */
 
-#signup button {
+/* #signup button {
   border: none;
   outline: none;
   font-size: large;
@@ -63,7 +63,7 @@
   background-color: rgb(194, 194, 194);
   padding: 10px;
   margin: 10px;
-}
+} */
 
 #firstLastSignup {
   display: flex;
@@ -74,5 +74,4 @@
 #firstLastSignup div {
   display: flex;
   flex-direction: column;
-  width: 50%;
 }
