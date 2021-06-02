@@ -15,14 +15,18 @@
   background-color: white;
 }
 
+#createJoinFamily h4 {
+  text-align: center;
+}
+
 .createJoin button {
-  border: none;
+  /* border: none;
   outline: none;
   font-size: large;
   color: white;
   background-color: rgb(194, 194, 194);
   padding: 10px;
-  margin: 10px;
+  margin: 10px; */
 }
 
 /* .createJoin input,
@@ -44,9 +48,13 @@
   font-size: large;
 } */
 
+#switchToJoinFamily {
+  color: rgb(255, 102, 0);
+}
+
 #switchToJoinFamily:hover {
-  color: rgb(255, 119, 119);
-  cursor: pointer;
+  color: black;
+  cursor: default;
 }
 
 /* .createJoin h6 {
