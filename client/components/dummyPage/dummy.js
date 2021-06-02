@@ -147,13 +147,13 @@ const Dummy = () => {
           <div className="dummyColors">
             Parent Colors
             <div id="parentPrimary">
-              Primary
+              Parent Primary
               <div className="light" />
               <div className="main" />
               <div className="dark" />
             </div>
             <div id="parentSecondary">
-              Secondary
+              Parent Secondary
               <div className="light" />
               <div className="main" />
               <div className="dark" />
@@ -233,13 +233,13 @@ const Dummy = () => {
           <div className="dummyColors">
             Parent Colors
             <div id="kidPrimary">
-              Primary
+              Kid Primary
               <div className="light" />
               <div className="main" />
               <div className="dark" />
             </div>
             <div id="kidSecondary">
-              Secondary
+              Kid Secondary
               <div className="light" />
               <div className="main" />
               <div className="dark" />

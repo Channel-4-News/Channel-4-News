@@ -80,12 +80,12 @@ class App extends Component {
               />
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
-              <Route exact path="/dummy" component={Dummy} />
               <Route
                 exact
                 path="/wishlist"
                 component={() => <WishList user={this.state.user} />}
               />
+              <Route exact path="/dummy" component={Dummy} />
             </Switch>
           </div>
         </Router>

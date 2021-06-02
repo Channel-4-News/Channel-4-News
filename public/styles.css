@@ -51,10 +51,6 @@ body {
   justify-content: space-evenly;
 }
 
-/* #dummy * {
-  margin: 10px;
-} */
-
 .dummyColors {
   display: flex;
   flex-direction: row;
