@@ -95,12 +95,12 @@ const EditChildProfile = ({ currUser, updateUser }) => {
   };
 
   //handles when user clicks off of input and checks validation
-  const handleBlur = async (e, validation, field) => {
-    const value = e.target.value;
-    const error = await validation(e.target);
-    console.log(error);
-    if (error.error && value) setErrors({ ...errors, [field]: error.message });
-  };
+  // const handleBlur = async (e, validation, field) => {
+  //   const value = e.target.value;
+  //   const error = await validation(e.target);
+  //   console.log(error);
+  //   if (error.error && value) setErrors({ ...errors, [field]: error.message });
+  // };
 
   const classes = useStyles();
 
@@ -139,11 +139,12 @@ const EditChildProfile = ({ currUser, updateUser }) => {
               variant="outlined"
               color="primary"
               value={newUsername}
-              label={errors.username}
-              error={errors.username !== 'Username'}
-              onBlur={async (e) => {
-                handleBlur(e, validUsername, 'username');
-              }}
+              label="Username"
+              // label={errors.username}
+              // error={errors.username !== 'Username'}
+              // onBlur={async (e) => {
+              //   handleBlur(e, validUsername, 'username');
+              // }}
               name="username"
               fullWidth
               onChange={(e) => setUsername(e.target.value)}
