@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { createUser } from '../../store/actions/userActions/createUser';
@@ -14,80 +14,173 @@ import {
   validEmail,
 } from '../../utilities/utilityValidation';
 
-const SignUp = (props) => {
-  const [passwordShown, setPasswordShown] = useState(false);
-  const [password, setPassword] = useState('');
+import { TextField, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
+const SignUp = (props) => {
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [errors, setErrors] = useState({
+    username: 'Username',
+    email: 'Email Address',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
+  });
+  const [signUpValues, setSignUpValues] = useState({
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    firstLast: { width: '48%' },
+    divWrap: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      margin: theme.spacing(),
+    },
+  }));
+
+  const classes = useStyles();
+
+  //handles user sign up
   const submitNewUser = async (e) => {
     e.preventDefault();
+    const { username, password } = signUpValues;
 
-    const { username, email, firstName, lastName, password } = e.target;
+    //check here to see if passwords match
+    if (
+      !passwordConfirm.length ||
+      errors.confirmPassword !== 'Confirm Password'
+    )
+      return;
 
-    const userValues = {
-      username: username.value,
-      email: email.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-      password: password.value,
-    };
+    await props.createUser(signUpValues);
+    await authUser({ username, password });
 
-    await props.createUser(userValues);
-    await authUser({ username: username.value, password: password.value });
-    await props.attemptLogin();
-    // props.history.push('/createFamily');
-    props.setPage(2);
+    //check login and sign up success
+    const signedUp = await props.attemptLogin();
+    if (signedUp) props.setPage(2);
+  };
+
+  //handles password matching, labels and errors for confirm password
+  useEffect(() => {
+    const areMatching = passwordsMatch(password, passwordConfirm);
+    if (passwordConfirm.length && areMatching.message) {
+      setErrors({ ...errors, confirmPassword: areMatching.message });
+    } else {
+      setErrors({ ...errors, confirmPassword: 'Confirm Password' });
+    }
+  }, [password, passwordConfirm]);
+
+  //handles when user clicks off of input and checks validation
+  const handleBlur = async (e, validation, field) => {
+    const value = e.target.value;
+    const error = await validation(e.target);
+    if (error.error && value) setErrors({ ...errors, [field]: error.message });
+  };
+
+  //checks validation, sets label, sets signUpValues
+  const handleChange = (e, validation, field, label) => {
+    const error = validation(e.target);
+    if (!error.error || e.target.value.length)
+      setErrors({ ...errors, [field]: label });
+    setSignUpValues({ ...signUpValues, [field]: e.target.value });
   };
 
   return (
     <div id="signup-wrapper">
-      <form id="signup" onSubmit={submitNewUser}>
-        <h5>Enter details</h5>
-        <label>Username</label>
-        <input
-          name="username"
+      <form id="signup">
+        <h4>ENTER DETAILS</h4>
+        <TextField
+          className={classes.root}
+          id="username"
+          label={errors.username}
+          variant="outlined"
+          color="primary"
+          error={errors.username !== 'Username'}
+          onBlur={async (e) => {
+            handleBlur(e, validUsername, 'username');
+          }}
           onChange={(e) => {
-            validUsername(e.target);
+            handleChange(e, validUsername, 'username', 'Username');
           }}
         />
-        <label>Email Address</label>
-        <input
-          id="inputEmail"
-          name="email"
+        <TextField
           type="email"
+          className={classes.root}
+          label={errors.email}
+          variant="outlined"
+          color="primary"
+          error={errors.email !== 'Email Address'}
+          onBlur={async (e) => {
+            handleBlur(e, validEmail, 'email');
+          }}
           onChange={(e) => {
-            validEmail(e.target);
+            handleChange(e, validEmail, 'email', 'Email Address');
           }}
         />
-        <div id="firstLastSignup">
-          <div>
-            <label>First Name</label>
-            <input name="firstName" required />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input name="lastName" required />
-          </div>
+        <div className={classes.divWrap}>
+          <TextField
+            className={classes.firstLast}
+            label="First Name"
+            variant="outlined"
+            color="primary"
+            onChange={(e) => {
+              setSignUpValues({ ...signUpValues, firstName: e.target.value });
+            }}
+          />
+          <TextField
+            className={classes.firstLast}
+            label="Last Name"
+            variant="outlined"
+            color="primary"
+            onChange={(e) => {
+              setSignUpValues({ ...signUpValues, lastName: e.target.value });
+            }}
+          />
         </div>
-        <label>Password</label>
-        <input
-          className="passwordInput"
-          name="password"
-          type={passwordShown ? 'text' : 'password'}
+        <TextField
+          type="password"
+          className={classes.root}
+          label={errors.password}
+          variant="outlined"
+          color="primary"
+          error={errors.password !== 'Password'}
+          onBlur={async (e) => {
+            handleBlur(e, passwordValid, 'password');
+          }}
           onChange={(e) => {
-            passwordValid(e.target);
             setPassword(e.target.value);
+            handleChange(e, passwordValid, 'password', 'Password');
           }}
         />
-        <label>Confirm Password</label>
-        <input
-          className="passwordInput"
-          name="confirmPassword"
-          type={passwordShown ? 'text' : 'password'}
+        <TextField
+          type="password"
+          className={classes.root}
+          label={errors.confirmPassword}
+          variant="outlined"
+          color="primary"
+          error={errors.confirmPassword !== 'Confirm Password'}
           onChange={(e) => {
-            passwordsMatch(password, e.target);
+            setPasswordConfirm(e.target.value);
           }}
         />
-        <button>Next</button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.root}
+          onClick={submitNewUser}
+        >
+          Sign Up
+        </Button>
       </form>
     </div>
   );
