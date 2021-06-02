@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import { attemptLogin } from '../store/actions/userActions/getCurUser';
 import Chores from './chores/ChoresView';
-import ChildProfile from './child components/ChildProfile';
+import ChildProfile from './childComponents/ChildProfile';
 import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
+
+//Here for testing purposes
+import EditChildProfile from './childComponents/EditChildProfile';
+import ChooseFile from './childComponents/ChooseFile';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +44,12 @@ class App extends Component {
             <Route exact path="/createfamily" component={JoinOrCreateFamily} />
             <Route exact path="/chores" component={Chores} />
             <Route exact path="/childprofile" component={ChildProfile} />
+            <Route
+              exact
+              path="/editchildprofile"
+              component={EditChildProfile}
+            />
+            <Route exact path="/choosefile" component={ChooseFile} />
             <Route
               exact
               path="/wishlist"
