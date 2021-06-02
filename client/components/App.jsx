@@ -10,6 +10,9 @@ import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 
+//For testing purposes
+import EditChildInfo from './child components/EditChildInfo';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +43,7 @@ class App extends Component {
             <Route exact path="/createfamily" component={JoinOrCreateFamily} />
             <Route exact path="/chores" component={Chores} />
             <Route exact path="/childprofile" component={ChildProfile} />
+            <Route exact path="/editchildinfo" component={EditChildInfo} />
             <Route
               exact
               path="/wishlist"
