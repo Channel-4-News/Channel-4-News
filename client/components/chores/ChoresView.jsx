@@ -144,7 +144,7 @@ const Chores = (props) => {
               <div id="filterAndSortChores">
                 <div id="chooseChildHover">
                   <Button id="sortButtonChild" variant="contained">
-                    Sort By
+                    &nbsp;&nbsp;Sort By&nbsp;&nbsp;
                   </Button>
                   <div id="childDropdownContent">
                     <div onClick={() => setChores(sortBy('amount', chores))}>
@@ -152,6 +152,11 @@ const Chores = (props) => {
                     </div>
                     <div onClick={() => setChores(sortBy('due', chores))}>
                       Due
+                    </div>
+                    <div
+                      onClick={() => setChores(sortBy('incomplete', chores))}
+                    >
+                      Incomplete
                     </div>
                   </div>
                 </div>

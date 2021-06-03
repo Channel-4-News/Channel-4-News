@@ -10,6 +10,11 @@ const sortBy = (criteria, chores) => {
       return new Date(a.due) - new Date(b.due);
     });
   }
+  if (criteria === 'incomplete') {
+    return [...chores].sort((a, b) => {
+      return a.isRecurring ? 0 : b.isRecurring ? 1 : -1;
+    });
+  }
 };
 
 export default sortBy;
