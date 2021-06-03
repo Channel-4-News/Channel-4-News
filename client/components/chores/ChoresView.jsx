@@ -19,6 +19,7 @@ const Chores = (props) => {
   const [childSelect, setChildSelect] = useState(false);
   const [selectedKid, setSelectedKid] = useState({});
   const [allKids, setAllKids] = useState(0);
+  const [choresUpdated, setUpdated] = useState(1);
 
   const handleClose = (id) => {
     if (id === 'modal') {
@@ -52,6 +53,7 @@ const Chores = (props) => {
         })
       );
       setChores(currentChores);
+      setUpdated(choresUpdated + 1);
     }
     setChildSelect(false);
   }, [props.chores]);
@@ -79,6 +81,15 @@ const Chores = (props) => {
       setChildSelect(false);
     }
   }, [childSelect]);
+
+  useEffect(() => {
+    if (props.currUser.status === 'Child') {
+      setChores(chores.filter((chore) => chore.userId === props.currUser.id));
+      setExpiredChores(
+        expiredChores.filter((chore) => chore.userId === props.currUser.id)
+      );
+    }
+  }, [choresUpdated]);
 
   return (
     <div id="choresView">

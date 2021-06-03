@@ -4,14 +4,14 @@ const sortBy = (criteria, chores) => {
   }
   if (criteria === 'due') {
     return [...chores].sort((a, b) => {
-      if (!a) a = new Date();
-      if (!b) b = new Date();
+      if (a.isRecurring) a.due = new Date();
+      if (b.isRecurring) b.due = new Date();
       return new Date(a.due) - new Date(b.due);
     });
   }
   if (criteria === 'incomplete') {
     return [...chores].sort((a, b) => {
-      return a.isRecurring ? 0 : b.isRecurring ? 1 : -1;
+      return a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1;
     });
   }
 };
