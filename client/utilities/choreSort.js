@@ -1,5 +1,4 @@
 const sortBy = (criteria, chores) => {
-  console.log(chores);
   if (criteria === 'amount') {
     return [...chores].sort((a, b) => b.amount - a.amount);
   }
@@ -16,7 +15,5 @@ const sortBy = (criteria, chores) => {
     });
   }
 };
-
-const filterChild = () => {};
 
 export default sortBy;

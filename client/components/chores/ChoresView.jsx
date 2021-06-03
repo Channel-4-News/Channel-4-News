@@ -67,7 +67,6 @@ const Chores = (props) => {
             new Date(chore.due) < today &&
             chore.userId === selectedKid.id
           ) {
-            console.log(chore);
             return chore;
           } else {
             currentChores.push(chore);
