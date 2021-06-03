@@ -12,12 +12,13 @@ const Chores = (props) => {
   const [kids, setKids] = useState([]);
   const [chores, setChores] = useState([]);
   const [expiredChores, setExpiredChores] = useState([]);
-  const [choresUpdated, setUpdated] = useState(1);
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
-  const [childSelect, setChildSelect] = useState(0);
+  const [childSelect, setChildSelect] = useState(false);
+  const [selectedKid, setSelectedKid] = useState({});
+  const [allKids, setAllKids] = useState(0);
 
   const handleClose = (id) => {
     if (id === 'modal') {
@@ -35,7 +36,7 @@ const Chores = (props) => {
           props.currUser.family.users.filter((user) => user.status === 'Child')
         );
     }
-  }, [props.currUser]);
+  }, [props.currUser, allKids]);
 
   useEffect(() => {
     if (props.chores.length) {
@@ -51,18 +52,34 @@ const Chores = (props) => {
         })
       );
       setChores(currentChores);
-      setUpdated(choresUpdated + 1);
     }
-  }, [props.chores, childSelect]);
+    setChildSelect(false);
+  }, [props.chores]);
 
   useEffect(() => {
-    if (props.currUser.status === 'Child') {
-      setChores(chores.filter((chore) => chore.userId === props.currUser.id));
+    const today = new Date();
+    const currentChores = [];
+    if (childSelect) {
       setExpiredChores(
-        expiredChores.filter((chore) => chore.userId === props.currUser.id)
+        props.chores.filter((chore) => {
+          if (
+            chore.due &&
+            new Date(chore.due) < today &&
+            chore.userId === selectedKid.id
+          ) {
+            console.log(chore);
+            return chore;
+          } else {
+            currentChores.push(chore);
+          }
+        })
       );
+      setChores(
+        currentChores.filter((chore) => chore.userId === selectedKid.id)
+      );
+      setChildSelect(false);
     }
-  }, [choresUpdated]);
+  }, [childSelect]);
 
   return (
     <div id="choresView">
@@ -110,14 +127,8 @@ const Chores = (props) => {
                       <div
                         key={`${user.id}familyChild`}
                         onClick={() => {
-                          setChores(
-                            chores.filter((chore) => chore.userId === user.id)
-                          );
-                          setExpiredChores(
-                            expiredChores.filter(
-                              (chore) => chore.userId === user.id
-                            )
-                          );
+                          setChildSelect(true);
+                          setSelectedKid(user);
                         }}
                       >
                         {user.firstName}
@@ -126,7 +137,7 @@ const Chores = (props) => {
                   })}
                   <div
                     onClick={() => {
-                      setChores(props.chores);
+                      setAllKids(allKids + 1);
                     }}
                   >
                     All

@@ -17,4 +17,6 @@ const sortBy = (criteria, chores) => {
   }
 };
 
+const filterChild = () => {};
+
 export default sortBy;
