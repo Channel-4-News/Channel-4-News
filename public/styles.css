@@ -22,6 +22,9 @@ html {
 body {
   margin: 0;
   height: 100%;
+  /* background: url('/public/images/testbg copy.jpg') repeat 0 0;
+  background-size: cover;
+  */
 }
 
 #root {
@@ -61,8 +64,8 @@ body {
 }
 
 #parentPrimary div {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 30px;
 }
 
 #parentPrimary .light {
@@ -78,8 +81,8 @@ body {
 }
 
 #parentSecondary div {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 30px;
 }
 
 #parentSecondary .light {
@@ -95,8 +98,8 @@ body {
 }
 
 #kidPrimary div {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 30px;
 }
 
 #kidPrimary .light {
@@ -112,8 +115,8 @@ body {
 }
 
 #kidSecondary div {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 30px;
 }
 
 #kidSecondary .light {
