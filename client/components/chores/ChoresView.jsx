@@ -5,7 +5,8 @@ import ChoreCard from './ChoreCard';
 import Modal from '@material-ui/core/Modal';
 import AddChore from './AddChore';
 import UpdateChore from './UpdateChore';
-import { Button, Popover } from '@material-ui/core';
+import { Button, Menu, MenuItem } from '@material-ui/core';
+import sortBy from '../../utilities/choreSort';
 
 const Chores = (props) => {
   const [kids, setKids] = useState([]);
@@ -15,10 +16,15 @@ const Chores = (props) => {
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [childSelect, setChildSelect] = useState(0);
 
-  const handleClose = () => {
-    setAddChore(false);
-    setUpdateClicked(false);
+  const handleClose = (id) => {
+    if (id === 'modal') {
+      setAddChore(false);
+      setUpdateClicked(false);
+    }
+    if (id === 'sort') setAnchorEl(null);
   };
 
   useEffect(() => {
@@ -47,7 +53,7 @@ const Chores = (props) => {
       setChores(currentChores);
       setUpdated(choresUpdated + 1);
     }
-  }, [props.chores]);
+  }, [props.chores, childSelect]);
 
   useEffect(() => {
     if (props.currUser.status === 'Child') {
@@ -67,7 +73,7 @@ const Chores = (props) => {
               id="addChoreModal"
               open={addChore}
               onClose={() => {
-                handleClose();
+                handleClose('modal');
               }}
             >
               <AddChore
@@ -82,7 +88,7 @@ const Chores = (props) => {
           id="addChoreModal"
           open={updateClicked}
           onClose={() => {
-            handleClose();
+            handleClose('modal');
           }}
         >
           <UpdateChore
@@ -105,9 +111,7 @@ const Chores = (props) => {
                         key={`${user.id}familyChild`}
                         onClick={() => {
                           setChores(
-                            props.chores.filter(
-                              (chore) => chore.userId === user.id
-                            )
+                            chores.filter((chore) => chore.userId === user.id)
                           );
                           setExpiredChores(
                             expiredChores.filter(
@@ -129,15 +133,6 @@ const Chores = (props) => {
                   </div>
                 </div>
               </div>
-              {/* <div id="sortChoresHover">
-                <Button variant="contained" id="sortChores">
-                  Sort By
-                </Button>
-                <div id="dropDownSortContent">
-                  <div>Amount ↑</div>
-                  <div>Amount ↓</div>
-                </div>
-              </div> */}
             </div>
             <Button variant="contained" onClick={() => setAddChore(true)}>
               Add Chore
@@ -145,9 +140,34 @@ const Chores = (props) => {
           </div>
         ) : (
           <div id="childDropdown">
-            <Button variant="contained" onClick={() => setAddChore(true)}>
-              Sort By
-            </Button>
+            <div id="childDropdown">
+              <div id="filterAndSortChores">
+                <div id="chooseChildHover">
+                  <Button id="sortButtonChild" variant="contained">
+                    Sort By
+                  </Button>
+                  <div id="childDropdownContent">
+                    <div onClick={() => setChores(sortBy('amount', chores))}>
+                      Amount
+                    </div>
+                    <div onClick={() => setChores(sortBy('due', chores))}>
+                      Due
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={() => {
+                handleClose('sort');
+              }}
+            >
+              <MenuItem onClick={() => handleClose('sort')}>Amount</MenuItem>
+            </Menu>
           </div>
         )}
         {chores.map((chore) => (
