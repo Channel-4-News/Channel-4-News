@@ -67,7 +67,6 @@ router.delete('/:id', async (req, res, next) => {
 //update user
 router.put('/:id', async (req, res, next) => {
   try {
-    console.log(req.body);
     const userToUpdate = await User.findByPk(req.params.id);
     const {
       username,
@@ -75,6 +74,7 @@ router.put('/:id', async (req, res, next) => {
       password,
       firstName,
       lastName,
+      imgUrl,
       status,
       isAdmin,
       familyId,
@@ -85,6 +85,7 @@ router.put('/:id', async (req, res, next) => {
       password,
       firstName,
       lastName,
+      imgUrl,
       status,
       isAdmin,
       familyId,

@@ -19,6 +19,8 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Keri',
         lastName: 'Weiss',
+        imgUrl:
+          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
         status: 'Parent',
       },
       {
@@ -27,6 +29,8 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Hugo',
         lastName: 'Sanchez',
+        imgUrl:
+          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
         status: 'Parent',
       },
       {
@@ -35,6 +39,8 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Damien',
         lastName: 'Outar',
+        imgUrl:
+          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
         status: 'Parent',
       },
       // {
@@ -64,6 +70,8 @@ const syncAndSeed = async () => {
         password: 'password123',
         firstName: 'Talia',
         lastName: 'Asleep',
+        imgUrl:
+          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       },
     ];
     await Promise.all(
@@ -127,6 +135,8 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Joe',
       lastName: 'Kid',
+      imgUrl:
+        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
     });
 
@@ -136,6 +146,8 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Francis',
       lastName: 'Haha',
+      imgUrl:
+        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
     });
 
@@ -145,6 +157,8 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Ismadder',
+      imgUrl:
+        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
     });
 
@@ -154,6 +168,8 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Mommie',
       lastName: 'Momster',
+      imgUrl:
+        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
     });

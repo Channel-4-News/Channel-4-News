@@ -60,6 +60,14 @@ const User = db.define('user', {
     type: DataTypes.DECIMAL(10, 2),
     defaultValue: 0,
   },
+  imgUrl: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    defaultValue: 'default-img.jpg',
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
 
 //authenticates user
