@@ -12,6 +12,9 @@ import WishList from './wishListComponents/WishList';
 import Dummy from './dummyPage/dummy';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+//For testing purposes
+import EditChildInfo from './child components/EditChildInfo';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -80,6 +83,7 @@ class App extends Component {
               />
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
+              <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route
                 exact
                 path="/wishlist"
