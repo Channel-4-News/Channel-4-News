@@ -48,6 +48,11 @@
   color: rgb(175, 175, 175);
 }
 
+.choreCardParent small {
+  margin-top: 10px;
+  color: rgb(175, 175, 175);
+}
+
 #choresView {
   display: flex;
   flex-direction: column;

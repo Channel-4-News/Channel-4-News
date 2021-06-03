@@ -41,6 +41,7 @@ const ChoreCard = (props) => {
         className="choreCompletedCheck"
         checked={complete ? 'checked' : null}
         onChange={() => {
+          console.log(props.chore.createdAt);
           setComplete(!complete);
           props.completeChore(props.chore.id, {
             isComplete: !complete,
