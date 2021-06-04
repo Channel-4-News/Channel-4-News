@@ -1,6 +1,6 @@
 const { db } = require('./db');
 const {
-  models: { WishListItem, WishList },
+  models: { WishListItem, WishList, Notification },
 } = require('./models/associations');
 const { Chore } = require('./models/Chore');
 const Family = require('./models/Family');
@@ -395,6 +395,24 @@ const syncAndSeed = async () => {
         await Transaction.create(transaction);
       })
     );
+
+    await Promise.all([
+      new Notification({
+        fromId: kid1.id,
+        toId: parent1.id,
+        text: 'Chore Incomplete',
+      }).save(),
+      new Notification({
+        fromId: kid2.id,
+        toId: parent1.id,
+        text: 'Chore Done!',
+      }).save(),
+      new Notification({
+        fromId: kid3.id,
+        toId: parent1.id,
+        text: 'Pay Me please',
+      }).save(),
+    ]);
 
     // await Allowance.create()
   } catch (err) {

@@ -79,6 +79,7 @@ router.put('/:id', async (req, res, next) => {
       isAdmin,
       familyId,
     } = req.body;
+
     await userToUpdate.update({
       username,
       email,

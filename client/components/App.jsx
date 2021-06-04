@@ -14,6 +14,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
 import EditChildInfo from './child components/EditChildInfo';
+import Notification from './Notification';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,14 @@ class App extends Component {
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
     }
+    // this.props.loadNotifications();
+    // window.socket = new WebSocket(window.location.origin.replace('http', 'ws'));
+    // window.socket.addEventListener('message', (ev) => {
+    //   const obj = JSON.parse(ev.data);
+    //   if(obj.type){
+    //     this.props.dispatchMessage(obj);
+    //   }
+    // });
   }
 
   render() {
@@ -84,6 +93,7 @@ class App extends Component {
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
+              <Route exact path="/notification" component={Notification} />
               <Route
                 exact
                 path="/wishlist"
@@ -107,6 +117,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
+    // loadNotifications: () => dispatch(loadNotifications()),
+    // dispatchNotification: (action) => dispatch(action)
   };
 };
 

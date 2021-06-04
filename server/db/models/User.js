@@ -136,4 +136,17 @@ User.addHook('afterCreate', async (user) => {
   await allowance.save();
 });
 
+User.prototype.getNotifications = function () {
+  return db.models.notification.findAll({
+    where: {
+      [db.Sequelize.Op.or]: [{ toId: this.id }],
+    },
+    include: [
+      { model: User, as: 'from' },
+      { model: User, as: 'to' },
+    ],
+    order: [['createdAt', 'DESC']],
+  });
+};
+
 module.exports = User;
