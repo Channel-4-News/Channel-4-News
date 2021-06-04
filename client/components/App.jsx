@@ -9,6 +9,8 @@ import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
+import CreateCard from './forms/CreateCard';
+import ChildLandingPage from './child components/ChildLandingPage';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +42,12 @@ class App extends Component {
             <Route exact path="/createfamily" component={JoinOrCreateFamily} />
             <Route exact path="/chores" component={Chores} />
             <Route exact path="/childprofile" component={ChildProfile} />
+            <Route exact path="/cardcreation" component={CreateCard} />
+            <Route
+              exact
+              path="/childlandingpage"
+              component={() => <ChildLandingPage user={this.state.user} />}
+            />
             <Route
               exact
               path="/wishlist"

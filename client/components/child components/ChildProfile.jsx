@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 //Style Import
 import '../../../public/style/childProfile.css';
 import EditChildProfile from './EditChildProfile';
-import SpendingGraph from '../SpendingGraph';
+import SpendingGraph from './SpendingGraph';
 
 class ChildProfile extends Component {
   constructor(props) {

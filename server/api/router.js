@@ -9,5 +9,6 @@ router.use('/auth', require('./auth'));
 router.use('/wishlistItem', require('./wishListItem'));
 router.use('/transaction', require('./transaction'));
 router.use('/notification', require('./notification'));
+router.use('/cards', require('./cards'));
 
 module.exports = router;
