@@ -62,11 +62,6 @@ const ChooseFile = ({
     fileReader.readAsDataURL(file);
   };
 
-  const reset = () => {
-    setNewImg(imgUrl);
-    close();
-  };
-
   const classes = useStyles();
   return (
     <div>
@@ -91,7 +86,7 @@ const ChooseFile = ({
           >
             Save!
           </Button>
-          <Button variant="contained" onClick={() => reset()}>
+          <Button variant="contained" onClick={close}>
             Close
           </Button>
         </div>
