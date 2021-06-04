@@ -13,7 +13,7 @@ import Dummy from './dummyPage/dummy';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
-import EditChildInfo from './child components/EditChildInfo';
+import EditChildInfo from './forms/EditChildInfo';
 
 class App extends Component {
   constructor(props) {

@@ -22,6 +22,9 @@ import { FiEdit } from 'react-icons/fi';
 //Component Imports
 import ChooseFile from './ChooseFile';
 
+//Validation Util
+import { validUsername, validEmail } from '../../utilities/utilityValidation';
+
 //React Notifications Components
 // import ReactNotification from 'react-notifications-component';
 // import { store } from 'react-notifications-component';
@@ -76,10 +79,15 @@ const EditChildInfo = ({ currUser, updateUser }) => {
 
   const [dialogueOpen, setDialogoueOpen] = useState(false);
 
-  //   const [errors, setErrors] = useState({
-  //     username: 'Username',
-  //     email: 'Email Address',
-  //   });
+  const [errors, setErrors] = useState({
+    username: 'Username',
+    email: 'Email Address',
+  });
+
+  // const [editValues, setEditValues] = useState({
+  //   username: newUsername,
+  //   email: newEmail
+  // });
 
   const handleOpen = () => {
     setDialogoueOpen(true);
@@ -95,11 +103,18 @@ const EditChildInfo = ({ currUser, updateUser }) => {
   };
 
   //handles when user clicks off of input and checks validation
-  // const handleBlur = async (e, validation, field) => {
-  //   const value = e.target.value;
-  //   const error = await validation(e.target);
-  //   console.log(error);
-  //   if (error.error && value) setErrors({ ...errors, [field]: error.message });
+  const handleBlur = async (e, validation, field) => {
+    const value = e.target.value;
+    const error = await validation(e.target);
+    if (error.error && value) setErrors({ ...errors, [field]: error.message });
+  };
+
+  //checks validation, sets label, sets signUpValues
+  // const handleChange = (e, validation, field, label) => {
+  //   const error = validation(e.target);
+  //   if (!error.error || e.target.value.length)
+  //     setErrors({ ...errors, [field]: label });
+  //   setEditValues({ ...editValues, [field]: e.target.value });
   // };
 
   const classes = useStyles();
@@ -138,23 +153,33 @@ const EditChildInfo = ({ currUser, updateUser }) => {
               variant="outlined"
               color="primary"
               value={newUsername}
-              label="Username"
-              // label={errors.username}
-              // error={errors.username !== 'Username'}
-              // onBlur={async (e) => {
-              //   handleBlur(e, validUsername, 'username');
-              // }}
+              // label="Username"
+              label={errors.username}
+              error={errors.username !== 'Username'}
+              onBlur={async (e) => {
+                handleBlur(e, validUsername, 'username');
+              }}
               name="username"
               fullWidth
+              // onChange={(e) => {
+              //   handleChange(e, validUsername, 'username', 'Username');
+              // }}
               onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               className={classes.editTextinput}
               variant="outlined"
-              label="Email Address"
+              label={errors.email}
               value={newEmail}
               name="email"
+              error={errors.email !== 'Email Address'}
+              onBlur={async (e) => {
+                handleBlur(e, validEmail, 'email');
+              }}
               fullWidth
+              // onChange={(e) => {
+              //   handleChange(e, validEmail, 'email', 'Email Address');
+              // }}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
