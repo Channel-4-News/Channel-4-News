@@ -42,7 +42,6 @@ class App extends Component {
             <Route exact path="/createfamily" component={JoinOrCreateFamily} />
             <Route exact path="/chores" component={Chores} />
             <Route exact path="/childprofile" component={ChildProfile} />
-            <Route exact path="/cardcreation" component={CreateCard} />
             <Route
               exact
               path="/childlandingpage"
