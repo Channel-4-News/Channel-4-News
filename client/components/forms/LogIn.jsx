@@ -40,6 +40,7 @@ const LogIn = (props) => {
   return (
     <div id="login-wrapper">
       <form id="login" onSubmit={submitUser}>
+        <h4>LOGIN</h4>
         <TextField
           className={classes.root}
           label="Email or Username"
