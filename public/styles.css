@@ -22,6 +22,9 @@ html {
 body {
   margin: 0;
   height: 100%;
+  /* background: url('/public/images/testbg copy.jpg') repeat 0 0;
+  background-size: cover;
+  */
 }
 
 #root {
@@ -40,4 +43,90 @@ body {
   margin-top: 4rem;
   height: 100%;
   width: 100%;
+}
+
+/* DUMMY PAGE STYLE */
+
+#dummy {
+  display: flex;
+  margin: 50px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.dummyColors {
+  display: flex;
+  flex-direction: row;
+}
+
+.dummyColors > div {
+  margin: 10px;
+}
+
+#parentPrimary div {
+  width: 40px;
+  height: 30px;
+}
+
+#parentPrimary .light {
+  background-color: #e6f2f9;
+}
+
+#parentPrimary .main {
+  background-color: #c9d4db;
+}
+
+#parentPrimary .dark {
+  background-color: #b4bfc6;
+}
+
+#parentSecondary div {
+  width: 40px;
+  height: 30px;
+}
+
+#parentSecondary .light {
+  background-color: #62efff;
+}
+
+#parentSecondary .main {
+  background-color: #00bcd4;
+}
+
+#parentSecondary .dark {
+  background-color: #008ba3;
+}
+
+#kidPrimary div {
+  width: 40px;
+  height: 30px;
+}
+
+#kidPrimary .light {
+  background-color: #7fc8ff;
+}
+
+#kidPrimary .main {
+  background-color: #3e98ff;
+}
+
+#kidPrimary .dark {
+  background-color: #006bcb;
+}
+
+#kidSecondary div {
+  width: 40px;
+  height: 30px;
+}
+
+#kidSecondary .light {
+  background-color: #ff5993;
+}
+
+#kidSecondary .main {
+  background-color: #ef0066;
+}
+
+#kidSecondary .dark {
+  background-color: #b6003c;
 }

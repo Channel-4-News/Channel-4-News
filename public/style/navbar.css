@@ -8,5 +8,10 @@
 }
 
 #navbar-links-wrapper {
+  display: flex;
   margin-left: auto;
+}
+#settings {
+  height: 25px;
+  width: 25px;
 }
