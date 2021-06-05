@@ -7,7 +7,6 @@ class ChildLandingPage extends React.Component {
     super();
   }
   render() {
-    console.log(this.props);
     return this.props.user.allowance ? (
       <div>
         <div>Hello {this.props.user.firstName}</div>
