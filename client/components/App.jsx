@@ -9,7 +9,6 @@ import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
-import CreateCard from './forms/CreateCard';
 import ChildLandingPage from './child components/ChildLandingPage';
 
 class App extends Component {
