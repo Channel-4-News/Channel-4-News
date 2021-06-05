@@ -10,11 +10,11 @@ import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
-import Dummy from './dummyPage/dummy';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
 import EditChildInfo from './forms/EditChildInfo';
+import Dummy from './dummyPage/dummy';
 
 class App extends Component {
   constructor(props) {

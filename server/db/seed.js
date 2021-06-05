@@ -163,7 +163,7 @@ const syncAndSeed = async () => {
     });
 
     const parent1 = await User.create({
-      username: 'mamama',
+      username: 'Sonny',
       email: 'mom@test.com',
       password: 'password123',
       firstName: 'Mommie',
