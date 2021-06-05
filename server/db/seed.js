@@ -372,6 +372,7 @@ const syncAndSeed = async () => {
       { cost: 68.99, category: 'Toys', userId: kid1.id },
       { cost: 20, category: 'Miscellaneous', userId: kid1.id },
       { cost: 114.87, category: 'Food', userId: kid1.id },
+      { cost: 119, category: 'Toys', userId: kid1.id },
     ];
 
     await Promise.all(
