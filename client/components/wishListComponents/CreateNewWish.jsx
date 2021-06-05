@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
+import { addNewWish } from '../../store/actions/wishListActions/addNewWish';
+import EditWishListCard from './EditWishListCard';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -66,12 +69,34 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const CreateNewWish = () => {
+const CreateNewWish = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState('url');
   const [select, setSelect] = useState('Miscelleneous');
   const [url, setUrl] = useState('');
+  const [itemAdded, setItemAdded] = useState(false);
+  const [lastItem, setLastItem] = useState({});
+  // const isFirstRender = useRef(true);
+  const onItemAdded = () => {
+    setItemAdded(true);
+    const newItemId = props.wishList
+      .map((item) => item.id)
+      .sort((a, b) => b - a)[0];
+    const item = props.wishList.find((item) => item.id === newItemId);
+    setLastItem({ ...item });
+  };
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //   } else {
+  //     console.log('lastItem changed');
+  //   }
+  // }, [lastItem]);
+  if (itemAdded) {
+    setForm('form');
+    setItemAdded(false);
+  }
   const handleClose = () => {
     setOpen(false);
   };
@@ -140,21 +165,44 @@ const CreateNewWish = () => {
                 </NativeSelect>
               </FormControl>
             </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  props.addNewWish(
+                    'https://www.amazon.com/Olight-I3T-EOS-Lumens-Dual-Output/dp/B07DLRK7Q5?ref_=Oct_DLandingS_D_ecb7a14f_60&smid=A3E6E1V9X0VZ5Q',
+                    'Electronics',
+                    props.user.id
+                  );
+                  onItemAdded();
+                }}
+                color="primary"
+              >
+                Enter
+              </Button>
+              <Button onClick={handleClose} color="secondary">
+                Cancel
+              </Button>
+            </DialogActions>
           </div>
         ) : (
           ''
         )}
-        <DialogActions>
-          <Button onClick={() => handleClose()} color="primary">
-            Withdraw
-          </Button>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default CreateNewWish;
+const mapStateToProps = (state) => {
+  return {
+    wishList: state.wishList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewWish: (url, category, userId) =>
+      dispatch(addNewWish(url, category, userId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewWish);

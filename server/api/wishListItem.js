@@ -1,11 +1,9 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const router = Router();
 
 const {
   models: { WishListItem },
 } = require('../db/models/associations');
-
-router.use(json());
 
 //Get all Wish List items by id
 router.get('/:id', async (req, res, next) => {
@@ -21,28 +19,65 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// Single Item
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const singleItem = await WishListItem.findByPk(id);
-//     res.send(singleItem);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//Find Url Data for wish list
+const puppeteer = require('puppeteer');
+const metascraper = require('metascraper')([
+  require('metascraper-image')(),
+  require('metascraper-title')(),
+  require('metascraper-description')(),
+  require('@samirrayani/metascraper-shopping')(),
+]);
+const got = require('got');
 
-//Add Item To WishList
 router.post('/', async (req, res, next) => {
   try {
-    const { itemName, description, imgUrl, cost, linkUrl, category } = req.body;
+    const myUrl = req.body.url;
+    const myCategory = req.body.category;
+    const userId = req.body.userId;
+    let result;
+    if (myUrl.indexOf('amazon') !== -1) {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.goto(myUrl);
+      await page.waitFor(1000);
+      result = await page.evaluate(() => {
+        const title = document.querySelector('#productTitle').innerText || '';
+        const imgUrl =
+          document.querySelector('#imgTagWrapperId > img').src || '';
+        const priceStr =
+          document.querySelector('#priceblock_ourprice')?.innerText ||
+          document.querySelector('#priceblock_dealprice')?.innerText ||
+          '';
+        const priceInt = parseFloat(priceStr.replace('$', '')) || '';
+        const descriptionPieces =
+          document.querySelectorAll('#feature-bullets > ul > li > span') || '';
+        let description = '';
+        descriptionPieces.forEach((bullet, id) =>
+          id > 0 ? (description += bullet.innerText || '') : ''
+        );
+        return {
+          itemName: title,
+          imgUrl,
+          cost: priceInt,
+          description,
+        };
+      });
+      browser.close();
+    } else {
+      const { body: html, url } = await got(myUrl);
+      const metadata = await metascraper({ html, url });
+      result = {
+        itemName: metadata.title,
+        imgUrl: metadata.image,
+        cost: metadata.price,
+        description: metadata.description,
+      };
+    }
     const newItem = await WishListItem.create({
-      itemName,
-      description,
-      imgUrl,
-      cost,
-      linkUrl,
-      category,
+      ...result,
+      category: myCategory,
+      linkUrl: myUrl,
+      userId,
     });
     res.status(201).send(newItem);
   } catch (err) {

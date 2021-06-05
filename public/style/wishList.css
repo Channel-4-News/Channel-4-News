@@ -170,9 +170,6 @@ body
   justify-content: space-around;
 }
 
-body
-  > div.MuiDialog-root
-  > div.MuiDialog-container.MuiDialog-scrollPaper
-  > div {
+#makeAWishDialog > div.MuiDialog-container.MuiDialog-scrollPaper > div {
   padding: 1rem;
 }
