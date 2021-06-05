@@ -179,7 +179,7 @@ const SignUp = (props) => {
           className={classes.root}
           onClick={submitNewUser}
         >
-          Sign Up
+          Next
         </Button>
       </form>
     </div>

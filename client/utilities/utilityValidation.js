@@ -36,9 +36,13 @@ const passwordValid = (pw) => {
 const secretValid = (secret) => {
   if (secret.value.length > 4 && secret.value.length < 71) {
     secret.setCustomValidity('');
-    return;
+    return true;
   }
-  secret.setCustomValidity('Family secret must be at least 4 characters.');
+  secret.setCustomValidity('Family secret must be at least 5 characters.');
+  return {
+    error: true,
+    message: 'Secret must be at least 5 characters.',
+  };
 };
 
 //check if email is valid

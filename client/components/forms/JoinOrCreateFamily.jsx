@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { createFamily } from '../../store/actions/familyActions/createFamily';
 import { authFamily } from '../../store/actions/familyActions/joinFamily';
@@ -21,14 +21,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import { updateUser } from '../../store/actions/userActions/updateUser';
 
 const JoinOrCreateFamily = (props) => {
-  const [passwordShown, setPasswordShown] = useState(false);
   const [familySecret, setFamilySecret] = useState('');
+  const [confirmSecret, setConfirmSecret] = useState('');
   const [join, setJoin] = useState('');
   const [joinOrCreate, setJoinOrCreate] = useState('create');
+  const [errors, setErrors] = useState({
+    familyName: 'Family Name',
+    familySecret: 'Family Secret',
+    confirmSecret: 'Confirm Secret',
+    relation: 'Relation To Family',
+  });
   const [familyCreds, setFamilyCreds] = useState({
     familyName: '',
     familySecret: '',
-    confirmSecret: '',
   });
 
   const useStyles = makeStyles((theme) => ({
@@ -45,18 +50,47 @@ const JoinOrCreateFamily = (props) => {
 
   const classes = useStyles();
 
+  //handles secret matching, labels and errors for confirm secret
+  useEffect(() => {
+    const areMatching = passwordsMatch(familySecret, confirmSecret);
+    if (confirmSecret.length && areMatching.message) {
+      setErrors({ ...errors, confirmSecret: areMatching.message });
+    } else {
+      setErrors({ ...errors, confirmSecret: 'Confirm Secret' });
+    }
+  }, [familySecret, confirmSecret]);
+
+  //handles when user clicks off of input and checks validation
+  const handleBlur = async (e, validation, field, type) => {
+    const value = e.target.value;
+    const error = await validation(e.target, type);
+    if (error.error && value) setErrors({ ...errors, [field]: error.message });
+  };
+
+  //checks validation, sets label, sets signUpValues
+  const handleChange = (e, validation, field, label) => {
+    const error = validation(e.target);
+    if (!error.error || e.target.value.length)
+      setErrors({ ...errors, [field]: label });
+    setFamilyCreds({ ...familyCreds, [field]: e.target.value });
+  };
+
   const submitFamily = async (e) => {
     e.preventDefault();
 
-    const { familyName, familySecret, confirmSecret } = familyCreds;
+    const { familyName, familySecret } = familyCreds;
 
     const familyValues = {
       name: familyName,
-      familySecret: familySecret,
+      familySecret,
     };
 
+    if (!confirmSecret.length || errors.confirmSecret !== 'Confirm Secret')
+      return;
+
     if (confirmSecret) {
-      await props.createFamily(familyValues);
+      const created = await props.createFamily(familyValues);
+      if (!created) return;
       const didJoin = await props.joinFamily(familyValues, props.currUser.id);
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
@@ -70,8 +104,8 @@ const JoinOrCreateFamily = (props) => {
     <div id="createJoinFamily">
       {joinOrCreate === 'create' ? (
         <form className="createJoin" onSubmit={submitFamily}>
-          <h5>Create Family</h5>
-          <h6>
+          <h4>CREATE FAMILY</h4>
+          <small className={classes.root}>
             Already have a family? Click
             <span
               id="switchToJoinFamily"
@@ -80,26 +114,20 @@ const JoinOrCreateFamily = (props) => {
               &nbsp;here&nbsp;
             </span>
             to enter family info.
-          </h6>
-          {/* <label>Family Name</label>
-          <input
-            name="familyName"
-            onChange={(e) => {
-              validUsername(e.target, 'Family name');
-            }}
-          /> */}
+          </small>
           <FormControl variant="outlined">
             <InputLabel
               htmlFor="parentOrChild"
               color="secondary"
               className={classes.parentOrChild}
             >
-              Relation To Family
+              {errors.relation}
             </InputLabel>
             <Select
+              required
               className={classes.parentOrChild}
               native
-              label="Relation To Family"
+              label={errors.relation}
               color="secondary"
               onChange={(e) =>
                 props.updateUser(props.currUser.id, { status: e.target.value })
@@ -113,70 +141,84 @@ const JoinOrCreateFamily = (props) => {
           </FormControl>
           <TextField
             className={classes.root}
-            label="Family Name"
+            label={errors.familyName}
             variant="outlined"
             color="secondary"
+            error={errors.familyName !== 'Family Name'}
+            onBlur={(e) =>
+              handleBlur(e, validUsername, 'familyName', 'Family name')
+            }
             onChange={(e) => {
-              validUsername(e.target, 'Family name');
-              setFamilyCreds({ ...familyCreds, familyName: e.target.value });
+              handleChange(e, validUsername, 'familyName', 'Family Name');
             }}
           />
-          {/* <label>Family Secret</label>
-          <input
-            name="familySecret"
-            type={passwordShown ? 'text' : 'password'}
-            onChange={(e) => {
-              secretValid(e.target);
-              setFamilySecret(e.target.value);
-            }}
-          /> */}
           <TextField
             className={classes.root}
             type="password"
-            label="Family Secret"
+            label={errors.familySecret}
             variant="outlined"
             color="secondary"
+            error={errors.familySecret !== 'Family Secret'}
+            onBlur={(e) => handleBlur(e, secretValid, 'familySecret')}
             onChange={(e) => {
-              secretValid(e.target);
               setFamilySecret(e.target.value);
-              setFamilyCreds({ ...familyCreds, familySecret: e.target.value });
+              handleChange(e, secretValid, 'familySecret', 'Family Secret');
             }}
           />
-          {/* <label>Confirm Family Secret</label>
-          <input
-            className="passwordInput"
-            name="confirmSecret"
-            type={passwordShown ? 'text' : 'password'}
-            onChange={(e) => {
-              passwordsMatch(familySecret, e.target, 'Secrets');
-            }}
-          /> */}
           <TextField
             className={classes.root}
             type="password"
-            label="Confirm Family Secret"
+            label={errors.confirmSecret}
             variant="outlined"
             color="secondary"
+            error={errors.confirmSecret !== 'Confirm Secret'}
             onChange={(e) => {
-              passwordsMatch(familySecret, e.target, 'Secrets');
-              setFamilyCreds({ ...familyCreds, confirmSecret: e.target.value });
+              setConfirmSecret(e.target.value);
             }}
           />
-          <Button onClick={submitFamily}>Sign Up</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              submitFamily(e);
+            }}
+            className={classes.root}
+          >
+            Sign Up
+          </Button>
         </form>
       ) : (
         <form className="createJoin" onSubmit={submitFamily}>
-          <h5>Join Family</h5>
-          <label>Family Name</label>
-          <input name="familyName" />
-          <label>Family Secret</label>
-          <input
-            id="test"
-            className="passwordInput"
-            name="familySecret"
-            type={passwordShown ? 'text' : 'password'}
+          <h4>JOIN FAMILY</h4>
+          <TextField
+            className={classes.root}
+            label={errors.familyName}
+            variant="outlined"
+            color="secondary"
+            onChange={(e) => {
+              setFamilyCreds({ ...familyCreds, familyName: e.target.value });
+            }}
           />
-          <button>Sign Up</button>
+          <TextField
+            className={classes.root}
+            type="password"
+            label={errors.familySecret}
+            variant="outlined"
+            color="secondary"
+            onChange={(e) => {
+              setFamilyCreds({ ...familyCreds, familySecret: e.target.value });
+            }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              submitFamily(e);
+            }}
+            className={classes.root}
+          >
+            Join Family
+          </Button>
           <small>{join}</small>
         </form>
       )}

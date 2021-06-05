@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 //Redux Imports
 import { connect } from 'react-redux';
-import { updateChildProfileThunk } from '../../store/actions/userActions/editChildProfile';
 
 //Material UI Imports
 import Button from '@material-ui/core/Button';
@@ -72,7 +71,7 @@ class ChildProfile extends Component {
             <div>Balance: ${balance}</div>
           </div>
         </div>
-        <Button
+        {/* <Button
           className="edit-profile-button"
           variant="outlined"
           color="primary"
@@ -86,7 +85,7 @@ class ChildProfile extends Component {
           close={this.handleClose}
           submit={this.handleSubmit}
           {...currUser}
-        />
+        /> */}
       </div>
     ) : (
       ''
@@ -100,10 +99,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (user) => dispatch(updateChildProfileThunk(user)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChildProfile);
+export default connect(mapStateToProps)(ChildProfile);
