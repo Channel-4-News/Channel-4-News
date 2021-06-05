@@ -9,6 +9,7 @@ import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
+import ChildLandingPage from './child components/ChildLandingPage';
 import Dummy from './dummyPage/dummy';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -83,6 +84,11 @@ class App extends Component {
               />
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
+              <Route
+                exact
+                path="/childlandingpage"
+                component={() => <ChildLandingPage user={this.state.user} />}
+              />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route
                 exact
