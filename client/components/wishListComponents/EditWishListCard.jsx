@@ -36,10 +36,9 @@ class EditWishListCard extends Component {
     this.setState({ [ev.target.name]: ev.target.value });
   }
 
-  onSubmit() {
+  async onSubmit() {
     const { itemName, imgUrl, cost, category, description } = this.state;
-    this.props.state();
-    this.props.editWishListCard({
+    await this.props.editWishListCard({
       itemName,
       imgUrl,
       cost,
@@ -47,6 +46,7 @@ class EditWishListCard extends Component {
       description,
       id: this.props.wishListItem.id,
     });
+    this.props.state();
   }
 
   render() {

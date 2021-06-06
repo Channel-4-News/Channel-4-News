@@ -16,59 +16,44 @@ class WishList extends Component {
     super(props);
     this.state = {
       sort: 'alphabetically',
-      filter: '',
       wishList: [],
-      sorted: false,
+      sorted: null,
     };
     this.changeSort = this.changeSort.bind(this);
     this.sortToggle = this.sortToggle.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.user.id && this.state.wishList.length === 0) {
-      await this.props.getWishList(this.props.user.id);
-      if (this.state.wishList.length > 0) {
-        const alphabetically = orderBy(
-          this.state.wishList,
-          ['itemName'],
-          ['asc']
-        );
+      this.props.getWishList(this.props.user.id);
+    }
+  }
+
+  componentDidUpdate() {
+    let mostExpensive, leastExpensive, alphabetically;
+    if (
+      this.state.sorted !== true &&
+      this.props.wishList !== this.state.wishList
+    ) {
+      let { wishList } = this.props;
+      this.setState({ wishList });
+    }
+    if (this.state.sorted === false) {
+      if (this.state.sort === 'most expensive') {
+        mostExpensive = sortByMostExpensive(this.props.wishList);
+        this.setState({ wishList: mostExpensive, sorted: true });
+      } else if (this.state.sort === 'least expensive') {
+        leastExpensive = sortByLeastExpensive(this.props.wishList);
+        this.setState({ wishList: leastExpensive, sorted: true });
+      } else if (this.state.sort === 'alphabetically') {
+        alphabetically = orderBy(this.props.wishList, ['itemName'], ['asc']);
         this.setState({ wishList: alphabetically, sorted: true });
-        // }
       }
     }
   }
 
   changeSort(sort) {
     this.setState({ sort });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.state.sorted === false &&
-      this.props.wishList !== this.state.wishList
-    ) {
-      const { wishList } = this.props;
-      this.setState({ wishList });
-    }
-    if (prevState.sort !== this.state.sort) {
-      console.log('being sorted');
-      if (this.state.sort === 'most expensive') {
-        console.log('sort changed', this.state.wishList);
-        const mostExpensive = sortByMostExpensive(this.state.wishList);
-        this.setState({ wishList: mostExpensive, sorted: true });
-      } else if (this.state.sort === 'least expensive') {
-        const leastExpensive = sortByLeastExpensive(this.state.wishList);
-        this.setState({ wishList: leastExpensive, sorted: true });
-      } else if (this.state.sort === 'alphabetically') {
-        const alphabetically = orderBy(
-          this.state.wishList,
-          ['itemName'],
-          ['asc']
-        );
-        this.setState({ wishList: alphabetically, sorted: true });
-      }
-    }
   }
 
   sortToggle() {
@@ -100,7 +85,7 @@ class WishList extends Component {
         </div>
       );
     } else {
-      return <p>No Wishes</p>;
+      return <div>No Wishes</div>;
     }
   }
 }
