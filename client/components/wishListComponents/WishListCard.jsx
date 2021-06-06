@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
@@ -84,8 +84,9 @@ const WishListCard = (props) => {
     return (
       <EditWishListCard
         wishListItem={item}
-        state={(edit) => {
-          setEdit(edit);
+        state={() => {
+          setEdit(false);
+          props.update();
         }}
       />
     );

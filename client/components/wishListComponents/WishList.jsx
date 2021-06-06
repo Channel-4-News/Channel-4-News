@@ -28,20 +28,13 @@ class WishList extends Component {
     if (this.props.user.id && this.state.wishList.length === 0) {
       await this.props.getWishList(this.props.user.id);
       if (this.state.wishList.length > 0) {
-        if (this.state.sort === 'most expensive') {
-          const mostExpensive = sortByMostExpensive(this.state.wishList);
-          this.setState({ wishList: mostExpensive, sorted: true });
-        } else if (this.state.sort === 'least expensive') {
-          const leastExpensive = sortByLeastExpensive(this.state.wishList);
-          this.setState({ wishList: leastExpensive, sorted: true });
-        } else if (this.state.sort === 'alphabetically') {
-          const alphabetically = orderBy(
-            this.state.wishList,
-            ['itemName'],
-            ['asc']
-          );
-          this.setState({ wishList: alphabetically, sorted: true });
-        }
+        const alphabetically = orderBy(
+          this.state.wishList,
+          ['itemName'],
+          ['asc']
+        );
+        this.setState({ wishList: alphabetically, sorted: true });
+        // }
       }
     }
   }
@@ -59,7 +52,9 @@ class WishList extends Component {
       this.setState({ wishList });
     }
     if (prevState.sort !== this.state.sort) {
+      console.log('being sorted');
       if (this.state.sort === 'most expensive') {
+        console.log('sort changed', this.state.wishList);
         const mostExpensive = sortByMostExpensive(this.state.wishList);
         this.setState({ wishList: mostExpensive, sorted: true });
       } else if (this.state.sort === 'least expensive') {
@@ -97,6 +92,7 @@ class WishList extends Component {
                   user={this.props.user}
                   key={wishListItem.id}
                   wishListItem={wishListItem}
+                  update={sortToggle}
                 />
               );
             })}
