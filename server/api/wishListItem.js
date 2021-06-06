@@ -31,6 +31,16 @@ const got = require('got');
 
 router.post('/', async (req, res, next) => {
   try {
+    const newItem = await WishListItem.create(req.body);
+    res.status(201).send(newItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//get form data for url
+router.post('/form', async (req, res, next) => {
+  try {
     const myUrl = req.body.url;
     const myCategory = req.body.category;
     const userId = req.body.userId;
@@ -73,12 +83,12 @@ router.post('/', async (req, res, next) => {
         description: metadata.description,
       };
     }
-    const newItem = await WishListItem.create({
+    const newItem = {
       ...result,
       category: myCategory,
       linkUrl: myUrl,
       userId,
-    });
+    };
     res.status(201).send(newItem);
   } catch (err) {
     next(err);

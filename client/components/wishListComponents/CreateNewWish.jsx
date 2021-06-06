@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -11,8 +11,10 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
-import { addNewWish } from '../../store/actions/wishListActions/addNewWish';
-import EditWishListCard from './EditWishListCard';
+import {
+  addNewWish,
+  fillForm,
+} from '../../store/actions/wishListActions/addNewWish';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -73,30 +75,17 @@ const CreateNewWish = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState('url');
-  const [select, setSelect] = useState('Miscelleneous');
+  const [select, setSelect] = useState('Miscellaneous');
   const [url, setUrl] = useState('');
-  const [itemAdded, setItemAdded] = useState(false);
-  const [lastItem, setLastItem] = useState({});
-  // const isFirstRender = useRef(true);
-  const onItemAdded = () => {
-    setItemAdded(true);
-    const newItemId = props.wishList
-      .map((item) => item.id)
-      .sort((a, b) => b - a)[0];
-    const item = props.wishList.find((item) => item.id === newItemId);
-    setLastItem({ ...item });
-  };
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //   } else {
-  //     console.log('lastItem changed');
-  //   }
-  // }, [lastItem]);
-  if (itemAdded) {
-    setForm('form');
-    setItemAdded(false);
-  }
+
+  const [itemName, setItemName] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [linkUrl, setLinkUrl] = useState('');
+  const [cost, setCost] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [userId, setUserId] = useState(props.user.id);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -161,19 +150,27 @@ const CreateNewWish = (props) => {
                   <option value={'Entertainment'}>Entertainment</option>
                   <option value={'Toys'}>Toys</option>
                   <option value={'Food'}>Food</option>
-                  <option defaultValue={'Miscelleneous'}>Miscelleneous</option>
+                  <option defaultValue={'Miscellaneous'}>Miscellaneous</option>
                 </NativeSelect>
               </FormControl>
             </DialogContent>
             <DialogActions>
               <Button
-                onClick={() => {
-                  props.addNewWish(
-                    'https://www.amazon.com/Olight-I3T-EOS-Lumens-Dual-Output/dp/B07DLRK7Q5?ref_=Oct_DLandingS_D_ecb7a14f_60&smid=A3E6E1V9X0VZ5Q',
-                    'Electronics',
+                onClick={async () => {
+                  const result = await props.fillForm(
+                    url,
+                    select,
                     props.user.id
                   );
-                  onItemAdded();
+                  setItemName(result.itemName);
+                  setCategory(result.category);
+                  setCost(result.cost);
+                  setDescription(result.description);
+                  setImgUrl(result.imgUrl);
+                  setLinkUrl(result.linkUrl);
+                  console.log(userId);
+                  props.update();
+                  setForm('form');
                 }}
                 color="primary"
               >
@@ -185,7 +182,101 @@ const CreateNewWish = (props) => {
             </DialogActions>
           </div>
         ) : (
-          ''
+          <div>
+            <DialogContent id="withdrawBoxItems">
+              <DialogContentText id="alert-dialog-description">
+                Name
+              </DialogContentText>
+              <TextField
+                id="wishListWithdrawBox"
+                onChange={setItemName}
+                type="search"
+                variant="outlined"
+                defaultValue={itemName}
+              />
+              <DialogContentText id="alert-dialog-description">
+                Image
+              </DialogContentText>
+              <TextField
+                id="wishListWithdrawBox"
+                onChange={setImgUrl}
+                type="search"
+                variant="outlined"
+                defaultValue={imgUrl}
+              />
+              <DialogContentText id="alert-dialog-description">
+                Link
+              </DialogContentText>
+              <TextField
+                id="wishListWithdrawBox"
+                onChange={setLinkUrl}
+                type="search"
+                variant="outlined"
+                defaultValue={linkUrl}
+              />
+              <DialogContentText id="alert-dialog-description">
+                Cost
+              </DialogContentText>
+              <TextField
+                id="wishListWithdrawBox"
+                onChange={setCost}
+                type="search"
+                variant="outlined"
+                defaultValue={cost}
+              />
+              <DialogContentText id="alert-dialog-description">
+                Description
+              </DialogContentText>
+              <TextField
+                id="wishListWithdrawBox"
+                onChange={setDescription}
+                type="search"
+                variant="outlined"
+                defaultValue={description}
+              />
+              <DialogContentText id="alert-dialog-description">
+                Pick a Category
+              </DialogContentText>
+              <FormControl className={classes.margin}>
+                <NativeSelect
+                  id="demo-customized-select-native"
+                  value={select}
+                  onChange={onSelectChange}
+                  input={<BootstrapInput />}
+                >
+                  <option value={'Electronics'}>Electronics</option>
+                  <option value={'Clothing'}>Clothing</option>
+                  <option value={'Entertainment'}>Entertainment</option>
+                  <option value={'Toys'}>Toys</option>
+                  <option value={'Food'}>Food</option>
+                  <option defaultValue={'Miscellaneous'}>Miscellaneous</option>
+                </NativeSelect>
+              </FormControl>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={async () => {
+                  await props.addNewWish({
+                    itemName,
+                    cost,
+                    imgUrl,
+                    linkUrl,
+                    description,
+                    category,
+                    userId,
+                  });
+                  handleClose();
+                  props.update();
+                }}
+                color="primary"
+              >
+                Enter
+              </Button>
+              <Button onClick={handleClose} color="secondary">
+                Cancel
+              </Button>
+            </DialogActions>
+          </div>
         )}
       </Dialog>
     </div>
@@ -200,8 +291,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewWish: (url, category, userId) =>
-      dispatch(addNewWish(url, category, userId)),
+    addNewWish: (item) => dispatch(addNewWish(item)),
+    fillForm: (url, category, userId) =>
+      dispatch(fillForm(url, category, userId)),
   };
 };
 
