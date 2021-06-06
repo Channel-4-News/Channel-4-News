@@ -7,3 +7,5 @@ before_script:
   - psql -c 'create database channel_4_news_db;' -U postgres
 env:
   - JWT=12345
+  - PLAID_CLIENT_ID=60b98sdkjhakjdfhi
+  - PLAID_SECRET=51ddbfjsdhfkjhsdkhfks
