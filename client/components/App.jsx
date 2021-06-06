@@ -15,6 +15,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 //For testing purposes
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
+import Home from './Home';
 
 class App extends Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class App extends Component {
           <NavBar user={this.state.user} />
           <div id="mainAppContent">
             <Switch>
+              <Route exact path="/" component={Home} />
               <Route exact path="/signup" component={Register} />
               <Route exact path="/login" component={LogIn} />
               <Route

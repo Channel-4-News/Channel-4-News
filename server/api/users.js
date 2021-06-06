@@ -36,8 +36,16 @@ router.get('/:id', async (req, res, next) => {
 //create new user
 router.post('/', async (req, res, next) => {
   try {
-    const { username, email, password, firstName, lastName, status, isAdmin } =
-      req.body;
+    const {
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      status,
+      isAdmin,
+      stripeAccount,
+    } = req.body;
     const newUser = await User.create({
       username,
       email,
@@ -46,6 +54,7 @@ router.post('/', async (req, res, next) => {
       lastName,
       status,
       isAdmin,
+      stripeAccount,
     });
     res.status(201).send(newUser);
   } catch (err) {
