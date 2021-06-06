@@ -16,6 +16,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
+import PlaidLink from './PlaidLink';
 
 class App extends Component {
   constructor(props) {
@@ -98,6 +99,7 @@ class App extends Component {
                 component={() => <WishList user={this.state.user} />}
               />
               <Route exact path="/dummy" component={Dummy} />
+              <Route exact path="/link" component={PlaidLink} />
             </Switch>
           </div>
         </Router>
