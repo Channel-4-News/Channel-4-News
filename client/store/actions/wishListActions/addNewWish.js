@@ -2,11 +2,12 @@ import axios from 'axios';
 
 const ADD_NEW_WISH = 'ADD_NEW_WISH';
 
-const addNewWish = (item) => {
+const addNewWish = (item, history) => {
   return async (dispatch) => {
     try {
       const result = await axios.post('/api/wishListItem/', item);
       dispatch(_addNewWish(result));
+      history.go(0);
     } catch (err) {
       console.log(err);
     }
@@ -21,7 +22,6 @@ const fillForm = (url, category, userId) => {
         category,
         userId,
       });
-      console.log(result.data);
       return result.data;
     } catch (err) {
       console.log(err);

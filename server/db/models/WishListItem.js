@@ -15,17 +15,12 @@ const WishListItem = db.define('wishListItems', {
   description: {
     type: DataTypes.TEXT,
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   imgUrl: {
     type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue: 'default-img.jpg',
-    validate: {
-      notEmpty: true,
-    },
+    defaultValue:
+      'https://cdn2.iconfinder.com/data/icons/eins-e-commerce-filled/64/wishlist_favourite_love_shopping_item-512.png',
   },
   cost: {
     type: DataTypes.DECIMAL(10, 2),
@@ -36,9 +31,6 @@ const WishListItem = db.define('wishListItems', {
     type: DataTypes.TEXT,
     allowNull: false,
     defaultValue: '#',
-    validate: {
-      notEmpty: true,
-    },
   },
   category: {
     type: DataTypes.ENUM([
@@ -55,6 +47,16 @@ const WishListItem = db.define('wishListItems', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+});
+
+WishListItem.addHook('beforeCreate', async (wishListItem) => {
+  if (wishListItem.imgUrl === '') {
+    wishListItem.imgUrl =
+      'https://cdn2.iconfinder.com/data/icons/eins-e-commerce-filled/64/wishlist_favourite_love_shopping_item-512.png';
+  }
+  if (wishListItem.purchased === null || wishListItem.purchased === undefined) {
+    wishListItem.purchased = false;
+  }
 });
 
 module.exports = { WishListItem, WishList };

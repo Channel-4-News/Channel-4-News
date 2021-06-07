@@ -21,6 +21,7 @@ class WishList extends Component {
     };
     this.changeSort = this.changeSort.bind(this);
     this.sortToggle = this.sortToggle.bind(this);
+    this.reRender = this.reRender.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +30,7 @@ class WishList extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     let mostExpensive, leastExpensive, alphabetically;
     if (
       this.state.sorted !== true &&
@@ -50,6 +51,9 @@ class WishList extends Component {
         this.setState({ wishList: alphabetically, sorted: true });
       }
     }
+    if (prevState.wishList.length !== this.state.wishList.length) {
+      this.setState({});
+    }
   }
 
   changeSort(sort) {
@@ -60,22 +64,31 @@ class WishList extends Component {
     this.setState({ sorted: false });
   }
 
+  reRender() {
+    let { wishList } = this.props;
+    this.setState({ wishList });
+  }
+
   render() {
-    const { changeSort, sortToggle } = this;
+    const { changeSort, sortToggle, reRender } = this;
     if (this.props.wishList.length) {
       return (
         <div id="wishListContent">
           <div id="wishListTopBar">
             <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
             <WithdrawMoneyDialog user={this.props.user} />
-            <CreateNewWish update={sortToggle} user={this.props.user} />
+            <CreateNewWish
+              update={sortToggle}
+              user={this.props.user}
+              newItem={reRender}
+            />
           </div>
           <div id="wishListWrapper">
-            {this.state.wishList.map((wishListItem) => {
+            {this.state.wishList.map((wishListItem, idx) => {
               return (
                 <WishListCard
                   user={this.props.user}
-                  key={wishListItem.id}
+                  key={idx}
                   wishListItem={wishListItem}
                   update={sortToggle}
                 />

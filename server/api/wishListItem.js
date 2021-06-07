@@ -19,16 +19,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-//Find Url Data for wish list
-const puppeteer = require('puppeteer');
-const metascraper = require('metascraper')([
-  require('metascraper-image')(),
-  require('metascraper-title')(),
-  require('metascraper-description')(),
-  require('@samirrayani/metascraper-shopping')(),
-]);
-const got = require('got');
-
+//Add item to wish list
 router.post('/', async (req, res, next) => {
   try {
     const newItem = await WishListItem.create(req.body);
@@ -39,6 +30,14 @@ router.post('/', async (req, res, next) => {
 });
 
 //get form data for url
+const puppeteer = require('puppeteer');
+const metascraper = require('metascraper')([
+  require('metascraper-image')(),
+  require('metascraper-title')(),
+  require('metascraper-description')(),
+  require('@samirrayani/metascraper-shopping')(),
+]);
+const got = require('got');
 router.post('/form', async (req, res, next) => {
   try {
     const myUrl = req.body.url;

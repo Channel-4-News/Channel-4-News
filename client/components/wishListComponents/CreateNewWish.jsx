@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -83,17 +84,11 @@ const CreateNewWish = (props) => {
   const [linkUrl, setLinkUrl] = useState('');
   const [cost, setCost] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
   const [userId, setUserId] = useState(props.user.id);
+  const [purchased, setPurchased] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
-  };
-  const onSelectChange = (event) => {
-    setSelect(event.target.value);
-  };
-  const onUrlChange = (event) => {
-    setUrl(event.target.value);
   };
   return (
     <div>
@@ -130,7 +125,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={onUrlChange}
+                onChange={(event) => setUrl(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={url}
@@ -142,7 +137,7 @@ const CreateNewWish = (props) => {
                 <NativeSelect
                   id="demo-customized-select-native"
                   value={select}
-                  onChange={onSelectChange}
+                  onChange={(event) => setSelect(event.target.value)}
                   input={<BootstrapInput />}
                 >
                   <option value={'Electronics'}>Electronics</option>
@@ -163,12 +158,11 @@ const CreateNewWish = (props) => {
                     props.user.id
                   );
                   setItemName(result.itemName);
-                  setCategory(result.category);
+                  setSelect(result.category);
                   setCost(result.cost);
                   setDescription(result.description);
                   setImgUrl(result.imgUrl);
                   setLinkUrl(result.linkUrl);
-                  console.log(userId);
                   props.update();
                   setForm('form');
                 }}
@@ -189,7 +183,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={setItemName}
+                onChange={(event) => setItemName(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={itemName}
@@ -199,7 +193,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={setImgUrl}
+                onChange={(event) => setImgUrl(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={imgUrl}
@@ -209,7 +203,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={setLinkUrl}
+                onChange={(event) => setLinkUrl(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={linkUrl}
@@ -219,7 +213,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={setCost}
+                onChange={(event) => setCost(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={cost}
@@ -229,7 +223,7 @@ const CreateNewWish = (props) => {
               </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
-                onChange={setDescription}
+                onChange={(event) => setDescription(event.target.value)}
                 type="search"
                 variant="outlined"
                 defaultValue={description}
@@ -241,7 +235,7 @@ const CreateNewWish = (props) => {
                 <NativeSelect
                   id="demo-customized-select-native"
                   value={select}
-                  onChange={onSelectChange}
+                  onChange={(event) => setSelect(event.target.value)}
                   input={<BootstrapInput />}
                 >
                   <option value={'Electronics'}>Electronics</option>
@@ -262,11 +256,10 @@ const CreateNewWish = (props) => {
                     imgUrl,
                     linkUrl,
                     description,
-                    category,
+                    category: select,
                     userId,
+                    purchased,
                   });
-                  handleClose();
-                  props.update();
                 }}
                 color="primary"
               >
@@ -289,12 +282,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    addNewWish: (item) => dispatch(addNewWish(item)),
+    addNewWish: (item) => dispatch(addNewWish(item, history)),
     fillForm: (url, category, userId) =>
       dispatch(fillForm(url, category, userId)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateNewWish);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CreateNewWish)
+);
