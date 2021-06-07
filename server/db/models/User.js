@@ -68,6 +68,9 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
+  stripeAccount: {
+    type: DataTypes.STRING,
+  },
 });
 
 //authenticates user

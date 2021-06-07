@@ -1,11 +1,9 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const router = Router();
 
 const {
   models: { WishListItem },
 } = require('../db/models/associations');
-
-router.use(json());
 
 //Get all Wish List items by id
 router.get('/:id', async (req, res, next) => {
