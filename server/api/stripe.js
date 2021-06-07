@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
 });
 
 //get balance
-router.get('/stripe/balance', async (req, res, next) => {
+router.get('/balance', async (req, res, next) => {
   try {
     const balance = await stripe.balance.retrieve({});
     res.send(balance);
@@ -32,7 +32,7 @@ router.get('/stripe/balance', async (req, res, next) => {
 });
 
 //stripe payout
-router.post('/stripe/payouts/:id', async (req, res, next) => {
+router.post('/payouts/:id', async (req, res, next) => {
   try {
     const { amount, destination } = req.body;
     const payout = await stripe.payouts.create({
@@ -43,6 +43,83 @@ router.post('/stripe/payouts/:id', async (req, res, next) => {
     res.send(payout);
   } catch (ex) {
     next(ex);
+  }
+});
+
+// CREATE VIRTUAL CARDS
+
+//create a card holder
+router.post('/create_cardholder', async (req, res, next) => {
+  try {
+    const { name, email } = req.body;
+    const cardholder = await stripe.issuing.cardholders.create({
+      name: name,
+      email: email,
+      status: 'active',
+      type: 'individual',
+      billing: {
+        address: {
+          line1: '123 Main Street',
+          city: 'San Francisco',
+          state: 'CA',
+          postal_code: '94111',
+          country: 'US',
+        },
+      },
+    });
+
+    res.send(cardholder);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//create a card
+router.post('/create_card', async (req, res, next) => {
+  try {
+    const { cardholder } = req.body;
+    const card = await stripe.issuing.cards.create({
+      cardholder: cardholder,
+      type: 'virtual',
+      currency: 'usd',
+      status: 'active',
+    });
+    res.send(card);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//create card details
+router.get('/card', async (req, res, next) => {
+  try {
+    const { cardId } = req.body;
+    const card_details = await stripe.issuing.cards.retrieve(cardId, {
+      expand: ['number', 'cvc'],
+    });
+    res.send(card_details);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//set spending limit
+router.put('/card/:id/limit', async (req, res, next) => {
+  try {
+    const { cardId, limit } = req.body;
+    const card = await stripe.issuing.cards.update(cardId, {
+      spending_controls: {
+        spending_limits: [
+          {
+            amount: limit,
+            interval: 'all_time',
+          },
+        ],
+      },
+    });
+    res.send(card);
+  } catch (err) {
+    next(err);
   }
 });
 

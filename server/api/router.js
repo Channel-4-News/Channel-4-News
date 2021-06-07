@@ -10,6 +10,7 @@ router.use('/wishlistItem', require('./wishListItem'));
 router.use('/transaction', require('./transaction'));
 router.use('/notification', require('./notification'));
 router.use('/stripe', require('./stripe'));
-router.use('/plaid', require('./plaid'));
+
+// router.use('/plaid', require('./plaid'));
 
 module.exports = router;

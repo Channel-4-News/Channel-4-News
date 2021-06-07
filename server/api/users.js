@@ -1,4 +1,4 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const Allowance = require('../db/models/Allowance');
 const router = Router();
 const {
