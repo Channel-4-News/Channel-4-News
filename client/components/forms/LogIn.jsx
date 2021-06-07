@@ -70,7 +70,13 @@ const LogIn = (props) => {
         </Button>
         <small>{loggedIn}</small>
         <small>
-          Don&apos;t have an account? <span id="takeMeToSignUp">Sign up.</span>
+          Don&apos;t have an account?{' '}
+          <span
+            id="takeMeToSignUp"
+            onClick={() => props.history.push('/signup')}
+          >
+            Sign up.
+          </span>
         </small>
       </form>
     </div>

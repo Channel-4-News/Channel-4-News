@@ -5,6 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
+import PayoutChore from './PayoutChore';
+import { Button } from '@material-ui/core';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
@@ -39,6 +41,7 @@ const ChoreCard = (props) => {
       <input
         type="checkbox"
         className="choreCompletedCheck"
+        disabled={props.chore.wasPaid ? true : false}
         checked={complete ? 'checked' : null}
         onChange={() => {
           setComplete(!complete);
@@ -64,6 +67,7 @@ const ChoreCard = (props) => {
       {props.isParent ? (
         <div className="editChore">
           <IconButton
+            disabled={props.chore.wasPaid ? true : false}
             onClick={() => {
               props.updateClicked(true);
               props.setChore(props.chore);
@@ -74,6 +78,20 @@ const ChoreCard = (props) => {
           <IconButton onClick={() => props.deleteChore(props.chore.id)}>
             <HighlightOffIcon />
           </IconButton>
+          <Button
+            disabled={props.chore.wasPaid ? true : false}
+            id="payoutButton"
+            variant="outlined"
+            onClick={() => {
+              setComplete(true);
+              props.updateChore(props.chore.id, {
+                isComplete: true,
+                wasPaid: true,
+              });
+            }}
+          >
+            Payout
+          </Button>
         </div>
       ) : null}
     </div>
@@ -84,6 +102,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     completeChore: (id, info) => dispatch(updateChore(id, info)),
     deleteChore: (id) => dispatch(deleteChore(id)),
+    updateChore: (id, updateInfo) => dispatch(updateChore(id, updateInfo)),
   };
 };
 

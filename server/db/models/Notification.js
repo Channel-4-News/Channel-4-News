@@ -18,7 +18,10 @@ const Notification = db.define('notification', {
       'Miscellaneous',
       'Food',
     ]),
-    defaultValue: 'Miscellaneous',
+  },
+  isChore: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   isCash: {
     type: DataTypes.BOOLEAN,
