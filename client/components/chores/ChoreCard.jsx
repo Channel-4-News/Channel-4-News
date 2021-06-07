@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
-import PayoutChore from './PayoutChore';
 import { Button } from '@material-ui/core';
 
 const ChoreCard = (props) => {
