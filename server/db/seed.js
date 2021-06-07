@@ -131,13 +131,14 @@ const syncAndSeed = async () => {
 
     const kid1 = await User.create({
       username: 'littlejoe',
-      email: 'joe@test.com',
+      email: 'joey@test.com',
       password: 'password123',
       firstName: 'Joe',
-      lastName: 'Kid',
+      lastName: 'Momordad',
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
+      stripeAccount: 'acct_1IzAs68Zgryb9oce',
     });
 
     const kid2 = await User.create({
@@ -145,10 +146,11 @@ const syncAndSeed = async () => {
       email: 'franny@test.com',
       password: 'password123',
       firstName: 'Francis',
-      lastName: 'Haha',
+      lastName: 'Momordad',
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
+      stripeAccount: 'acct_1IzAmb6ZMsqnhkqA',
     });
 
     const kid3 = await User.create({
@@ -156,22 +158,37 @@ const syncAndSeed = async () => {
       email: 'archie@test.com',
       password: 'password123',
       firstName: 'Archie',
-      lastName: 'Ismadder',
+      lastName: 'Momordad',
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
+      stripeAccount: 'acct_1IzApu4TvddDN8Cv',
     });
 
     const parent1 = await User.create({
-      username: 'mamama',
+      username: 'Sonny',
       email: 'mom@test.com',
       password: 'password123',
-      firstName: 'Mommie',
-      lastName: 'Momster',
+      firstName: 'Sonny',
+      lastName: 'Momordad',
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
+      stripeAccount: 'acct_1IzAbQ4TLAmJPSen',
+    });
+
+    const parent2 = await User.create({
+      username: 'Sandy',
+      email: 'dad@test.com',
+      password: 'password123',
+      firstName: 'Sandy',
+      lastName: 'Momordad',
+      imgUrl:
+        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+      familyId: myFam.id,
+      status: 'Parent',
+      stripeAccount: 'acct_1IzAuA4SBMCACHhF',
     });
 
     Chore.create({

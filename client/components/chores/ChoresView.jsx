@@ -34,7 +34,7 @@ const Chores = (props) => {
       props.getChores(props.currUser.familyId);
       if (props.currUser.status === 'Parent')
         setKids(
-          props.currUser.family.users.filter((user) => user.status === 'Child')
+          props.currUser.family?.users.filter((user) => user.status === 'Child')
         );
     }
   }, [props.currUser, allKids]);
@@ -93,128 +93,140 @@ const Chores = (props) => {
 
   return (
     <div id="choresView">
-      <div id="choreCardContainer">
-        {props.currUser.status === 'Parent' ? (
-          <div>
-            <Modal
-              id="addChoreModal"
-              open={addChore}
-              onClose={() => {
-                handleClose('modal');
-              }}
-            >
-              <AddChore
-                kids={kids}
-                familyId={props.currUser.familyId}
-                setAddChore={setAddChore}
-              />
-            </Modal>
-          </div>
-        ) : null}
-        <Modal
-          id="addChoreModal"
-          open={updateClicked}
-          onClose={() => {
-            handleClose('modal');
-          }}
-        >
-          <UpdateChore
-            chore={choreToUpdate}
-            kids={kids}
-            setClicked={setUpdateClicked}
-          />
-        </Modal>
-        {kids.length > 1 && props.currUser.status === 'Parent' ? (
-          <div id="childDropdown">
-            <div id="filterAndSortChores">
-              <div id="chooseChildHover">
-                <Button id="childDropButton" variant="contained">
-                  Choose child
-                </Button>
-                <div id="childDropdownContent">
-                  {kids.map((user) => {
-                    return (
-                      <div
-                        key={`${user.id}familyChild`}
-                        onClick={() => {
-                          setChildSelect(true);
-                          setSelectedKid(user);
-                        }}
-                      >
-                        {user.firstName}
-                      </div>
-                    );
-                  })}
-                  <div
-                    onClick={() => {
-                      setAllKids(allKids + 1);
-                    }}
-                  >
-                    All
-                  </div>
-                </div>
-              </div>
+      {props.chores.length ? (
+        <div id="choreCardContainer">
+          {props.currUser.status === 'Parent' ? (
+            <div>
+              <Modal
+                id="addChoreModal"
+                open={addChore}
+                onClose={() => {
+                  handleClose('modal');
+                }}
+              >
+                <AddChore
+                  kids={kids}
+                  familyId={props.currUser.familyId}
+                  setAddChore={setAddChore}
+                />
+              </Modal>
             </div>
-            <Button variant="contained" onClick={() => setAddChore(true)}>
-              Add Chore
-            </Button>
-          </div>
-        ) : (
-          <div id="childDropdown">
+          ) : null}
+          <Modal
+            id="addChoreModal"
+            open={updateClicked}
+            onClose={() => {
+              handleClose('modal');
+            }}
+          >
+            <UpdateChore
+              chore={choreToUpdate}
+              kids={kids}
+              setClicked={setUpdateClicked}
+            />
+          </Modal>
+          {kids.length > 1 && props.currUser.status === 'Parent' ? (
             <div id="childDropdown">
               <div id="filterAndSortChores">
                 <div id="chooseChildHover">
-                  <Button id="sortButtonChild" variant="contained">
-                    &nbsp;&nbsp;Sort By&nbsp;&nbsp;
+                  <Button id="childDropButton" variant="contained">
+                    Choose child
                   </Button>
                   <div id="childDropdownContent">
-                    <div onClick={() => setChores(sortBy('amount', chores))}>
-                      Amount
-                    </div>
-                    <div onClick={() => setChores(sortBy('due', chores))}>
-                      Due
-                    </div>
+                    {kids.map((user) => {
+                      return (
+                        <div
+                          key={`${user.id}familyChild`}
+                          onClick={() => {
+                            setChildSelect(true);
+                            setSelectedKid(user);
+                          }}
+                        >
+                          {user.firstName}
+                        </div>
+                      );
+                    })}
                     <div
-                      onClick={() => setChores(sortBy('incomplete', chores))}
+                      onClick={() => {
+                        setAllKids(allKids + 1);
+                      }}
                     >
-                      Incomplete
+                      All
                     </div>
                   </div>
                 </div>
               </div>
+              <Button variant="contained" onClick={() => setAddChore(true)}>
+                Add Chore
+              </Button>
             </div>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={() => {
-                handleClose('sort');
-              }}
-            >
-              <MenuItem onClick={() => handleClose('sort')}>Amount</MenuItem>
-            </Menu>
-          </div>
-        )}
-        {chores.map((chore) => (
-          <ChoreCard
-            chore={chore}
-            key={`${chore.id}chore`}
-            isParent={props.currUser.status === 'Parent'}
-            updateClicked={setUpdateClicked}
-            setChore={setChoreToUpdate}
-          />
-        ))}
-        {expiredChores.map((chore) => (
-          <ChoreCard
-            chore={chore}
-            key={`${chore.id}chore`}
-            isParent={props.currUser.status === 'Parent'}
-            updateClicked={setUpdateClicked}
-            setChore={setChoreToUpdate}
-          />
-        ))}
-      </div>
+          ) : (
+            <div id="childDropdown">
+              <div id="childDropdown">
+                <div id="filterAndSortChores">
+                  <div id="chooseChildHover">
+                    <Button id="sortButtonChild" variant="contained">
+                      &nbsp;&nbsp;Sort By&nbsp;&nbsp;
+                    </Button>
+                    <div id="childDropdownContent">
+                      <div onClick={() => setChores(sortBy('amount', chores))}>
+                        Amount
+                      </div>
+                      <div onClick={() => setChores(sortBy('due', chores))}>
+                        Due
+                      </div>
+                      <div
+                        onClick={() => setChores(sortBy('incomplete', chores))}
+                      >
+                        Incomplete
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={() => {
+                  handleClose('sort');
+                }}
+              >
+                <MenuItem onClick={() => handleClose('sort')}>Amount</MenuItem>
+              </Menu>
+            </div>
+          )}
+          {chores.map((chore) => (
+            <ChoreCard
+              chore={chore}
+              key={`${chore.id}chore`}
+              isParent={props.currUser.status === 'Parent'}
+              updateClicked={setUpdateClicked}
+              setChore={setChoreToUpdate}
+            />
+          ))}
+          {expiredChores.map((chore) => (
+            <ChoreCard
+              chore={chore}
+              key={`${chore.id}chore`}
+              isParent={props.currUser.status === 'Parent'}
+              updateClicked={setUpdateClicked}
+              setChore={setChoreToUpdate}
+            />
+          ))}
+        </div>
+      ) : props.currUser?.status === 'Parent' ? (
+        <div>
+          You haven&apos;t added chores! Please click <span>here</span> to add a
+          chore.
+        </div>
+      ) : (
+        <div>
+          You haven&apos;t been assigned any chores. Click here to send your
+          parent(s) a reminder to add chores.
+        </div>
+      )}
     </div>
   );
 };
