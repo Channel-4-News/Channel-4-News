@@ -9,6 +9,12 @@ import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
+import ChildLandingPage from './child components/ChildLandingPage';
+import Dummy from './dummyPage/dummy';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+//For testing purposes
+import EditChildInfo from './forms/EditChildInfo';
 
 class App extends Component {
   constructor(props) {
@@ -30,24 +36,70 @@ class App extends Component {
   }
 
   render() {
+    const parentTheme = createMuiTheme({
+      palette: {
+        primary: {
+          light: '#e6f2f9',
+          main: '#c9d4db',
+          dark: '#b4bfc6',
+          contrastText: '#fff',
+        },
+        secondary: {
+          light: '#62efff',
+          main: '#00bcd4',
+          dark: '#008ba3',
+          contrastText: '#000',
+        },
+      },
+    });
+
+    const kidTheme = createMuiTheme({
+      palette: {
+        primary: {
+          light: '#7fc8ff',
+          main: '#3e98ff',
+          dark: '#006bcb',
+          contrastText: '#fff',
+        },
+        secondary: {
+          light: '#ff5993',
+          main: '#ef0066',
+          dark: '#b6003c',
+          contrastText: '#000',
+        },
+      },
+    });
     return (
-      <Router>
-        <NavBar user={this.state.user} />
-        <div id="mainAppContent">
-          <Switch>
-            <Route exact path="/signup" component={Register} />
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/createfamily" component={JoinOrCreateFamily} />
-            <Route exact path="/chores" component={Chores} />
-            <Route exact path="/childprofile" component={ChildProfile} />
-            <Route
-              exact
-              path="/wishlist"
-              component={() => <WishList user={this.state.user} />}
-            />
-          </Switch>
-        </div>
-      </Router>
+      <ThemeProvider theme={kidTheme}>
+        <Router>
+          <NavBar user={this.state.user} />
+          <div id="mainAppContent">
+            <Switch>
+              <Route exact path="/signup" component={Register} />
+              <Route exact path="/login" component={LogIn} />
+              <Route
+                exact
+                path="/createfamily"
+                component={JoinOrCreateFamily}
+              />
+              <Route exact path="/chores" component={Chores} />
+              <Route exact path="/childprofile" component={ChildProfile} />
+              <Route
+                exact
+                path="/childlandingpage"
+                component={() => <ChildLandingPage user={this.state.user} />}
+              />
+              <Route exact path="/editchildinfo" component={EditChildInfo} />
+              <Route
+                exact
+                path="/wishlist"
+                component={() => <WishList user={this.state.user} />}
+              />
+              <Route exact path="/dummy" component={Dummy} />
+            </Switch>
+          </div>
+        </Router>
+      </ThemeProvider>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { updateChore } from '../../store/actions/choreActions/updateChore';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,9 +8,34 @@ import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
+  const [dueDate, setDueDate] = useState('');
 
+  useEffect(() => {
+    if (!props.chore.isRecurring) {
+      const date = new Date(props.chore.due);
+      setDueDate(`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`);
+    } else {
+      props.chore.recurringInterval > 1
+        ? setDueDate('Weekly')
+        : setDueDate('Daily');
+    }
+  });
+
+  const today = new Date();
+  let expired;
+  if (props.chore.due && new Date(props.chore.due) < today) expired = true;
   return (
-    <div id={props.isParent ? 'choreCardParent' : 'choreCard'}>
+    <div
+      className={
+        props.isParent && !expired
+          ? 'choreCardParent'
+          : !expired
+            ? 'choreCard'
+            : props.isParent && expired
+              ? 'choreCardParent expiredCard'
+              : 'choreCard expiredCard'
+      }
+    >
       <input
         type="checkbox"
         className="choreCompletedCheck"
@@ -30,7 +55,11 @@ const ChoreCard = (props) => {
       <div>${props.chore.amount}</div>
       <div className="assignmentContainer">
         <div>{props.chore.user.firstName}</div>
-        <small>Daily</small>
+        {!props.chore.isRecurring ? (
+          <small>Due: {dueDate}</small>
+        ) : (
+          <small>{dueDate}</small>
+        )}
       </div>
       {props.isParent ? (
         <div className="editChore">

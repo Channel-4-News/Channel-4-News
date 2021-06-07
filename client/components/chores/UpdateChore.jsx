@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { updateChore } from '../../store/actions/choreActions/updateChore';
 import {
@@ -16,6 +16,8 @@ import {
 
 const UpdateChore = (props) => {
   const [updateValues, setUpdateValues] = useState({});
+  const [today, setToday] = useState('');
+  const [interval, setInterval] = useState('');
 
   const icons = [
     { name: 'Miscellaneous', file: 'misc' },
@@ -31,6 +33,29 @@ const UpdateChore = (props) => {
     { name: 'Plants', file: 'watering-plants' },
   ];
 
+  useEffect(() => {
+    const holdToday = new Date();
+    let year = holdToday.getFullYear();
+    let day = holdToday.getDate();
+    let month = holdToday.getMonth() + 1;
+    if (`${day}`.length < 2) {
+      day = `0${day}`;
+    }
+    if (`${month}`.length < 2) {
+      month = `0${month}`;
+    }
+    setToday(`${year}-${month}-${day}`);
+  }, []);
+
+  useEffect(() => {
+    if (props.chore.isRecurring) {
+      props.chore.recurringInterval === 1 ? setInterval('1') : setInterval('7');
+    }
+    if (props.chore.due) {
+      setToday(props.chore.due);
+    }
+  }, [props.chore]);
+
   const filteredKids = props.kids.filter(
     (kid) => kid.firstName !== props.chore.user.firstName
   );
@@ -45,6 +70,13 @@ const UpdateChore = (props) => {
         margin: theme.spacing(1),
       },
     },
+    divWrap: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      margin: theme.spacing(1),
+    },
+    interval: { width: '48%' },
   }));
 
   const theme = createMuiTheme({
@@ -139,7 +171,6 @@ const UpdateChore = (props) => {
             native
             placeholder={props.chore.user.firstName}
             defaultValue={props.chore.user.firstName}
-            //   value={state.age}
             label="Assignee"
             color="secondary"
             onChange={(e) =>
@@ -158,6 +189,40 @@ const UpdateChore = (props) => {
             })}
           </Select>
         </FormControl>
+        <div id="dueOrInterval" className={classes.divWrap}>
+          <FormControl variant="outlined" className={classes.interval}>
+            <InputLabel htmlFor="choreAssigneeAdd">Interval</InputLabel>
+            <Select
+              native
+              label="Interval"
+              value={interval}
+              onChange={(e) => {
+                setInterval(e.target.value);
+                setUpdateValues({
+                  ...updateValues,
+                  recurringInterval: e.target.value * 1,
+                });
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value="1">Daily</option>
+              <option value="7">Weekly</option>
+            </Select>
+          </FormControl>
+          <small id="smallOr">OR</small>
+          <TextField
+            className={classes.interval}
+            id="addChoreInput"
+            label="Due Date"
+            variant="outlined"
+            type="date"
+            value={today}
+            onChange={(e) => {
+              setToday(e.target.value);
+              setUpdateValues({ ...updateValues, due: e.target.value });
+            }}
+          />
+        </div>
         <Button
           variant="contained"
           color="secondary"

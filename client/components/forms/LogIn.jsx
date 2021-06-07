@@ -7,16 +7,30 @@ import {
 } from '../../store/actions/userActions/getCurUser';
 import { logout } from '../../store/actions/userActions/logoutUser';
 
+import { TextField, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
 const LogIn = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [loggedIn, setLoggedIn] = useState('');
+  const [loginValues, setLoginValues] = useState({
+    username: '',
+    password: '',
+  });
 
-  const submitUser = async (e) => {
-    e.preventDefault();
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+  }));
 
-    const { username, password } = e.target;
+  const classes = useStyles();
 
-    await authUser({ username: username.value, password: password.value });
+  const submitUser = async () => {
+    const { username, password } = loginValues;
+
+    await authUser({ username, password });
     const login = await props.attemptLogin();
 
     if (!login) setLoggedIn('Invalid username or password.');
@@ -26,25 +40,39 @@ const LogIn = (props) => {
   return (
     <div id="login-wrapper">
       <form id="login" onSubmit={submitUser}>
-        <label>Email or Username</label>
-        <input name="username" />
-        <label>Password</label>
-        <input
-          className="passwordInput"
-          name="password"
-          type={passwordShown ? 'text' : 'password'}
+        <h4>LOGIN</h4>
+        <TextField
+          className={classes.root}
+          label="Email or Username"
+          variant="outlined"
+          color="secondary"
+          onChange={(e) => {
+            setLoginValues({ ...loginValues, username: e.target.value });
+          }}
         />
-        <button>Login</button>
-        {/* delete logout button below when we have logout in navbar */}
+        <TextField
+          className={classes.root}
+          type="password"
+          label="Password"
+          variant="outlined"
+          color="secondary"
+          onChange={(e) => {
+            setLoginValues({ ...loginValues, password: e.target.value });
+          }}
+        />
+        <Button
+          className={classes.root}
+          onClick={submitUser}
+          color="secondary"
+          variant="contained"
+        >
+          Login
+        </Button>
         <small>{loggedIn}</small>
+        <small>
+          Don&apos;t have an account? <span id="takeMeToSignUp">Sign up.</span>
+        </small>
       </form>
-      <button
-        onClick={() => {
-          props.logout();
-        }}
-      >
-        LogOutTest
-      </button>
     </div>
   );
 };
