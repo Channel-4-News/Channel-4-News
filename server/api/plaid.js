@@ -33,24 +33,32 @@ router.post('/create_link_token', async (req, res, next) => {
   }
 });
 
+//exhanges plaid's public token for access token and access token for stribe bank account token
 router.post('/tokenExchange', async (req, res) => {
-  const { token } = req.body;
+  const { token, accountId } = req.body;
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
     token
   );
+  const stripeToken = await plaidClient.createStripeToken(
+    accessToken,
+    accountId
+  );
+
+  //stripe res token - stripe.stripe_bank_account_token
+  console.log('stripe', stripeToken);
   console.log('accessToken', accessToken);
 
-  const authResponse = await plaidClient.getAuth(accessToken);
-  console.log('Auth response:', authResponse);
-  console.log('---------------');
+  // const authResponse = await plaidClient.getAuth(accessToken);
+  // console.log('Auth response:', authResponse);
+  // console.log('---------------');
 
-  const identityResponse = await plaidClient.getIdentity(accessToken);
-  console.log('Identity response:', identityResponse);
-  console.log('---------------');
+  // const identityResponse = await plaidClient.getIdentity(accessToken);
+  // console.log('Identity response:', identityResponse);
+  // console.log('---------------');
 
-  const balanceResponse = await plaidClient.getBalance(accessToken);
-  console.log('Balance response', balanceResponse);
-  console.log('---------------');
+  // const balanceResponse = await plaidClient.getBalance(accessToken);
+  // console.log('Balance response', balanceResponse);
+  // console.log('---------------');
 
   res.sendStatus(200);
 });

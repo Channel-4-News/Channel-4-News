@@ -46,6 +46,35 @@ router.post('/payouts/:id', async (req, res, next) => {
   }
 });
 
+//create bank account using stripe bank account token from plaid
+router.post('/create_bank_account', async (req, res, next) => {
+  try {
+    const { id, accountToken } = req.body;
+    const bankAccount = await stripe.customers.createSource(id, {
+      source: accountToken,
+    });
+    res.status(201).send(bankAccount);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//create an ACH chard
+router.post('/charges', async (req, res, next) => {
+  try {
+    const { amount, source, kid } = req.body;
+    const charge = await stripe.charges.create({
+      amount: amount,
+      currency: 'usd',
+      source: source,
+      description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
+    });
+    res.status(201).send(charge);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // CREATE VIRTUAL CARDS
 
 //create a card holder

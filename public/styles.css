@@ -4,6 +4,7 @@
 @import url('./style/navbar.css');
 @import url('./style/chores.css');
 @import url('./style/wishList.css');
+@import url('./style/plaidLink.css');
 
 @font-face {
   font-family: main;
