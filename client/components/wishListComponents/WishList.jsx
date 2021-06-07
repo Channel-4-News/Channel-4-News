@@ -16,33 +16,43 @@ class WishList extends Component {
     super(props);
     this.state = {
       sort: 'alphabetically',
-      filter: '',
       wishList: [],
-      sorted: false,
+      sorted: null,
     };
     this.changeSort = this.changeSort.bind(this);
     this.sortToggle = this.sortToggle.bind(this);
+    this.reRender = this.reRender.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.user.id && this.state.wishList.length === 0) {
-      await this.props.getWishList(this.props.user.id);
-      if (this.state.wishList.length > 0) {
-        if (this.state.sort === 'most expensive') {
-          const mostExpensive = sortByMostExpensive(this.state.wishList);
-          this.setState({ wishList: mostExpensive, sorted: true });
-        } else if (this.state.sort === 'least expensive') {
-          const leastExpensive = sortByLeastExpensive(this.state.wishList);
-          this.setState({ wishList: leastExpensive, sorted: true });
-        } else if (this.state.sort === 'alphabetically') {
-          const alphabetically = orderBy(
-            this.state.wishList,
-            ['itemName'],
-            ['asc']
-          );
-          this.setState({ wishList: alphabetically, sorted: true });
-        }
+      this.props.getWishList(this.props.user.id);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    let mostExpensive, leastExpensive, alphabetically;
+    if (
+      this.state.sorted !== true &&
+      this.props.wishList !== this.state.wishList
+    ) {
+      let { wishList } = this.props;
+      this.setState({ wishList });
+    }
+    if (this.state.sorted === false) {
+      if (this.state.sort === 'most expensive') {
+        mostExpensive = sortByMostExpensive(this.props.wishList);
+        this.setState({ wishList: mostExpensive, sorted: true });
+      } else if (this.state.sort === 'least expensive') {
+        leastExpensive = sortByLeastExpensive(this.props.wishList);
+        this.setState({ wishList: leastExpensive, sorted: true });
+      } else if (this.state.sort === 'alphabetically') {
+        alphabetically = orderBy(this.props.wishList, ['itemName'], ['asc']);
+        this.setState({ wishList: alphabetically, sorted: true });
       }
+    }
+    if (prevState.wishList.length !== this.state.wishList.length) {
+      this.setState({});
     }
   }
 
@@ -50,54 +60,37 @@ class WishList extends Component {
     this.setState({ sort });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.state.sorted === false &&
-      this.props.wishList !== this.state.wishList
-    ) {
-      const { wishList } = this.props;
-      this.setState({ wishList });
-    }
-    if (prevState.sort !== this.state.sort) {
-      if (this.state.sort === 'most expensive') {
-        const mostExpensive = sortByMostExpensive(this.state.wishList);
-        this.setState({ wishList: mostExpensive, sorted: true });
-      } else if (this.state.sort === 'least expensive') {
-        const leastExpensive = sortByLeastExpensive(this.state.wishList);
-        this.setState({ wishList: leastExpensive, sorted: true });
-      } else if (this.state.sort === 'alphabetically') {
-        const alphabetically = orderBy(
-          this.state.wishList,
-          ['itemName'],
-          ['asc']
-        );
-        this.setState({ wishList: alphabetically, sorted: true });
-      }
-    }
-  }
-
   sortToggle() {
     this.setState({ sorted: false });
   }
 
+  reRender() {
+    let { wishList } = this.props;
+    this.setState({ wishList });
+  }
+
   render() {
-    const { changeSort, sortToggle } = this;
+    const { changeSort, sortToggle, reRender } = this;
     if (this.props.wishList.length) {
       return (
         <div id="wishListContent">
           <div id="wishListTopBar">
             <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
-
             <WithdrawMoneyDialog user={this.props.user} />
-            <CreateNewWish />
+            <CreateNewWish
+              update={sortToggle}
+              user={this.props.user}
+              newItem={reRender}
+            />
           </div>
           <div id="wishListWrapper">
-            {this.state.wishList.map((wishListItem) => {
+            {this.state.wishList.map((wishListItem, idx) => {
               return (
                 <WishListCard
                   user={this.props.user}
-                  key={wishListItem.id}
+                  key={idx}
                   wishListItem={wishListItem}
+                  update={sortToggle}
                 />
               );
             })}
@@ -105,7 +98,7 @@ class WishList extends Component {
         </div>
       );
     } else {
-      return <p>No Wishes</p>;
+      return <div>No Wishes</div>;
     }
   }
 }

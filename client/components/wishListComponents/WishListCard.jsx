@@ -12,83 +12,93 @@ import { purchaseOrWithdraw } from '../../store/actions/wishListActions/purchase
 import PurchaseButton from './PurchaseButton';
 
 const WishListCard = (props) => {
-  const [edit, setEdit] = useState(false);
-  const [purchased, setPurchased] = useState(props.wishListItem.purchased);
-  const item = props.wishListItem;
-  const { id } = props.user;
-  if (edit === false) {
-    return (
-      <Card id="wishListCardWrapper">
-        <Typography className="title" gutterBottom variant="h5" component="h2">
-          {item.itemName}
-          <span id="purchased-tag">{purchased ? 'Purchased!' : ''}</span>
-        </Typography>
-        <div id="itemRow">
-          <Paper id="itemImage" variant="outlined">
-            <img src={item.imgUrl} />
-          </Paper>
-          <div id="itemInfo">
-            <div>Wish Cost:</div>
-            <Paper className="itemValues" variant="outlined">
-              ${item.cost}
+  if (props.wishListItem) {
+    const [edit, setEdit] = useState(false);
+    const [purchased, setPurchased] = useState(props.wishListItem.purchased);
+    const item = props.wishListItem;
+    const { id } = props.user;
+    if (edit === false) {
+      return (
+        <Card id="wishListCardWrapper">
+          <Typography
+            className="title"
+            gutterBottom
+            variant="h5"
+            component="h2"
+          >
+            {item.itemName}
+            <span id="purchased-tag">{purchased ? 'Purchased!' : ''}</span>
+          </Typography>
+          <div id="itemRow">
+            <Paper id="itemImage" variant="outlined">
+              <img src={item.imgUrl} />
             </Paper>
-            <br />
-            <div>Wish Category:</div>
-            <Paper className="itemValues" variant="outlined">
-              {item.category}
-            </Paper>
-            <br />
-            <div>Wish Description:</div>
-            <Paper
-              id="itemDescriptionWrapper"
-              className="itemValues"
-              variant="outlined"
-            >
-              <Typography
-                id="itemDescription"
-                variant="body2"
-                color="textSecondary"
-                component="p"
+            <div id="itemInfo">
+              <div>Wish Cost:</div>
+              <Paper className="itemValues" variant="outlined">
+                ${item.cost}
+              </Paper>
+              <br />
+              <div>Wish Category:</div>
+              <Paper className="itemValues" variant="outlined">
+                {item.category}
+              </Paper>
+              <br />
+              <div>Wish Description:</div>
+              <Paper
+                id="itemDescriptionWrapper"
+                className="itemValues"
+                variant="outlined"
               >
-                {item.description}
-              </Typography>
-            </Paper>
+                <Typography
+                  id="itemDescription"
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  {item.description}
+                </Typography>
+              </Paper>
+            </div>
           </div>
-        </div>
-        <div id="buttonRow">
-          <CalculatorButton wishListItem={item} />
-          <PurchaseButton
-            purchaseOrWithdraw={() => props.purchaseOrWithdraw(id, item)}
-            setPurchased={() => setPurchased(true)}
-            item={item}
-          />
-          <Button
-            size="large"
-            onClick={() => setEdit(true)}
-            variant="contained"
-          >
-            Edit
-          </Button>
-          <Button
-            onClick={() => props.deleteWishListCard(item.id)}
-            size="large"
-            color="secondary"
-            variant="contained"
-          >
-            Delete
-          </Button>
-        </div>
-      </Card>
-    );
+          <div id="buttonRow">
+            <CalculatorButton wishListItem={item} />
+            <PurchaseButton
+              purchaseOrWithdraw={() => props.purchaseOrWithdraw(id, item)}
+              setPurchased={() => setPurchased(true)}
+              item={item}
+            />
+            <Button
+              size="large"
+              onClick={() => setEdit(true)}
+              variant="contained"
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => props.deleteWishListCard(item.id)}
+              size="large"
+              color="secondary"
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </div>
+        </Card>
+      );
+    } else {
+      return (
+        <EditWishListCard
+          wishListItem={item}
+          state={() => {
+            setEdit(false);
+            props.update();
+          }}
+        />
+      );
+    }
   } else {
-    return (
-      <EditWishListCard
-        wishListItem={item}
-        state={(edit) => {
-          setEdit(edit);
-        }}
-      />
-    );
+    return '';
   }
 };
 
