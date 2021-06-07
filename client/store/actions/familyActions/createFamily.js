@@ -7,6 +7,7 @@ const createFamily = (family) => {
     try {
       const newFamily = (await axios.post('/api/families', family)).data;
       dispatch(_createFamily(newFamily));
+      return true;
     } catch (err) {
       console.log(err);
     }

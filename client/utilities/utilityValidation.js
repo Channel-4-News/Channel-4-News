@@ -8,12 +8,10 @@ const notValid = (reason) => {
 
 //check if passwords match
 const passwordsMatch = (pw1, pw2, type = 'Passwords') => {
-  if (pw1 === pw2.value) {
-    pw2.setCustomValidity('');
-    return;
+  if (pw1 === pw2) {
+    return true;
   }
-  pw2.setCustomValidity(`${type} must match.`);
-  return false;
+  return { error: true, message: `${type} must match.` };
 };
 
 //check if password is valid password
@@ -22,61 +20,70 @@ const passwordValid = (pw) => {
   const length = pw.value.length > 4 && pw.value.length < 51;
   const hasNum = nums.some((num) => pw.value.includes(num));
   if (hasNum && length) {
-    pw.setCustomValidity('');
-    return;
+    // pw.setCustomValidity('');
+    return true;
   }
-  pw.setCustomValidity(
-    'Passwords must be at least 5 characters and include a number.'
-  );
+  // pw.setCustomValidity(
+  //   'Passwords must be at least 5 characters and include a number.'
+  // );
+  return {
+    error: true,
+    message: 'Passwords must be at least 5 characters and include a number.',
+  };
 };
 
 //check if family secret is valid secret
 const secretValid = (secret) => {
   if (secret.value.length > 4 && secret.value.length < 71) {
     secret.setCustomValidity('');
-    return;
+    return true;
   }
-  secret.setCustomValidity('Family secret must be at least 4 characters.');
+  secret.setCustomValidity('Family secret must be at least 5 characters.');
+  return {
+    error: true,
+    message: 'Secret must be at least 5 characters.',
+  };
 };
 
 //check if email is valid
 const validEmail = async (email) => {
-  //   if (!validator.validate(email)) {
-  //     notValid('Email must be a valid email.');
-  //     return false;
-  //   }
+  if (!validator.validate(email.value)) {
+    return { error: true, message: 'Email must be a valid email.' };
+  }
   const users = (await axios.get('/api/users')).data;
   if (users.some((user) => user.email === email.value)) {
-    email.setCustomValidity('Email already exists.');
-    return;
+    // email.setCustomValidity('Email already exists.');
+    return { error: true, message: 'Email already exists.' };
   }
-  email.setCustomValidity('');
+  return true;
 };
 
 //check if username is valid
-const validUsername = async (username, type = 'Username') => {
+const validUsername = async (username, type) => {
+  if (!type) type = 'Username';
   const length = username.value.length > 4 && username.value.length < 41;
   if (!length) {
-    username.setCustomValidity(`${type} must be 4 characters long.`);
-    return;
+    // username.setCustomValidity(`${type} must be 5 characters long.`);
+    return { error: true, message: `${type} must be 5 characters long.` };
   }
   const users = (await axios.get('/api/users')).data;
   const families = (await axios.get('/api/families')).data;
   if (type === 'Username') {
     if (users.some((user) => user.username === username.value)) {
-      username.setCustomValidity('Username already exists.');
-      return;
+      // username.setCustomValidity('Username already exists.');
+      return { error: true, message: 'Username already exists.' };
     }
   } else {
     if (families.some((family) => family.name === username.value)) {
       username.setCustomValidity('Family name already exists.');
-      return;
+      return { error: true, message: 'Family name already exists.' };
     }
   }
   username.setCustomValidity('');
+  return true;
 };
 
-const systemsGo = (signUpInput) => {
+const systemsGoSignup = (signUpInput) => {
   const { password, confirmPassword, email, username } = signUpInput;
   const pwMatch = passwordsMatch(password, confirmPassword);
   const pwValid = passwordValid(password);
@@ -86,7 +93,7 @@ const systemsGo = (signUpInput) => {
 };
 
 export {
-  systemsGo,
+  systemsGoSignup,
   validUsername,
   passwordValid,
   passwordsMatch,

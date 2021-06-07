@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { updateChore } from '../../store/actions/choreActions/updateChore';
 import {
@@ -16,6 +16,7 @@ import {
 import { addChore } from '../../store/actions/choreActions/addChore';
 
 const AddChore = (props) => {
+  const [today, setToday] = useState('');
   const [choreValues, setChoreValues] = useState({
     icon: '',
     name: '',
@@ -23,7 +24,24 @@ const AddChore = (props) => {
     amount: 0,
     userId: 0,
     familyId: props.familyId,
+    due: '',
+    isRecurring: false,
+    recurringInterval: null,
   });
+
+  useEffect(() => {
+    const holdToday = new Date();
+    let year = holdToday.getFullYear();
+    let day = holdToday.getDate();
+    let month = holdToday.getMonth() + 1;
+    if (`${day}`.length < 2) {
+      day = `0${day}`;
+    }
+    if (`${month}`.length < 2) {
+      month = `0${month}`;
+    }
+    setToday(`${year}-${month}-${day}`);
+  }, []);
 
   const icons = [
     { name: 'Miscellaneous', file: 'misc' },
@@ -90,6 +108,8 @@ const AddChore = (props) => {
         }
       />
       <TextField
+        multiline
+        rowsMax={4}
         className={classes.root}
         label="Description"
         variant="outlined"
@@ -127,7 +147,39 @@ const AddChore = (props) => {
           }
         />
       </div>
-      {/* <button>Add Chore</button> */}
+      <div id="dueOrInterval" className={classes.divWrap}>
+        <FormControl variant="outlined" className={classes.assigneeAmount}>
+          <InputLabel htmlFor="choreAssigneeAdd">Interval</InputLabel>
+          <Select
+            native
+            label="Interval"
+            onChange={(e) =>
+              setChoreValues({
+                ...choreValues,
+                recurringInterval: e.target.value * 1,
+              })
+            }
+          >
+            <option aria-label="None" value="" />
+            <option value="1">Daily</option>
+            <option value="7">Weekly</option>
+          </Select>
+        </FormControl>
+        <small id="smallOr">OR</small>
+        <TextField
+          className={classes.assigneeAmount}
+          id="addChoreInput"
+          label="Due Date"
+          variant="outlined"
+          type="date"
+          // defaultValue="2021-05-17"
+          value={today}
+          onChange={(e) => {
+            setToday(e.target.value);
+            setChoreValues({ ...choreValues, due: e.target.value });
+          }}
+        />
+      </div>
       <Button
         className={classes.root}
         variant="contained"

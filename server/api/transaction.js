@@ -1,11 +1,9 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const router = Router();
 
 const {
   models: { Transaction },
 } = require('../db/models/associations');
-
-router.use(json());
 
 //Get all transactions by userId
 router.get('/:id', async (req, res, next) => {
