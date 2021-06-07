@@ -46,6 +46,10 @@ const Chore = db.define('chore', {
     type: DataTypes.STRING,
     defaultValue: 'public/images/choreIcons/misc.png',
   },
+  wasPaid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = { Chore, ChoreList };
