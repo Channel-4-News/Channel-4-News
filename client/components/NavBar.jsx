@@ -7,11 +7,15 @@ import { HashRouter as Link } from 'react-router-dom';
 import { logout } from '../store/actions/userActions/logoutUser';
 import { connect } from 'react-redux';
 
-const NavBar = (props) => {
+const NavBar = (props, notifications) => {
   const user = props.user.status;
+  // if(!props.notifications.length){
+  //   return null;
+  // }
   return (
     <div id="navbar-wrapper">
       <AppBar position="static" id="navbar">
+        {console.log(props.notifications)}
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             Channel-4-News
@@ -38,6 +42,13 @@ const NavBar = (props) => {
             {user === 'Child' ? (
               <Button color="inherit" href="/#/wishlist">
                 Wish List
+              </Button>
+            ) : (
+              ''
+            )}
+            {user === 'Child' ? (
+              <Button href="/#/notifications" color="inherit">
+                Notifications({props.notifications.length})
               </Button>
             ) : (
               ''
@@ -74,7 +85,9 @@ const NavBar = (props) => {
             {/*----------- USER IS A PARENT --------------*/}
 
             {user === 'Parent' ? (
-              <Button color="inherit">Notifications</Button>
+              <Button href="/#/notifications" color="inherit">
+                Notifications({props.notifications.length})
+              </Button>
             ) : (
               ''
             )}
@@ -107,8 +120,14 @@ const NavBar = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return { signOut: () => dispatch(logout()) };
 };
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

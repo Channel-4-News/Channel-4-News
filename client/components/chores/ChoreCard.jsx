@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
+import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
@@ -24,6 +25,7 @@ const ChoreCard = (props) => {
   const today = new Date();
   let expired;
   if (props.chore.due && new Date(props.chore.due) < today) expired = true;
+  let noti;
   return (
     <div
       className={
@@ -42,6 +44,10 @@ const ChoreCard = (props) => {
         checked={complete ? 'checked' : null}
         onChange={() => {
           setComplete(!complete);
+          noti = 'Chore is done';
+          if (!complete) {
+            props.sendNotification({ text: 'hello motto', toId: 8 });
+          }
           props.completeChore(props.chore.id, {
             isComplete: !complete,
           });
@@ -84,6 +90,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     completeChore: (id, info) => dispatch(updateChore(id, info)),
     deleteChore: (id) => dispatch(deleteChore(id)),
+    sendNotification: (message) => dispatch(sendNotificationThunk(message)),
   };
 };
 

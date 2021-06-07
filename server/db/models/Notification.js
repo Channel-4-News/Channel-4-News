@@ -37,7 +37,7 @@ Notification.addHook('afterCreate', async (notification) => {
     // ]
   });
   getSockets().forEach((socket) =>
-    socket.send(JSON.stringify({ type: 'ADD_NOTIFICATION', notification }))
+    socket.send(JSON.stringify({ type: 'SEND_NOTIFICATION', notification }))
   );
 });
 

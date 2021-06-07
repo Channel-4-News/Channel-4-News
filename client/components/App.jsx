@@ -16,6 +16,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import EditChildInfo from './child components/EditChildInfo';
 import Notification from './Notification';
 
+//Thunk Import
+import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
+import { sendNotificationThunk } from '../store/actions/notificationActions/sendNotification';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,15 +36,9 @@ class App extends Component {
   componentDidUpdate() {
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
+
+      this.props.loadNotifications();
     }
-    // this.props.loadNotifications();
-    // window.socket = new WebSocket(window.location.origin.replace('http', 'ws'));
-    // window.socket.addEventListener('message', (ev) => {
-    //   const obj = JSON.parse(ev.data);
-    //   if(obj.type){
-    //     this.props.dispatchMessage(obj);
-    //   }
-    // });
   }
 
   render() {
@@ -93,7 +91,7 @@ class App extends Component {
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
-              <Route exact path="/notification" component={Notification} />
+              <Route exact path="/notifications" component={Notification} />
               <Route
                 exact
                 path="/wishlist"
@@ -117,8 +115,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
-    // loadNotifications: () => dispatch(loadNotifications()),
-    // dispatchNotification: (action) => dispatch(action)
+    loadNotifications: () => dispatch(loadNotificationsThunk()),
+    dispatchNotification: (action) => {
+      console.log('action', action);
+      console.log(dispatch);
+      dispatch(action);
+    },
   };
 };
 

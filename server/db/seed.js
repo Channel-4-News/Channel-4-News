@@ -412,6 +412,16 @@ const syncAndSeed = async () => {
         toId: parent1.id,
         text: 'Pay Me please',
       }).save(),
+      new Notification({
+        fromId: parent1.id,
+        toId: kid1.id,
+        text: 'Chore added',
+      }).save(),
+      new Notification({
+        fromId: parent1.id,
+        toId: kid2.id,
+        text: 'Chore under review',
+      }).save(),
     ]);
 
     // await Allowance.create()
