@@ -1,5 +1,15 @@
-const db = require('../db');
+const { db } = require('../db');
 const { DataTypes } = require('sequelize');
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+
+const validator = require('email-validator');
+
+const { NotificationList } = require('./Notification');
+const { WishList } = require('./WishListItem');
+const Allowance = require('./Allowance');
 
 const User = db.define('user', {
   username: {
@@ -46,6 +56,76 @@ const User = db.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  balance: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
+  },
+});
+
+//authenticates user
+User.authenticate = async (creds) => {
+  try {
+    let user;
+    const { username, password } = creds;
+
+    //check if user logs in with email or username
+    if (validator.validate(username)) {
+      user = await User.findOne({
+        where: {
+          email: username,
+        },
+      });
+    } else {
+      user = await User.findOne({
+        where: {
+          username,
+        },
+      });
+    }
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return jwt.sign({ id: user.id }, process.env.JWT);
+    }
+  } catch (err) {
+    const error = Error('bad credentials');
+    error.status = 401;
+    throw error;
+  }
+};
+
+User.byToken = async (token) => {
+  try {
+    const { id } = await jwt.verify(token, process.env.JWT);
+    //get the user id and return user
+    const user = await User.findByPk(id);
+    if (user) return user;
+  } catch (err) {
+    const error = Error('bad credentials');
+    error.status = 401;
+    throw error;
+  }
+};
+
+//hashes password
+User.addHook('beforeSave', async (user) => {
+  if (user.changed('password')) {
+    user.password = await bcrypt.hash(user.password, 7);
+  }
+});
+
+//Adds a Notification List to the user
+//Adds a Wish List to the user
+//Adds an Allowance to the user
+User.addHook('afterCreate', async (user) => {
+  const notificationList = await NotificationList.create();
+  notificationList.userId = notificationList.id;
+  await notificationList.save();
+  const wishList = await WishList.create();
+  wishList.userId = wishList.id;
+  await wishList.save();
+  const allowance = await Allowance.create();
+  allowance.userId = user.id;
+  await allowance.save();
 });
 
 module.exports = User;

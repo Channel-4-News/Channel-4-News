@@ -1,16 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
+const router = require('./api/router');
 
 const path = require('path');
 
 const app = express();
 
-// const router = require('./api/router');
-
 app.use(morgan('dev'));
 app.use('/public', express.static('./public'));
 app.use(express.json());
-// app.use('/api', router);
+app.use('/api', router);
 
 app.get('/', (req, res, next) => {
   try {
@@ -22,7 +21,7 @@ app.get('/', (req, res, next) => {
   }
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.statusCode || 500).send({ error: err.message });
 });

@@ -4,4 +4,12 @@ const db = new Sequelize(
   { logging: false }
 );
 
-module.exports = db;
+const initDB = async () => {
+  try {
+    await db.sync({ force: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { db, initDB };

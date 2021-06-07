@@ -1,0 +1,66 @@
+#createJoinFamily {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: lightgray;
+  height: 100%;
+}
+
+.createJoin {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  width: 40%;
+  background-color: white;
+}
+
+.createJoin button {
+  border: none;
+  outline: none;
+  font-size: large;
+  color: white;
+  background-color: rgb(194, 194, 194);
+  padding: 10px;
+  margin: 10px;
+}
+
+.createJoin input,
+.passwordInput {
+  margin-bottom: 20px;
+  border: 1px black solid;
+  padding: 10px;
+  outline: none;
+  color: black;
+  font-size: large;
+  margin: 10px;
+  width: auto;
+  height: auto;
+}
+
+/* #test {
+  margin-bottom: 20px;
+  border: 1px black solid;
+  padding: 10px;
+  outline: none;
+  color: black;
+  font-size: large;
+  margin: 10px;
+  width: auto;
+  height: auto;
+} */
+
+.createJoin label {
+  color: rgb(153, 147, 147);
+  margin-left: 10px;
+  font-size: large;
+}
+
+#switchToJoinFamily:hover {
+  color: rgb(255, 119, 119);
+  cursor: pointer;
+}
+
+.createJoin h6 {
+  padding: 10px;
+}

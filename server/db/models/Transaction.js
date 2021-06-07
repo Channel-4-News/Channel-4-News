@@ -1,11 +1,10 @@
 const { DataTypes } = require('sequelize');
-const db = require('../db');
-
-const TransactionHistory = db.define('transaction history');
+const { db } = require('../db');
 
 const Transaction = db.define('transaction', {
   cost: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
     defaultValue: 0,
   },
   category: {
@@ -19,9 +18,17 @@ const Transaction = db.define('transaction', {
     ]),
     defaultValue: 'Miscellaneous',
   },
-  allowanceId: {
-    type: DataTypes.INTEGER,
+  itemName: {
+    type: DataTypes.STRING,
+  },
+  linkUrl: {
+    type: DataTypes.STRING,
   },
 });
 
-module.exports = { Transaction, TransactionHistory };
+// Transaction.addHook('afterCreate', async (transaction) => {
+//   transaction.userId = 5;
+//   console.log(transaction);
+//   // await transaction.save();
+// });
+module.exports = { Transaction };

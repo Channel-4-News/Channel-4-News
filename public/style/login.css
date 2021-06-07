@@ -1,0 +1,44 @@
+#login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: lightgray;
+  height: 100%;
+}
+
+#login {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  width: 40%;
+  background-color: white;
+}
+
+#login button {
+  border: none;
+  outline: none;
+  font-size: large;
+  color: white;
+  background-color: rgb(194, 194, 194);
+  padding: 10px;
+  margin: 10px;
+}
+
+#login input {
+  margin-bottom: 20px;
+  border: 1px black solid;
+  padding: 10px;
+  outline: none;
+  color: black;
+  font-size: large;
+  margin: 10px;
+  width: auto;
+  height: auto;
+}
+
+#login label {
+  color: rgb(153, 147, 147);
+  margin-left: 10px;
+  font-size: large;
+}
