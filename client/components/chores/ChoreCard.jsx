@@ -84,9 +84,6 @@ const ChoreCard = (props) => {
             id="payoutButton"
             variant="outlined"
             onClick={async () => {
-              console.log(props.chore.user.firstName);
-              console.log(parseInt(props.chore.amount) * 100);
-              console.log(props);
               await axios.post('/api/stripe/charges', {
                 customer: props.stripeAccount,
                 amount: parseInt(props.chore.amount) * 100,
