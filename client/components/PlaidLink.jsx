@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { PlaidLink } from 'react-plaid-link';
+import React, { useState } from 'react';
+import { usePlaidLink } from 'react-plaid-link';
 import axios from 'axios';
+import BankAuth from './stripe/BankAuth';
+import { Button } from '@material-ui/core';
 
 const LinkPlaid = (props) => {
   const [token, setToken] = useState('');
+  const [auth, setAuth] = useState(true);
+  const [processing, setProcessing] = useState(false);
 
   async function fetchToken() {
-    let linkToken = await axios.post('/api/plaid/create_link_token');
+    let linkToken = (await axios.post('/api/plaid/create_link_token')).data;
     setToken(linkToken);
   }
 
@@ -16,27 +20,66 @@ const LinkPlaid = (props) => {
 
   const onSuccess = async (token, metadata) => {
     console.log('onSuccess', token, metadata);
-    await axios.post('/api/plaid/tokenExchange', { token });
-    props.history.push('/');
+    await axios.post('/api/plaid/tokenExchange', {
+      token,
+      accountId: metadata.accounts[0].id,
+    });
+    props.setPage(3);
+    props.history.push('/createfamily');
   };
-  const onExit = (error, metadata) => console.log('onExit', error, metadata);
+  const onExit = (error, metadata) => {
+    setProcessing(false);
+    console.log('onExit', error, metadata);
+  };
 
   const onEvent = (eventName, metadata) => {
     console.log('onEvent', eventName, metadata);
-    // if(metadata === 'OPEN') {
-    // props.getToken()
-    // }
   };
 
-  return token.data ? (
-    <PlaidLink
-      onSuccess={onSuccess}
-      onExit={onExit}
-      onEvent={onEvent}
-      token={token.data}
-    >
-      Connect!
-    </PlaidLink>
+  const config = {
+    token: token,
+    onSuccess,
+    onExit,
+    onEvent,
+  };
+
+  const { open, ready, error } = usePlaidLink(config);
+
+  return token ? (
+    <div id="linkContainer">
+      <div id="linkButton">
+        <h4>CONNECT YOUR BANK ACCOUNT</h4>
+        <BankAuth setAuth={setAuth} auth={auth} />
+        <Button
+          onClick={() => {
+            setProcessing(true);
+            open();
+          }}
+          disabled={auth}
+          variant="contained"
+        >
+          {!processing ? 'Connect Your Bank Account' : 'Processing...'}
+        </Button>
+        <div id="learnAboutPlaid" onClick={() => {}}>
+          <small>
+            We use Plaid to create a secure connection between your bank account
+            and FUNDIT. Click{' '}
+            <a
+              href="https://plaid.com/how-we-handle-data/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              here{' '}
+            </a>
+            to learn more about Plaid.{' '}
+          </small>
+          <small>
+            If you have any questions or wish to revoke authorization, please
+            contact FUNDIT at contact@fundit.com.
+          </small>
+        </div>
+      </div>
+    </div>
   ) : (
     <div>LOADING...</div>
   );
