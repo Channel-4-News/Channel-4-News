@@ -6,9 +6,7 @@ export const notificationReducer = (state = [], action) => {
     state = action.notifications;
   }
   if (action.type === SEND_NOTIFICATION) {
-    console.log('before', state);
     state = [...state, action.newNotification];
-    console.log('after', state);
   }
   return state;
 };

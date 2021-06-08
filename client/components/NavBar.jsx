@@ -7,15 +7,11 @@ import { HashRouter as Link } from 'react-router-dom';
 import { logout } from '../store/actions/userActions/logoutUser';
 import { connect } from 'react-redux';
 
-const NavBar = (props, notifications) => {
+const NavBar = (props) => {
   const user = props.user.status;
-  // if(!props.notifications.length){
-  //   return null;
-  // }
   return (
     <div id="navbar-wrapper">
       <AppBar position="static" id="navbar">
-        {console.log(props.notifications)}
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             Channel-4-News

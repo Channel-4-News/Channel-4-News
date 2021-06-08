@@ -13,12 +13,13 @@ import Dummy from './dummyPage/dummy';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
-import EditChildInfo from './child components/EditChildInfo';
 import Notification from './Notification';
+import store from '../store/store';
+import { sendNotification } from '../store/actions/notificationActions/sendNotification';
+import websocket from '../store/actions/notificationActions/sendNotification';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
-import { sendNotificationThunk } from '../store/actions/notificationActions/sendNotification';
 
 class App extends Component {
   constructor(props) {
@@ -31,13 +32,32 @@ class App extends Component {
   async componentDidMount() {
     await this.props.attemptLogin();
     await this.setState({ ...this.state, user: this.props.currUser });
+    websocket.addEventListener('message', (ev) => {
+      const action = JSON.parse(ev.data);
+      if (action.id) {
+        store.dispatch(sendNotification(action));
+      }
+    });
   }
 
   componentDidUpdate() {
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
-
       this.props.loadNotifications();
+      if (websocket.readyState === 1) {
+        websocket.send(
+          JSON.stringify({
+            token: window.localStorage.getItem('userToken'),
+          })
+        );
+      }
+      websocket.addEventListener('open', () => {
+        websocket.send(
+          JSON.stringify({
+            token: window.localStorage.getItem('userToken'),
+          })
+        );
+      });
     }
   }
 
@@ -90,7 +110,6 @@ class App extends Component {
               />
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
-              <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route exact path="/notifications" component={Notification} />
               <Route
                 exact
@@ -109,6 +128,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     currUser: state.currUser,
+    notifications: state.notifications,
   };
 };
 
@@ -116,11 +136,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
     loadNotifications: () => dispatch(loadNotificationsThunk()),
-    dispatchNotification: (action) => {
-      console.log('action', action);
-      console.log(dispatch);
-      dispatch(action);
-    },
   };
 };
 
