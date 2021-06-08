@@ -47,7 +47,7 @@ class ChildProfile extends Component {
   render() {
     const { currUser } = this.props;
     const { dialogueOpen } = this.state;
-    const { firstName, lastName, email, username, imgUrl, balance, allowance } =
+    const { firstName, lastName, email, username, imgUrl, allowance } =
       currUser;
 
     return allowance ? (

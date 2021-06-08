@@ -34,7 +34,7 @@ const LogIn = (props) => {
     const login = await props.attemptLogin();
 
     if (!login) setLoggedIn('Invalid username or password.');
-    if (login) props.history.push('/');
+    if (login) props.history.push('/home');
   };
 
   return (

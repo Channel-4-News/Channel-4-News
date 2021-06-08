@@ -202,6 +202,7 @@ const Chores = (props) => {
               chore={chore}
               key={`${chore.id}chore`}
               isParent={props.currUser.status === 'Parent'}
+              stripeAccount={props.currUser.stripeAccount}
               updateClicked={setUpdateClicked}
               setChore={setChoreToUpdate}
             />
@@ -211,6 +212,7 @@ const Chores = (props) => {
               chore={chore}
               key={`${chore.id}chore`}
               isParent={props.currUser.status === 'Parent'}
+              stripeAccount={props.currUser.stripeAccount}
               updateClicked={setUpdateClicked}
               setChore={setChoreToUpdate}
             />

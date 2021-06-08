@@ -22,7 +22,7 @@ const Home = () => {
     const charge = await axios.post('/api/stripe/charges', {
       customer: 'cus_JdBOqmptzdoNis',
       amount: 400,
-      kid: 'Franny',
+      kid: 'Joe',
     });
     console.log(charge);
   };

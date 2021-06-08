@@ -7,6 +7,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 import PayoutChore from './PayoutChore';
 import { Button } from '@material-ui/core';
+import axios from 'axios';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
@@ -82,7 +83,12 @@ const ChoreCard = (props) => {
             disabled={props.chore.wasPaid ? true : false}
             id="payoutButton"
             variant="outlined"
-            onClick={() => {
+            onClick={async () => {
+              await axios.post('/api/stripe/charges', {
+                customer: props.stripeAccount,
+                amount: parseInt(props.chore.amount) * 100,
+                kid: props.chore.user.firstName,
+              });
               setComplete(true);
               props.updateChore(props.chore.id, {
                 isComplete: true,
