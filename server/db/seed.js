@@ -138,7 +138,8 @@ const syncAndSeed = async () => {
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
-      stripeAccount: 'acct_1IzAs68Zgryb9oce',
+      cardHolderId: 'ich_1IzueCGMLeOpoTZxygG8ap6i',
+      virtualCard: 'ic_1IzufNGMLeOpoTZxPd1bYRNy',
     });
 
     const kid2 = await User.create({
@@ -150,7 +151,8 @@ const syncAndSeed = async () => {
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
-      stripeAccount: 'acct_1IzAmb6ZMsqnhkqA',
+      cardHolderId: 'ich_1IzuiLGMLeOpoTZxI7NdxPkF',
+      virtualCard: 'ic_1IzujAGMLeOpoTZx1wFkCcUd',
     });
 
     const kid3 = await User.create({
@@ -162,7 +164,8 @@ const syncAndSeed = async () => {
       imgUrl:
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
-      stripeAccount: 'acct_1IzApu4TvddDN8Cv',
+      cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
+      virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
     });
 
     const parent1 = await User.create({
@@ -175,7 +178,7 @@ const syncAndSeed = async () => {
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
-      stripeAccount: 'acct_1IzAbQ4TLAmJPSen',
+      stripeAccount: 'cus_JdBOqmptzdoNis',
     });
 
     const parent2 = await User.create({
@@ -188,7 +191,6 @@ const syncAndSeed = async () => {
         'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
-      stripeAccount: 'acct_1IzAuA4SBMCACHhF',
     });
 
     Chore.create({

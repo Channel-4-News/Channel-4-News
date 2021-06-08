@@ -5,48 +5,47 @@ const {
   models: { User },
 } = require('../db/models/associations');
 
-// create stripe account for user
+// create stripe customerId for user
 router.post('/', async (req, res, next) => {
   try {
-    const { email, metadata } = req.body;
-    const account = await stripe.accounts.create({
-      type: 'express',
-      country: 'US',
+    const { email, metadata, fullName } = req.body;
+    const customer = await stripe.customers.create({
       email,
       metadata,
+      fullName,
     });
-    res.status(201).send(account);
+    res.status(201).send(customer);
   } catch (err) {
     next(err);
   }
 });
 
 //get balance
-router.get('/balance', async (req, res, next) => {
-  try {
-    const balance = await stripe.balance.retrieve({});
-    res.send(balance);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get('/balance', async (req, res, next) => {
+//   try {
+//     const balance = await stripe.balance.retrieve({});
+//     res.send(balance);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //stripe payout
-router.post('/payouts/:id', async (req, res, next) => {
-  try {
-    const { amount, destination } = req.body;
-    const payout = await stripe.payouts.create({
-      amount,
-      currency: 'usd',
-      destination,
-    });
-    res.send(payout);
-  } catch (ex) {
-    next(ex);
-  }
-});
+// router.post('/payouts/:id', async (req, res, next) => {
+//   try {
+//     const { amount, destination } = req.body;
+//     const payout = await stripe.payouts.create({
+//       amount,
+//       currency: 'usd',
+//       destination,
+//     });
+//     res.send(payout);
+//   } catch (ex) {
+//     next(ex);
+//   }
+// });
 
-//create bank account using stripe bank account token from plaid
+//create bank account using stripe bank account token from plaid - untested -triggered on register/connect bank acct
 router.post('/create_bank_account', async (req, res, next) => {
   try {
     const { id, accountToken } = req.body;
@@ -59,14 +58,14 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard
+//create an ACH chard - untested - triggered on chore payout
 router.post('/charges', async (req, res, next) => {
   try {
-    const { amount, source, kid } = req.body;
+    const { customer, amount, kid } = req.body;
     const charge = await stripe.charges.create({
+      customer: customer,
       amount: amount,
       currency: 'usd',
-      source: source,
       description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
     });
     res.status(201).send(charge);
@@ -77,7 +76,7 @@ router.post('/charges', async (req, res, next) => {
 
 // CREATE VIRTUAL CARDS
 
-//create a card holder
+//create a card holder - triggered on register
 router.post('/create_cardholder', async (req, res, next) => {
   try {
     const { name, email } = req.body;
@@ -103,7 +102,7 @@ router.post('/create_cardholder', async (req, res, next) => {
   }
 });
 
-//create a card
+//create a card - triggered on register
 router.post('/create_card', async (req, res, next) => {
   try {
     const { cardholder } = req.body;
@@ -119,7 +118,7 @@ router.post('/create_card', async (req, res, next) => {
   }
 });
 
-//create card details
+//get card details - child landing page
 router.get('/card', async (req, res, next) => {
   try {
     const { cardId } = req.body;
@@ -132,7 +131,7 @@ router.get('/card', async (req, res, next) => {
   }
 });
 
-//set spending limit
+//set spending limit - triggered on chore payout
 router.put('/card/:id/limit', async (req, res, next) => {
   try {
     const { cardId, limit } = req.body;

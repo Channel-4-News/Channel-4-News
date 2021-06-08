@@ -70,6 +70,15 @@ const User = db.define('user', {
   },
   stripeAccount: {
     type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cardHolderId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  virtualCard: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 });
 

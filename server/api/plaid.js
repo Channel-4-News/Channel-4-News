@@ -14,7 +14,7 @@ router.post('/create_link_token', async (req, res, next) => {
     const response = await plaidClient.createLinkToken({
       user: {
         client_user_id: 'user1',
-        legal_name: 'Joe Fun',
+        legal_name: 'Joe Test',
         email_address: 'joe@test.com',
       },
       client_name: 'FUNDIT',
@@ -27,6 +27,7 @@ router.post('/create_link_token', async (req, res, next) => {
         },
       },
     });
+    console.log(response);
     res.status(201).send(response.link_token);
   } catch (err) {
     next(err);
