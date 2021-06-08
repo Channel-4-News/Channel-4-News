@@ -23,9 +23,9 @@ const Register = (props) => {
       {page === 1 ? (
         <SignUp setPage={setPage} />
       ) : page === 2 ? (
-        <LinkPlaid history={props.history} setPage={setPage} />
+        <JoinOrCreateFamily history={props.history} setPage={setPage} />
       ) : (
-        <JoinOrCreateFamily history={props.history} />
+        <LinkPlaid history={props.history} />
       )}
     </div>
   );

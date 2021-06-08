@@ -24,8 +24,7 @@ const LinkPlaid = (props) => {
       token,
       accountId: metadata.accounts[0].id,
     });
-    props.setPage(3);
-    props.history.push('/createfamily');
+    props.history.push('/');
   };
   const onExit = (error, metadata) => {
     setProcessing(false);
