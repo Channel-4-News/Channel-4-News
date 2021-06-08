@@ -3,16 +3,19 @@ import React, { useEffect, useState } from 'react';
 
 const Home = () => {
   const createCard = async () => {
-    const card = await axios.post('/api/stripe/create_cardholder');
-    console.log(card);
+    // const card = await axios.post('/api/stripe/create_cardholder', {
+    //   name: 'Test',
+    //   email: 'test@test.com',
+    // });
+    // console.log(card);
   };
 
   const createAccount = async () => {
-    const account = await axios.post('/api/stripe/create_bank_account', {
-      id: 'cus_JdBOqmptzdoNis',
-      accountToken: 'btok_1IzurxGMLeOpoTZxivNeSiOt',
-    });
-    console.log(account);
+    // const account = await axios.post('/api/stripe/create_bank_account', {
+    //   id: 'cus_JdBOqmptzdoNis',
+    //   accountToken: 'btok_1IzurxGMLeOpoTZxivNeSiOt',
+    // });
+    // console.log(account);
   };
 
   const createCharge = async () => {
