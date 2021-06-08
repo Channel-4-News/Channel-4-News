@@ -10,7 +10,7 @@ const LinkPlaid = (props) => {
   const [processing, setProcessing] = useState(false);
 
   async function fetchToken() {
-    let linkToken = await axios.post('/api/plaid/create_link_token');
+    let linkToken = (await axios.post('/api/plaid/create_link_token')).data;
     setToken(linkToken);
   }
 
@@ -34,13 +34,10 @@ const LinkPlaid = (props) => {
 
   const onEvent = (eventName, metadata) => {
     console.log('onEvent', eventName, metadata);
-    // if(metadata === 'OPEN') {
-    // props.getToken()
-    // }
   };
 
   const config = {
-    token: 'link-sandbox-3784d87f-67f6-4832-9b6b-013dc7ceee3e',
+    token: token,
     onSuccess,
     onExit,
     onEvent,
@@ -48,7 +45,7 @@ const LinkPlaid = (props) => {
 
   const { open, ready, error } = usePlaidLink(config);
 
-  return token.data ? (
+  return token ? (
     <div id="linkContainer">
       <div id="linkButton">
         <h4>CONNECT YOUR BANK ACCOUNT</h4>
