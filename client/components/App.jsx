@@ -13,6 +13,13 @@ import ChildLandingPage from './child components/ChildLandingPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
+import Notification from './Notification';
+import store from '../store/store';
+import { sendNotification } from '../store/actions/notificationActions/sendNotification';
+import websocket from '../store/actions/notificationActions/sendNotification';
+
+//Thunk Import
+import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
@@ -29,11 +36,33 @@ class App extends Component {
   async componentDidMount() {
     await this.props.attemptLogin();
     await this.setState({ ...this.state, user: this.props.currUser });
+    websocket.addEventListener('message', (ev) => {
+      const action = JSON.parse(ev.data);
+      if (action.id) {
+        // console.log('only from paret');
+        store.dispatch(sendNotification(action));
+      }
+    });
   }
 
   componentDidUpdate() {
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
+      this.props.loadNotifications();
+      if (websocket.readyState === 1) {
+        websocket.send(
+          JSON.stringify({
+            token: window.localStorage.getItem('userToken'),
+          })
+        );
+      }
+      websocket.addEventListener('open', () => {
+        websocket.send(
+          JSON.stringify({
+            token: window.localStorage.getItem('userToken'),
+          })
+        );
+      });
     }
   }
 
@@ -89,6 +118,7 @@ class App extends Component {
               />
               <Route exact path="/chores" component={Chores} />
               <Route exact path="/childprofile" component={ChildProfile} />
+              <Route exact path="/notifications" component={Notification} />
               <Route
                 exact
                 path="/home"
@@ -119,12 +149,14 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     currUser: state.currUser,
+    notifications: state.notifications,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
+    loadNotifications: () => dispatch(loadNotificationsThunk()),
   };
 };
 
