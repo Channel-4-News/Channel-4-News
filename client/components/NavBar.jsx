@@ -48,6 +48,13 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
+            {/* {user === 'Child' ? (
+              <Button href="/#/notifications" color="inherit">
+                Notifications({props.notifications.length})
+              </Button>
+            ) : (
+              ''
+            )} */}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/chores">
                 Chores
@@ -83,7 +90,9 @@ const NavBar = (props) => {
             {/*----------- USER IS A PARENT --------------*/}
 
             {user === 'Parent' ? (
-              <Button color="inherit">Notifications</Button>
+              <Button href="/#/notifications" color="inherit">
+                Notifications({props.notifications.length})
+              </Button>
             ) : (
               ''
             )}
@@ -117,8 +126,14 @@ const NavBar = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return { signOut: () => dispatch(logout()) };
 };
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

@@ -68,6 +68,22 @@ router.post('/charges', async (req, res, next) => {
       currency: 'usd',
       description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
     });
+    //update kid's balance after charge is created
+    const kidToCharge = await User.findOne({ where: { firstName: kid } });
+    kidToCharge.balance = (
+      (parseInt(kidToCharge.balance * 100) + parseInt(amount)) /
+      100
+    ).toFixed(2);
+    await kidToCharge.save();
+    //update card spending limit
+    const card = await stripe.issuing.cards.update(kidToCharge.virtualCard, {
+      spending_controls: {
+        spending_limits: [
+          { amount: parseInt(kidToCharge.balance) * 100, interval: 'all_time' },
+        ],
+      },
+    });
+    console.log(card.spending_controls.spending_limits);
     res.status(201).send(charge);
   } catch (err) {
     next(err);

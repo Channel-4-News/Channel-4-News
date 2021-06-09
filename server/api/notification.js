@@ -4,6 +4,7 @@ const router = Router();
 const {
   models: { Notification, NotificationList },
 } = require('../db/models/associations');
+const User = require('../db/models/User');
 
 //Get all notifications in notification list
 router.get('/:id', async (req, res, next) => {
@@ -15,6 +16,15 @@ router.get('/:id', async (req, res, next) => {
       },
     });
     res.send(notificationList.notifications);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/', async (req, res, next) => {
+  try {
+    const user = await User.byToken(req.headers.authorization);
+    res.send(await user.getNotifications());
   } catch (err) {
     next(err);
   }
@@ -32,6 +42,26 @@ router.post('/:id', async (req, res, next) => {
       notificationListId: id,
     });
     res.status(201).send(newNotification);
+  } catch (err) {
+    next(err);
+  }
+});
+router.post('/create', async (req, res, next) => {
+  try {
+    const user = await User.byToken(req.headers.authorization);
+    const notification = await Notification.create({
+      fromId: user.id,
+      ...req.body,
+    });
+
+    res.status(201).send(
+      await Notification.findByPk(notification.id, {
+        include: [
+          { model: User, as: 'to' },
+          { model: User, as: 'from' },
+        ],
+      })
+    );
   } catch (err) {
     next(err);
   }

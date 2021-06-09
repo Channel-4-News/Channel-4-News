@@ -47,7 +47,7 @@ class ChildProfile extends Component {
   render() {
     const { currUser } = this.props;
     const { dialogueOpen } = this.state;
-    const { firstName, lastName, email, username, imgUrl, balance, allowance } =
+    const { firstName, lastName, email, username, imgUrl, allowance } =
       currUser;
 
     return allowance ? (
@@ -65,11 +65,11 @@ class ChildProfile extends Component {
             <h6>Username:</h6>
             <p>{username}</p>
           </div>
-          <div>
+          {/* <div>
             <div>Money made this month:</div>
             <div>Next Allowance Payment:${allowance.amount}</div>
             <div>Balance: ${balance}</div>
-          </div>
+          </div> */}
         </div>
         {/* <Button
           className="edit-profile-button"

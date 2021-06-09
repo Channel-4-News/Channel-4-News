@@ -5,8 +5,10 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
+import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
 import PayoutChore from './PayoutChore';
 import { Button } from '@material-ui/core';
+import axios from 'axios';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
@@ -26,6 +28,7 @@ const ChoreCard = (props) => {
   const today = new Date();
   let expired;
   if (props.chore.due && new Date(props.chore.due) < today) expired = true;
+  let noti;
   return (
     <div
       className={
@@ -45,6 +48,13 @@ const ChoreCard = (props) => {
         checked={complete ? 'checked' : null}
         onChange={() => {
           setComplete(!complete);
+          noti = 'Chore is done';
+          if (!complete) {
+            // console.log('only on child');
+            // console.log(props)
+            // props.parent[0].id}
+            props.sendNotification({ text: 'hello motto', toId: 8 });
+          }
           props.completeChore(props.chore.id, {
             isComplete: !complete,
           });
@@ -82,7 +92,12 @@ const ChoreCard = (props) => {
             disabled={props.chore.wasPaid ? true : false}
             id="payoutButton"
             variant="outlined"
-            onClick={() => {
+            onClick={async () => {
+              await axios.post('/api/stripe/charges', {
+                customer: props.stripeAccount,
+                amount: parseInt(props.chore.amount) * 100,
+                kid: props.chore.user.firstName,
+              });
               setComplete(true);
               props.updateChore(props.chore.id, {
                 isComplete: true,
@@ -98,12 +113,19 @@ const ChoreCard = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    // parent: state.currUser.family.users.filter(currUser => currUser.status === 'Parent'),
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     completeChore: (id, info) => dispatch(updateChore(id, info)),
     deleteChore: (id) => dispatch(deleteChore(id)),
+    sendNotification: (message) => dispatch(sendNotificationThunk(message)),
     updateChore: (id, updateInfo) => dispatch(updateChore(id, updateInfo)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(ChoreCard);
+export default connect(mapStateToProps, mapDispatchToProps)(ChoreCard);
