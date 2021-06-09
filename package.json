@@ -49,6 +49,7 @@
     "puppeteer": "^10.0.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^3.0.3",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.3.2",
     "react-icons": "^4.2.0",

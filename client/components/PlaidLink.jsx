@@ -3,6 +3,9 @@ import { usePlaidLink } from 'react-plaid-link';
 import axios from 'axios';
 import BankAuth from './stripe/BankAuth';
 import { Button } from '@material-ui/core';
+import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
+import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
+import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 
 const LinkPlaid = (props) => {
   const [token, setToken] = useState('');
@@ -48,8 +51,14 @@ const LinkPlaid = (props) => {
     <div id="linkContainer">
       <div id="linkButton">
         <h4>CONNECT YOUR BANK ACCOUNT</h4>
+        <div id="bankConnectIcons">
+          <ImportantDevicesIcon color="secondary" />
+          <SettingsEthernetIcon color="secondary" />
+          <AccountBalanceOutlinedIcon color="secondary" />
+        </div>
         <BankAuth setAuth={setAuth} auth={auth} />
         <Button
+          color="secondary"
           onClick={() => {
             setProcessing(true);
             open();
