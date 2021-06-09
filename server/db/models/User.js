@@ -44,9 +44,15 @@ const User = db.define('user', {
   },
   firstName: {
     type: DataTypes.STRING,
+    validate: {
+      notEmpty: true,
+    },
   },
   lastName: {
     type: DataTypes.STRING,
+    validate: {
+      notEmpty: true,
+    },
   },
   status: {
     type: DataTypes.ENUM(['Parent', 'Child']),

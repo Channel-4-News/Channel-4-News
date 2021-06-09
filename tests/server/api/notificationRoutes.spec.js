@@ -33,13 +33,13 @@ describe('Notification Routes', () => {
     await db.close();
   });
 
-  test('GET /api/notification/:id returns all notifications', async (done) => {
-    const response = await request.get('/api/notification/1');
+  xtest('GET /api/notification returns all notifications', async (done) => {
+    const response = await request.get('/api/notification');
     expect(response.body.length).toBe(2);
     done();
   });
 
-  test('POST /api/notification/:id adds an notification to list', async (done) => {
+  xtest('POST /api/notification/:id adds an notification to list', async (done) => {
     const newNotification = {
       amount: 5.0,
       category: 'Food',

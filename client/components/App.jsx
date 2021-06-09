@@ -49,7 +49,9 @@ class App extends Component {
   componentDidUpdate() {
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
-      this.props.loadNotifications();
+      if (this.props.currUser.status === 'Parent') {
+        this.props.loadNotifications();
+      }
       if (websocket.readyState === 1) {
         websocket.send(
           JSON.stringify({

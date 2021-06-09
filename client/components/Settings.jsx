@@ -53,11 +53,16 @@ const Settings = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Link className={classes.menuLinks} to="editchildinfo">
-            Edit Profile!
-          </Link>
-        </MenuItem>
+        {props.currUser.status === 'Parent' ? (
+          console.log('Parent Page')
+        ) : (
+          <MenuItem onClick={handleClose}>
+            <Link className={classes.menuLinks} to="editchildinfo">
+              Edit Profile!
+            </Link>
+          </MenuItem>
+        )}
+
         <MenuItem onClick={handleClose}>
           {' '}
           <Button
@@ -75,8 +80,14 @@ const Settings = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    currUser: state.currUser,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return { signOut: () => dispatch(logout()) };
 };
 
-export default connect(null, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

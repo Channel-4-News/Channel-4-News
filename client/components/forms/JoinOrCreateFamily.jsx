@@ -100,6 +100,11 @@ const JoinOrCreateFamily = (props) => {
     }
   };
 
+  //Make sure they dont skip the first signup part
+  if (!props.currUser.id) {
+    return <h1>Please Sign Up!</h1>;
+  }
+
   return (
     <div id="createJoinFamily">
       {joinOrCreate === 'create' ? (
