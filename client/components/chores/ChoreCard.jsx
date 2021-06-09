@@ -50,10 +50,13 @@ const ChoreCard = (props) => {
           setComplete(!complete);
           noti = 'Chore is done';
           if (!complete) {
-            // console.log('only on child');
-            // console.log(props)
-            // props.parent[0].id}
-            props.sendNotification({ text: 'hello motto', toId: 8 });
+            console.log(props);
+            props.parents.map((currParent) => {
+              props.sendNotification({
+                text: 'hello motto anotha one',
+                toId: currParent.id,
+              });
+            });
           }
           props.completeChore(props.chore.id, {
             isComplete: !complete,
@@ -115,7 +118,9 @@ const ChoreCard = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    // parent: state.currUser.family.users.filter(currUser => currUser.status === 'Parent'),
+    parents: state.currUser.family.users.filter(
+      (currUser) => currUser.status === 'Parent'
+    ),
   };
 };
 

@@ -31,6 +31,7 @@ const init = () => {
           socket.userId = user.id;
         }
         sockets
+          .filter((s) => s !== socket)
           .filter((s) => s.userId === obj.toId)
           .forEach((s) => s.send(notification));
       });

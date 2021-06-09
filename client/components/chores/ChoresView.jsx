@@ -91,6 +91,10 @@ const Chores = (props) => {
     }
   }, [choresUpdated]);
 
+  if (!props.currUser.id) {
+    return <h1>Please LogIn/Sign Up!</h1>;
+  }
+
   return (
     <div id="choresView">
       {props.chores.length ? (
@@ -199,6 +203,7 @@ const Chores = (props) => {
           )}
           {chores.map((chore) => (
             <ChoreCard
+              currUser={props.currUser}
               chore={chore}
               key={`${chore.id}chore`}
               isParent={props.currUser.status === 'Parent'}
@@ -209,6 +214,7 @@ const Chores = (props) => {
           ))}
           {expiredChores.map((chore) => (
             <ChoreCard
+              currUser={props.currUser}
               chore={chore}
               key={`${chore.id}chore`}
               isParent={props.currUser.status === 'Parent'}

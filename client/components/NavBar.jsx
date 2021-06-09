@@ -48,13 +48,6 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {/* {user === 'Child' ? (
-              <Button href="/#/notifications" color="inherit">
-                Notifications({props.notifications.length})
-              </Button>
-            ) : (
-              ''
-            )} */}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/chores">
                 Chores
@@ -70,21 +63,6 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {/* {user === 'Child' ? (
-              <Button
-                color="inherit"
-                onClick={() => {
-                  props.signOut();
-                }}
-                href="/"
-              >
-                Sign Out
-              </Button>
-              
-            ) 
-            : (
-              ''
-            )} */}
             {user === 'Child' ? <Settings id="settings" /> : ''}
 
             {/*----------- USER IS A PARENT --------------*/}
@@ -104,20 +82,6 @@ const NavBar = (props) => {
               ''
             )}
             {user === 'Parent' ? <Button color="inherit">Chat</Button> : ''}
-            {user === 'Parent' ? <Button color="inherit">Settings</Button> : ''}
-            {/* {user === 'Parent' ? (
-              <Button
-                color="inherit"
-                onClick={() => {
-                  props.signOut();
-                }}
-                href="/"
-              >
-                Sign Out
-              </Button>
-            ) : (
-              ''
-            )} */}
             {user === 'Parent' ? <Settings id="settings" /> : ''}
           </div>
         </Toolbar>

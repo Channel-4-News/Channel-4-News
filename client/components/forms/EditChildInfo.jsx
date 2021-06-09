@@ -23,7 +23,11 @@ import { FiEdit } from 'react-icons/fi';
 import ChooseFile from './ChooseFile';
 
 //Validation Util
-import { validUsername, validEmail } from '../../utilities/utilityValidation';
+import {
+  validUsername,
+  validEmail,
+  validName,
+} from '../../utilities/utilityValidation';
 
 //React Notifications Components
 // import ReactNotification from 'react-notifications-component';
@@ -71,10 +75,10 @@ const EditChildInfo = ({ currUser, updateUser }) => {
     return null;
   }
   const { firstName, lastName, username, email, imgUrl } = currUser;
-  const [newFirstName, setFirstName] = useState(firstName);
-  const [newLastName, setLastName] = useState(lastName);
-  const [newUsername, setUsername] = useState(username);
-  const [newEmail, setEmail] = useState(email);
+  // const [newFirstName, setFirstName] = useState(firstName);
+  // const [newLastName, setLastName] = useState(lastName);
+  // const [newUsername, setUsername] = useState(username);
+  // const [newEmail, setEmail] = useState(email);
   const [newImgUrl, setImgUrl] = useState(imgUrl);
 
   const [dialogueOpen, setDialogoueOpen] = useState(false);
@@ -82,12 +86,16 @@ const EditChildInfo = ({ currUser, updateUser }) => {
   const [errors, setErrors] = useState({
     username: 'Username',
     email: 'Email Address',
+    firstName: 'First Name',
+    lastName: 'Last Name',
   });
 
-  // const [editValues, setEditValues] = useState({
-  //   username: newUsername,
-  //   email: newEmail
-  // });
+  const [editValues, setEditValues] = useState({
+    firstName: firstName,
+    lastName: lastName,
+    username: username,
+    email: email,
+  });
 
   const handleOpen = () => {
     setDialogoueOpen(true);
@@ -106,16 +114,17 @@ const EditChildInfo = ({ currUser, updateUser }) => {
   const handleBlur = async (e, validation, field) => {
     const value = e.target.value;
     const error = await validation(e.target);
-    if (error.error && value) setErrors({ ...errors, [field]: error.message });
+    if (error.error && value >= 0)
+      setErrors({ ...errors, [field]: error.message });
   };
 
   //checks validation, sets label, sets signUpValues
-  // const handleChange = (e, validation, field, label) => {
-  //   const error = validation(e.target);
-  //   if (!error.error || e.target.value.length)
-  //     setErrors({ ...errors, [field]: label });
-  //   setEditValues({ ...editValues, [field]: e.target.value });
-  // };
+  const handleChange = (e, validation, field, label) => {
+    const error = validation(e.target);
+    if (!error.error || e.target.value.length)
+      setErrors({ ...errors, [field]: label });
+    setEditValues({ ...editValues, [field]: e.target.value });
+  };
 
   const classes = useStyles();
 
@@ -133,27 +142,40 @@ const EditChildInfo = ({ currUser, updateUser }) => {
               className={classes.editTextinput}
               variant="outlined"
               color="primary"
-              value={newFirstName}
-              label="First Name"
+              value={editValues.firstName}
+              label={errors.firstName}
               name="firstName"
+              error={errors.firstName !== 'First Name'}
+              required
+              onBlur={async (e) => {
+                handleBlur(e, validName, 'firstName');
+              }}
               fullWidth
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => {
+                handleChange(e, validName, 'firstName', 'First Name');
+              }}
             />
             <TextField
               className={classes.editTextinput}
               variant="outlined"
-              label="Last Name"
-              value={newLastName}
+              label={errors.lastName}
+              error={errors.lastName !== 'Last Name'}
+              value={editValues.lastName}
               name="lastName"
+              required
+              onBlur={async (e) => {
+                handleBlur(e, validName, 'lastName');
+              }}
               fullWidth
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => {
+                handleChange(e, validName, 'lastName', 'Last Name');
+              }}
             />
             <TextField
               className={classes.editTextinput}
               variant="outlined"
               color="primary"
-              value={newUsername}
-              // label="Username"
+              value={editValues.username}
               label={errors.username}
               error={errors.username !== 'Username'}
               onBlur={async (e) => {
@@ -161,26 +183,24 @@ const EditChildInfo = ({ currUser, updateUser }) => {
               }}
               name="username"
               fullWidth
-              // onChange={(e) => {
-              //   handleChange(e, validUsername, 'username', 'Username');
-              // }}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                handleChange(e, validUsername, 'username', 'Username');
+              }}
             />
             <TextField
               className={classes.editTextinput}
               variant="outlined"
               label={errors.email}
-              value={newEmail}
               name="email"
+              value={editValues.email}
               error={errors.email !== 'Email Address'}
               onBlur={async (e) => {
                 handleBlur(e, validEmail, 'email');
               }}
               fullWidth
-              // onChange={(e) => {
-              //   handleChange(e, validEmail, 'email', 'Email Address');
-              // }}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                handleChange(e, validEmail, 'email', 'Email Address');
+              }}
             />
           </Grid>
         </form>
@@ -188,7 +208,12 @@ const EditChildInfo = ({ currUser, updateUser }) => {
           variant="contained"
           className={classes.saveEditButton}
           onClick={() =>
-            handleSubmit(newFirstName, newLastName, newUsername, newEmail)
+            handleSubmit(
+              editValues.firstName,
+              editValues.lastName,
+              editValues.username,
+              editValues.email
+            )
           }
         >
           Save!
@@ -198,10 +223,10 @@ const EditChildInfo = ({ currUser, updateUser }) => {
         open={dialogueOpen}
         close={handleClose}
         submit={handleSubmit}
-        firstName={newFirstName}
-        lastName={newLastName}
-        username={newUsername}
-        email={newEmail}
+        firstName={editValues.firstName}
+        lastName={editValues.lastName}
+        username={editValues.username}
+        email={editValues.email}
         imgUrl={newImgUrl}
       />
     </Paper>
