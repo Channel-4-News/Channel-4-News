@@ -119,9 +119,9 @@ router.post('/create_card', async (req, res, next) => {
 });
 
 //get card details - child landing page
-router.get('/card', async (req, res, next) => {
+router.get('/card/:id', async (req, res, next) => {
   try {
-    const { cardId } = req.body;
+    const cardId = req.params.id;
     const card_details = await stripe.issuing.cards.retrieve(cardId, {
       expand: ['number', 'cvc'],
     });
