@@ -46,6 +46,9 @@ const ChoreCard = (props) => {
           setComplete(!complete);
           noti = 'Chore is done';
           if (!complete) {
+            // console.log('only on child');
+            // console.log(props)
+            // props.parent[0].id}
             props.sendNotification({ text: 'hello motto', toId: 8 });
           }
           props.completeChore(props.chore.id, {
@@ -86,6 +89,12 @@ const ChoreCard = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    // parent: state.currUser.family.users.filter(currUser => currUser.status === 'Parent'),
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     completeChore: (id, info) => dispatch(updateChore(id, info)),
@@ -94,4 +103,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ChoreCard);
+export default connect(mapStateToProps, mapDispatchToProps)(ChoreCard);

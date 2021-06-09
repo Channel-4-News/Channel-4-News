@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const router = require('./api/router');
-const session = require('express-session');
 
 const path = require('path');
 
@@ -11,7 +10,6 @@ app.use(morgan('dev'));
 app.use('/public', express.static('./public'));
 app.use(express.json());
 app.use('/api', router);
-app.use(session());
 
 app.get('/', (req, res, next) => {
   try {

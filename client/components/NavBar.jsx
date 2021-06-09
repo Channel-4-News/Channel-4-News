@@ -42,13 +42,13 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Child' ? (
+            {/* {user === 'Child' ? (
               <Button href="/#/notifications" color="inherit">
                 Notifications({props.notifications.length})
               </Button>
             ) : (
               ''
-            )}
+            )} */}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/chores">
                 Chores
