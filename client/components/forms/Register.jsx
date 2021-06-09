@@ -6,6 +6,7 @@ import {
   attemptLogin,
   authUser,
 } from '../../store/actions/userActions/getCurUser';
+import LinkPlaid from '../PlaidLink';
 import JoinOrCreateFamily from './JoinOrCreateFamily';
 import SignUp from './SignUp';
 
@@ -17,11 +18,14 @@ const Register = (props) => {
       <div id="signupProgress">
         <span id={page === 1 ? 'signupOne' : 'signupTwo'} />
         <span id={page === 2 ? 'signupOne' : 'signupTwo'} />
+        <span id={page === 3 ? 'signupOne' : 'signupTwo'} />
       </div>
       {page === 1 ? (
         <SignUp setPage={setPage} />
+      ) : page === 2 ? (
+        <JoinOrCreateFamily history={props.history} setPage={setPage} />
       ) : (
-        <JoinOrCreateFamily history={props.history} />
+        <LinkPlaid history={props.history} />
       )}
     </div>
   );

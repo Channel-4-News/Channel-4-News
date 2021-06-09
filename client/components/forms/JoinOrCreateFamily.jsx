@@ -95,7 +95,7 @@ const JoinOrCreateFamily = (props) => {
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
       } else {
-        props.history.push('/');
+        props.setPage(3);
       }
     }
   };

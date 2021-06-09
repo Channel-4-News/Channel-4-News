@@ -14,7 +14,7 @@ router.post('/create_link_token', async (req, res, next) => {
     const response = await plaidClient.createLinkToken({
       user: {
         client_user_id: 'user1',
-        legal_name: 'Joe Fun',
+        legal_name: 'Joe Test',
         email_address: 'joe@test.com',
       },
       client_name: 'FUNDIT',
@@ -27,30 +27,39 @@ router.post('/create_link_token', async (req, res, next) => {
         },
       },
     });
+    console.log(response);
     res.status(201).send(response.link_token);
   } catch (err) {
     next(err);
   }
 });
 
+//exhanges plaid's public token for access token and access token for stribe bank account token
 router.post('/tokenExchange', async (req, res) => {
-  const { token } = req.body;
+  const { token, accountId } = req.body;
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
     token
   );
+  const stripeToken = await plaidClient.createStripeToken(
+    accessToken,
+    accountId
+  );
+
+  //stripe res token - stripe.stripe_bank_account_token
+  console.log('stripe', stripeToken);
   console.log('accessToken', accessToken);
 
-  const authResponse = await plaidClient.getAuth(accessToken);
-  console.log('Auth response:', authResponse);
-  console.log('---------------');
+  // const authResponse = await plaidClient.getAuth(accessToken);
+  // console.log('Auth response:', authResponse);
+  // console.log('---------------');
 
-  const identityResponse = await plaidClient.getIdentity(accessToken);
-  console.log('Identity response:', identityResponse);
-  console.log('---------------');
+  // const identityResponse = await plaidClient.getIdentity(accessToken);
+  // console.log('Identity response:', identityResponse);
+  // console.log('---------------');
 
-  const balanceResponse = await plaidClient.getBalance(accessToken);
-  console.log('Balance response', balanceResponse);
-  console.log('---------------');
+  // const balanceResponse = await plaidClient.getBalance(accessToken);
+  // console.log('Balance response', balanceResponse);
+  // console.log('---------------');
 
   res.sendStatus(200);
 });

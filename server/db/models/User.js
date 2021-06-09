@@ -70,6 +70,15 @@ const User = db.define('user', {
   },
   stripeAccount: {
     type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cardHolderId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  virtualCard: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 });
 
@@ -138,5 +147,18 @@ User.addHook('afterCreate', async (user) => {
   allowance.userId = user.id;
   await allowance.save();
 });
+
+User.prototype.getNotifications = function () {
+  return db.models.notification.findAll({
+    where: {
+      [db.Sequelize.Op.or]: [{ toId: this.id }],
+    },
+    include: [
+      { model: User, as: 'from' },
+      { model: User, as: 'to' },
+    ],
+    order: [['createdAt', 'DESC']],
+  });
+};
 
 module.exports = User;

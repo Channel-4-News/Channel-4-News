@@ -163,3 +163,13 @@ body
   display: flex;
   flex-direction: column;
 }
+
+#makeNewWishButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#makeAWishDialog > div.MuiDialog-container.MuiDialog-scrollPaper > div {
+  padding: 1rem;
+}
