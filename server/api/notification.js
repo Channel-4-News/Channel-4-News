@@ -6,7 +6,7 @@ const {
 } = require('../db/models/associations');
 const User = require('../db/models/User');
 
-// Get all notifications in notification list
+//Get all notifications in notification list
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
