@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { HashRouter as Link } from 'react-router-dom';
 import { logout } from '../store/actions/userActions/logoutUser';
 import { connect } from 'react-redux';
 
+//Component Imports
+import Settings from './Settings';
+
+//CSS Imports
+import '../../public/style/navbar.css';
+
 const NavBar = (props) => {
   const user = props.user.status;
+
   return (
     <div id="navbar-wrapper">
       <AppBar position="static" id="navbar">
@@ -64,7 +70,7 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Child' ? (
+            {/* {user === 'Child' ? (
               <Button
                 color="inherit"
                 onClick={() => {
@@ -74,9 +80,12 @@ const NavBar = (props) => {
               >
                 Sign Out
               </Button>
-            ) : (
+              
+            ) 
+            : (
               ''
-            )}
+            )} */}
+            {user === 'Child' ? <Settings id="settings" /> : ''}
 
             {/*----------- USER IS A PARENT --------------*/}
 
@@ -96,7 +105,7 @@ const NavBar = (props) => {
             )}
             {user === 'Parent' ? <Button color="inherit">Chat</Button> : ''}
             {user === 'Parent' ? <Button color="inherit">Settings</Button> : ''}
-            {user === 'Parent' ? (
+            {/* {user === 'Parent' ? (
               <Button
                 color="inherit"
                 onClick={() => {
@@ -108,7 +117,8 @@ const NavBar = (props) => {
               </Button>
             ) : (
               ''
-            )}
+            )} */}
+            {user === 'Parent' ? <Settings id="settings" /> : ''}
           </div>
         </Toolbar>
       </AppBar>

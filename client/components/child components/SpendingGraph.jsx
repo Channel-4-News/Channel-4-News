@@ -2,18 +2,23 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
 const SpendingGraph = (props) => {
+  let transactions = {};
+  props.transactions.map((transaction) => {
+    if (!transactions[transaction.category]) {
+      transactions[transaction.category] = parseInt(transaction.cost);
+    } else {
+      transactions[transaction.category] += parseInt(transaction.cost);
+    }
+  });
+  console.log(transactions);
   return props.transactions ? (
     <div className="spendingGraph">
       <Pie
         data={{
-          labels: props.transactions.map((transaction) => {
-            return transaction.category;
-          }),
+          labels: Object.keys(transactions),
           datasets: [
             {
-              data: props.transactions.map((transaction) => {
-                return transaction.amount;
-              }),
+              data: Object.values(transactions),
               backgroundColor: [
                 'rgba(255,0,0,0.5)',
                 'rgba(0,255,0,0.5)',
@@ -25,8 +30,8 @@ const SpendingGraph = (props) => {
             },
           ],
         }}
-        height={400}
-        width={400}
+        height={300}
+        width={300}
         options={{ maintainAspectRatio: false }}
       />
     </div>

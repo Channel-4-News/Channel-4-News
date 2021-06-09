@@ -36,7 +36,9 @@ const sortByLeastExpensive = (wishList) => {
   let leastExpensive = [];
   orderedWishListCopy.forEach((sortedName) => {
     for (let item of wishList) {
-      sortedName.itemName === item.itemName ? leastExpensive.push(item) : null;
+      if (sortedName.itemName === item.itemName) {
+        leastExpensive.push(item);
+      }
     }
   });
   return leastExpensive;

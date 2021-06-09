@@ -6,26 +6,29 @@ const NotificationList = db.define('notification list');
 
 const Notification = db.define('notification', {
   text: DataTypes.TEXT,
-  // amount: {
-  //   type: DataTypes.DECIMAL(10, 2),
-  //   allowNull: false,
-  //   defaultValue: 0,
-  // },
-  // category: {
-  //   type: DataTypes.ENUM([
-  //     'Electronics',
-  //     'Clothing',
-  //     'Entertainment',
-  //     'Toys',
-  //     'Miscellaneous',
-  //     'Food',
-  //   ]),
-  //   defaultValue: 'Miscellaneous',
-  // },
-  // isCash: {
-  //   type: DataTypes.BOOLEAN,
-  //   defaultValue: false,
-  // },
+  amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  category: {
+    type: DataTypes.ENUM([
+      'Electronics',
+      'Clothing',
+      'Entertainment',
+      'Toys',
+      'Miscellaneous',
+      'Food',
+    ]),
+  },
+  isChore: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  isCash: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 Notification.addHook('afterCreate', async (notification) => {

@@ -6,6 +6,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
+import PayoutChore from './PayoutChore';
+import { Button } from '@material-ui/core';
+import axios from 'axios';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
@@ -41,6 +44,7 @@ const ChoreCard = (props) => {
       <input
         type="checkbox"
         className="choreCompletedCheck"
+        disabled={props.chore.wasPaid ? true : false}
         checked={complete ? 'checked' : null}
         onChange={() => {
           setComplete(!complete);
@@ -73,6 +77,7 @@ const ChoreCard = (props) => {
       {props.isParent ? (
         <div className="editChore">
           <IconButton
+            disabled={props.chore.wasPaid ? true : false}
             onClick={() => {
               props.updateClicked(true);
               props.setChore(props.chore);
@@ -83,6 +88,25 @@ const ChoreCard = (props) => {
           <IconButton onClick={() => props.deleteChore(props.chore.id)}>
             <HighlightOffIcon />
           </IconButton>
+          <Button
+            disabled={props.chore.wasPaid ? true : false}
+            id="payoutButton"
+            variant="outlined"
+            onClick={async () => {
+              await axios.post('/api/stripe/charges', {
+                customer: props.stripeAccount,
+                amount: parseInt(props.chore.amount) * 100,
+                kid: props.chore.user.firstName,
+              });
+              setComplete(true);
+              props.updateChore(props.chore.id, {
+                isComplete: true,
+                wasPaid: true,
+              });
+            }}
+          >
+            Payout
+          </Button>
         </div>
       ) : null}
     </div>
@@ -100,6 +124,7 @@ const mapDispatchToProps = (dispatch) => {
     completeChore: (id, info) => dispatch(updateChore(id, info)),
     deleteChore: (id) => dispatch(deleteChore(id)),
     sendNotification: (message) => dispatch(sendNotificationThunk(message)),
+    updateChore: (id, updateInfo) => dispatch(updateChore(id, updateInfo)),
   };
 };
 

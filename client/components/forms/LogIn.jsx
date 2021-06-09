@@ -34,7 +34,7 @@ const LogIn = (props) => {
     const login = await props.attemptLogin();
 
     if (!login) setLoggedIn('Invalid username or password.');
-    if (login) props.history.push('/');
+    if (login) props.history.push('/home');
   };
 
   return (
@@ -70,7 +70,13 @@ const LogIn = (props) => {
         </Button>
         <small>{loggedIn}</small>
         <small>
-          Don&apos;t have an account? <span id="takeMeToSignUp">Sign up.</span>
+          Don&apos;t have an account?{' '}
+          <span
+            id="takeMeToSignUp"
+            onClick={() => props.history.push('/signup')}
+          >
+            Sign up.
+          </span>
         </small>
       </form>
     </div>

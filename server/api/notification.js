@@ -1,12 +1,10 @@
-const { Router, json } = require('express');
+const { Router } = require('express');
 const router = Router();
 
 const {
   models: { Notification, NotificationList },
 } = require('../db/models/associations');
 const User = require('../db/models/User');
-
-router.use(json());
 
 //Get all notifications in notification list
 // router.get('/:id', async (req, res, next) => {

@@ -10,7 +10,6 @@ import Avatar from '@material-ui/core/Avatar';
 //Style Import
 import '../../../public/style/childProfile.css';
 import EditChildProfile from './EditChildProfile';
-import SpendingGraph from '../SpendingGraph';
 
 class ChildProfile extends Component {
   constructor(props) {
@@ -48,16 +47,8 @@ class ChildProfile extends Component {
   render() {
     const { currUser } = this.props;
     const { dialogueOpen } = this.state;
-    const {
-      firstName,
-      lastName,
-      email,
-      username,
-      imgUrl,
-      transactions,
-      balance,
-      allowance,
-    } = currUser;
+    const { firstName, lastName, email, username, imgUrl, allowance } =
+      currUser;
 
     return allowance ? (
       <div className="profile-container">
@@ -74,15 +65,11 @@ class ChildProfile extends Component {
             <h6>Username:</h6>
             <p>{username}</p>
           </div>
-          <div>
+          {/* <div>
             <div>Money made this month:</div>
             <div>Next Allowance Payment:${allowance.amount}</div>
             <div>Balance: ${balance}</div>
-          </div>
-          <div>
-            Spending History
-            <SpendingGraph transactions={transactions} />
-          </div>
+          </div> */}
         </div>
         {/* <Button
           className="edit-profile-button"

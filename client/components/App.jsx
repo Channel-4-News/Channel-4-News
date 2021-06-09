@@ -9,7 +9,7 @@ import LogIn from './forms/LogIn';
 import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
-import Dummy from './dummyPage/dummy';
+import ChildLandingPage from './child components/ChildLandingPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
@@ -20,6 +20,10 @@ import websocket from '../store/actions/notificationActions/sendNotification';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
+import EditChildInfo from './forms/EditChildInfo';
+import Dummy from './dummyPage/dummy';
+import Home from './Home';
+import LinkPlaid from './PlaidLink';
 
 class App extends Component {
   constructor(props) {
@@ -97,11 +101,14 @@ class App extends Component {
       },
     });
     return (
-      <ThemeProvider theme={kidTheme}>
+      <ThemeProvider
+        theme={this.state.user.status === 'Parent' ? parentTheme : kidTheme}
+      >
         <Router>
           <NavBar user={this.state.user} />
           <div id="mainAppContent">
             <Switch>
+              <Route exact path="/" component={Home} />
               <Route exact path="/signup" component={Register} />
               <Route exact path="/login" component={LogIn} />
               <Route
@@ -114,10 +121,23 @@ class App extends Component {
               <Route exact path="/notifications" component={Notification} />
               <Route
                 exact
+                path="/home"
+                component={() =>
+                  this.state.user.status === 'Child' ? (
+                    <ChildLandingPage user={this.state.user} />
+                  ) : (
+                    ''
+                  )
+                }
+              />
+              <Route exact path="/editchildinfo" component={EditChildInfo} />
+              <Route
+                exact
                 path="/wishlist"
                 component={() => <WishList user={this.state.user} />}
               />
               <Route exact path="/dummy" component={Dummy} />
+              <Route exact path="/link" component={LinkPlaid} />
             </Switch>
           </div>
         </Router>
