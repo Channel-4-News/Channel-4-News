@@ -75,10 +75,7 @@ const EditChildInfo = ({ currUser, updateUser }) => {
     return null;
   }
   const { firstName, lastName, username, email, imgUrl } = currUser;
-  // const [newFirstName, setFirstName] = useState(firstName);
-  // const [newLastName, setLastName] = useState(lastName);
-  // const [newUsername, setUsername] = useState(username);
-  // const [newEmail, setEmail] = useState(email);
+
   const [newImgUrl, setImgUrl] = useState(imgUrl);
 
   const [dialogueOpen, setDialogoueOpen] = useState(false);
