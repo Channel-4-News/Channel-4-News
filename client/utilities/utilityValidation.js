@@ -58,6 +58,15 @@ const validEmail = async (email) => {
   return true;
 };
 
+//check first name and last name to not be empty
+const validName = (name, type) => {
+  const length = name.value.length > 0;
+  if (!length) {
+    return { error: true, message: 'Required Field' };
+  }
+  return true;
+};
+
 //check if username is valid
 const validUsername = async (username, type) => {
   if (!type) type = 'Username';
@@ -99,4 +108,5 @@ export {
   passwordsMatch,
   secretValid,
   validEmail,
+  validName,
 };

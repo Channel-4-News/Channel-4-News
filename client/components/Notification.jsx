@@ -6,13 +6,18 @@ import { sendNotification } from '../store/actions/notificationActions/sendNotif
 /**
  * COMPONENT
  */
-const Notification = ({ notifications }) => {
+const Notification = ({ notifications, currUser }) => {
   if (!notifications.length) {
     return null;
+  }
+  // COMMENTED FOR TESTING
+  if (currUser.status !== 'Parent') {
+    return <div>You do not have permission to view this screen</div>;
   }
 
   return (
     <div>
+      {console.log(currUser)}
       {notifications.map((currNote, idx) => {
         return <li key={idx}>{currNote.text}</li>;
       })}
