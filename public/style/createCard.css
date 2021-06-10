@@ -55,7 +55,7 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   background: linear-gradient(25deg, #939393, #717171);
-  /* background-color: darkcyan; */
+  background-color: #939393;
   border-radius: 14.5px;
   color: #fff;
   height: 100%;
@@ -66,12 +66,12 @@
   transform-style: preserve-3d;
   width: 100%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  background-image: url('../images/cardIcons/bathdog.png');
-  background-size: auto 170px;
+  /* background-image: url('../images/cardIcons/bathdog.png'); */
+  /* background-size: auto 170px; */
   background-repeat: no-repeat;
   background-position: center;
   background-position: bottom;
-  background-color: rgb(0, 119, 255);
+  /* background-color: linear-gradient(25deg, #939393, #717171); */
 }
 .rccs__card--front {
   z-index: 20;

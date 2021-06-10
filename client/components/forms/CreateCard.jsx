@@ -28,14 +28,15 @@ const CreateCard = (props) => {
     number: '',
   });
 
-  console.log('bg', backgroundImage);
-
   useEffect(() => {
     if (cardBackground[0])
       cardBackground[0].style.backgroundColor = backgroundColor;
-    if (cardBackground[0])
+    if (cardBackground[0] && backgroundImage) {
       cardBackground[0].style.backgroundImage = `url(public/images/cardIcons/${backgroundImage}.png)`;
-    console.log(cardBackground[0].style);
+      cardBackground[0].style.backgroundSize = 'auto 170px';
+      // cardBackground[0].style.backgroundRepeat = 'no-repeat';
+      // cardBackground[0].style.backgroundSize = 'auto 170px';
+    }
   }, [cardBackground, backgroundColor, backgroundImage]);
 
   const useStyles = makeStyles((theme) => ({
@@ -198,11 +199,6 @@ const CreateCard = (props) => {
           <img
             src="public/images/cardIcons/flowerpower.png"
             name="flowerpower"
-            onClick={(e) => setBackgroundImage(e.target.name)}
-          />
-          <img
-            src="public/images/cardIcons/meltedicecream.png"
-            name="meltedicecream"
             onClick={(e) => setBackgroundImage(e.target.name)}
           />
           <img
