@@ -11,7 +11,7 @@ import {
 import Cards from 'react-credit-cards';
 
 const CreateCard = (props) => {
-  const [val, setVal] = useState('#3e98ff');
+  const [val, setVal] = useState('#939393');
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
@@ -102,10 +102,10 @@ const CreateCard = (props) => {
           <MenuItem
             onClick={() => {
               handleClose;
-              setVal('#ef0066');
-              setBackgroundColor('#ef0066');
+              setVal('#ff73ff');
+              setBackgroundColor('#ff73ff');
             }}
-            style={{ backgroundColor: '#ef0066' }}
+            style={{ backgroundColor: '#ff73ff' }}
           >
             &nbsp;
           </MenuItem>
