@@ -24,6 +24,7 @@ import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
 import LinkPlaid from './PlaidLink';
+import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
 
 class App extends Component {
@@ -139,7 +140,8 @@ class App extends Component {
               />
               <Route exact path="/dummy" component={Dummy} />
               <Route exact path="/link" component={LinkPlaid} />
-              <Route exact path="/createCard" component={CreateCard} />
+              <Route exact path="/card" component={VirtualCard} />
+              <Route exact path="/createcard" component={CreateCard} />
             </Switch>
           </div>
         </Router>
