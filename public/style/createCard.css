@@ -54,7 +54,7 @@
 .rccs__card--back {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  background: linear-gradient(25deg, #939393, #717171);
+  /* background: linear-gradient(25deg, #939393, #717171); */
   background-color: #939393;
   border-radius: 14.5px;
   color: #fff;
@@ -117,7 +117,7 @@
   /* box-shadow: none; */
 }
 .rccs__card--unknown .rccs__issuer {
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 .rccs__card:not(.rccs__card--unknown) .rccs__card__background {
   left: -22%;
@@ -276,6 +276,7 @@
   right: 10%;
   top: 10%;
   width: 40%;
+  background-image: url('../images/cardlogo.png');
 }
 .rccs__stripe {
   background-color: #2a1d16;

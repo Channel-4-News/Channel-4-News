@@ -34,8 +34,6 @@ const CreateCard = (props) => {
     if (cardBackground[0] && backgroundImage) {
       cardBackground[0].style.backgroundImage = `url(public/images/cardIcons/${backgroundImage}.png)`;
       cardBackground[0].style.backgroundSize = 'auto 170px';
-      // cardBackground[0].style.backgroundRepeat = 'no-repeat';
-      // cardBackground[0].style.backgroundSize = 'auto 170px';
     }
   }, [cardBackground, backgroundColor, backgroundImage]);
 
@@ -148,16 +146,6 @@ const CreateCard = (props) => {
               setBackgroundColor('#00ff6a');
             }}
             style={{ backgroundColor: '#00ff6a' }}
-          >
-            &nbsp;
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClose;
-              setVal('#ffffff');
-              setBackgroundColor('#ffffff');
-            }}
-            style={{ backgroundColor: '#ffffff' }}
           >
             &nbsp;
           </MenuItem>
