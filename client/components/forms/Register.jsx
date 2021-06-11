@@ -7,11 +7,13 @@ import {
   authUser,
 } from '../../store/actions/userActions/getCurUser';
 import LinkPlaid from '../PlaidLink';
+import CreateCard from './CreateCard';
 import JoinOrCreateFamily from './JoinOrCreateFamily';
 import SignUp from './SignUp';
 
 const Register = (props) => {
   const [page, setPage] = useState(1);
+  const [userStatus, setUserStatus] = useState('');
 
   return (
     <div id="signup-wrapper">
@@ -23,9 +25,15 @@ const Register = (props) => {
       {page === 1 ? (
         <SignUp setPage={setPage} />
       ) : page === 2 ? (
-        <JoinOrCreateFamily history={props.history} setPage={setPage} />
-      ) : (
+        <JoinOrCreateFamily
+          history={props.history}
+          setPage={setPage}
+          setUserStatus={setUserStatus}
+        />
+      ) : userStatus === 'Parent' ? (
         <LinkPlaid history={props.history} />
+      ) : (
+        <CreateCard history={props.history} />
       )}
     </div>
   );

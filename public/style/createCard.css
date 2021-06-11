@@ -11,7 +11,7 @@
 }
 
 #cardChooser {
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
 }
@@ -22,12 +22,21 @@
   height: 100px;
 }
 
+#imageSelectContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 #createYourCard {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 65%;
+  background-color: white;
+  margin-top: 20px;
+  padding-bottom: 30px;
 }
 
 #createCardTitle {
@@ -50,15 +59,17 @@
 }
 
 #cardImageSelector {
-  overflow: auto;
+  /* overflow: auto; */
+  overflow: hidden;
   white-space: nowrap;
 }
 
 #cardStepButtons {
   width: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   margin-bottom: 40px;
+  padding-left: 24px;
 }
 
 /* FOR THE CARD */

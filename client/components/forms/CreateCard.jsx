@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import {
-  TextField,
-  Button,
-  makeStyles,
-  MenuItem,
-  Menu,
-} from '@material-ui/core';
+import { TextField, Button, makeStyles } from '@material-ui/core';
 import Cards from 'react-credit-cards';
 import CardStepper from './createCard/CardStepper';
 
@@ -18,7 +14,8 @@ const CreateCard = (props) => {
   const [cardBackground] = useState(
     document.getElementsByClassName('rccs__card--front')
   );
-
+  const [nameError, setNameError] = useState('');
+  const [reset, setReset] = useState(0);
   const [cardDetails, setCardDetails] = useState({
     cvc: '',
     expiry: '',
@@ -36,6 +33,7 @@ const CreateCard = (props) => {
   const [imagesStyle, setImagesStyle] = useState({
     display: 'none',
   });
+  const scrollImages = useRef(null);
 
   useEffect(() => {
     if (cardBackground[0])
@@ -45,6 +43,12 @@ const CreateCard = (props) => {
       cardBackground[0].style.backgroundSize = 'auto 170px';
     }
   }, [cardBackground, backgroundColor, backgroundImage]);
+
+  useEffect(() => {
+    setBackgroundColor('');
+    setBackgroundImage('');
+    cardBackground[0].style.backgroundImage = '';
+  }, [reset]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,6 +88,9 @@ const CreateCard = (props) => {
         setImagesStyle={setImagesStyle}
         history={props.history}
         name={cardDetails.name}
+        setNameError={setNameError}
+        setReset={setReset}
+        reset={reset}
       />
       <div id="cardChooser">
         <TextField
@@ -95,6 +102,8 @@ const CreateCard = (props) => {
           onChange={(e) => {
             setCardDetails({ ...cardDetails, name: e.target.value });
           }}
+          error={!!nameError}
+          helperText={nameError}
         />
         <div id="cardColorPicker" style={colorPickerStyle}>
           {/* <Button
@@ -108,10 +117,8 @@ const CreateCard = (props) => {
             &nbsp;
           </Button> */}
           <Button
-            // color="secondary"
             aria-controls="simple-menu"
             aria-haspopup="true"
-            // onClick={handleClick}
             name="#3e98ff"
             test="tomatoe"
             onClick={() => handleColorClick('#3e98ff')}
@@ -177,7 +184,13 @@ const CreateCard = (props) => {
           </Button>
         </div>
         <div id="imageSelectContainer" style={imagesStyle}>
-          <div id="cardImageSelector">
+          <ArrowBackIosIcon
+            fontSize="large"
+            onClick={() => {
+              scrollImages.current.scrollLeft -= 300;
+            }}
+          />
+          <div id="cardImageSelector" ref={scrollImages}>
             <img
               src="public/images/cardIcons/basketball.png"
               name="basketball"
@@ -254,6 +267,12 @@ const CreateCard = (props) => {
               onClick={handleImageClick}
             />
           </div>
+          <ArrowForwardIosIcon
+            fontSize="large"
+            onClick={() => {
+              scrollImages.current.scrollLeft += 300;
+            }}
+          />
         </div>
       </div>
     </div>

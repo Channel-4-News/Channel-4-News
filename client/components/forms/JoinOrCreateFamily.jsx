@@ -134,9 +134,10 @@ const JoinOrCreateFamily = (props) => {
               native
               label={errors.relation}
               color="secondary"
-              onChange={(e) =>
-                props.updateUser(props.currUser.id, { status: e.target.value })
-              }
+              onChange={(e) => {
+                props.setUserStatus(e.target.value);
+                props.updateUser(props.currUser.id, { status: e.target.value });
+              }}
             >
               <option aria-label="None" value="" />
               <option value="Parent">Parent</option>

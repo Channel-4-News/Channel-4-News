@@ -12,7 +12,7 @@ import {
 const CardStepper = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      width: '70%',
+      width: '100%',
     },
     button: {
       marginRight: theme.spacing(1),
@@ -25,7 +25,7 @@ const CardStepper = (props) => {
 
   function getSteps() {
     return [
-      'Enter full name as it should appear on card.',
+      'Enter full name as it should appear on your card.',
       'Choose your color.',
       'Choose an image.',
     ];
@@ -56,6 +56,9 @@ const CardStepper = (props) => {
     if (whichStep === 4 && !props.name.length) {
       setWhichStep(1);
       setActiveStep(0);
+      props.setNameError(
+        'Please enter your full name as it should appear on your virtual card.'
+      );
     }
     if (whichStep === 4 && props.name.length) props.history.push('/home');
   }, [whichStep]);
@@ -81,6 +84,10 @@ const CardStepper = (props) => {
   const handleBack = () => {
     setWhichStep(whichStep - 1);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    props.setReset(props.reset + 1);
   };
 
   return (
@@ -125,6 +132,9 @@ const CardStepper = (props) => {
               className={classes.button}
             >
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+            <Button onClick={handleReset} className={classes.button}>
+              Reset
             </Button>
           </div>
         </div>
