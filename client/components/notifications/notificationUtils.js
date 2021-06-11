@@ -1,11 +1,11 @@
 import { store } from 'react-notifications-component';
-// import 'animate.css';
+import 'animate.css';
 
 const choreSuccess = (text, amount) =>
   store.addNotification({
     title: 'Chore Completed',
     message: `${text} amount due $${amount}`,
-    type: 'success',
+    type: 'info',
     insert: 'top',
     container: 'top-right',
     animationIn: ['animate_animated', 'animate_fadeIn'],
@@ -31,7 +31,9 @@ const choreIncomplete = (text) =>
     },
   });
 
-// props.parents.map((currParent) => {
+// if (expired && !props.chore.isComplete && props.currUser.status === 'Child') {
+//   console.log('my wacky if statement');
+//   props.parents.map((currParent) => {
 //     props.sendNotification({
 //       text: `${props.chore.name} Incomplete! Assigned to ${props.chore.user.username}`,
 //       amount: props.chore.amount,
@@ -40,5 +42,27 @@ const choreIncomplete = (text) =>
 //       toId: currParent.id,
 //     });
 //   });
+// }
 
-export { choreSuccess, choreIncomplete };
+const choresCompletedSort = (notiArr) => {
+  const newArr = notiArr.filter((currNoti) => currNoti.isChoreCompleted);
+  return newArr;
+};
+const choresIncompletedSort = (notiArr) => {
+  const newArr = notiArr.filter(
+    (currNoti) => !currNoti.isChoreCompleted && !currNoti.isCash
+  );
+  return newArr;
+};
+
+const cashRelated = (notiArr) => {
+  const newArr = notiArr.filter((currNoti) => currNoti.isCash);
+  return newArr;
+};
+export {
+  choreSuccess,
+  choreIncomplete,
+  choresCompletedSort,
+  choresIncompletedSort,
+  cashRelated,
+};

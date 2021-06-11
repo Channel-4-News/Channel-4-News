@@ -33,18 +33,7 @@ const ChoreCard = (props) => {
   if (props.chore.due && new Date(props.chore.due) < today) {
     expired = true;
   }
-  if (expired && !props.chore.isComplete && props.currUser.status === 'Child') {
-    console.log('my wacky if statement');
-    props.parents.map((currParent) => {
-      props.sendNotification({
-        text: `${props.chore.name} Incomplete! Assigned to ${props.chore.user.username}`,
-        amount: props.chore.amount,
-        isChoreCompleted: false,
-        isChore: true,
-        toId: currParent.id,
-      });
-    });
-  }
+
   return (
     <div
       className={
