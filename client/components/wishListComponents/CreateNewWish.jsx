@@ -1,79 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
 import {
   addNewWish,
   fillForm,
 } from '../../store/actions/wishListActions/addNewWish';
 
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    height: 48,
-    padding: '0 100px 0 0',
-    boxShadow: '1px 1px 1px 1px rgba(54, 54, 54, 0.3)',
-    borderRadius: 4,
-    position: 'relative',
-    border: '1px',
-    borderColor: 'black',
-    fontSize: 16,
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 3,
-    },
-  },
-}))(InputBase);
-
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(0),
-  },
-}));
-
-const StyledButton = withStyles({
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FE6B8B 90%)',
-    borderRadius: 3,
-    border: 0,
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  },
-  label: {
-    textTransform: 'capitalize',
-  },
-})(Button);
-
 const CreateNewWish = (props) => {
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState('url');
   const [select, setSelect] = useState('Miscellaneous');
@@ -82,17 +26,25 @@ const CreateNewWish = (props) => {
   const [itemName, setItemName] = useState('');
   const [imgUrl, setImgUrl] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
-  const [cost, setCost] = useState('');
+  const [cost, setCost] = useState(0);
   const [description, setDescription] = useState('');
   const [userId, setUserId] = useState(props.user.id);
   const [purchased, setPurchased] = useState(false);
+
+  useEffect(() => {
+    if (itemName.length > 45) {
+      setItemName(itemName.slice(0, 45));
+    }
+  });
 
   const handleClose = () => {
     setOpen(false);
   };
   return (
     <div>
-      <StyledButton onClick={() => setOpen(true)}>Make A New Wish</StyledButton>
+      <Button variant="contained" size="large" onClick={() => setOpen(true)}>
+        Make A New Wish
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -105,14 +57,14 @@ const CreateNewWish = (props) => {
           <Button
             onClick={() => setForm('url')}
             variant="contained"
-            size="small"
+            size={form === 'url' ? 'small' : 'large'}
           >
             Enter Url
           </Button>
           <Button
             onClick={() => setForm('form')}
             variant="contained"
-            size="small"
+            size={form === 'url' ? 'small' : 'large'}
           >
             Input Form
           </Button>
@@ -120,34 +72,45 @@ const CreateNewWish = (props) => {
         {form === 'url' ? (
           <div>
             <DialogContent id="withdrawBoxItems">
-              <DialogContentText id="alert-dialog-description">
-                Enter Link
-              </DialogContentText>
               <TextField
                 id="wishListWithdrawBox"
                 onChange={(event) => setUrl(event.target.value)}
-                type="search"
+                type="input"
+                label="Product URL"
                 variant="outlined"
                 defaultValue={url}
               />
+              <br />
               <DialogContentText id="alert-dialog-description">
                 Pick a Category
               </DialogContentText>
-              <FormControl className={classes.margin}>
-                <NativeSelect
-                  id="demo-customized-select-native"
-                  value={select}
-                  onChange={(event) => setSelect(event.target.value)}
-                  input={<BootstrapInput />}
-                >
-                  <option value={'Electronics'}>Electronics</option>
-                  <option value={'Clothing'}>Clothing</option>
-                  <option value={'Entertainment'}>Entertainment</option>
-                  <option value={'Toys'}>Toys</option>
-                  <option value={'Food'}>Food</option>
-                  <option defaultValue={'Miscellaneous'}>Miscellaneous</option>
-                </NativeSelect>
-              </FormControl>
+              <div id="wishListDropdown">
+                <div id="filterAndSortWishes">
+                  <div id="chooseWishHover">
+                    <Button
+                      size="large"
+                      id="withdrawButton"
+                      variant="contained"
+                    >
+                      &nbsp;&nbsp;{select}&nbsp;&nbsp;
+                    </Button>
+                    <div id="wishDropdownContent">
+                      <div onClick={() => setSelect('Electronics')}>
+                        Electronics
+                      </div>
+                      <div onClick={() => setSelect('Clothing')}>Clothing</div>
+                      <div onClick={() => setSelect('Entertainment')}>
+                        Entertainment
+                      </div>
+                      <div onClick={() => setSelect('Toys')}>Toys</div>
+                      <div onClick={() => setSelect('Food')}>Food</div>
+                      <div onClick={() => setSelect('Miscelleneous')}>
+                        Miscelleneous
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </DialogContent>
             <DialogActions>
               <Button
@@ -167,85 +130,106 @@ const CreateNewWish = (props) => {
                   setForm('form');
                 }}
                 color="primary"
+                variant="contained"
               >
                 Enter
               </Button>
-              <Button onClick={handleClose} color="secondary">
+              <Button
+                onClick={handleClose}
+                color="secondary"
+                variant="contained"
+              >
                 Cancel
               </Button>
             </DialogActions>
           </div>
         ) : (
           <div>
-            <DialogContent id="withdrawBoxItems">
-              <DialogContentText id="alert-dialog-description">
-                Name
-              </DialogContentText>
-              <TextField
-                id="wishListWithdrawBox"
-                onChange={(event) => setItemName(event.target.value)}
-                type="search"
-                variant="outlined"
-                defaultValue={itemName}
-              />
-              <DialogContentText id="alert-dialog-description">
-                Image
-              </DialogContentText>
-              <TextField
-                id="wishListWithdrawBox"
-                onChange={(event) => setImgUrl(event.target.value)}
-                type="search"
-                variant="outlined"
-                defaultValue={imgUrl}
-              />
-              <DialogContentText id="alert-dialog-description">
-                Link
-              </DialogContentText>
-              <TextField
-                id="wishListWithdrawBox"
-                onChange={(event) => setLinkUrl(event.target.value)}
-                type="search"
-                variant="outlined"
-                defaultValue={linkUrl}
-              />
-              <DialogContentText id="alert-dialog-description">
-                Cost
-              </DialogContentText>
-              <TextField
-                id="wishListWithdrawBox"
-                onChange={(event) => setCost(event.target.value)}
-                type="search"
-                variant="outlined"
-                defaultValue={cost}
-              />
-              <DialogContentText id="alert-dialog-description">
-                Description
-              </DialogContentText>
-              <TextField
-                id="wishListWithdrawBox"
-                onChange={(event) => setDescription(event.target.value)}
-                type="search"
-                variant="outlined"
-                defaultValue={description}
-              />
+            <DialogContent id="createWishBoxItems1">
               <DialogContentText id="alert-dialog-description">
                 Pick a Category
               </DialogContentText>
-              <FormControl className={classes.margin}>
-                <NativeSelect
-                  id="demo-customized-select-native"
-                  value={select}
-                  onChange={(event) => setSelect(event.target.value)}
-                  input={<BootstrapInput />}
+              <div id="costAndCategory">
+                <div id="wishListDropdown" className="secondCreateDropdown">
+                  <div id="filterAndSortWishes">
+                    <div id="chooseWishHover">
+                      <Button
+                        size="large"
+                        id="withdrawButton"
+                        variant="contained"
+                      >
+                        &nbsp;&nbsp;{select}&nbsp;&nbsp;
+                      </Button>{' '}
+                      <div id="wishDropdownContent">
+                        <div onClick={() => setSelect('Electronics')}>
+                          Electronics
+                        </div>
+                        <div onClick={() => setSelect('Clothing')}>
+                          Clothing
+                        </div>
+                        <div onClick={() => setSelect('Entertainment')}>
+                          Entertainment
+                        </div>
+                        <div onClick={() => setSelect('Toys')}>Toys</div>
+                        <div onClick={() => setSelect('Food')}>Food</div>
+                        <div onClick={() => setSelect('Miscelleneous')}>
+                          Miscelleneous
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  className="wishListCreateBox"
                 >
-                  <option value={'Electronics'}>Electronics</option>
-                  <option value={'Clothing'}>Clothing</option>
-                  <option value={'Entertainment'}>Entertainment</option>
-                  <option value={'Toys'}>Toys</option>
-                  <option value={'Food'}>Food</option>
-                  <option defaultValue={'Miscellaneous'}>Miscellaneous</option>
-                </NativeSelect>
-              </FormControl>
+                  <InputLabel>Cost</InputLabel>
+                  <OutlinedInput
+                    value={cost}
+                    onChange={(event) => setCost(event.target.value)}
+                    label="Cost"
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    labelWidth={70}
+                  />
+                </FormControl>
+              </div>
+              <TextField
+                className="wishListCreateBox"
+                onChange={(event) => setItemName(event.target.value)}
+                type="input"
+                label="Product Name"
+                variant="outlined"
+                defaultValue={itemName}
+              />
+              <TextField
+                className="wishListCreateBox"
+                onChange={(event) => setImgUrl(event.target.value)}
+                type="input"
+                label="Image Url"
+                variant="outlined"
+                defaultValue={imgUrl}
+              />
+              <TextField
+                className="wishListCreateBox"
+                onChange={(event) => setLinkUrl(event.target.value)}
+                type="input"
+                label="Product Link"
+                variant="outlined"
+                defaultValue={linkUrl}
+              />
+              <TextField
+                className="wishListCreateBox"
+                onChange={(event) => setDescription(event.target.value)}
+                multiline
+                rows={4}
+                type="input"
+                label="Description"
+                variant="outlined"
+                defaultValue={description}
+              />
             </DialogContent>
             <DialogActions>
               <Button
@@ -262,10 +246,15 @@ const CreateNewWish = (props) => {
                   });
                 }}
                 color="primary"
+                variant="contained"
               >
                 Enter
               </Button>
-              <Button onClick={handleClose} color="secondary">
+              <Button
+                onClick={handleClose}
+                color="secondary"
+                variant="contained"
+              >
                 Cancel
               </Button>
             </DialogActions>

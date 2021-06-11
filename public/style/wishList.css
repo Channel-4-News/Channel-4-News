@@ -218,6 +218,7 @@ body
 
 #chooseWishHover > button {
   width: 210px;
+  justify-content: center;
 }
 
 body
@@ -227,4 +228,26 @@ body
   > div.MuiDialogActions-root.MuiDialogActions-spacing {
   justify-content: center;
   margin-bottom: 10px;
+}
+
+#createWishBoxItems1 {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  justify-items: center;
+}
+
+#createWishBoxItems1 .wishListCreateBox {
+  margin-top: 10px;
+}
+
+#costAndCategory {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+#withdrawButton {
+  margin-top: 15px;
+  margin-right: 10px;
 }
