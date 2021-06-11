@@ -32,6 +32,13 @@ class EditWishListCard extends Component {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.itemName.length > 45) {
+      let shortened = this.state.itemName.slice(0, 45);
+      this.setState({ itemName: shortened });
+    }
+  }
+
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
