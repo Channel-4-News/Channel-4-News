@@ -10,6 +10,6 @@ const middleware = applyMiddleware(
 );
 
 //Redux Store
-const store = createStore(rootReducer, middleware);
+const _store = createStore(rootReducer, middleware);
 
-export default store;
+export default _store;

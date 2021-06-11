@@ -17,7 +17,6 @@ const Notification = ({ notifications, currUser }) => {
 
   return (
     <div>
-      {console.log(currUser)}
       {notifications.map((currNote, idx) => {
         return <li key={idx}>{currNote.text}</li>;
       })}

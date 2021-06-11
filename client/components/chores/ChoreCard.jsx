@@ -10,6 +10,9 @@ import PayoutChore from './PayoutChore';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 
+import { store } from 'react-notifications-component';
+import 'animate.css';
+
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
   const [dueDate, setDueDate] = useState('');
@@ -27,8 +30,21 @@ const ChoreCard = (props) => {
 
   const today = new Date();
   let expired;
-  if (props.chore.due && new Date(props.chore.due) < today) expired = true;
-  let noti;
+  if (props.chore.due && new Date(props.chore.due) < today) {
+    expired = true;
+  }
+  if (expired && !props.chore.isComplete && props.currUser.status === 'Child') {
+    console.log('my wacky if statement');
+    props.parents.map((currParent) => {
+      props.sendNotification({
+        text: `${props.chore.name} Incomplete! Assigned to ${props.chore.user.username}`,
+        amount: props.chore.amount,
+        isChoreCompleted: false,
+        isChore: true,
+        toId: currParent.id,
+      });
+    });
+  }
   return (
     <div
       className={
@@ -48,15 +64,18 @@ const ChoreCard = (props) => {
         checked={complete ? 'checked' : null}
         onChange={() => {
           setComplete(!complete);
-          noti = 'Chore is done';
           if (!complete) {
-            console.log(props);
-            props.parents.map((currParent) => {
-              props.sendNotification({
-                text: 'hello motto anotha one',
-                toId: currParent.id,
+            if (props.currUser.status === 'Child') {
+              props.parents.map((currParent) => {
+                props.sendNotification({
+                  text: `${props.chore.name} Completed by ${props.chore.user.username}`,
+                  amount: props.chore.amount,
+                  isChoreCompleted: true,
+                  isChore: true,
+                  toId: currParent.id,
+                });
               });
-            });
+            }
           }
           props.completeChore(props.chore.id, {
             isComplete: !complete,

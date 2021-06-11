@@ -14,9 +14,12 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
 import Notification from './Notification';
-import store from '../store/store';
+import _store from '../store/store';
 import { sendNotification } from '../store/actions/notificationActions/sendNotification';
 import websocket from '../store/actions/notificationActions/sendNotification';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { choreSuccess, choreIncomplete } from './styleNotification';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
@@ -40,8 +43,10 @@ class App extends Component {
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
       if (action.id) {
-        // console.log('only from paret');
-        store.dispatch(sendNotification(action));
+        action.isChoreComplete
+          ? choreSuccess(action.text, action.amount)
+          : choreIncomplete(action.text);
+        _store.dispatch(sendNotification(action));
       }
     });
   }
@@ -107,6 +112,7 @@ class App extends Component {
       <ThemeProvider
         theme={this.state.user.status === 'Parent' ? parentTheme : kidTheme}
       >
+        <ReactNotification />
         <Router>
           <NavBar user={this.state.user} />
           <div id="mainAppContent">
