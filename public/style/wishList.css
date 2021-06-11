@@ -251,3 +251,8 @@ body
   margin-top: 15px;
   margin-right: 10px;
 }
+
+#itemUrlLink {
+  text-decoration: none;
+  color: black;
+}

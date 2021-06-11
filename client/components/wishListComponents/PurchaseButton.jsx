@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -33,6 +34,7 @@ class PurchaseButton extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { handleClickOpen, handleClose, disableButton } = this;
     const { open } = this.state;
     return (
@@ -66,22 +68,23 @@ class PurchaseButton extends Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
+              Remember that price does not include shipping and tax!!!
+              <br />
               This cannot be undone...
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button
               onClick={() => {
-                return (
-                  handleClose(),
-                  this.props.setPurchased(),
-                  this.props.purchaseOrWithdraw(),
-                  this.props.editWishListCard({
-                    ...this.props.item,
-                    purchased: true,
-                  }),
-                  disableButton()
-                );
+                handleClose();
+                this.props.purchaseOrWithdraw();
+                this.props.editWishListCard({
+                  ...this.props.item,
+                  purchased: true,
+                });
+                disableButton();
+                this.props.state();
+                this.props.history.go(0);
               }}
               color="primary"
             >
@@ -104,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(PurchaseButton);
+export default withRouter(connect(null, mapDispatchToProps)(PurchaseButton));
