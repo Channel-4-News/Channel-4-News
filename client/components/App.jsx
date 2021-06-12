@@ -16,6 +16,7 @@ import Register from './forms/Register';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
+import Chatroom from './chatComponents/Chatroom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
@@ -167,6 +168,7 @@ class App extends Component {
               <Route exact path="/link" component={LinkPlaid} />
               <Route exact path="/card" component={VirtualCard} />
               <Route exact path="/createcard" component={CreateCard} />
+              <Route exact path="/chatroom" component={Chatroom} />
             </Switch>
           </div>
         </Router>

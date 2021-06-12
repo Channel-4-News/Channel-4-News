@@ -67,7 +67,13 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Child' ? <Button color="inherit">Chat</Button> : ''}
+            {user === 'Child' ? (
+              <Button href="/#/chatroom" color="inherit">
+                Chat
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/childprofile">
                 Profile
@@ -93,7 +99,13 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Parent' ? <Button color="inherit">Chat</Button> : ''}
+            {user === 'Parent' ? (
+              <Button href="/#/chatroom" color="inherit">
+                Chat
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Parent' ? <Settings id="settings" /> : ''}
           </div>
         </Toolbar>
