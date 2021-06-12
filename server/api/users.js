@@ -87,6 +87,11 @@ router.put('/:id', async (req, res, next) => {
       status,
       isAdmin,
       familyId,
+      stripeAccount,
+      cardHolderId,
+      virtualCard,
+      cardColor,
+      cardImage,
     } = req.body;
 
     await userToUpdate.update({
@@ -99,6 +104,11 @@ router.put('/:id', async (req, res, next) => {
       status,
       isAdmin,
       familyId,
+      stripeAccount,
+      cardHolderId,
+      virtualCard,
+      cardColor,
+      cardImage,
     });
     res.status(200).send(userToUpdate);
   } catch (err) {

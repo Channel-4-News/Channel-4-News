@@ -86,6 +86,14 @@ const User = db.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  cardColor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cardImage: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 //authenticates user
