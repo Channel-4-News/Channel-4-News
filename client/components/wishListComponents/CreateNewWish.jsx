@@ -12,6 +12,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import PulseLoader from 'react-spinners/PulseLoader';
 import {
   addNewWish,
   fillForm,
@@ -22,6 +23,7 @@ const CreateNewWish = (props) => {
   const [form, setForm] = useState('url');
   const [select, setSelect] = useState('Miscellaneous');
   const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [itemName, setItemName] = useState('');
   const [imgUrl, setImgUrl] = useState('');
@@ -32,13 +34,14 @@ const CreateNewWish = (props) => {
   const [purchased, setPurchased] = useState(false);
 
   useEffect(() => {
-    if (itemName.length > 45) {
-      setItemName(itemName.slice(0, 45));
+    if (itemName.length > 35) {
+      setItemName(itemName.slice(0, 35));
     }
   });
 
   const handleClose = () => {
     setOpen(false);
+    setLoading(false);
   };
   return (
     <div>
@@ -112,9 +115,16 @@ const CreateNewWish = (props) => {
                 </div>
               </div>
             </DialogContent>
+            <PulseLoader
+              id="pulseLoader"
+              color="blue"
+              loading={loading}
+              size={20}
+            />
             <DialogActions>
               <Button
                 onClick={async () => {
+                  setLoading(true);
                   const result = await props.fillForm(
                     url,
                     select,
@@ -127,6 +137,7 @@ const CreateNewWish = (props) => {
                   setImgUrl(result.imgUrl);
                   setLinkUrl(result.linkUrl);
                   props.update();
+                  setLoading(false);
                   setForm('form');
                 }}
                 color="primary"

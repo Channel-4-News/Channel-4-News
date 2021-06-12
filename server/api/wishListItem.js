@@ -44,15 +44,19 @@ router.post('/form', async (req, res, next) => {
     const myCategory = req.body.category;
     const userId = req.body.userId;
     let result;
-    if (myUrl.indexOf('amazon') !== -1) {
+    if (myUrl.indexOf('www.amazon.com') !== -1) {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
+      await page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+      );
       await page.goto(myUrl);
       await page.waitFor(1000);
       result = await page.evaluate(() => {
-        const title = document.querySelector('#productTitle').innerText || '';
+        const title = document.querySelector('#productTitle')?.innerText || '';
+        console.log('dom', document.querySelector('#productTitle'));
         const imgUrl =
-          document.querySelector('#imgTagWrapperId > img').src || '';
+          document.querySelector('#imgTagWrapperId > img')?.src || '';
         const priceStr =
           document.querySelector('#priceblock_ourprice')?.innerText ||
           document.querySelector('#priceblock_dealprice')?.innerText ||
