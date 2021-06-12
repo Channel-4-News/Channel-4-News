@@ -11,5 +11,4 @@ firebase.initializeApp({
 });
 
 export const firebaseRef = firebase;
-export const auth = firebase.auth();
 export const db = firebase.firestore();

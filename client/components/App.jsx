@@ -168,7 +168,11 @@ class App extends Component {
               <Route exact path="/link" component={LinkPlaid} />
               <Route exact path="/card" component={VirtualCard} />
               <Route exact path="/createcard" component={CreateCard} />
-              <Route exact path="/chatroom" component={Chatroom} />
+              <Route
+                exact
+                path="/chatroom"
+                component={() => <Chatroom user={this.state.user} />}
+              />
             </Switch>
           </div>
         </Router>
