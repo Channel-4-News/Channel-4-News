@@ -256,3 +256,14 @@ body
   text-decoration: none;
   color: black;
 }
+
+#makeAWishDialog
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div:nth-child(3)
+  > span {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  z-index: 1;
+}

@@ -34,7 +34,6 @@ class PurchaseButton extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { handleClickOpen, handleClose, disableButton } = this;
     const { open } = this.state;
     return (
@@ -75,22 +74,23 @@ class PurchaseButton extends Component {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => {
+              onClick={async () => {
                 handleClose();
-                this.props.purchaseOrWithdraw();
-                this.props.editWishListCard({
+                await this.props.purchaseOrWithdraw();
+                await this.props.editWishListCard({
                   ...this.props.item,
                   purchased: true,
                 });
-                disableButton();
                 this.props.state();
-                this.props.history.go(0);
+                disableButton();
+                window.open(this.props.item.linkUrl, '_blank');
               }}
               color="primary"
+              variant="contained"
             >
               Fund It!
             </Button>
-            <Button onClick={handleClose} color="secondary">
+            <Button onClick={handleClose} color="secondary" variant="contained">
               Cancel
             </Button>
           </DialogActions>
