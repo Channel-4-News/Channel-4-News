@@ -30,21 +30,6 @@ router.post('/', async (req, res, next) => {
 //   }
 // });
 
-//stripe payout
-// router.post('/payouts/:id', async (req, res, next) => {
-//   try {
-//     const { amount, destination } = req.body;
-//     const payout = await stripe.payouts.create({
-//       amount,
-//       currency: 'usd',
-//       destination,
-//     });
-//     res.send(payout);
-//   } catch (ex) {
-//     next(ex);
-//   }
-// });
-
 //create bank account using stripe bank account token from plaid - untested -triggered on register/connect bank acct
 router.post('/create_bank_account', async (req, res, next) => {
   try {
@@ -58,7 +43,7 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard - untested - triggered on chore payout
+//create an ACH charge - untested - triggered on chore payout
 router.post('/charges', async (req, res, next) => {
   try {
     const { customer, amount, kid } = req.body;
@@ -89,7 +74,40 @@ router.post('/charges', async (req, res, next) => {
     next(err);
   }
 });
+//set spending limit - triggered on withdrawal or purchase
+router.put('/card/:id/purchase', async (req, res, next) => {
+  try {
+    const { cardId, limit } = req.body;
+    const card = await stripe.issuing.cards.update(cardId, {
+      spending_controls: {
+        spending_limits: [
+          {
+            amount: limit,
+            interval: 'all_time',
+          },
+        ],
+      },
+    });
+    res.send(card);
+  } catch (err) {
+    next(err);
+  }
+});
 
+//stripe payout
+router.post('/payouts/:id', async (req, res, next) => {
+  try {
+    const { amount, destination } = req.body;
+    const payout = await stripe.payouts.create({
+      amount,
+      currency: 'usd',
+      destination,
+    });
+    res.status(201).send(payout);
+  } catch (ex) {
+    next(ex);
+  }
+});
 // CREATE VIRTUAL CARDS
 
 //create a card holder - triggered on register
@@ -148,23 +166,23 @@ router.get('/card/:id', async (req, res, next) => {
 });
 
 //set spending limit - triggered on chore payout
-router.put('/card/:id/limit', async (req, res, next) => {
-  try {
-    const { cardId, limit } = req.body;
-    const card = await stripe.issuing.cards.update(cardId, {
-      spending_controls: {
-        spending_limits: [
-          {
-            amount: limit,
-            interval: 'all_time',
-          },
-        ],
-      },
-    });
-    res.send(card);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.put('/card/:id/limit', async (req, res, next) => {
+//   try {
+//     const { cardId, limit } = req.body;
+//     const card = await stripe.issuing.cards.update(cardId, {
+//       spending_controls: {
+//         spending_limits: [
+//           {
+//             amount: limit,
+//             interval: 'all_time',
+//           },
+//         ],
+//       },
+//     });
+//     res.send(card);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 module.exports = router;

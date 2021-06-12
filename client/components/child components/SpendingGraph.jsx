@@ -10,7 +10,6 @@ const SpendingGraph = (props) => {
       transactions[transaction.category] += parseInt(transaction.cost);
     }
   });
-  console.log(transactions);
   return props.transactions ? (
     <div className="spendingGraph">
       <Pie
