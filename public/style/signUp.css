@@ -4,7 +4,7 @@
   flex-direction: column;
   /* justify-content: space-around; */
   align-items: center;
-  background-color: lightgray;
+  background-color: rgb(226, 225, 225);
   height: 100%;
 }
 
@@ -15,6 +15,7 @@
   padding: 20px;
   width: 40%;
   background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #signup h4 {
@@ -78,4 +79,20 @@
 #firstLastSignup div {
   display: flex;
   flex-direction: column;
+}
+
+#signup small {
+  align-self: center;
+  color: rgb(94, 94, 94);
+}
+
+#goToLogin {
+  color: rgb(252, 77, 54);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 60px;
+}
+
+#goToLogin:hover {
+  color: black;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import SpendingGraph from './SpendingGraph';
 import Avatar from '@material-ui/core/Avatar';
+import VirtualCard from '../forms/VirtualCard';
 
 class ChildLandingPage extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ class ChildLandingPage extends React.Component {
           src={this.props.user.imgUrl}
         />
         <SpendingGraph transactions={this.props.user.transactions} />
+        <VirtualCard />
         <div>Categories:</div>
         <div>Money made this month ${this.props.user.balance}</div>
         <div>

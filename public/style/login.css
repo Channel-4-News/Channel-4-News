@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: lightgray;
+  background-color: rgb(226, 225, 225);
   height: 100%;
 }
 
@@ -17,6 +17,8 @@
   padding: 20px;
   width: 40%;
   background-color: white;
+  height: 50vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* #login button {
@@ -58,4 +60,10 @@
 
 #login small {
   margin-left: 10px;
+  color: rgb(94, 94, 94);
+  align-self: center;
+}
+
+#login label {
+  font-family: main;
 }

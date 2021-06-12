@@ -177,10 +177,18 @@ const SignUp = (props) => {
           variant="contained"
           color="primary"
           className={classes.root}
+          style={{ width: '40%', alignSelf: 'center', marginTop: '40px' }}
           onClick={submitNewUser}
         >
           Next
         </Button>
+        <small>
+          Already have an account? Login{' '}
+          <a id="goToLogin" href="/#/login">
+            here
+          </a>
+          .
+        </small>
       </form>
     </div>
   );

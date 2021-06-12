@@ -19,8 +19,15 @@ const NavBar = (props) => {
     <div id="navbar-wrapper">
       <AppBar position="static" id="navbar">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            Channel-4-News
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            href="/#/home"
+          >
+            <span id="navLogo">
+              FUND<span id="logoIT">IT</span>
+            </span>
           </IconButton>
           <div id="navbar-links-wrapper">
             {/*--------- USER IS NOT SIGNED IN ----------*/}
@@ -33,7 +40,12 @@ const NavBar = (props) => {
               ''
             )}
             {user === undefined ? (
-              <Button color="inherit" href="/#/signup">
+              <Button
+                href="/#/signup"
+                variant="contained"
+                color="primary"
+                style={{ color: 'white' }}
+              >
                 Sign Up
               </Button>
             ) : (

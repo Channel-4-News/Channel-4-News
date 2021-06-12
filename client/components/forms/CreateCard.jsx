@@ -18,10 +18,10 @@ const CreateCard = (props) => {
   const [reset, setReset] = useState(0);
   const [cardDetails, setCardDetails] = useState({
     cvc: '',
-    expiry: '',
+    expiry: '09/22',
     focus: '',
     name: '',
-    number: '',
+    number: '0000 0099 9000 0047',
   });
   const [textFieldStyle, setTextFieldStyle] = useState({
     width: '400px',
@@ -106,16 +106,6 @@ const CreateCard = (props) => {
           helperText={nameError}
         />
         <div id="cardColorPicker" style={colorPickerStyle}>
-          {/* <Button
-            // color="secondary"
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            variant="contained"
-            style={{ backgroundColor: `${val}` }}
-          >
-            &nbsp;
-          </Button> */}
           <Button
             aria-controls="simple-menu"
             aria-haspopup="true"
@@ -154,7 +144,7 @@ const CreateCard = (props) => {
             aria-controls="simple-menu"
             aria-haspopup="true"
             // onClick={handleClick}
-            onClick={() => handleColorClick('#fffc49')}
+            onClick={() => handleColorClick('#ffe600')}
             variant="contained"
             style={{ backgroundColor: '#fffc49' }}
           >

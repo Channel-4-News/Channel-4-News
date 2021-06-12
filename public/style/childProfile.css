@@ -22,3 +22,7 @@
 div > .edit-profile-button {
   background-color: white;
 }
+
+.spendingGraph {
+  width: 25%;
+}
