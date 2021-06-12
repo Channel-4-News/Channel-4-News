@@ -1,29 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { db, firebaseRef } from './config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import MessageCard from './MessageCard';
 
 const Chatroom = (props) => {
   const [message, setMessage] = useState('');
 
   const messagesRef = db.collection('messages');
 
-  const { id, imgUrl, familyId } = props.user;
+  const { id, imgUrl, familyId, username } = props.user;
 
+  let query;
   if (familyId) {
-    const query = messagesRef
+    query = messagesRef
       .where('room', '==', familyId)
       .orderBy('createdAt')
       .limit(20);
-    const [messages] = useCollectionData(query, { idField: 'id' });
-    console.log({ messages });
   }
+  const [messages] = useCollectionData(query, { idField: 'id' });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const createdAt = firebaseRef.firestore.FieldValue.serverTimestamp();
     const newMessage = {
       uid: id,
-      imgUrl: imgUrl,
+      username,
+      imgUrl,
       createdAt,
       text: message,
       room: familyId,
@@ -32,8 +34,15 @@ const Chatroom = (props) => {
     setMessage('');
   };
 
-  return (
+  return messages ? (
     <div className="messages">
+      {messages.map((oneMessage) => (
+        <MessageCard
+          key={oneMessage.id}
+          message={oneMessage}
+          user={props.user}
+        />
+      ))}
       <form onSubmit={handleSubmit}>
         <textarea
           value={message}
@@ -46,6 +55,8 @@ const Chatroom = (props) => {
         </button>
       </form>
     </div>
+  ) : (
+    <div>butts</div>
   );
 };
 
