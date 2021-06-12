@@ -56,8 +56,13 @@
 #choresView {
   display: flex;
   flex-direction: column;
-  width: 100%;
   background-color: rgb(238, 238, 238);
+  /* height: 100vh; */
+}
+
+#choresContainer {
+  background-color: rgb(238, 238, 238);
+  width: 100%;
   height: 100vh;
 }
 

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Link,
+  Switch,
+  Route,
+  withRouter,
+} from 'react-router-dom';
 import { attemptLogin } from '../store/actions/userActions/getCurUser';
 import Chores from './chores/ChoresView';
 import ChildProfile from './child components/ChildProfile';
@@ -91,19 +97,20 @@ class App extends Component {
     const kidTheme = createMuiTheme({
       palette: {
         primary: {
-          light: '#7fc8ff',
-          main: '#3e98ff',
-          dark: '#006bcb',
+          light: '#8199ff',
+          main: '#3e6bff',
+          dark: '#0041cb',
           contrastText: '#fff',
         },
         secondary: {
-          light: '#ff5993',
-          main: '#ef0066',
-          dark: '#b6003c',
-          contrastText: '#000',
+          light: '#ff8262',
+          main: 'rgb(252, 77, 54)',
+          dark: '#c1010b',
+          contrastText: '#fff',
         },
       },
     });
+
     return (
       <ThemeProvider
         theme={this.state.user.status === 'Parent' ? parentTheme : kidTheme}
@@ -129,8 +136,10 @@ class App extends Component {
                 component={() =>
                   this.state.user.status === 'Child' ? (
                     <ChildLandingPage user={this.state.user} />
-                  ) : (
+                  ) : this.state.user.status === 'Parent' ? (
                     ''
+                  ) : (
+                    <Home />
                   )
                 }
               />

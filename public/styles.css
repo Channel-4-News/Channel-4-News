@@ -6,10 +6,16 @@
 @import url('./style/wishList.css');
 @import url('./style/plaidLink.css');
 @import url('./style/createCard.css');
+@import url('./style/home.css');
 
 @font-face {
   font-family: main;
   src: url('/public/fonts/PierSans-Regular.otf');
+}
+
+@font-face {
+  font-family: mainBold;
+  src: url('/public/fonts/PierSans-Bold.otf');
 }
 
 * {
@@ -132,3 +138,6 @@ body {
 #kidSecondary .dark {
   background-color: #b6003c;
 }
+
+/* 
+'#3e98ff', */

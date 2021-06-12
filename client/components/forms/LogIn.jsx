@@ -43,7 +43,7 @@ const LogIn = (props) => {
         <h4>LOGIN</h4>
         <TextField
           className={classes.root}
-          label="Email or Username"
+          label="Email or username"
           variant="outlined"
           color="secondary"
           onChange={(e) => {
@@ -65,6 +65,11 @@ const LogIn = (props) => {
           onClick={submitUser}
           color="secondary"
           variant="contained"
+          style={{
+            width: '40%',
+            alignSelf: 'center',
+            marginTop: '40px',
+          }}
         >
           Login
         </Button>

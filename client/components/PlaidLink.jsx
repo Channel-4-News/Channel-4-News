@@ -27,7 +27,7 @@ const LinkPlaid = (props) => {
       token,
       accountId: metadata.accounts[0].id,
     });
-    props.history.push('/');
+    props.history.push('/home');
   };
   const onExit = (error, metadata) => {
     setProcessing(false);
