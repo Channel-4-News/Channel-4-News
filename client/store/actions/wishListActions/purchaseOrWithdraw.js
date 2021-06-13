@@ -8,6 +8,8 @@ const purchaseOrWithdraw = (userId, transaction) => {
       const newTransaction = (
         await axios.post(`/api/transaction/${userId}`, transaction)
       ).data;
+      // await axios.get('/api/stripe/balance');
+      await axios.post('/api/stripe/payouts', { userId, transaction });
       dispatch(_purchaseOrWithdraw(newTransaction));
     } catch (err) {
       console.log(err);

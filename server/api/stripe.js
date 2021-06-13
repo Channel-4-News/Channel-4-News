@@ -21,29 +21,44 @@ router.post('/', async (req, res, next) => {
 });
 
 //get balance
-// router.get('/balance', async (req, res, next) => {
-//   try {
-//     const balance = await stripe.balance.retrieve({});
-//     res.send(balance);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+router.get('/balance', async (req, res, next) => {
+  try {
+    const balance = await stripe.balance.retrieve({});
+    console.log(balance);
+    res.send(balance);
+  } catch (err) {
+    next(err);
+  }
+});
 
-//stripe payout
-// router.post('/payouts/:id', async (req, res, next) => {
-//   try {
-//     const { amount, destination } = req.body;
-//     const payout = await stripe.payouts.create({
-//       amount,
-//       currency: 'usd',
-//       destination,
-//     });
-//     res.send(payout);
-//   } catch (ex) {
-//     next(ex);
-//   }
-// });
+//stripe payout (creating a negative balance for parent upon withdrawawl to use as credit)
+router.post('/payouts', async (req, res, next) => {
+  try {
+    const { userId, transaction } = req.body;
+    const user = await User.findOne({ where: { id: userId } });
+    const parents = await User.findAll({
+      where: {
+        familyId: user.familyId,
+        status: 'Parent',
+      },
+    });
+    const parent = parents.filter((data) => {
+      if (data.stripeAccount) return data;
+    });
+    console.log('parent before updated balance', parent[0]);
+    const balanceTransaction = await stripe.customers.createBalanceTransaction(
+      parent[0].stripeAccount,
+      { amount: -transaction.cost * 100, currency: 'usd' }
+    );
+    console.log('balance:', balanceTransaction);
+    parent[0].balance = (balanceTransaction.amount / 100).toFixed(2);
+    await parent[0].save();
+    console.log('parent after updated balance', parent[0]);
+    res.send(balanceTransaction);
+  } catch (ex) {
+    next(ex);
+  }
+});
 
 //create bank account using stripe bank account token from plaid - untested -triggered on register/connect bank acct
 router.post('/create_bank_account', async (req, res, next) => {
@@ -58,16 +73,28 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard - untested - triggered on chore payout
+//create an ACH charge - untested - triggered on chore payout
 router.post('/charges', async (req, res, next) => {
   try {
     const { customer, amount, kid } = req.body;
+    let newAmount = amount;
+    const parent = await User.findOne({ where: { stripeAccount: customer } });
+    if (parseInt(parent.balance) * 100 < 0) {
+      newAmount += parseInt(parent.balance) * 100;
+    }
     const charge = await stripe.charges.create({
       customer: customer,
-      amount: amount,
+      amount: newAmount,
       currency: 'usd',
       description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
     });
+    console.log(charge);
+    //update parent balance after charge is created
+    parent.balance = (
+      (parseInt(parent.balance) * 100 + parseInt(amount)) /
+      100
+    ).toFixed(2);
+    await parent.save();
     //update kid's balance after charge is created
     const kidToCharge = await User.findOne({ where: { firstName: kid } });
     kidToCharge.balance = (
