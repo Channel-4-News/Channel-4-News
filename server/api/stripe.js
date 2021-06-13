@@ -24,7 +24,6 @@ router.post('/', async (req, res, next) => {
 router.get('/balance', async (req, res, next) => {
   try {
     const balance = await stripe.balance.retrieve({});
-    console.log(balance);
     res.send(balance);
   } catch (err) {
     next(err);
@@ -45,16 +44,21 @@ router.post('/payouts', async (req, res, next) => {
     const parent = parents.filter((data) => {
       if (data.stripeAccount) return data;
     });
-    console.log('parent before updated balance', parent[0]);
     const balanceTransaction = await stripe.customers.createBalanceTransaction(
       parent[0].stripeAccount,
       { amount: -transaction.cost * 100, currency: 'usd' }
     );
-    console.log('balance:', balanceTransaction);
-    parent[0].balance = (balanceTransaction.amount / 100).toFixed(2);
+    // console.log(typeof parseInt(parseInt(parent[0].balance).toFixed(2)));
+    // console.log(typeof parseInt((balanceTransaction.amount / 100).toFixed(2)));
+    parent[0].balance =
+      parseInt(parseInt(parent[0].balance).toFixed(2)) +
+      parseInt((balanceTransaction.amount / 100).toFixed(2));
     await parent[0].save();
-    console.log('parent after updated balance', parent[0]);
-    res.send(balanceTransaction);
+    const newBalance = parseInt(user.balance) - parseInt(transaction.cost);
+    user.balance = newBalance;
+    await user.save();
+    console.log('user before sending', user);
+    res.status(201).send(user);
   } catch (ex) {
     next(ex);
   }
@@ -88,7 +92,6 @@ router.post('/charges', async (req, res, next) => {
       currency: 'usd',
       description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
     });
-    console.log(charge);
     //update parent balance after charge is created
     parent.balance = (
       (parseInt(parent.balance) * 100 + parseInt(amount)) /
@@ -110,7 +113,6 @@ router.post('/charges', async (req, res, next) => {
         ],
       },
     });
-    console.log(card.spending_controls.spending_limits);
     res.status(201).send(charge);
   } catch (err) {
     next(err);

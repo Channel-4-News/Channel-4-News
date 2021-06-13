@@ -12,6 +12,8 @@ import { purchaseOrWithdraw } from '../../store/actions/wishListActions/purchase
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const WithdrawMoneyDialog = (props) => {
   const [open, setOpen] = useState(false);
@@ -32,6 +34,9 @@ const WithdrawMoneyDialog = (props) => {
       category: select,
     };
   };
+  const errorNotify = () =>
+    toast('You do not have enough money in your account for this withdrawal');
+  const successNotify = () => toast('Your withdrawal was a success');
   return (
     <div>
       <Button size="large" variant="contained" onClick={() => setOpen(true)}>
@@ -88,15 +93,19 @@ const WithdrawMoneyDialog = (props) => {
           <Button
             variant="contained"
             onClick={() => {
-              return (
+              if (onSubmit().cost > parseInt(props.user.balance)) {
+                errorNotify();
+              } else {
+                successNotify();
                 handleClose(),
-                props.purchaseOrWithdraw(props.user.id, onSubmit())
-              );
+                props.purchaseOrWithdraw(props.user.id, onSubmit());
+              }
             }}
             color="primary"
           >
             Withdraw
           </Button>
+          <ToastContainer />
           <Button
             variant="contained"
             onClick={handleClose}
