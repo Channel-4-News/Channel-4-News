@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import SpendingGraph from './SpendingGraph';
 import Avatar from '@material-ui/core/Avatar';
 import { HashRouter as Router, Link } from 'react-router-dom';
@@ -30,6 +31,7 @@ class ChildLandingPage extends React.Component {
     return transactionsArray;
   }
   render() {
+    console.log(this.props);
     let transactions = this.categorizeTransactions();
     return this.props.user.allowance ? (
       <div>
@@ -65,5 +67,8 @@ class ChildLandingPage extends React.Component {
     );
   }
 }
+const mapStatetoProps = (state) => {
+  return { user: state.currUser };
+};
 
-export default ChildLandingPage;
+export default connect(mapStatetoProps, null)(ChildLandingPage);

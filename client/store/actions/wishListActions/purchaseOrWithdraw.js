@@ -13,7 +13,6 @@ const purchaseOrWithdraw = (userId, transaction) => {
         transaction,
       });
       newBalance = newBalance.data.balance.toFixed(2);
-      console.log('user balance after sending', newBalance);
       dispatch(_purchaseOrWithdraw({ newTransaction, newBalance }));
     } catch (err) {
       console.log(err);
