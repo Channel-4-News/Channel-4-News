@@ -24,5 +24,94 @@ div > .edit-profile-button {
 }
 
 .spendingGraph {
-  width: 25%;
+  width: 80%;
+  margin-left: 70px;
+}
+
+#avatarWrapper {
+  /* display: flex;
+  flex-direction: row; */
+  margin-top: -100px;
+  border: white 10px solid;
+  border-radius: 120px;
+  background-color: white;
+}
+
+#childLandingPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  background-color: tomato;
+  height: 100%;
+}
+#childLandingPage p {
+  font-size: 4vw;
+  color: white;
+  align-self: flex-start;
+  margin-left: 10%;
+  margin-bottom: 30px;
+}
+
+#childGraphics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-top: -140px;
+}
+
+#childLandingContainer {
+  margin-top: 0px;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  /* background-color: white; */
+  border-radius: 10px;
+}
+
+#spendingSnapshot,
+#childLandingVirtualCard {
+  background-color: white;
+  width: 50%;
+  height: 100%;
+  padding-bottom: 4%;
+  padding-top: 4%;
+  border-radius: 10px;
+}
+
+#spendingSnapshot h4 {
+  margin-left: 20%;
+  font-weight: normal;
+  font-size: larger;
+}
+
+#spendingSnapshotTitle {
+  font-weight: normal;
+  font-size: larger;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#childLandingVirtualCard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+#nextAllowance {
+  padding-top: 80px;
+  font-size: larger;
+}
+
+#spendingSnapshot {
+  /* border-right: 10px tomato solid;
+  height: 100%; */
 }

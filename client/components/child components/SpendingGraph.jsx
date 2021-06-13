@@ -20,7 +20,7 @@ const SpendingGraph = (props) => {
               data: Object.values(transactions),
               backgroundColor: [
                 'rgb(252, 77, 54)',
-                'rgb(0, 255, 200)',
+                'rgb(153, 97, 255)',
                 '#3e6bff',
                 'rgb(138, 138, 138)',
                 'rgb(255, 0, 140)',
@@ -34,6 +34,13 @@ const SpendingGraph = (props) => {
         options={{
           maintainAspectRatio: false,
           plugins: {
+            // title: {
+            //   display: true,
+            //   text: 'Spending Snapshot',
+            //   position: 'top',
+            //   align: 'center',
+            //   padding: '5px',
+            // },
             tooltip: {
               usePointStyle: true,
               backgroundColor: 'rgb(250, 250, 250)',
@@ -59,6 +66,7 @@ const SpendingGraph = (props) => {
             },
             legend: {
               position: 'right',
+              align: 'left',
               labels: {
                 font: {
                   size: 16,

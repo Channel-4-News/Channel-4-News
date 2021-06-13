@@ -20,30 +20,40 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-//get balance
-// router.get('/balance', async (req, res, next) => {
-//   try {
-//     const balance = await stripe.balance.retrieve({});
-//     res.send(balance);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+// get balance
+router.get('/balance', async (req, res, next) => {
+  try {
+    const balance = await stripe.balance.retrieve({});
+    res.send(balance);
+  } catch (err) {
+    next(err);
+  }
+});
 
-//stripe payout
-// router.post('/payouts/:id', async (req, res, next) => {
-//   try {
-//     const { amount, destination } = req.body;
-//     const payout = await stripe.payouts.create({
-//       amount,
-//       currency: 'usd',
-//       destination,
-//     });
-//     res.send(payout);
-//   } catch (ex) {
-//     next(ex);
-//   }
-// });
+// stripe payout
+router.post('/payouts', async (req, res, next) => {
+  try {
+    const { amount, destination } = req.body;
+    console.log(amount);
+    const payout = await stripe.payouts.create(
+      {
+        amount,
+        currency: 'usd',
+        source_type: 'bank_account',
+        // destination: 'ba_1IzurxGMLeOpoTZxmnr0PWCS',
+      },
+      {
+        stripeAccount: 'acct_1IzAbQ4TLAmJPSen',
+      }
+    );
+    const refund = await stripe.refunds.create({
+      charge: 'ch_1J1ZYZGMLeOpoTZxnj6cjG6Q',
+    });
+    res.send(refund);
+  } catch (ex) {
+    next(ex);
+  }
+});
 
 //create bank account using stripe bank account token from plaid - untested -triggered on register/connect bank acct
 router.post('/create_bank_account', async (req, res, next) => {

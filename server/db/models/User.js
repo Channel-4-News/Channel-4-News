@@ -94,6 +94,13 @@ const User = db.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  // allowance: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: true,
+  // },
+  // allowanceInterval: {
+  //   type: DataTypes.STRING,
+  // },
 });
 
 //authenticates user

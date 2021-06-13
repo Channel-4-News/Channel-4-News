@@ -23,7 +23,7 @@ const NavBar = (props) => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            href="/#/home"
+            href={user === 'Child' || user === 'Parent' ? '/#/home' : '/'}
           >
             <span id="navLogo">
               FUND<span id="logoIT">IT</span>
@@ -69,7 +69,11 @@ const NavBar = (props) => {
             )}
             {user === 'Child' ? <Button color="inherit">Chat</Button> : ''}
             {user === 'Child' ? (
-              <Button color="inherit" href="/#/childprofile">
+              <Button
+                color="primary"
+                href="/#/childprofile"
+                variant="contained"
+              >
                 Profile
               </Button>
             ) : (
