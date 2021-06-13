@@ -136,10 +136,13 @@ const syncAndSeed = async () => {
       firstName: 'Joe',
       lastName: 'Momordad',
       imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+        'public/images/profilePics/gabriel-tovar-y9YsbrljPOw-unsplash.jpg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzueCGMLeOpoTZxygG8ap6i',
       virtualCard: 'ic_1IzufNGMLeOpoTZxPd1bYRNy',
+      cardColor: '#ff73ff',
+      cardImage: 'public/images/cardIcons/donut.png',
+      balance: 58,
     });
 
     const kid2 = await User.create({

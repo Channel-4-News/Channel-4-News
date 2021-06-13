@@ -136,10 +136,8 @@ class App extends Component {
                 component={() =>
                   this.state.user.status === 'Child' ? (
                     <ChildLandingPage user={this.state.user} />
-                  ) : this.state.user.status === 'Parent' ? (
-                    ''
                   ) : (
-                    <Home />
+                    ''
                   )
                 }
               />

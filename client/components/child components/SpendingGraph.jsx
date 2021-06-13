@@ -34,6 +34,13 @@ const SpendingGraph = (props) => {
         options={{
           maintainAspectRatio: false,
           plugins: {
+            // title: {
+            //   display: true,
+            //   text: 'Spending Snapshot',
+            //   position: 'top',
+            //   align: 'center',
+            //   padding: '5px',
+            // },
             tooltip: {
               usePointStyle: true,
               backgroundColor: 'rgb(250, 250, 250)',
@@ -59,6 +66,7 @@ const SpendingGraph = (props) => {
             },
             legend: {
               position: 'right',
+              align: 'left',
               labels: {
                 font: {
                   size: 16,

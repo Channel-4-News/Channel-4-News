@@ -72,10 +72,17 @@
   padding-left: 24px;
 }
 
+#virtualCardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* FOR THE CARD */
 
-.rccs__card--visa .rccs__card__background,
-.rccs__card-- {
+/* .rccs__card--visa  */
+.rccs__card__background
+/* .rccs__card--  */ {
   background-image: url('../images/cardIcons/bathdog.png');
   background-size: auto 170px;
   background-repeat: no-repeat;
