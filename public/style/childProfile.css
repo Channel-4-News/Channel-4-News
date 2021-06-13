@@ -70,20 +70,40 @@ div > .edit-profile-button {
   flex-direction: column;
   align-items: center;
   width: 80%;
+  /* background-color: white; */
+  border-radius: 10px;
+}
+
+#spendingSnapshot,
+#childLandingVirtualCard {
   background-color: white;
+  width: 50%;
+  height: 100%;
+  padding-bottom: 4%;
+  padding-top: 4%;
   border-radius: 10px;
 }
 
 #spendingSnapshot h4 {
   margin-left: 20%;
   font-weight: normal;
+  font-size: larger;
+}
+
+#spendingSnapshotTitle {
+  font-weight: normal;
+  font-size: larger;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 #childLandingVirtualCard {
-  margin-right: 10%;
-  margin-top: -100px;
   text-align: center;
-  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
 }
 
 #nextAllowance {
@@ -94,11 +114,4 @@ div > .edit-profile-button {
 #spendingSnapshot {
   /* border-right: 10px tomato solid;
   height: 100%; */
-}
-
-#forBorder {
-  margin-top: 200px;
-  margin-right: 13.5%;
-  border-right: 15px tomato solid;
-  height: 80%;
 }

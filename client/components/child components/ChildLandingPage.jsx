@@ -24,12 +24,12 @@ class ChildLandingPage extends React.Component {
           </div>
           <div id="childGraphics">
             <div style={{ width: '50%' }} id="spendingSnapshot">
-              <h4>SPENDING SNAPSHOT</h4>
+              <div id="spendingSnapshotTitle">SPENDING SNAPSHOT</div>
               <SpendingGraph transactions={this.props.user.transactions} />
             </div>
             <div id="forBorder"></div>
             <div id="childLandingVirtualCard">
-              <div>
+              <div style={{ fontSize: 'larger' }}>
                 BALANCE &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;$
                 {this.props.user.balance}
               </div>
@@ -40,16 +40,6 @@ class ChildLandingPage extends React.Component {
               </div>
             </div>
           </div>
-          {/* <div>Money made this month ${this.props.user.balance}</div>
-          <div>
-            Next allowance in {this.props.user.allowance.interval} day(s) $
-            {this.props.user.allowance.amount}
-          </div>
-          <div>
-            <div>Money spent this month:</div>
-            <button>Chores</button>
-            <button>Wishlist</button>
-          </div> */}
         </div>
       </div>
     ) : (

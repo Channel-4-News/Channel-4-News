@@ -20,7 +20,7 @@ const SpendingGraph = (props) => {
               data: Object.values(transactions),
               backgroundColor: [
                 'rgb(252, 77, 54)',
-                'rgb(0, 255, 200)',
+                'rgb(153, 97, 255)',
                 '#3e6bff',
                 'rgb(138, 138, 138)',
                 'rgb(255, 0, 140)',
