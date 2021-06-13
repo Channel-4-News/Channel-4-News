@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { db, firebaseRef } from './config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import MessageCard from './MessageCard';
+import Paper from '@material-ui/core/Paper';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@material-ui/core/Button';
 
 const Chatroom = (props) => {
   const [message, setMessage] = useState('');
+  const [loaded, setLoaded] = useState(false);
+  const customRef = useRef();
 
   const messagesRef = db.collection('messages');
 
@@ -19,6 +25,12 @@ const Chatroom = (props) => {
   }
   const [messages] = useCollectionData(query, { idField: 'id' });
 
+  if (messages && !loaded) {
+    console.log('there');
+    customRef.current.scrollIntoView({ behavior: 'smooth' });
+    setLoaded(true);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const createdAt = firebaseRef.firestore.FieldValue.serverTimestamp();
@@ -32,31 +44,42 @@ const Chatroom = (props) => {
     };
     await messagesRef.add(newMessage);
     setMessage('');
+    customRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return messages ? (
-    <div className="messages">
-      {messages.map((oneMessage) => (
-        <MessageCard
-          key={oneMessage.id}
-          message={oneMessage}
-          user={props.user}
-        />
-      ))}
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
-        />
-        <button type="submit" disabled={!message}>
-          Send
-        </button>
-      </form>
+  return (
+    <div id="chatroom">
+      <Paper id="chatroomBox">
+        <Paper variant="outlined" id="messageBox">
+          {messages?.map((oneMessage) => (
+            <MessageCard
+              key={oneMessage.id}
+              message={oneMessage}
+              user={props.user}
+            />
+          ))}
+          <span ref={customRef}></span>
+        </Paper>
+        <FormControl id="messageInput" variant="outlined">
+          <OutlinedInput
+            id="component-outlined"
+            className="inputMessage"
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+            value={message}
+            fullWidth
+          />
+          <Button
+            disabled={message ? false : true}
+            variant="contained"
+            onClick={handleSubmit}
+          >
+            Send
+          </Button>
+        </FormControl>
+      </Paper>
     </div>
-  ) : (
-    <div>butts</div>
   );
 };
 

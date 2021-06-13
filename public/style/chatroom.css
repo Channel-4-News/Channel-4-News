@@ -1,0 +1,23 @@
+#chatroom {
+  background-color: lightgrey;
+  height: 100%;
+  width: 100%;
+  padding-top: 30px;
+}
+#chatroomBox {
+  width: 80%;
+  margin-left: 10%;
+  height: 80%;
+  position: fixed;
+  padding: 30px;
+}
+#messageBox {
+  height: 90%;
+  overflow-y: auto;
+}
+
+#messageInput {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
