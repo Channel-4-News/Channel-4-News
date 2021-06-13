@@ -74,6 +74,8 @@ const Chatroom = (props) => {
             disabled={message ? false : true}
             variant="contained"
             onClick={handleSubmit}
+            id="sentButton"
+            color="default"
           >
             Send
           </Button>

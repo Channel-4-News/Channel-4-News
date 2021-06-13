@@ -1,5 +1,5 @@
 #chatroom {
-  background-color: lightgrey;
+  background-color: rgb(252, 77, 54);
   height: 100%;
   width: 100%;
   padding-top: 30px;
@@ -14,10 +14,71 @@
 #messageBox {
   height: 90%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(230, 230, 230);
 }
 
 #messageInput {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
+}
+
+.message {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 40%;
+  padding: 5px;
+}
+
+.message.sent {
+  align-self: flex-end;
+  background-color: rgb(248, 139, 124);
+  border: 2px solid rgb(252, 77, 54);
+  border-radius: 20px 5px 20px 5px;
+  box-shadow: 1px 2px 8px;
+}
+
+.message.sent .hiddenImageSent {
+  display: none;
+}
+
+.message.sent .messageContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message.recieved {
+  align-self: flex-start;
+  background-color: #85a1fd;
+  border: 2px solid #3e6bff;
+  border-radius: 5px 20px 5px 20px;
+  box-shadow: 1px 2px 8px;
+}
+
+.message.recieved .messageContent {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message.recieved .hiddenImageRecieved {
+  display: none;
+}
+
+.messageContent img {
+  width: 60px;
+  height: 60px;
+}
+
+#sentButton {
+  margin-left: 5px;
+}
+
+#username {
+  text-decoration: underline;
+  font-size: large;
+  font-weight: bolder;
 }
