@@ -7,6 +7,7 @@
 @import url('./style/plaidLink.css');
 @import url('./style/createCard.css');
 @import url('./style/home.css');
+@import url('./style/chatroom.css');
 
 @font-face {
   font-family: main;
@@ -139,5 +140,5 @@ body {
   background-color: #b6003c;
 }
 
-/* 
+/*
 '#3e98ff', */

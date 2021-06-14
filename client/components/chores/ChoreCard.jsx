@@ -10,6 +10,9 @@ import PayoutChore from './PayoutChore';
 import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 
+import { store } from 'react-notifications-component';
+import 'animate.css';
+
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
   const [dueDate, setDueDate] = useState('');
@@ -27,7 +30,9 @@ const ChoreCard = (props) => {
 
   const today = new Date();
   let expired;
-  if (props.chore.due && new Date(props.chore.due) < today) expired = true;
+  if (props.chore.due && new Date(props.chore.due) < today) {
+    expired = true;
+  }
 
   return (
     <div
@@ -48,12 +53,17 @@ const ChoreCard = (props) => {
         onChange={() => {
           setComplete(!complete);
           if (!complete) {
-            props.parents.map((currParent) => {
-              props.sendNotification({
-                text: 'hello motto anotha one',
-                toId: currParent.id,
+            if (props.currUser.status === 'Child') {
+              props.parents.map((currParent) => {
+                props.sendNotification({
+                  text: `${props.chore.name} Completed by ${props.chore.user.username}`,
+                  amount: props.chore.amount,
+                  isChoreCompleted: true,
+                  isChore: true,
+                  toId: currParent.id,
+                });
               });
-            });
+            }
           }
           props.completeChore(props.chore.id, {
             isComplete: !complete,

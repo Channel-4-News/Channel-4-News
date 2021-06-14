@@ -9,6 +9,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 class CalculatorButton extends Component {
   constructor(props) {
@@ -43,6 +45,7 @@ class CalculatorButton extends Component {
     ev.preventDefault();
     let howLong =
       (this.props.wishListItem.cost / this.state.howMuch) * this.state.howOften;
+    howLong = Math.ceil(howLong / this.state.howOften) * this.state.howOften;
     const getHowLong = (days) => {
       let months, weeks;
       days = Math.ceil(days);
@@ -111,20 +114,26 @@ class CalculatorButton extends Component {
           <DialogContent>
             <form onSubmit={calculate}>
               <DialogContentText>Total Cost:</DialogContentText>
-              <TextField
+              <OutlinedInput
                 className="wishListFormBox"
+                defaultValue={item.cost}
                 onChange={onTextChange}
                 type="search"
                 variant="outlined"
-                defaultValue={item.cost}
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
               />
               <DialogContentText>How much are you saving?</DialogContentText>
-              <TextField
+              <OutlinedInput
                 className="wishListFormBox"
                 onChange={onTextChange}
                 name="howMuch"
                 type="search"
                 variant="outlined"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
               />
               <DialogContentText>How often?</DialogContentText>
               <FormControl
@@ -150,7 +159,7 @@ class CalculatorButton extends Component {
               </FormControl>
               <br />
               <div id="calculatorButtons">
-                <Button type="submit" color="secondary" variant="contained">
+                <Button type="submit" color="primary" variant="contained">
                   Calculate
                 </Button>
                 <Button

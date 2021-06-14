@@ -14,21 +14,29 @@ import PurchaseButton from './PurchaseButton';
 const WishListCard = (props) => {
   if (props.wishListItem) {
     const [edit, setEdit] = useState(false);
-    const [purchased, setPurchased] = useState(props.wishListItem.purchased);
     const item = props.wishListItem;
     const { id } = props.user;
     if (edit === false) {
       return (
         <Card id="wishListCardWrapper">
-          <Typography
-            className="title"
-            gutterBottom
-            variant="h5"
-            component="h2"
+          <a
+            id="itemUrlLink"
+            target="_blank"
+            rel="noreferrer"
+            href={item.linkUrl}
           >
-            {item.itemName}
-            <span id="purchased-tag">{purchased ? 'Purchased!' : ''}</span>
-          </Typography>
+            <Typography
+              className="title"
+              gutterBottom
+              variant="h5"
+              component="h2"
+            >
+              {item.itemName}
+              <span id="purchased-tag">
+                {item.purchased ? 'Purchased!' : ''}
+              </span>
+            </Typography>
+          </a>
           <div id="itemRow">
             <Paper id="itemImage" variant="outlined">
               <img src={item.imgUrl} />
@@ -65,8 +73,8 @@ const WishListCard = (props) => {
             <CalculatorButton wishListItem={item} />
             <PurchaseButton
               purchaseOrWithdraw={() => props.purchaseOrWithdraw(id, item)}
-              setPurchased={() => setPurchased(true)}
               item={item}
+              state={() => props.update()}
             />
             <Button
               size="large"

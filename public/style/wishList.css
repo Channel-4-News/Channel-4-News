@@ -173,3 +173,97 @@ body
 #makeAWishDialog > div.MuiDialog-container.MuiDialog-scrollPaper > div {
   padding: 1rem;
 }
+
+#wishListDropdown {
+  z-index: 100;
+}
+
+#wishDropdownContent {
+  position: absolute;
+  display: none;
+  padding: 10px;
+  border-radius: 3px;
+  margin-top: 1px;
+  background-color: rgb(107, 107, 107);
+  color: white;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  width: 210px;
+}
+
+#chooseWishHover {
+  position: relative;
+}
+
+#chooseWishHover:hover #wishDropdownContent {
+  display: block;
+  position: fixed;
+}
+
+#wishDropdownContent div:hover {
+  background-color: rgb(158, 158, 158);
+}
+
+#wishDropdownContent div {
+  padding: 20px;
+  padding-left: 20px;
+  cursor: pointer;
+  margin: -10px;
+}
+#filterAndSortWishes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#chooseWishHover > button {
+  width: 210px;
+  justify-content: center;
+}
+
+body
+  > div.MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div.MuiDialogActions-root.MuiDialogActions-spacing {
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#createWishBoxItems1 {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  justify-items: center;
+}
+
+#createWishBoxItems1 .wishListCreateBox {
+  margin-top: 10px;
+}
+
+#costAndCategory {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+#withdrawButton {
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
+#itemUrlLink {
+  text-decoration: none;
+  color: black;
+}
+
+#makeAWishDialog
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > div
+  > div:nth-child(3)
+  > span {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  z-index: 1;
+}

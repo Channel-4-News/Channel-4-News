@@ -21,6 +21,10 @@ const Notification = db.define('notification', {
       'Food',
     ]),
   },
+  isChoreCompleted: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
   isChore: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
