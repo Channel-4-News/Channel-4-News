@@ -77,7 +77,7 @@ class EditWishListCard extends Component {
             ></input>
           </Typography>
           <div id="itemRow">
-            <Paper id="itemImage" variant="outlined">
+            <Paper id="itemImage" className="itemImage" variant="outlined">
               <img name="imgUrl" src={item.imgUrl} />
               <input
                 className="wishListFormInput"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { HashRouter as Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -30,10 +31,11 @@ const WishListCard = (props) => {
               gutterBottom
               variant="h5"
               component="h2"
+              id="wishListTitleText"
             >
               {item.itemName}
               <span id="purchased-tag">
-                {item.purchased ? 'Purchased!' : ''}
+                {item.purchased ? 'Purchased!' : null}
               </span>
             </Typography>
           </a>
@@ -80,6 +82,7 @@ const WishListCard = (props) => {
               size="large"
               onClick={() => setEdit(true)}
               variant="contained"
+              color="primary"
             >
               Edit
             </Button>
