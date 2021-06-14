@@ -14,7 +14,9 @@ const curUserReducer = (state = {}, action) => {
     return (state = action.user);
   }
   if (action.type === UPDATE_CHILD_PROFILE) {
-    return (state = action.updatedUser);
+    state = action.updatedUser;
+    console.log('state', state);
+    return state;
   }
   return state;
 };

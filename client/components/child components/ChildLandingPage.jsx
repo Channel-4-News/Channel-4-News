@@ -2,6 +2,7 @@ import React from 'react';
 import SpendingGraph from './SpendingGraph';
 import { Avatar } from '@material-ui/core';
 import VirtualCard from '../forms/VirtualCard';
+import { connect } from 'react-redux';
 
 class ChildLandingPage extends React.Component {
   constructor() {
@@ -9,7 +10,6 @@ class ChildLandingPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.user);
     return this.props.user.allowance ? (
       <div id="childLandingPage">
         <p>Hello, {this.props.user.firstName}!</p>
@@ -48,4 +48,10 @@ class ChildLandingPage extends React.Component {
   }
 }
 
-export default ChildLandingPage;
+const mapStateToProps = (state) => {
+  return {
+    user: state.currUser,
+  };
+};
+
+export default connect(mapStateToProps)(ChildLandingPage);
