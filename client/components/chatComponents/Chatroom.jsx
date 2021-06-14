@@ -6,10 +6,13 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Button from '@material-ui/core/Button';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker, Emoji } from 'emoji-mart';
 
 const Chatroom = (props) => {
   const [message, setMessage] = useState('');
-  const [loaded, setLoaded] = useState(false);
+  const [emojiMart, setEmojiMart] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
   const customRef = useRef();
 
   const messagesRef = db.collection('messages');
@@ -25,11 +28,11 @@ const Chatroom = (props) => {
   }
   const [messages] = useCollectionData(query, { idField: 'id' });
 
-  if (messages && !loaded) {
-    console.log('there');
-    customRef.current.scrollIntoView({ behavior: 'smooth' });
-    setLoaded(true);
-  }
+  // if (messages && !loaded) {
+  //   console.log('there');
+  //   customRef.current.scrollIntoView({ behavior: 'smooth' });
+  //   setLoaded(true);
+  // }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,6 +48,12 @@ const Chatroom = (props) => {
     await messagesRef.add(newMessage);
     setMessage('');
     customRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const emojiSelect = (event) => {
+    setMessage(message + event.native);
+    // console.log(event);
+    setEmojiMart(false);
   };
 
   return (
@@ -71,11 +80,30 @@ const Chatroom = (props) => {
             fullWidth
           />
           <Button
+            variant="contained"
+            onClick={() => {
+              setEmojiMart(!emojiMart);
+            }}
+            id="sentButton"
+            color="default"
+          >
+            <Emoji emoji={{ id: 'smiley' }} size={40} />
+          </Button>
+          {emojiMart ? (
+            <Picker
+              onSelect={(event) => emojiSelect(event)}
+              style={{ position: 'absolute', bottom: '60px', right: '20px' }}
+            />
+          ) : (
+            ''
+          )}
+
+          <Button
             disabled={message ? false : true}
             variant="contained"
             onClick={handleSubmit}
             id="sentButton"
-            color="default"
+            color="primary"
           >
             Send
           </Button>
