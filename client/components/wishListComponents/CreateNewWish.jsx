@@ -45,7 +45,12 @@ const CreateNewWish = (props) => {
   };
   return (
     <div>
-      <Button variant="contained" size="large" onClick={() => setOpen(true)}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={() => setOpen(true)}
+      >
         Make A New Wish
       </Button>
       <Dialog

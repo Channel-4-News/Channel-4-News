@@ -43,6 +43,7 @@ class PurchaseButton extends Component {
             onClick={() => handleClickOpen()}
             size="large"
             variant="contained"
+            color="primary"
           >
             Purchase
           </Button>
