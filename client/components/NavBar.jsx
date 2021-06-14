@@ -26,7 +26,8 @@ const NavBar = (props) => {
             href={user === 'Child' || user === 'Parent' ? '/#/home' : '/'}
           >
             <span id="navLogo">
-              FUND<span id="logoIT">IT</span>
+              FUND
+              <span id={user === 'Parent' ? 'logoITparent' : 'logoIT'}>IT</span>
             </span>
           </IconButton>
           <div id="navbar-links-wrapper">

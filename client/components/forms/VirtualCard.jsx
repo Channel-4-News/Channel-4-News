@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 const VirtualCard = (props) => {
+  const [inf, setInf] = useState();
   const [cardBackground] = useState(
     document.getElementsByClassName('rccs__card__background')
   );
@@ -33,25 +34,40 @@ const VirtualCard = (props) => {
   }, [cardBackground]);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     if (props.currUser.id) {
-      let info;
       const getCardInfo = async () => {
-        info = (
-          await axios.get(`/api/stripe/card/${props.currUser.virtualCard}`)
-        ).data;
-        info.exp_month =
-          info.exp_month < 10 ? '0' + info.exp_month : info.exp_month;
-        info.exp_year = `${info.exp_year}`.slice(2);
-        setCardDetails({
-          cvc: info.cvc,
-          number: info.number,
-          name: info.cardholder.name,
-          expiry: info.exp_month + info.exp_year,
-        });
+        let info;
+        try {
+          info = (
+            await axios.get(`/api/stripe/card/${props.currUser.virtualCard}`, {
+              cancelToken: source.token,
+            })
+          ).data;
+          info.exp_month =
+            info.exp_month < 10 ? '0' + info.exp_month : info.exp_month;
+          info.exp_year = `${info.exp_year}`.slice(2);
+          setInf(info);
+        } catch (err) {
+          console.log(err);
+        }
       };
       getCardInfo();
     }
+    return () => {
+      source.cancel('Component unmounted');
+    };
   }, [props.currUser]);
+
+  useEffect(() => {
+    if (inf?.cvc)
+      setCardDetails({
+        cvc: inf.cvc,
+        number: inf.number,
+        name: inf.cardholder.name,
+        expiry: inf.exp_month + inf.exp_year,
+      });
+  }, [inf]);
 
   return (
     <div id="virtualCardContainer">

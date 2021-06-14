@@ -7,7 +7,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
 import PayoutChore from './PayoutChore';
-import { Button } from '@material-ui/core';
+import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 
 const ChoreCard = (props) => {
@@ -28,7 +28,7 @@ const ChoreCard = (props) => {
   const today = new Date();
   let expired;
   if (props.chore.due && new Date(props.chore.due) < today) expired = true;
-  let noti;
+
   return (
     <div
       className={
@@ -41,16 +41,13 @@ const ChoreCard = (props) => {
               : 'choreCard expiredCard'
       }
     >
-      <input
-        type="checkbox"
+      <Checkbox
         className="choreCompletedCheck"
         disabled={props.chore.wasPaid ? true : false}
-        checked={complete ? 'checked' : null}
+        checked={complete ? true : false}
         onChange={() => {
           setComplete(!complete);
-          noti = 'Chore is done';
           if (!complete) {
-            console.log(props);
             props.parents.map((currParent) => {
               props.sendNotification({
                 text: 'hello motto anotha one',

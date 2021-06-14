@@ -151,11 +151,13 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Francis',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+      imgUrl: 'public/images/profilePics/francis.jpg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuiLGMLeOpoTZxI7NdxPkF',
       virtualCard: 'ic_1IzujAGMLeOpoTZx1wFkCcUd',
+      balance: 67,
+      cardColor: 'rgb(153, 97, 255)',
+      cardImage: 'public/images/cardIcons/catpeak.png',
     });
 
     const kid3 = await User.create({
@@ -424,8 +426,24 @@ const syncAndSeed = async () => {
       { cost: 119, category: 'Toys', userId: kid1.id },
     ];
 
+    const transactions2 = [
+      { cost: 20.99, category: 'Electronics', userId: kid2.id },
+      { cost: 35.0, category: 'Clothing', userId: kid2.id },
+      { cost: 72.5, category: 'Entertainment', userId: kid2.id },
+      { cost: 13.99, category: 'Toys', userId: kid2.id },
+      { cost: 20, category: 'Miscellaneous', userId: kid2.id },
+      { cost: 3.87, category: 'Food', userId: kid2.id },
+      { cost: 10, category: 'Toys', userId: kid2.id },
+    ];
+
     await Promise.all(
       transactions.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
+    await Promise.all(
+      transactions2.map(async (transaction) => {
         await Transaction.create(transaction);
       })
     );

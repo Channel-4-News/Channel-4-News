@@ -6,6 +6,7 @@ const {
 } = require('../db/models/associations');
 const Family = require('../db/models/Family');
 const { Transaction } = require('../db/models/Transaction');
+const { route } = require('./families');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -72,6 +73,16 @@ router.delete('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+// //upload image file
+// router.put('/image/:id', async (req, res, next) => {
+//   console.log(req.file);
+//   try {
+//     res.send({ file: req.file });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //update user
 router.put('/:id', async (req, res, next) => {

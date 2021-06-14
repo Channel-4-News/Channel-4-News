@@ -39,6 +39,8 @@ const ChooseFile = ({
   //From React Dropzone
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
+    maxFilesize: 200,
+    maxThumbnailFilesize: 200,
   });
 
   const [newImgUrl, setNewImg] = useState('');

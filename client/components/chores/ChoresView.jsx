@@ -29,6 +29,8 @@ const Chores = (props) => {
     if (id === 'sort') setAnchorEl(null);
   };
 
+  console.log(props);
+
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
@@ -96,8 +98,22 @@ const Chores = (props) => {
   }
 
   return (
-    <div id="choresContainer">
-      <div id="choresView">
+    <div
+      id={
+        props.currUser.status === 'Parent'
+          ? 'choresContainerParent'
+          : 'choresContainer'
+      }
+    >
+      <img
+        src="public/images/chores.png"
+        style={{ height: '80vh', margin: '50px', marginLeft: '100px' }}
+      ></img>
+      <div
+        id={
+          props.currUser.status === 'Parent' ? 'choresViewParent' : 'choresView'
+        }
+      >
         {props.chores.length ? (
           <div id="choreCardContainer">
             {props.currUser.status === 'Parent' ? (
@@ -134,7 +150,11 @@ const Chores = (props) => {
               <div id="childDropdown">
                 <div id="filterAndSortChores">
                   <div id="chooseChildHover">
-                    <Button id="childDropButton" variant="contained">
+                    <Button
+                      id="childDropButton"
+                      variant="contained"
+                      color="secondary"
+                    >
                       Choose child
                     </Button>
                     <div id="childDropdownContent">
@@ -161,7 +181,11 @@ const Chores = (props) => {
                     </div>
                   </div>
                 </div>
-                <Button variant="contained" onClick={() => setAddChore(true)}>
+                <Button
+                  variant="contained"
+                  onClick={() => setAddChore(true)}
+                  color="secondary"
+                >
                   Add Chore
                 </Button>
               </div>
@@ -170,7 +194,16 @@ const Chores = (props) => {
                 <div id="childDropdown">
                   <div id="filterAndSortChores">
                     <div id="chooseChildHover">
-                      <Button id="sortButtonChild" variant="contained">
+                      <Button
+                        id="sortButtonChild"
+                        variant="outlined"
+                        color="secondary"
+                        style={{
+                          color: 'white',
+                          backgroundColor: 'tomato',
+                          border: '2px white solid',
+                        }}
+                      >
                         &nbsp;&nbsp;Sort By&nbsp;&nbsp;
                       </Button>
                       <div id="childDropdownContent">
