@@ -1,18 +1,29 @@
 import { connect } from 'react-redux';
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Button, Menu, MenuItem, makeStyles } from '@material-ui/core';
 import Notification from './Notification';
-import {
-  choresCompletedSort,
-  choresIncompletedSort,
-  cashRelated,
-} from './notificationUtils';
+import { choresCompletedSort, cashRelated } from './notificationUtils';
+
+const useStyles = makeStyles((theme) => ({
+  notificationContainer: {
+    backgroundColor: '#3e6bff',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  notificationsSelect: {
+    // alignSelf: 'flex-start',
+    margin: '2rem',
+  },
+}));
 
 const SortNotifications = ({ notifications }) => {
   const [val, setVal] = useState('Select');
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const [newNotifications, setNewNotifications] = useState([]);
+  const [newNotifications, setNewNotifications] = useState([] || '');
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,15 +33,16 @@ const SortNotifications = ({ notifications }) => {
     setAnchorEl(null);
     setOpen(false);
   };
-
+  const classes = useStyles();
   return (
-    <div>
+    <div className={classes.notificationContainer}>
       <Button
         color="secondary"
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
         variant="contained"
+        className={classes.notificationsSelect}
       >
         {val}
       </Button>
@@ -52,15 +64,6 @@ const SortNotifications = ({ notifications }) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setNewNotifications(choresIncompletedSort(notifications));
-            handleClose();
-            setVal('Incomplete Chores');
-          }}
-        >
-          Incomplete Chores
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
             setNewNotifications(cashRelated(notifications));
             handleClose();
             setVal('Cash Withdrawls');
@@ -78,11 +81,15 @@ const SortNotifications = ({ notifications }) => {
           All
         </MenuItem>
       </Menu>
-      <Notification
-        notifications={
-          !newNotifications.length ? notifications : newNotifications
-        }
-      />
+      {!Array.isArray(notifications) ? (
+        <h1>{notifications || 'No'}</h1>
+      ) : (
+        <Notification
+          notifications={
+            !newNotifications.length ? notifications : newNotifications
+          }
+        />
+      )}
     </div>
   );
 };

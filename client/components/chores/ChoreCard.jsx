@@ -10,9 +10,6 @@ import PayoutChore from './PayoutChore';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 
-import { store } from 'react-notifications-component';
-import 'animate.css';
-
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
   const [dueDate, setDueDate] = useState('');

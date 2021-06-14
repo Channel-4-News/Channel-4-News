@@ -432,12 +432,6 @@ const syncAndSeed = async () => {
 
     await Promise.all([
       new Notification({
-        fromId: kid1.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
-      }).save(),
-      new Notification({
         fromId: kid2.id,
         toId: parent1.id,
         text: 'Chore Done!',
@@ -457,12 +451,6 @@ const syncAndSeed = async () => {
         text: 'Got the bread',
         isCash: true,
         amount: 5.0,
-      }).save(),
-      new Notification({
-        fromId: kid2.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
       }).save(),
       new Notification({
         fromId: kid3.id,

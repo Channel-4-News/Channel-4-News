@@ -4,7 +4,7 @@ import 'animate.css';
 const choreSuccess = (text, amount) =>
   store.addNotification({
     title: 'Chore Completed',
-    message: `${text} amount due $${amount}`,
+    message: `${text}, amount due $${amount}!`,
     type: 'info',
     insert: 'top',
     container: 'top-right',
@@ -16,11 +16,11 @@ const choreSuccess = (text, amount) =>
     },
   });
 
-const choreIncomplete = (text) =>
+const cashWithdrawl = (text) =>
   store.addNotification({
-    title: 'Chore Incomplete',
-    message: `${text}`,
-    type: 'danger',
+    title: 'Cash Withdrawl',
+    message: `${text}!`,
+    type: 'success',
     insert: 'top',
     container: 'top-right',
     animationIn: ['animate_animated', 'animate_fadeIn'],
@@ -31,38 +31,20 @@ const choreIncomplete = (text) =>
     },
   });
 
-// if (expired && !props.chore.isComplete && props.currUser.status === 'Child') {
-//   console.log('my wacky if statement');
-//   props.parents.map((currParent) => {
-//     props.sendNotification({
-//       text: `${props.chore.name} Incomplete! Assigned to ${props.chore.user.username}`,
-//       amount: props.chore.amount,
-//       isChoreCompleted: false,
-//       isChore: true,
-//       toId: currParent.id,
-//     });
-//   });
-// }
-
 const choresCompletedSort = (notiArr) => {
   const newArr = notiArr.filter((currNoti) => currNoti.isChoreCompleted);
-  return newArr;
-};
-const choresIncompletedSort = (notiArr) => {
-  const newArr = notiArr.filter(
-    (currNoti) => !currNoti.isChoreCompleted && !currNoti.isCash
-  );
+  if (!newArr.length) {
+    return 'Currently No Chores Completed';
+  }
   return newArr;
 };
 
 const cashRelated = (notiArr) => {
   const newArr = notiArr.filter((currNoti) => currNoti.isCash);
+  if (!newArr.length) {
+    return 'Currently No Cash Withdrawls';
+  }
   return newArr;
 };
-export {
-  choreSuccess,
-  choreIncomplete,
-  choresCompletedSort,
-  choresIncompletedSort,
-  cashRelated,
-};
+
+export { choreSuccess, cashWithdrawl, choresCompletedSort, cashRelated };
