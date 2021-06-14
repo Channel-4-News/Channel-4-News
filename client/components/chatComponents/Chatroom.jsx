@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { db, firebaseRef } from './config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import MessageCard from './MessageCard';
@@ -12,13 +12,20 @@ import { Picker, Emoji } from 'emoji-mart';
 const Chatroom = (props) => {
   const [message, setMessage] = useState('');
   const [emojiMart, setEmojiMart] = useState(false);
-  // const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const customRef = useRef();
-
-  const messagesRef = db.collection('messages');
 
   const { id, imgUrl, familyId, username } = props.user;
 
+  useEffect(() => {
+    if (messages && !loaded) {
+      console.log('there');
+      customRef.current.scrollIntoView({ behavior: 'smooth' });
+      setLoaded(true);
+    }
+  });
+
+  const messagesRef = db.collection('messages');
   let query;
   if (familyId) {
     query = messagesRef
@@ -27,12 +34,6 @@ const Chatroom = (props) => {
       .limit(20);
   }
   const [messages] = useCollectionData(query, { idField: 'id' });
-
-  // if (messages && !loaded) {
-  //   console.log('there');
-  //   customRef.current.scrollIntoView({ behavior: 'smooth' });
-  //   setLoaded(true);
-  // }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
