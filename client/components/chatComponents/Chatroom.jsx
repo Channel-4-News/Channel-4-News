@@ -53,7 +53,6 @@ const Chatroom = (props) => {
 
   const emojiSelect = (event) => {
     setMessage(message + event.native);
-    // console.log(event);
     setEmojiMart(false);
   };
 
@@ -98,7 +97,6 @@ const Chatroom = (props) => {
           ) : (
             ''
           )}
-
           <Button
             disabled={message ? false : true}
             variant="contained"
