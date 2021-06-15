@@ -438,6 +438,7 @@ const syncAndSeed = async () => {
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 1,
       }).save(),
       new Notification({
         amount: 12.0,
@@ -462,6 +463,7 @@ const syncAndSeed = async () => {
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 2,
       }).save(),
     ]);
 

@@ -10,6 +10,7 @@ const validator = require('email-validator');
 const { NotificationList } = require('./Notification');
 const { WishList } = require('./WishListItem');
 const Allowance = require('./Allowance');
+const { Chore } = require('./Chore');
 
 const User = db.define('user', {
   username: {
@@ -174,10 +175,7 @@ User.prototype.getNotifications = function () {
     where: {
       [db.Sequelize.Op.or]: [{ toId: this.id }],
     },
-    include: [
-      { model: User, as: 'from' },
-      { model: User, as: 'to' },
-    ],
+    include: [Chore, { model: User, as: 'from' }, { model: User, as: 'to' }],
     order: [['createdAt', 'DESC']],
   });
 };

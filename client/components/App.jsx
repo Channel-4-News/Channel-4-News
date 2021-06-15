@@ -51,7 +51,6 @@ class App extends Component {
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
       if (action.id) {
-        console.log(action);
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
           : action.isCash

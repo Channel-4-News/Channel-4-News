@@ -1,11 +1,13 @@
 import { Grid, makeStyles, IconButton, Button } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { GrCheckboxSelected } from 'react-icons/gr';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { deleteNotificationThunk } from '../../store/actions/notificationActions/deleteNotification';
 import axios from 'axios';
+import { updateChore } from '../../store/actions/choreActions/updateChore';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   icons: {
@@ -32,40 +34,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NotificationCard = ({ currNote, destroy }) => {
+const NotificationCard = (props) => {
   const classes = useStyles();
+  const [chore, setChore] = useState({});
+
+  useEffect(() => {
+    if (props.currNote.chore) {
+      const id = props.currNote.chore.id;
+      const getSpecificChore = async (id) => {
+        const { data: singleChore } = await axios.get(`/api/chores/${id}`);
+        setChore(singleChore);
+      };
+      getSpecificChore(id);
+    } else {
+      setChore({});
+    }
+  }, []);
+
   return (
     <div>
-      {currNote.isChoreCompleted ? (
+      {props.currNote.isChoreCompleted ? (
         <Grid className={classes.completed}>
-          <GrCheckboxSelected className={classes.icons} /> {currNote.text},
-          amount due ${currNote.amount}!
+          <GrCheckboxSelected className={classes.icons} /> {props.currNote.text}
+          , amount due ${props.currNote.amount}!
           <Button
-            // disabled={props.chore.wasPaid ? true : false}
+            disabled={props.currNote.isChore && chore.wasPaid ? true : false}
             id="payoutButton"
             variant="outlined"
             onClick={async () => {
               await axios.post('/api/stripe/charges', {
-                customer: currNote.to.stripeAccount,
-                amount: parseInt(currNote.amount) * 100,
-                kid: currNote.from.firstName,
+                customer: props.currNote.to.stripeAccount,
+                amount: parseInt(props.currNote.amount) * 100,
+                kid: props.currNote.from.firstName,
               });
-              destroy(currNote.id);
+              props.destroy(props.currNote.id);
+              props.updateChore(chore.id, {
+                isComplete: true,
+                wasPaid: true,
+              });
             }}
-            // setComplete(true);
-            // props.updateChore(props.chore.id, {
-            //   isComplete: true,
-            //   wasPaid: true,
-            // });
-            //}}
           >
             Payout
           </Button>
+          <IconButton onClick={() => props.destroy(props.currNote.id)}>
+            <HighlightOffIcon />
+          </IconButton>
         </Grid>
-      ) : currNote.isCash ? (
+      ) : props.currNote.isCash ? (
         <Grid className={classes.cash}>
-          <GiTakeMyMoney className={classes.icons} /> {currNote.text}!
-          <IconButton onClick={() => destroy(currNote.id)}>
+          <GiTakeMyMoney className={classes.icons} /> {props.currNote.text}!
+          <IconButton onClick={() => props.destroy(props.currNote.id)}>
             <HighlightOffIcon />
           </IconButton>
         </Grid>
@@ -80,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     destroy: (currNotficationId) =>
       dispatch(deleteNotificationThunk(currNotficationId)),
+    updateChore: (id, updateInfo) => dispatch(updateChore(id, updateInfo)),
   };
 };
 

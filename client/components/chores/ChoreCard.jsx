@@ -59,6 +59,7 @@ const ChoreCard = (props) => {
                   isChoreCompleted: true,
                   isChore: true,
                   toId: currParent.id,
+                  choreId: props.chore.id,
                 });
               });
             }

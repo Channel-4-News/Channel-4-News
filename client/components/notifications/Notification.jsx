@@ -24,14 +24,11 @@ const Notification = ({ currUser, notifications }) => {
   if (currUser.status !== 'Parent') {
     return <div>You do not have permission to view this screen</div>;
   }
-  if (!notifications.length) {
-    return null;
-  }
+
   const classes = useStyles();
   return (
     <div className={classes.paperContainer}>
       <Paper className={classes.notifications}>
-        {console.log(notifications)}
         {Array.isArray(notifications) && notifications.length ? (
           notifications.map((currNote, idx) => {
             return <NotificationCard key={idx} currNote={currNote} />;
