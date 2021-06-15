@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { GrCheckboxSelected } from 'react-icons/gr';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-
-import { HashRouter as Router, Link } from 'react-router-dom';
+import { deleteNotificationThunk } from '../../store/actions/notificationActions/deleteNotification';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   icons: {
@@ -30,14 +30,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '65px',
   },
-  // notificationLink:{
-  //     textDecoration: 'none',
-  //     color: 'black',
-  // }
-  //<Link className={classes.notificationLink} to='chores'></Link>
 }));
 
-const NotificationCard = ({ currNote }) => {
+const NotificationCard = ({ currNote, destroy }) => {
   const classes = useStyles();
   return (
     <div>
@@ -49,12 +44,14 @@ const NotificationCard = ({ currNote }) => {
             // disabled={props.chore.wasPaid ? true : false}
             id="payoutButton"
             variant="outlined"
-            // onClick={async () => {
-            //   await axios.post('/api/stripe/charges', {
-            //     customer: props.stripeAccount,
-            //     amount: parseInt(props.chore.amount) * 100,
-            //     kid: props.chore.user.firstName,
-            //   });
+            onClick={async () => {
+              await axios.post('/api/stripe/charges', {
+                customer: currNote.to.stripeAccount,
+                amount: parseInt(currNote.amount) * 100,
+                kid: currNote.from.firstName,
+              });
+              destroy(currNote.id);
+            }}
             // setComplete(true);
             // props.updateChore(props.chore.id, {
             //   isComplete: true,
@@ -68,7 +65,7 @@ const NotificationCard = ({ currNote }) => {
       ) : currNote.isCash ? (
         <Grid className={classes.cash}>
           <GiTakeMyMoney className={classes.icons} /> {currNote.text}!
-          <IconButton onClick={() => console.log('delete')}>
+          <IconButton onClick={() => destroy(currNote.id)}>
             <HighlightOffIcon />
           </IconButton>
         </Grid>
@@ -79,4 +76,11 @@ const NotificationCard = ({ currNote }) => {
   );
 };
 
-export default connect()(NotificationCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    destroy: (currNotficationId) =>
+      dispatch(deleteNotificationThunk(currNotficationId)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(NotificationCard);

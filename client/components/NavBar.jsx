@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { logout } from '../store/actions/userActions/logoutUser';
 import { connect } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
 
 //Component Imports
 import Settings from './Settings';
@@ -91,7 +92,12 @@ const NavBar = (props) => {
 
             {user === 'Parent' ? (
               <Button href="/#/notifications" color="inherit">
-                Notifications({props.notifications.length})
+                <Badge
+                  badgeContent={props.notifications.length}
+                  color="secondary"
+                >
+                  Notifications
+                </Badge>
               </Button>
             ) : (
               ''

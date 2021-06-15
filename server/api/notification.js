@@ -39,4 +39,14 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const notificationDelete = await Notification.findByPk(req.params.id);
+    await notificationDelete.destroy();
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

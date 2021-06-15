@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  paperContainer: {
+    backgroundColor: '#3e6bff',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }));
 
 const Notification = ({ currUser, notifications }) => {
@@ -23,17 +29,20 @@ const Notification = ({ currUser, notifications }) => {
   }
   const classes = useStyles();
   return (
-    <Paper className={classes.notifications}>
-      {Array.isArray(notifications) ? (
-        notifications.map((currNote, idx) => {
-          return <NotificationCard key={idx} currNote={currNote} />;
-        })
-      ) : typeof notifications === 'string' ? (
-        <h3 className={classes.noneText}>{notifications}</h3>
-      ) : (
-        ''
-      )}
-    </Paper>
+    <div className={classes.paperContainer}>
+      <Paper className={classes.notifications}>
+        {console.log(notifications)}
+        {Array.isArray(notifications) && notifications.length ? (
+          notifications.map((currNote, idx) => {
+            return <NotificationCard key={idx} currNote={currNote} />;
+          })
+        ) : typeof notifications === 'string' ? (
+          <h3 className={classes.noneText}>{notifications}</h3>
+        ) : (
+          ''
+        )}
+      </Paper>
+    </div>
   );
 };
 

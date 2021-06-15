@@ -34,6 +34,7 @@ const SortNotifications = ({ notifications }) => {
     setOpen(false);
   };
   const classes = useStyles();
+
   return (
     <div className={classes.notificationContainer}>
       <Button
@@ -81,8 +82,12 @@ const SortNotifications = ({ notifications }) => {
           All
         </MenuItem>
       </Menu>
-      {!Array.isArray(notifications) ? (
-        <h1>{notifications || 'No'}</h1>
+      {!notifications.length ? (
+        <Notification
+          notifications={
+            !newNotifications.length ? 'No New Notifications' : newNotifications
+          }
+        />
       ) : (
         <Notification
           notifications={
