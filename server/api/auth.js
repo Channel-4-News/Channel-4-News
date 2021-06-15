@@ -46,4 +46,12 @@ router.get('/family', async (req, res, next) => {
   }
 });
 
+router.get('/google', async (req, res, next) => {
+  try {
+    res.send('Google Auth');
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

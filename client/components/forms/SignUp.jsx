@@ -17,6 +17,8 @@ import {
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import GoogleButton from 'react-google-button';
+
 const SignUp = (props) => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -182,6 +184,19 @@ const SignUp = (props) => {
         >
           Next
         </Button>
+        <GoogleButton
+          style={{
+            width: '40%',
+            alignSelf: 'center',
+            marginTop: '15px',
+            marginBottom: '15px',
+          }}
+          type="dark"
+          label="Sign Up With Google"
+          onClick={() => {
+            console.log('Google button clicked');
+          }}
+        />
         <small>
           Already have an account? Login{' '}
           <a id="goToLogin" href="/#/login">
