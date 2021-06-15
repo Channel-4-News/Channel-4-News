@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paperContainer: {
-    backgroundColor: '#3e6bff',
+    backgroundColor: 'lightGrey',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',

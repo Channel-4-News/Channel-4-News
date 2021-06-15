@@ -6,7 +6,7 @@ import { choresCompletedSort, cashRelated } from './notificationUtils';
 
 const useStyles = makeStyles((theme) => ({
   notificationContainer: {
-    backgroundColor: '#3e6bff',
+    backgroundColor: 'lightGrey',
     width: '100%',
     height: '100%',
     display: 'flex',
