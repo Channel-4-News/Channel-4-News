@@ -107,7 +107,12 @@ const Chores = (props) => {
     >
       <img
         src="public/images/chores.png"
-        style={{ height: '80vh', margin: '50px', marginLeft: '100px' }}
+        style={{
+          height: '80vh',
+          margin: '50px',
+          marginLeft: '100px',
+          position: 'fixed',
+        }}
       ></img>
       <div
         id={

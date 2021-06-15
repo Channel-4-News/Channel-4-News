@@ -2,29 +2,46 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  background-color: rgb(252, 77, 54);
+  justify-content: center;
+  background-color: tomato;
+}
+
+#wishListWrapper > div {
+  margin: 10px;
+  box-shadow: none;
+}
+
+.itemTitle {
+  font-size: larger;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1;
 }
 
 #wishListCardWrapper {
-  width: 650px;
+  width: 400px;
   height: 600px;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: whitesmoke;
-  box-shadow: 1px 1px 10px;
+  background-color: white;
+  /* box-shadow: 1px 1px 10px; */
   border-radius: 10px;
+  margin: 10px;
 }
 
 #itemInfo > div:nth-child(2),
 #itemInfo > div:nth-child(5),
 #itemDescriptionWrapper {
-  border: #85a1fd 5px solid;
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px;
+  /* border: #85a1fd 5px solid; */
+  border-radius: 0;
+  /* box-shadow: 1px 1px 5px; */
+  border: none;
+  /* margin-top: 10px; */
 }
 
 #wishListCardWrapper .title {
@@ -33,38 +50,59 @@
 
 #wishListCardWrapper img {
   object-fit: contain;
-  height: 380px;
-  width: 380px;
+  height: 270px;
+  width: 270px;
+  border: none;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #itemImage {
-  align-self: flex-start;
-  border: #85a1fd 5px solid;
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px;
+  align-self: center;
+  border: white 5px solid;
+  border-radius: 0;
+  box-shadow: inset 1px 3px 17px -3px rgba(0, 0, 0, 0.34);
+
+  height: 320px;
+  width: 320px;
+  z-index: 1;
 }
 
 #itemImage.itemImage {
-  align-self: flex-start;
+  /* align-self: flex-start; */
   border: #85a1fd 5px solid;
-  border-radius: 15px;
-  box-shadow: 1px 1px 5px;
-  width: 390px;
+  /* border-radius: 15px; */
+  width: 320px;
+  align-self: center;
+  margin-bottom: 30px;
 }
 
 #itemRow {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
-  justify-content: space-between;
+  /* justify-content: center; */
   margin: 0;
-  height: 400px;
-  margin-bottom: 3rem;
+  /* height: 400px; */
+  /* margin-bottom: 3rem; */
+  align-items: center;
 }
 
 #itemInfo {
-  width: 30%;
-  height: 400px;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+}
+
+#itemInfoEdit {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .itemValues {
@@ -78,8 +116,13 @@
 
 #buttonRow {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+}
+
+#buttonRow button {
+  width: 90%;
+  margin: 5%;
 }
 
 .wishListFormBox {
@@ -88,8 +131,7 @@
 }
 
 #itemUrlLink > h2 {
-  text-shadow: 1px 1px 1px #85a1fd;
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 body
@@ -147,13 +189,16 @@ body
   border: none;
 }
 
-#itemImage > input {
+/* #itemImage > input {
   width: 380px;
-}
+} */
 
 #changeWishListTitle {
   font-size: large;
   width: 400px;
+  /* padding-bottom: 10px; */
+  margin-bottom: 20px;
+  width: 70%;
 }
 
 #wishListTextAreaEdit {
@@ -170,10 +215,15 @@ body
   flex-direction: row;
   justify-content: space-around;
   padding-top: 2rem;
+  width: 80%;
+  align-items: center;
 }
 
 #wishListContent {
-  background-color: rgb(252, 77, 54);
+  background-color: tomato;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 #sortWishList {
@@ -246,9 +296,16 @@ body
   align-items: center;
 }
 
-#chooseWishHover > button {
+#chooseWishHover button {
   width: 210px;
   justify-content: center;
+  color: white;
+  border: 2px white solid;
+}
+
+#chooseWishHover button:hover {
+  color: tomato;
+  background-color: white;
 }
 
 body
@@ -296,4 +353,55 @@ body
   top: 50%;
   left: 40%;
   z-index: 1;
+}
+
+#withdrawContainer button,
+#makeAWishContainer button {
+  color: white;
+  border: 2px white solid;
+}
+
+#wishlistHeader {
+  color: white;
+  font-size: 70px;
+}
+
+#withdrawContainer button:hover,
+#makeAWishContainer button:hover {
+  color: tomato;
+  background-color: white;
+}
+
+.editInput {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; */
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.editCost {
+  margin-right: 20px;
+  width: 35%;
+}
+
+#editWish input {
+  outline: none;
+}
+
+#editImage {
+  /* width: 70%; */
+}
+
+#editImageContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+#editImageContainer input {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }

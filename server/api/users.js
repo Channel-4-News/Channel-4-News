@@ -1,12 +1,15 @@
-const { Router } = require('express');
-const Allowance = require('../db/models/Allowance');
-const router = Router();
+const router = require('express')();
+// const router = Router();
 const {
   models: { User },
 } = require('../db/models/associations');
 const Family = require('../db/models/Family');
 const { Transaction } = require('../db/models/Transaction');
 const { route } = require('./families');
+
+//interval scheduling
+const schedule = require('node-schedule');
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -24,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
       await User.findByPk(req.params.id, {
         include: [
           { model: Transaction },
-          { model: Allowance },
+          // { model: Allowance },
           { model: Family, include: [User] },
         ],
       })
@@ -126,5 +129,37 @@ router.put('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+//created scheduler
+const scheduler = new ToadScheduler();
+
+//route to add allowance
+router.put('/allowance/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const { allowance } = req.body;
+    await user.update({ balance: user.balance * 1 + allowance });
+    const add = new Task('allowance', async () => {
+      await user.update({ balance: user.balance * 1 + allowance });
+      console.log('adding allowance');
+    });
+    const newJob = new SimpleIntervalJob({ minutes: 1 }, add);
+    scheduler.addSimpleIntervalJob(newJob);
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// // run on particular date
+// const someDate = new Date('2021-06-14T20:07.00.000-04:00');
+// schedule.scheduleJob(someDate, () => {
+//   console.log('Job ran @', new Date().toString());
+// });
+
+// //run at interval
+// schedule.scheduleJob(' */2  * * * *', () => {
+//   console.log('I ran ...');
+// });
 
 module.exports = router;
