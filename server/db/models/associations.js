@@ -12,7 +12,7 @@ User.belongsTo(Family);
 Family.hasMany(User);
 
 Notification.belongsTo(Chore);
-Chore.hasMany(Notification);
+Chore.hasOne(Notification);
 
 User.hasMany(WishListItem);
 WishListItem.belongsTo(User);

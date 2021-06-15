@@ -110,9 +110,7 @@ router.delete('/:id', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const chore = await Chore.findByPk(req.params.id, {
-      include: [Notification],
-    });
+    const chore = await Chore.findByPk(req.params.id);
     res.send(chore);
   } catch (err) {
     next(err);
