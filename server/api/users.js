@@ -139,12 +139,26 @@ router.put('/allowance/:id', async (req, res, next) => {
     const user = await User.findByPk(req.params.id);
     const { allowance } = req.body;
     await user.update({ balance: user.balance * 1 + allowance });
+
+    //add allowance to scheduler
     const add = new Task('allowance', async () => {
       await user.update({ balance: user.balance * 1 + allowance });
       console.log('adding allowance');
     });
-    const newJob = new SimpleIntervalJob({ minutes: 1 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
     scheduler.addSimpleIntervalJob(newJob);
+
+    //add allowance interval to scheduler
+    const addInterval = new Task('interval', async () => {
+      if (user.daysToAllowance > 0) {
+        await user.update({ daysToAllowance: user.daysToAllowance - 1 });
+      } else {
+        await user.update({ daysToAllowance: user.allowanceInterval });
+      }
+      console.log('almost allowance');
+    });
+    const intervalJob = new SimpleIntervalJob({ seconds: 5 }, addInterval);
+    scheduler.addSimpleIntervalJob(intervalJob);
     res.sendStatus(200);
   } catch (err) {
     next(err);

@@ -101,6 +101,9 @@ const User = db.define('user', {
   daysToAllowance: {
     type: DataTypes.INTEGER,
   },
+  allowanceInterval: {
+    type: DataTypes.STRING,
+  },
 });
 
 //authenticates user

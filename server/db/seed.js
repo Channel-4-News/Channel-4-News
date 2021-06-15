@@ -145,6 +145,7 @@ const syncAndSeed = async () => {
       balance: 58,
       allowance: 6,
       daysToAllowance: 7,
+      allowanceInterval: 7,
     });
 
     const kid2 = await User.create({
@@ -162,6 +163,7 @@ const syncAndSeed = async () => {
       cardImage: 'public/images/cardIcons/catpeak.png',
       allowance: 8,
       daysToAllowance: 7,
+      allowanceInterval: 30,
     });
 
     const kid3 = await User.create({
