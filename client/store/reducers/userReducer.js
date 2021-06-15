@@ -2,6 +2,7 @@ import { LOGOUT_USER } from '../actions/userActions/logoutUser';
 import { GET_CURRENT_USER } from '../actions/userActions/getCurUser';
 import { JOIN_FAMILY } from '../actions/familyActions/joinFamily';
 import { UPDATE_CHILD_PROFILE } from '../actions/userActions/editChildProfile';
+import { PURCHASE_OR_WITHDRAW } from '../actions/wishListActions/purchaseOrWithdraw';
 
 const curUserReducer = (state = {}, action) => {
   if (action.type === GET_CURRENT_USER) {
@@ -14,7 +15,15 @@ const curUserReducer = (state = {}, action) => {
     return (state = action.user);
   }
   if (action.type === UPDATE_CHILD_PROFILE) {
-    return (state = action.updatedUser);
+    state = action.updatedUser;
+    console.log('state', state);
+    return state;
+  }
+  if (action.type === PURCHASE_OR_WITHDRAW) {
+    return {
+      ...state,
+      transactions: [...state.transactions, action.transaction],
+    };
   }
   return state;
 };

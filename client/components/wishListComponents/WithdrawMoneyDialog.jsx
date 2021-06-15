@@ -35,7 +35,12 @@ const WithdrawMoneyDialog = (props) => {
   };
   return (
     <div>
-      <Button size="large" variant="contained" onClick={() => setOpen(true)}>
+      <Button
+        size="large"
+        color="primary"
+        variant="contained"
+        onClick={() => setOpen(true)}
+      >
         Withdraw Money
       </Button>
       <Dialog

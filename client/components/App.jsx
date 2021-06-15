@@ -147,11 +147,7 @@ class App extends Component {
                 exact
                 path="/home"
                 component={() =>
-                  this.state.user.status === 'Child' ? (
-                    <ChildLandingPage user={this.state.user} />
-                  ) : (
-                    ''
-                  )
+                  this.state.user.status === 'Child' ? <ChildLandingPage /> : ''
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />

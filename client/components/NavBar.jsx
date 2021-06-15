@@ -27,7 +27,8 @@ const NavBar = (props) => {
             href={user === 'Child' || user === 'Parent' ? '/#/home' : '/'}
           >
             <span id="navLogo">
-              FUND<span id="logoIT">IT</span>
+              FUND
+              <span id={user === 'Parent' ? 'logoITparent' : 'logoIT'}>IT</span>
             </span>
           </IconButton>
           <div id="navbar-links-wrapper">
@@ -54,6 +55,13 @@ const NavBar = (props) => {
             )}
 
             {/* USER IS A CHILD */}
+            {user === 'Child' ? (
+              <Button color="inherit" href="/#/home">
+                Home
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/wishlist">
                 Wish List

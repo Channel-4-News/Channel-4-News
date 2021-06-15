@@ -115,3 +115,29 @@ div > .edit-profile-button {
   /* border-right: 10px tomato solid;
   height: 100%; */
 }
+
+#editChild {
+  background-color: tomato;
+  height: 100vh;
+  padding: 1px;
+}
+
+/* #editAvatar {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+} */
+
+#avatarEdit {
+  margin-top: -45px;
+  border-radius: 20px;
+  border: 2px white solid;
+  background-color: grey;
+  z-index: 2;
+  height: 40px;
+  width: 40px;
+}
+
+#avatarEdit:hover {
+  background-color: tomato;
+}

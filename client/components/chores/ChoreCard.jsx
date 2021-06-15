@@ -7,7 +7,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
 import PayoutChore from './PayoutChore';
-import { Button } from '@material-ui/core';
+import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 
 const ChoreCard = (props) => {
@@ -43,11 +43,10 @@ const ChoreCard = (props) => {
               : 'choreCard expiredCard'
       }
     >
-      <input
-        type="checkbox"
+      <Checkbox
         className="choreCompletedCheck"
         disabled={props.chore.wasPaid ? true : false}
-        checked={complete ? 'checked' : null}
+        checked={complete ? true : false}
         onChange={() => {
           setComplete(!complete);
           if (!complete) {

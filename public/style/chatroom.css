@@ -16,7 +16,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(245, 245, 245);
 }
 
 #messageInput {
@@ -36,7 +36,7 @@
 
 .message.sent {
   align-self: flex-end;
-  background-color: rgb(248, 139, 124);
+  background-color: rgb(245, 170, 160);
   border: 2px solid rgb(252, 77, 54);
   border-radius: 20px 5px 20px 5px;
   box-shadow: 1px 2px 8px;
@@ -53,7 +53,7 @@
 
 .message.recieved {
   align-self: flex-start;
-  background-color: #85a1fd;
+  background-color: #b3c3f7;
   border: 2px solid #3e6bff;
   border-radius: 5px 20px 5px 20px;
   box-shadow: 1px 2px 8px;
