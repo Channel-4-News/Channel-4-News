@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { googleLogin } from '../../store/actions/googleActions/googleLogin';
 
 import {
   attemptLogin,
@@ -84,8 +85,9 @@ const LogIn = (props) => {
           }}
           type="dark"
           label="Login With Google"
-          onClick={() => {
-            console.log('Google button clicked');
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = '/api/google';
           }}
         />
         <small>{loggedIn}</small>
@@ -107,6 +109,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
     logout: () => dispatch(logout()),
+    googleLogin: () => dispatch(googleLogin()),
   };
 };
 
