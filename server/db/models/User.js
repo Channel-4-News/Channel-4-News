@@ -95,13 +95,16 @@ const User = db.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  // allowance: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: true,
-  // },
-  // allowanceInterval: {
-  //   type: DataTypes.STRING,
-  // },
+  allowance: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  daysToAllowance: {
+    type: DataTypes.INTEGER,
+  },
+  allowanceInterval: {
+    type: DataTypes.STRING,
+  },
 });
 
 //authenticates user
@@ -158,17 +161,17 @@ User.addHook('beforeSave', async (user) => {
 //Adds a Notification List to the user
 //Adds a Wish List to the user
 //Adds an Allowance to the user
-User.addHook('afterCreate', async (user) => {
-  const notificationList = await NotificationList.create();
-  notificationList.userId = notificationList.id;
-  await notificationList.save();
-  const wishList = await WishList.create();
-  wishList.userId = wishList.id;
-  await wishList.save();
-  const allowance = await Allowance.create();
-  allowance.userId = user.id;
-  await allowance.save();
-});
+// User.addHook('afterCreate', async (user) => {
+//   const notificationList = await NotificationList.create();
+//   notificationList.userId = notificationList.id;
+//   await notificationList.save();
+//   const wishList = await WishList.create();
+//   wishList.userId = wishList.id;
+//   await wishList.save();
+//   const allowance = await Allowance.create();
+//   allowance.userId = user.id;
+//   await allowance.save();
+// });
 
 User.prototype.getNotifications = function () {
   return db.models.notification.findAll({

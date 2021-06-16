@@ -58,8 +58,11 @@ class ChildLandingPage extends React.Component {
               </div>
               <VirtualCard />
               <div id="nextAllowance">
-                Next allowance in {this.props.user.allowance.interval} day(s) $
-                {this.props.user.allowance.amount}
+                Next allowance in {this.props.user.daysToAllowance}{' '}
+                {this.props.user.daysToAllowance > 1 ? 'days' : 'day'}
+                &nbsp;&nbsp;
+                <span style={{ color: 'tomato' }}>|</span> &nbsp; $
+                {this.props.user.allowance}
               </div>
             </div>
           </div>

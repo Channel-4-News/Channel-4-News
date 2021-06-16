@@ -12,7 +12,7 @@ const SortAndFilterWishList = (props) => {
     <div id="wishListDropdown">
       <div id="filterAndSortWishes">
         <div id="chooseWishHover">
-          <Button size="large" color="primary" variant="contained">
+          <Button size="large" color="primary" variant="outlined">
             &nbsp;&nbsp;Sort By&nbsp;&nbsp;
           </Button>
           <div id="wishDropdownContent">
