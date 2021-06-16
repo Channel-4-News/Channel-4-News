@@ -20,42 +20,50 @@ const WishListCard = (props) => {
     if (edit === false) {
       return (
         <Card id="wishListCardWrapper">
-          <a
-            id="itemUrlLink"
-            target="_blank"
-            rel="noreferrer"
-            href={item.linkUrl}
-          >
-            <Typography
+          <div className="itemTitle">
+            <a
+              id="itemUrlLink"
+              target="_blank"
+              rel="noreferrer"
+              href={item.linkUrl}
+            >
+              {/* <Typography
               className="title"
               gutterBottom
               variant="h5"
               component="h2"
               id="wishListTitleText"
-            >
+            > */}
               {item.itemName}
-              <span id="purchased-tag">
-                {item.purchased ? 'Purchased!' : null}
-              </span>
-            </Typography>
-          </a>
+
+              {item.purchased ? (
+                <span id="purchased-tag">Purchased! </span>
+              ) : null}
+
+              {/* </Typography> */}
+            </a>
+          </div>
           <div id="itemRow">
             <Paper id="itemImage" variant="outlined">
               <img src={item.imgUrl} />
             </Paper>
             <div id="itemInfo">
-              <div>Wish Cost:</div>
-              <Paper className="itemValues" variant="outlined">
+              <div></div>
+              <Paper
+                className="itemValues"
+                variant="outlined"
+                style={{ marginTop: '10px' }}
+              >
                 ${item.cost}
               </Paper>
               <br />
-              <div>Wish Category:</div>
+              {/* <div>Category:</div>
               <Paper className="itemValues" variant="outlined">
                 {item.category}
-              </Paper>
-              <br />
-              <div>Wish Description:</div>
-              <Paper
+              </Paper> */}
+              {/* <br /> */}
+              {/* <div>Description:</div> */}
+              {/* <Paper
                 id="itemDescriptionWrapper"
                 className="itemValues"
                 variant="outlined"
@@ -68,7 +76,7 @@ const WishListCard = (props) => {
                 >
                   {item.description}
                 </Typography>
-              </Paper>
+              </Paper> */}
             </div>
           </div>
           <div id="buttonRow">
@@ -82,7 +90,6 @@ const WishListCard = (props) => {
               size="large"
               onClick={() => setEdit(true)}
               variant="contained"
-              color="primary"
             >
               Edit
             </Button>

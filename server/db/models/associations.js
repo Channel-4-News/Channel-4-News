@@ -23,8 +23,8 @@ NotificationList.hasMany(Notification);
 Notification.belongsTo(User, { as: 'from' });
 Notification.belongsTo(User, { as: 'to' });
 
-Allowance.belongsTo(User);
-User.hasOne(Allowance);
+// Allowance.belongsTo(User);
+// User.hasOne(Allowance);
 
 // ChoreList.hasMany(Chore);
 Chore.belongsTo(ChoreList);

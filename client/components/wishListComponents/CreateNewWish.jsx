@@ -44,14 +44,14 @@ const CreateNewWish = (props) => {
     setLoading(false);
   };
   return (
-    <div>
+    <div id="makeAWishContainer">
       <Button
-        variant="contained"
+        variant="outlined"
         color="primary"
         size="large"
         onClick={() => setOpen(true)}
       >
-        Make A New Wish
+        Make A Wish
       </Button>
       <Dialog
         open={open}
@@ -60,7 +60,7 @@ const CreateNewWish = (props) => {
         aria-describedby="alert-dialog-description"
         id="makeAWishDialog"
       >
-        <DialogTitle id="alert-dialog-title">Make A New Wish</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Make A Wish</DialogTitle>
         <div id="makeNewWishButtons">
           <Button
             onClick={() => setForm('url')}

@@ -75,6 +75,7 @@ class WishList extends Component {
       return (
         <div id="wishListContent">
           <div id="wishListTopBar">
+            <div id="wishlistHeader">WISHLIST</div>
             <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
             <WithdrawMoneyDialog user={this.props.user} />
             <CreateNewWish

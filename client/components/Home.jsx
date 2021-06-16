@@ -138,6 +138,7 @@ const Home = () => {
           <img src="public/images/techs/1200px-Plaid_logo.svg.png" />
           <img src="public/images/techs/stripe-logo-blue.png" />
           <img src="public/images/techs/charjs.png" />
+          <img src="public/images/techs/Firebase_Logo.png" />
         </div>
       </div>
     </div>
