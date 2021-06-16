@@ -98,8 +98,6 @@ const Chores = (props) => {
     return <h1>Please LogIn/Sign Up!</h1>;
   }
 
-  console.log(chores);
-
   return (
     <div
       id={

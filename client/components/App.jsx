@@ -75,7 +75,6 @@ class App extends Component {
 
   componentDidUpdate() {
     if (this.props.currUser) {
-      console.log(this.props.currUser.allowanceInterval);
       this.props.setAllowance(
         this.props.currUser.balance,
         this.props.currUser.allowanceInterval

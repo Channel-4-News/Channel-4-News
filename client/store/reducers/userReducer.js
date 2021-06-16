@@ -2,7 +2,7 @@ import { LOGOUT_USER } from '../actions/userActions/logoutUser';
 import { GET_CURRENT_USER } from '../actions/userActions/getCurUser';
 import { JOIN_FAMILY } from '../actions/familyActions/joinFamily';
 import { UPDATE_CHILD_PROFILE } from '../actions/userActions/editChildProfile';
-import { UPDATE_ALLOWANCE } from '../actions/allowance/updateAllowance';
+import { UPDATE_CARD } from '../actions/cardActions/updateCard';
 
 const curUserReducer = (state = {}, action) => {
   if (action.type === GET_CURRENT_USER) {
@@ -18,13 +18,14 @@ const curUserReducer = (state = {}, action) => {
     state = action.updatedUser;
     return state;
   }
-  // if (action.type === UPDATE_ALLOWANCE) {
-  //   return (state = {
-  //     ...state,
-  //     balance: action.balance,
-  //     daysToAllowance: action.daysToAllowance,
-  //   });
-  // }
+  if (action.type === UPDATE_CARD) {
+    return (state = {
+      ...state,
+      cardImage: action.image,
+      cardColor: action.color,
+      virtualCard: action.cardNumber,
+    });
+  }
   return state;
 };
 
