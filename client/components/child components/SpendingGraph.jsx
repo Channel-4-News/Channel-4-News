@@ -3,13 +3,16 @@ import { Pie, Doughnut } from 'react-chartjs-2';
 
 const SpendingGraph = (props) => {
   let transactions = {};
-  props.transactions.map((transaction) => {
-    if (!transactions[transaction.category]) {
-      transactions[transaction.category] = parseInt(transaction.cost);
-    } else {
-      transactions[transaction.category] += parseInt(transaction.cost);
-    }
-  });
+  // console.log(props);
+  props.transactions
+    ? props.transactions.map((transaction) => {
+      if (!transactions[transaction.category]) {
+        transactions[transaction.category] = parseInt(transaction.cost);
+      } else {
+        transactions[transaction.category] += parseInt(transaction.cost);
+      }
+    })
+    : '';
   return props.transactions ? (
     <div className="spendingGraph">
       <Doughnut
