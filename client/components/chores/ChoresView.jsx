@@ -19,9 +19,10 @@ const Chores = (props) => {
   const [selectedKid, setSelectedKid] = props.location.state
     ? useState(props.location.state.selectedKid)
     : useState({});
-  const [childSelect, setChildSelect] = useState(
-    props.location.state ? true : false
-  );
+  const [childSelect, setChildSelect] = props.location.state
+    ? useState(true)
+    : useState(false);
+
   const [allKids, setAllKids] = useState(0);
   const [choresUpdated, setUpdated] = useState(1);
 
