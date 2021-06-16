@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const validator = require('email-validator');
+const socketUtils = require('../../../socketUtils');
 
 const { NotificationList } = require('./Notification');
 const { WishList } = require('./WishListItem');
@@ -69,7 +70,8 @@ const User = db.define('user', {
   imgUrl: {
     type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue: 'default-img.jpg',
+    defaultValue:
+      'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
     validate: {
       notEmpty: true,
     },
@@ -184,5 +186,16 @@ User.prototype.getNotifications = function () {
     order: [['createdAt', 'DESC']],
   });
 };
+
+User.addHook('afterUpdate', async (notification) => {
+  const socket = socketUtils
+    .getSockets()
+    .find((socket) => notification.id === socket.userId);
+  console.log(socketUtils.getSockets());
+  if (socket) {
+    notification = await User.findByPk(notification.id, {});
+    socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+  }
+});
 
 module.exports = User;

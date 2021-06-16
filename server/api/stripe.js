@@ -105,7 +105,8 @@ router.post('/charges', async (req, res, next) => {
 //create a card holder - triggered on register
 router.post('/create_cardholder', async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, id } = req.body;
+    console.log(id);
     const cardholder = await stripe.issuing.cardholders.create({
       name: name,
       email: email,
@@ -122,7 +123,12 @@ router.post('/create_cardholder', async (req, res, next) => {
       },
     });
 
-    res.send(cardholder);
+    const user = await User.findByPk(id);
+    const updatedUser = await user.update({
+      cardHolderId: cardholder.id,
+    });
+
+    res.send(updatedUser);
   } catch (err) {
     next(err);
   }

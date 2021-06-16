@@ -40,6 +40,7 @@ import Home from './Home';
 import LinkPlaid from './PlaidLink';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
+import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,14 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
+      if (action.notification.firstName) {
+        store.dispatch(
+          updateAllowance(
+            action.notification.balance,
+            action.notification.daysToAllowance
+          )
+        );
+      }
       if (action.id) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
@@ -145,11 +154,12 @@ class App extends Component {
                 path="/notifications"
                 component={SortNotifications}
               />
+              {/* {this.state.user.status === 'Child'} */}
               <Route
                 exact
                 path="/home"
-                component={() =>
-                  this.state.user.status === 'Child' ? <ChildLandingPage /> : ''
+                component={
+                  this.state.user.status === 'Child' ? ChildLandingPage : ''
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />

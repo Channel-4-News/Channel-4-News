@@ -91,6 +91,7 @@ const CreateCard = (props) => {
         setNameError={setNameError}
         setReset={setReset}
         reset={reset}
+        user={props.currUser}
       />
       <div id="cardChooser">
         <TextField

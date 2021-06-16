@@ -3,14 +3,22 @@ import SpendingGraph from './SpendingGraph';
 import { Avatar } from '@material-ui/core';
 import VirtualCard from '../forms/VirtualCard';
 import { connect } from 'react-redux';
+import Balance from './allowance components/Balance';
+import AllowanceInterval from './allowance components/AllowanceInterval';
 
 class ChildLandingPage extends React.Component {
   constructor() {
     super();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   render() {
-    return this.props.user.allowance ? (
+    this.props.user.imgUrl;
+    // return this.props.user.allowance ? (
+    return (
       <div id="childLandingPage">
         <p>Hello, {this.props.user.firstName}!</p>
         <div id="childLandingContainer">
@@ -29,24 +37,13 @@ class ChildLandingPage extends React.Component {
             </div>
             <div id="forBorder"></div>
             <div id="childLandingVirtualCard">
-              <div style={{ fontSize: 'larger' }}>
-                BALANCE &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;$
-                {this.props.user.balance}
-              </div>
+              <Balance />
               <VirtualCard />
-              <div id="nextAllowance">
-                Next allowance in {this.props.user.daysToAllowance}{' '}
-                {this.props.user.daysToAllowance > 1 ? 'days' : 'day'}
-                &nbsp;&nbsp;
-                <span style={{ color: 'tomato' }}>|</span> &nbsp; $
-                {this.props.user.allowance}
-              </div>
+              <AllowanceInterval />
             </div>
           </div>
         </div>
       </div>
-    ) : (
-      ''
     );
   }
 }
