@@ -16,11 +16,11 @@ const Chores = (props) => {
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedKid, setSelectedKid] = useState(
-    props.location.state ? props.location.state.selectedKid : {}
-  );
+  const [selectedKid, setSelectedKid] = props.location.state
+    ? useState(props.location.state.selectedKid)
+    : useState({});
   const [childSelect, setChildSelect] = useState(
-    props.location.state.selectedKid ? true : false
+    props.location.state ? true : false
   );
   const [allKids, setAllKids] = useState(0);
   const [choresUpdated, setUpdated] = useState(1);

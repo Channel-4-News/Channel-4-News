@@ -7,6 +7,8 @@ export class ParentLandingPage extends Component {
     super();
     this.getKids = this.getKids.bind(this);
   }
+  componentDidMount() {}
+  componentDidUpdate() {}
   getKids() {
     const kids = this.props.user.family.users.filter(
       (member) => member.status === 'Child'
