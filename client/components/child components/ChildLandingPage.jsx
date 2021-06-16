@@ -1,14 +1,37 @@
 import React from 'react';
 import SpendingGraph from './SpendingGraph';
+import { connect } from 'react-redux';
 import { Avatar } from '@material-ui/core';
 import VirtualCard from '../forms/VirtualCard';
-import { connect } from 'react-redux';
 import Balance from './allowance components/Balance';
 import AllowanceInterval from './allowance components/AllowanceInterval';
+
 
 class ChildLandingPage extends React.Component {
   constructor() {
     super();
+    this.categorizeTransactions = this.categorizeTransactions.bind(this);
+  }
+  categorizeTransactions() {
+    let transactionsObject = {};
+    this.props.user.transactions.map((transaction) => {
+      if (!transactionsObject[transaction.category]) {
+        transactionsObject[transaction.category] = parseInt(transaction.cost);
+      } else {
+        transactionsObject[transaction.category] += parseInt(transaction.cost);
+      }
+    });
+    let total = 0;
+    for (const [key, value] of Object.entries(transactionsObject)) {
+      total += value;
+    }
+    let transactionsArray = [];
+    for (const [key, value] of Object.entries(transactionsObject)) {
+      let temp = {};
+      temp[key] = [value, ((value / total) * 100).toFixed(2)];
+      transactionsArray.push(temp);
+    }
+    return transactionsArray;
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -16,6 +39,8 @@ class ChildLandingPage extends React.Component {
   }
 
   render() {
+
+    let transactions = this.categorizeTransactions();
     this.props.user.imgUrl;
     // return this.props.user.allowance ? (
     return (

@@ -3,6 +3,8 @@ import { GET_CURRENT_USER } from '../actions/userActions/getCurUser';
 import { JOIN_FAMILY } from '../actions/familyActions/joinFamily';
 import { UPDATE_CHILD_PROFILE } from '../actions/userActions/editChildProfile';
 import { UPDATE_CARD } from '../actions/cardActions/updateCard';
+import { UPDATE_ALLOWANCE } from '../actions/allowance/updateAllowance';
+import { PURCHASE_OR_WITHDRAW } from '../actions/wishListActions/purchaseOrWithdraw';
 
 const curUserReducer = (state = {}, action) => {
   if (action.type === GET_CURRENT_USER) {
@@ -25,6 +27,11 @@ const curUserReducer = (state = {}, action) => {
       cardColor: action.color,
       virtualCard: action.cardNumber,
     });
+  if (action.type === PURCHASE_OR_WITHDRAW) {
+    return {
+      ...state,
+      transactions: [...state.transactions, action.transaction],
+    };
   }
   return state;
 };

@@ -9,7 +9,6 @@ import { sendNotificationThunk } from '../../store/actions/notificationActions/s
 import PayoutChore from './PayoutChore';
 import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
-
 import 'animate.css';
 
 const ChoreCard = (props) => {
@@ -64,6 +63,7 @@ const ChoreCard = (props) => {
                   isChoreCompleted: true,
                   isChore: true,
                   toId: currParent.id,
+                  choreId: props.chore.id,
                 });
               });
             }

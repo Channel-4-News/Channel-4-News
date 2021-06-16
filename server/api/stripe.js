@@ -34,7 +34,7 @@ router.get('/balance', async (req, res, next) => {
 router.post('/payouts', async (req, res, next) => {
   try {
     const { amount, destination } = req.body;
-    console.log(amount);
+    console.log('here', amount);
     const payout = await stripe.payouts.create(
       {
         amount,
