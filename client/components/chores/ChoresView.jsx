@@ -16,8 +16,12 @@ const Chores = (props) => {
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
-  const [childSelect, setChildSelect] = useState(false);
-  const [selectedKid, setSelectedKid] = useState({});
+  const [selectedKid, setSelectedKid] = useState(
+    props.location.state ? props.location.state.selectedKid : {}
+  );
+  const [childSelect, setChildSelect] = useState(
+    props.location.state.selectedKid ? true : false
+  );
   const [allKids, setAllKids] = useState(0);
   const [choresUpdated, setUpdated] = useState(1);
 
@@ -29,8 +33,8 @@ const Chores = (props) => {
     if (id === 'sort') setAnchorEl(null);
   };
 
-  console.log(props);
-
+  console.log(selectedKid);
+  console.log(childSelect);
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
@@ -43,6 +47,7 @@ const Chores = (props) => {
 
   useEffect(() => {
     if (props.chores.length) {
+      console.log('second hook ran');
       const today = new Date();
       const currentChores = [];
       setExpiredChores(
@@ -64,6 +69,7 @@ const Chores = (props) => {
     const today = new Date();
     const currentChores = [];
     if (childSelect) {
+      console.log('hook ran');
       setExpiredChores(
         props.chores.filter((chore) => {
           if (
