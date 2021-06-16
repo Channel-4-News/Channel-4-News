@@ -31,6 +31,9 @@ class WishList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.user.id && this.state.wishList.length === 0) {
+      this.props.getWishList(this.props.user.id);
+    }
     let mostExpensive, leastExpensive, alphabetically;
     if (
       this.state.sorted !== true &&
@@ -70,6 +73,7 @@ class WishList extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { changeSort, sortToggle, reRender } = this;
     if (this.props.wishList.length) {
       return (
@@ -107,6 +111,7 @@ class WishList extends Component {
 const mapStateToProps = (state) => {
   return {
     wishList: state.wishList,
+    user: state.currUser,
   };
 };
 

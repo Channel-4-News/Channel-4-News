@@ -36,6 +36,8 @@ import Home from './Home';
 import LinkPlaid from './PlaidLink';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
+import { updateAllowance } from '../store/actions/allowance/updateAllowance';
+import { setAllowance } from '../store/actions/allowance/setAllowance';
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +52,14 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
+      if (action.notification.firstName) {
+        store.dispatch(
+          updateAllowance(
+            action.notification.balance,
+            action.notification.daysToAllowance
+          )
+        );
+      }
       if (action.id) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
@@ -62,6 +72,13 @@ class App extends Component {
   }
 
   componentDidUpdate() {
+    if (this.props.currUser) {
+      console.log(this.props.currUser.allowanceInterval);
+      this.props.setAllowance(
+        this.props.currUser.balance,
+        this.props.currUser.allowanceInterval
+      );
+    }
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
       if (this.props.currUser.status === 'Parent') {
@@ -143,19 +160,16 @@ class App extends Component {
                 path="/notifications"
                 component={SortNotifications}
               />
+              {/* {this.state.user.status === 'Child'} */}
               <Route
                 exact
                 path="/home"
-                component={() =>
-                  this.state.user.status === 'Child' ? <ChildLandingPage /> : ''
+                component={
+                  this.state.user.status === 'Child' ? ChildLandingPage : ''
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
-              <Route
-                exact
-                path="/wishlist"
-                component={() => <WishList user={this.state.user} />}
-              />
+              <Route exact path="/wishlist" component={WishList} />
               <Route exact path="/dummy" component={Dummy} />
               <Route exact path="/link" component={LinkPlaid} />
               <Route exact path="/card" component={VirtualCard} />
@@ -184,6 +198,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
     loadNotifications: () => dispatch(loadNotificationsThunk()),
+    setAllowance: (balance, allowanceInterval) =>
+      dispatch(setAllowance(balance, allowanceInterval)),
   };
 };
 

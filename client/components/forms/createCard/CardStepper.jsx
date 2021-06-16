@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import {
   makeStyles,
   Stepper,
@@ -60,7 +61,10 @@ const CardStepper = (props) => {
         'Please enter your full name as it should appear on your virtual card.'
       );
     }
-    if (whichStep === 4 && props.name.length) props.history.push('/home');
+    if (whichStep === 4 && props.name.length) {
+      handleFinish();
+      // props.history.push('/home');
+    }
   }, [whichStep]);
 
   const isStepOptional = (step) => {
@@ -88,6 +92,22 @@ const CardStepper = (props) => {
 
   const handleReset = () => {
     props.setReset(props.reset + 1);
+  };
+
+  const handleFinish = async () => {
+    console.log(props.user);
+    const cardHolder = (
+      await axios.post('/api/stripe/create_cardholder', {
+        name: props.name,
+        email: props.user.email,
+        id: props.user.id,
+      })
+    ).data;
+    const card = await axios.post('/api/stripe/create_card', {
+      cardholder: cardHolder.id,
+    });
+    console.log(card);
+    props.history.push('/home');
   };
 
   return (

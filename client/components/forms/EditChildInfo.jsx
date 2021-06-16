@@ -31,6 +31,7 @@ import {
 } from '../../utilities/utilityValidation';
 
 import axios from 'axios';
+import { setAllowance } from '../../store/actions/allowance/setAllowance';
 
 //React Notifications Components
 // import ReactNotification from 'react-notifications-component';
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditChildInfo = ({ currUser, updateUser, history }) => {
+const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
   if (!currUser.id) {
     return null;
   }
@@ -253,7 +254,7 @@ const EditChildInfo = ({ currUser, updateUser, history }) => {
               allowance: 5,
             })
           ).data;
-          console.log(test);
+          // setAllowance(5, 7);
         }}
       >
         TEST
@@ -270,6 +271,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateChildProfileThunk(user)),
+    setAllowance: (balance, daysToAllowance) =>
+      dispatch(setAllowance(balance, daysToAllowance)),
   };
 };
 
