@@ -5,6 +5,7 @@ import curUserReducer from './reducers/userReducer';
 import wishListReducer from './reducers/wishListReducer';
 import transactionReducer from './reducers/transactionReducer';
 import { notificationReducer } from './reducers/notificationReducer';
+import allowanceReducer from './reducers/allowanceReducer';
 
 const rootReducer = combineReducers({
   currUser: curUserReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   wishList: wishListReducer,
   transaction: transactionReducer,
   notifications: notificationReducer,
+  allowance: allowanceReducer,
 });
 
 export default rootReducer;

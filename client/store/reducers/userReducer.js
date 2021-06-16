@@ -18,13 +18,13 @@ const curUserReducer = (state = {}, action) => {
     state = action.updatedUser;
     return state;
   }
-  if (action.type === UPDATE_ALLOWANCE) {
-    return (state = {
-      ...state,
-      balance: action.balance,
-      daysToAllowance: action.daysToAllowance,
-    });
-  }
+  // if (action.type === UPDATE_ALLOWANCE) {
+  //   return (state = {
+  //     ...state,
+  //     balance: action.balance,
+  //     daysToAllowance: action.daysToAllowance,
+  //   });
+  // }
   return state;
 };
 

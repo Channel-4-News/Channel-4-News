@@ -51,6 +51,7 @@ class ChildLandingPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
+    allowance: state.allowance,
   };
 };
 
