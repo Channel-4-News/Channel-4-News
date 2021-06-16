@@ -204,6 +204,18 @@ const syncAndSeed = async () => {
       status: 'Parent',
     });
 
+    // Chore.create({
+    //   name: 'Water plants.',
+    //   description: 'Water the plants in the living room and kitchen.',
+    //   amount: 5,
+    //   isRecurring: true,
+    //   recurringInterval: 7,
+    //   icon: '/public/images/choreIcons/watering-plants.png',
+    //   familyId: myFam.id,
+    //   userId: kid3.id,
+    //   isComplete: true,
+    //   createdAt: '2020-02-12',
+    // });
     Chore.create({
       name: 'Water plants.',
       description: 'Water the plants in the living room and kitchen.',
@@ -388,6 +400,86 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
       userId: kid1.id,
+      createdAt: '2021-11-13',
+    });
+    Chore.create({
+      name: 'Make a snack for your baby sister.',
+      description: 'Help prepare guacomole for Lucy on Thursday after school.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-05-03',
+      icon: '/public/images/choreIcons/babysitter.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+      isComplete: true,
+      createdAt: '2021-11-08',
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family movie night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-08-16',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2021-05-02',
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family movie night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-08-16',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2021-05-02',
+    });
+    Chore.create({
+      name: 'Take out trash.',
+      description:
+        'When the bins are full, take trash to the trash cans in the garage.',
+      amount: 2,
+      isRecurring: true,
+      recurringInterval: 3,
+      familyId: myFam.id,
+      userId: kid3.id,
+      icon: '/public/images/choreIcons/delete.png',
+      createdAt: '2021-11-09',
+    });
+    Chore.create({
+      name: 'Wash windows.',
+      description: 'Wash the windows in your room. Dad will help.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-09-11',
+      icon: '/public/images/choreIcons/window-cleaning.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2021-11-10',
+    });
+    Chore.create({
+      name: 'Cook dinner.',
+      description: 'Help mom prepare the marinade for the salmon.',
+      amount: 3,
+      isRecurring: false,
+      due: '2020-06-13',
+      icon: '/public/images/choreIcons/soup.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2021-11-12',
+    });
+    Chore.create({
+      name: 'Wash clothes.',
+      description:
+        'Load clothes into washing machine and start cycle. Ask dad if you need help.',
+      amount: 3,
+      isRecurring: false,
+      due: '2022-07-01',
+      icon: '/public/images/choreIcons/clean-clothes-2.png',
+      familyId: myFam.id,
+      userId: kid3.id,
       createdAt: '2021-11-13',
     });
 

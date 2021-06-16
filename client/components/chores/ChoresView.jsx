@@ -29,8 +29,6 @@ const Chores = (props) => {
     if (id === 'sort') setAnchorEl(null);
   };
 
-  console.log(props);
-
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
@@ -47,7 +45,7 @@ const Chores = (props) => {
       const currentChores = [];
       setExpiredChores(
         props.chores.filter((chore) => {
-          if (chore.due && new Date(chore.due) < today) {
+          if (chore.due && new Date(chore.due) < today && !chore.isRecurring) {
             return chore;
           } else {
             currentChores.push(chore);
@@ -69,7 +67,8 @@ const Chores = (props) => {
           if (
             chore.due &&
             new Date(chore.due) < today &&
-            chore.userId === selectedKid.id
+            chore.userId === selectedKid.id &&
+            !chore.isRecurring
           ) {
             return chore;
           } else {
@@ -88,7 +87,9 @@ const Chores = (props) => {
     if (props.currUser.status === 'Child') {
       setChores(chores.filter((chore) => chore.userId === props.currUser.id));
       setExpiredChores(
-        expiredChores.filter((chore) => chore.userId === props.currUser.id)
+        expiredChores.filter(
+          (chore) => chore.userId === props.currUser.id && !chore.isRecurring
+        )
       );
     }
   }, [choresUpdated]);
@@ -96,6 +97,8 @@ const Chores = (props) => {
   if (!props.currUser.id) {
     return <h1>Please LogIn/Sign Up!</h1>;
   }
+
+  console.log(chores);
 
   return (
     <div

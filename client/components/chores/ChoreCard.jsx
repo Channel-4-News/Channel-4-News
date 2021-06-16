@@ -10,7 +10,6 @@ import PayoutChore from './PayoutChore';
 import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 
-import { store } from 'react-notifications-component';
 import 'animate.css';
 
 const ChoreCard = (props) => {
@@ -30,7 +29,11 @@ const ChoreCard = (props) => {
 
   const today = new Date();
   let expired;
-  if (props.chore.due && new Date(props.chore.due) < today) {
+  if (
+    props.chore.due &&
+    new Date(props.chore.due) < today &&
+    !props.chore.isRecurring
+  ) {
     expired = true;
   }
 
