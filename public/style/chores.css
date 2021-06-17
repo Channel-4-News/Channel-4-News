@@ -266,3 +266,20 @@
   /* background-color: rgb(38, 255, 244); */
   /* border: 1px solid rgb(0, 255, 55); */
 }
+
+#noChoresContainer {
+  align-self: center;
+  width: 65%;
+  /* margin-right: 17%; */
+  margin-left: 20%;
+}
+
+#noChores {
+  align-self: center;
+  width: 50%;
+  /* margin-right: 17%; */
+  margin-left: 30%;
+  color: white;
+  font-size: larger;
+  margin-bottom: 200px;
+}

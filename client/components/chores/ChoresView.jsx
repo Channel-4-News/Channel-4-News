@@ -119,49 +119,54 @@ const Chores = (props) => {
           position: 'fixed',
         }}
       ></img>
-      <div
-        id={
-          props.currUser.status === 'Parent' ? 'choresViewParent' : 'choresView'
-        }
-      >
-        {props.chores.length ? (
+      {props.chores.length ? (
+        <div
+          id={
+            props.currUser.status === 'Parent'
+              ? 'choresViewParent'
+              : 'choresView'
+          }
+        >
+          {/* {props.chores.length ? ( */}
           <div id="choreCardContainer">
-            <AddUpdateChoreContainer
-              addChore={addChore}
-              handleClose={handleClose}
-              setAddChore={setAddChore}
-              updateClicked={updateClicked}
-              choreToUpdate={choreToUpdate}
-              setUpdateClicked={setUpdateClicked}
-            />
-            {props.kids.length > 1 && props.currUser.status === 'Parent' ? (
-              <ParentSortAddButtons
-                kids={props.kids}
-                setChildSelect={setChildSelect}
-                setSelectedKid={setSelectedKid}
+            <>
+              <AddUpdateChoreContainer
+                addChore={addChore}
+                handleClose={handleClose}
                 setAddChore={setAddChore}
+                updateClicked={updateClicked}
+                choreToUpdate={choreToUpdate}
+                setUpdateClicked={setUpdateClicked}
               />
-            ) : (
-              <KidsChoreSort setChores={setChores} chores={chores} />
-            )}
-            {chores.map((chore) => (
-              <ChoreCard
-                chore={chore}
-                key={`${chore.id}chore`}
-                updateClicked={setUpdateClicked}
-                setChore={setChoreToUpdate}
-              />
-            ))}
-            {expiredChores.map((chore) => (
-              <ChoreCard
-                chore={chore}
-                key={`${chore.id}chore`}
-                updateClicked={setUpdateClicked}
-                setChore={setChoreToUpdate}
-              />
-            ))}
+              {props.kids.length > 1 && props.currUser.status === 'Parent' ? (
+                <ParentSortAddButtons
+                  kids={props.kids}
+                  setChildSelect={setChildSelect}
+                  setSelectedKid={setSelectedKid}
+                  setAddChore={setAddChore}
+                />
+              ) : (
+                <KidsChoreSort setChores={setChores} chores={chores} />
+              )}
+              {chores.map((chore) => (
+                <ChoreCard
+                  chore={chore}
+                  key={`${chore.id}chore`}
+                  updateClicked={setUpdateClicked}
+                  setChore={setChoreToUpdate}
+                />
+              ))}
+              {expiredChores.map((chore) => (
+                <ChoreCard
+                  chore={chore}
+                  key={`${chore.id}chore`}
+                  updateClicked={setUpdateClicked}
+                  setChore={setChoreToUpdate}
+                />
+              ))}
+            </>
           </div>
-        ) : props.currUser?.status === 'Parent' ? (
+          {/* ) : props.currUser?.status === 'Parent' ? (
           <div>
             You haven&apos;t added chores! Please click <span>here</span> to add
             a chore.
@@ -171,8 +176,20 @@ const Chores = (props) => {
             You haven&apos;t been assigned any chores. Check back after your
             parent(s) assign you chores.
           </div>
-        )}
-      </div>
+        )} */}
+        </div>
+      ) : (
+        <div id="noChores">
+          <h1>YOU ARE CHORELESS!</h1>
+          You haven&apos;t been assigned any chores! Once your parent(s) add and
+          assign you chores, they will appear on this page. You will be able to
+          manage and easily sort through your chores, as well as mark them
+          completed.
+          <br /> <br /> When you complete a chore, a notification will be sent
+          to your parent(s), and they will confirm by either paying out the
+          chore, or marking it as incomplete.
+        </div>
+      )}
     </div>
   );
 };
