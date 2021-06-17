@@ -34,8 +34,6 @@ const Chores = (props) => {
     if (id === 'sort') setAnchorEl(null);
   };
 
-  console.log(selectedKid);
-  console.log(childSelect);
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
@@ -48,7 +46,6 @@ const Chores = (props) => {
 
   useEffect(() => {
     if (props.chores.length) {
-      console.log('second hook ran');
       const today = new Date();
       const currentChores = [];
       setExpiredChores(
