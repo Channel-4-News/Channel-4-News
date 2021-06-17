@@ -5,6 +5,7 @@ import ChoreCard from './ChoreCard';
 import AddUpdateChoreContainer from './AddUpdateChoreContainer';
 import KidsChoreSort from './KidsChoreSort';
 import ParentSortAddButtons from './ParentSortAddButtons';
+import NoChores from './NoChores';
 
 const Chores = (props) => {
   const [chores, setChores] = useState([]);
@@ -22,8 +23,6 @@ const Chores = (props) => {
       setUpdateClicked(false);
     }
   };
-
-  console.log(chores);
 
   useEffect(() => {
     if (props.currUser.id) {
@@ -97,11 +96,6 @@ const Chores = (props) => {
       );
     }
   }, [choresUpdated]);
-
-  if (!props.currUser.id) {
-    return <h1>Please LogIn/Sign Up!</h1>;
-  }
-
   return (
     <div
       id={
@@ -119,7 +113,7 @@ const Chores = (props) => {
           position: 'fixed',
         }}
       ></img>
-      {props.chores.length ? (
+      {chores.length ? (
         <div
           id={
             props.currUser.status === 'Parent'
@@ -127,7 +121,6 @@ const Chores = (props) => {
               : 'choresView'
           }
         >
-          {/* {props.chores.length ? ( */}
           <div id="choreCardContainer">
             <>
               <AddUpdateChoreContainer
@@ -138,7 +131,7 @@ const Chores = (props) => {
                 choreToUpdate={choreToUpdate}
                 setUpdateClicked={setUpdateClicked}
               />
-              {props.kids.length > 1 && props.currUser.status === 'Parent' ? (
+              {props.currUser.status === 'Parent' ? (
                 <ParentSortAddButtons
                   kids={props.kids}
                   setChildSelect={setChildSelect}
@@ -166,29 +159,16 @@ const Chores = (props) => {
               ))}
             </>
           </div>
-          {/* ) : props.currUser?.status === 'Parent' ? (
-          <div>
-            You haven&apos;t added chores! Please click <span>here</span> to add
-            a chore.
-          </div>
-        ) : (
-          <div>
-            You haven&apos;t been assigned any chores. Check back after your
-            parent(s) assign you chores.
-          </div>
-        )} */}
         </div>
       ) : (
-        <div id="noChores">
-          <h1>YOU ARE CHORELESS!</h1>
-          You haven&apos;t been assigned any chores! Once your parent(s) add and
-          assign you chores, they will appear on this page. You will be able to
-          manage and easily sort through your chores, as well as mark them
-          completed.
-          <br /> <br /> When you complete a chore, a notification will be sent
-          to your parent(s), and they will confirm by either paying out the
-          chore, or marking it as incomplete.
-        </div>
+        <NoChores
+          setAddChore={setAddChore}
+          addChore={addChore}
+          handleClose={handleClose}
+          updateClicked={updateClicked}
+          choreToUpdate={choreToUpdate}
+          setUpdateClicked={setUpdateClicked}
+        />
       )}
     </div>
   );
