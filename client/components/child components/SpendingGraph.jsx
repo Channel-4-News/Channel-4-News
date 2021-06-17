@@ -12,7 +12,8 @@ const SpendingGraph = (props) => {
       }
     });
   }
-  return props.transactions ? (
+
+  return props.transactions?.length ? (
     <div className="spendingGraph">
       <Doughnut
         data={{
@@ -69,7 +70,46 @@ const SpendingGraph = (props) => {
       />
     </div>
   ) : (
-    ''
+    <div className="spendingGraph">
+      <Doughnut
+        data={{
+          labels: ['No Data'],
+          datasets: [
+            {
+              data: [1],
+              backgroundColor: ['rgb(211,211,211)'],
+            },
+          ],
+        }}
+        height={300}
+        width={300}
+        options={{
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              usePointStyle: true,
+              backgroundColor: 'rgb(250, 250, 250)',
+              borderWidth: '1',
+              borderColor: 'rgb(0, 0, 0)',
+              bodyColor: 'rgb(0, 0, 0)',
+              bodyFont: { size: '17', family: 'main' },
+              displayColors: false,
+            },
+            legend: {
+              position: 'right',
+              align: 'left',
+              labels: {
+                font: {
+                  size: 16,
+                  family: 'main',
+                },
+                color: 'black',
+              },
+            },
+          },
+        }}
+      />
+    </div>
   );
 };
 

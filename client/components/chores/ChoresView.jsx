@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 import ChoreCard from './ChoreCard';
-import Modal from '@material-ui/core/Modal';
-import AddChore from './AddChore';
-import UpdateChore from './UpdateChore';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import sortBy from '../../utilities/choreSort';
+import AddUpdateChoreContainer from './AddUpdateChoreContainer';
+import KidsChoreSort from './KidsChoreSort';
+import ParentSortAddButtons from './ParentSortAddButtons';
 
 const Chores = (props) => {
-  const [kids, setKids] = useState([]);
   const [chores, setChores] = useState([]);
   const [expiredChores, setExpiredChores] = useState([]);
   const [addChore, setAddChore] = useState(false);
@@ -32,10 +29,6 @@ const Chores = (props) => {
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
-      if (props.currUser.status === 'Parent')
-        setKids(
-          props.currUser.family?.users.filter((user) => user.status === 'Child')
-        );
     }
   }, [props.currUser, allKids]);
 
@@ -122,130 +115,25 @@ const Chores = (props) => {
       >
         {props.chores.length ? (
           <div id="choreCardContainer">
-            {props.currUser.status === 'Parent' ? (
-              <div>
-                <Modal
-                  id="addChoreModal"
-                  open={addChore}
-                  onClose={() => {
-                    handleClose('modal');
-                  }}
-                >
-                  <AddChore
-                    kids={kids}
-                    familyId={props.currUser.familyId}
-                    setAddChore={setAddChore}
-                  />
-                </Modal>
-              </div>
-            ) : null}
-            <Modal
-              id="addChoreModal"
-              open={updateClicked}
-              onClose={() => {
-                handleClose('modal');
-              }}
-            >
-              <UpdateChore
-                chore={choreToUpdate}
-                kids={kids}
-                setClicked={setUpdateClicked}
+            <AddUpdateChoreContainer
+              addChore={addChore}
+              handleClose={handleClose}
+              setAddChore={setAddChore}
+              updateClicked={updateClicked}
+              choreToUpdate={choreToUpdate}
+              setUpdateClicked={setUpdateClicked}
+            />
+            {props.kids.length > 1 && props.currUser.status === 'Parent' ? (
+              <ParentSortAddButtons
+                kids={props.kids}
+                setChildSelect={setChildSelect}
+                setSelectedKid={setSelectedKid}
+                setAllKids={setAllKids}
+                allKids={allKids}
+                setAddChore={setAddChore}
               />
-            </Modal>
-            {kids.length > 1 && props.currUser.status === 'Parent' ? (
-              <div id="childDropdown">
-                <div id="filterAndSortChores">
-                  <div id="chooseChildHover">
-                    <Button
-                      id="childDropButton"
-                      variant="contained"
-                      color="secondary"
-                    >
-                      Choose child
-                    </Button>
-                    <div id="childDropdownContent">
-                      {kids.map((user) => {
-                        return (
-                          <div
-                            key={`${user.id}familyChild`}
-                            onClick={() => {
-                              setChildSelect(true);
-                              setSelectedKid(user);
-                            }}
-                          >
-                            {user.firstName}
-                          </div>
-                        );
-                      })}
-                      <div
-                        onClick={() => {
-                          setAllKids(allKids + 1);
-                        }}
-                      >
-                        All
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <Button
-                  variant="contained"
-                  onClick={() => setAddChore(true)}
-                  color="secondary"
-                >
-                  Add Chore
-                </Button>
-              </div>
             ) : (
-              <div id="childDropdown">
-                <div id="childDropdown">
-                  <div id="filterAndSortChores">
-                    <div id="chooseChildHover">
-                      <Button
-                        id="sortButtonChild"
-                        variant="outlined"
-                        color="secondary"
-                        style={{
-                          color: 'white',
-                          backgroundColor: 'tomato',
-                          border: '2px white solid',
-                        }}
-                      >
-                        &nbsp;&nbsp;Sort By&nbsp;&nbsp;
-                      </Button>
-                      <div id="childDropdownContent">
-                        <div
-                          onClick={() => setChores(sortBy('amount', chores))}
-                        >
-                          Amount
-                        </div>
-                        <div onClick={() => setChores(sortBy('due', chores))}>
-                          Due
-                        </div>
-                        <div
-                          onClick={() =>
-                            setChores(sortBy('incomplete', chores))
-                          }
-                        >
-                          Incomplete
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={() => {
-                    handleClose('sort');
-                  }}
-                >
-                  <MenuItem onClick={() => handleClose('sort')}>
-                    Amount
-                  </MenuItem>
-                </Menu>
-              </div>
+              <KidsChoreSort setChores={setChores} chores={chores} />
             )}
             {chores.map((chore) => (
               <ChoreCard
@@ -277,8 +165,8 @@ const Chores = (props) => {
           </div>
         ) : (
           <div>
-            You haven&apos;t been assigned any chores. Click here to send your
-            parent(s) a reminder to add chores.
+            You haven&apos;t been assigned any chores. Check back after your
+            parent(s) assign you chores.
           </div>
         )}
       </div>
@@ -290,6 +178,7 @@ const mapStateToProps = (state) => {
   return {
     chores: state.chores,
     currUser: state.currUser,
+    kids: state.kids,
   };
 };
 

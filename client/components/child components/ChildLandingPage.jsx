@@ -42,6 +42,16 @@ class ChildLandingPage extends React.Component {
               <AllowanceInterval />
             </div>
           </div>
+          {!this.props.user?.transactions?.length ? (
+            <div id="newCardMessage">
+              New card? When you make a purchase, your spending snapshot will
+              update and this terribly boring yet somewhat informative message
+              will disappear. Use your spending snapshot to visualize how you
+              are spending money, and to save and budget.
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );
