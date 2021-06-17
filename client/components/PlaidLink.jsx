@@ -17,6 +17,7 @@ const LinkPlaid = (props) => {
     setToken(linkToken);
   }
 
+  //FEEDBACK: any async calls should happen in a useEffect
   if (!token) {
     fetchToken();
   }

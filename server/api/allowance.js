@@ -7,6 +7,9 @@ const {
 //get all allowances
 router.get('/', async (req, res, next) => {
   try {
+    /*FEEDBACK: be consistent throughout your codebase, sometimes you do your
+    sequelize query inline in your res.send(), other times you do it separately
+    */
     res.send(await Allowance.findAll());
   } catch (err) {
     next.err;
