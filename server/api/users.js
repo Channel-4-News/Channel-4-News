@@ -19,8 +19,9 @@ router.get('/', async (req, res, next) => {
 //get single user by id
 router.get('/:id', async (req, res, next) => {
   try {
+    const { id } = req.params;
     res.send(
-      await User.findByPk(req.params.id, {
+      await User.findByPk(id, {
         include: [
           { model: Transaction },
           { model: Allowance },

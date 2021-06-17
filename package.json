@@ -49,6 +49,7 @@
     "metascraper-title": "^5.22.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.3.3",
     "plaid": "^8.5.1",

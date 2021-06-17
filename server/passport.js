@@ -1,4 +1,4 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('./db/models/User');
 
 module.exports = function (passport) {
@@ -17,7 +17,7 @@ module.exports = function (passport) {
           lastName: profile.name.familyName,
           imgUrl: profile.photos[0].value,
           password: profile.id,
-          email: `${profile.id}@email.com`,
+          email: profile.emails[0].value,
         };
         try {
           let user = await User.findOne({ where: { googleId: profile.id } });
@@ -39,6 +39,7 @@ module.exports = function (passport) {
   });
 
   passport.deserializeUser((id, done) => {
-    User.findByPk(id, (err, user) => done(err, user));
+    const user = User.findByPk(id);
+    done(null, user);
   });
 };

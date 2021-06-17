@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: 'blueberry pie',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })

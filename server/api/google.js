@@ -4,7 +4,10 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 //google auth routes
-router.get('/', passport.authenticate('google', { scope: ['profile'] }));
+router.get(
+  '/',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
 router.get(
   '/callback',
