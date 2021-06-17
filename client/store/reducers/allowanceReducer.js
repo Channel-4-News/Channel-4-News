@@ -2,7 +2,6 @@ import { SET_ALLOWANCE } from '../actions/allowance/setAllowance';
 import { UPDATE_ALLOWANCE } from '../actions/allowance/updateAllowance';
 
 const allowanceReducer = (state = {}, action) => {
-  console.log(action);
   if (action.type === SET_ALLOWANCE) {
     return (state = {
       balance: action.balance,

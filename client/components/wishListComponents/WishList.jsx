@@ -73,7 +73,6 @@ class WishList extends Component {
   }
 
   render() {
-    // console.log(this.props);
     const { changeSort, sortToggle, reRender } = this;
     return (
       <div>

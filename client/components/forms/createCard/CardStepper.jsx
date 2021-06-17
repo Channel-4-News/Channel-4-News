@@ -9,6 +9,7 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
+import { updateCard } from '../../../store/actions/cardActions/updateCard';
 
 const CardStepper = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -63,7 +64,6 @@ const CardStepper = (props) => {
     }
     if (whichStep === 4 && props.name.length) {
       handleFinish();
-      // props.history.push('/home');
     }
   }, [whichStep]);
 
@@ -94,8 +94,8 @@ const CardStepper = (props) => {
     props.setReset(props.reset + 1);
   };
 
+  //creates cardHolder and card for child
   const handleFinish = async () => {
-    console.log(props.user);
     const cardHolder = (
       await axios.post('/api/stripe/create_cardholder', {
         name: props.name,
@@ -103,10 +103,16 @@ const CardStepper = (props) => {
         id: props.user.id,
       })
     ).data;
-    const card = await axios.post('/api/stripe/create_card', {
-      cardholder: cardHolder.id,
-    });
-    console.log(card);
+    const card = (
+      await axios.post('/api/stripe/create_card', {
+        cardholder: cardHolder.cardHolderId,
+      })
+    ).data;
+    await props.updateCard(
+      card.id,
+      props.cardSettings.image,
+      props.cardSettings.color
+    );
     props.history.push('/home');
   };
 
@@ -163,4 +169,10 @@ const CardStepper = (props) => {
   );
 };
 
-export default CardStepper;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCard: (num, image, color) => dispatch(updateCard(num, image, color)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CardStepper);
