@@ -106,6 +106,7 @@ const CardStepper = (props) => {
     const card = (
       await axios.post('/api/stripe/create_card', {
         cardholder: cardHolder.cardHolderId,
+        id: props.user.id,
       })
     ).data;
     await props.updateCard(

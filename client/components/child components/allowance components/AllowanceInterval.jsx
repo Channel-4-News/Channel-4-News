@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const AllowanceInterval = (props) => {
-  return (
+  return props.allowance.daysToAllowance ? (
     <div id="nextAllowance">
       Next allowance in {props.allowance.daysToAllowance}{' '}
       {props.allowance.daysToAllowance > 1 ? 'days' : 'day'}
       &nbsp;&nbsp;
       <span style={{ color: 'tomato' }}>|</span> &nbsp; ${props.user.allowance}
     </div>
+  ) : (
+    ''
   );
 };
 
