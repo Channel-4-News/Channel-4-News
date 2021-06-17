@@ -43,6 +43,10 @@
   opacity: 70%;
 }
 
+.parentExpiredCard {
+  opacity: 50%;
+}
+
 .choreCard small {
   margin-top: 10px;
   color: rgb(175, 175, 175);

@@ -23,6 +23,8 @@ const Chores = (props) => {
     }
   };
 
+  console.log(chores);
+
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
@@ -144,22 +146,16 @@ const Chores = (props) => {
             )}
             {chores.map((chore) => (
               <ChoreCard
-                currUser={props.currUser}
                 chore={chore}
                 key={`${chore.id}chore`}
-                isParent={props.currUser.status === 'Parent'}
-                stripeAccount={props.currUser.stripeAccount}
                 updateClicked={setUpdateClicked}
                 setChore={setChoreToUpdate}
               />
             ))}
             {expiredChores.map((chore) => (
               <ChoreCard
-                currUser={props.currUser}
                 chore={chore}
                 key={`${chore.id}chore`}
-                isParent={props.currUser.status === 'Parent'}
-                stripeAccount={props.currUser.stripeAccount}
                 updateClicked={setUpdateClicked}
                 setChore={setChoreToUpdate}
               />
