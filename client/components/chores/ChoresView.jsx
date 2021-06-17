@@ -12,10 +12,8 @@ const Chores = (props) => {
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
-  const [anchorEl, setAnchorEl] = useState(null);
   const [childSelect, setChildSelect] = useState(false);
   const [selectedKid, setSelectedKid] = useState({});
-  const [allKids, setAllKids] = useState(0);
   const [choresUpdated, setUpdated] = useState(1);
 
   const handleClose = (id) => {
@@ -23,14 +21,13 @@ const Chores = (props) => {
       setAddChore(false);
       setUpdateClicked(false);
     }
-    if (id === 'sort') setAnchorEl(null);
   };
 
   useEffect(() => {
     if (props.currUser.id) {
       props.getChores(props.currUser.familyId);
     }
-  }, [props.currUser, allKids]);
+  }, [props.currUser]);
 
   useEffect(() => {
     if (props.chores.length) {
@@ -54,7 +51,7 @@ const Chores = (props) => {
   useEffect(() => {
     const today = new Date();
     const currentChores = [];
-    if (childSelect) {
+    if (childSelect && selectedKid.id) {
       setExpiredChores(
         props.chores.filter((chore) => {
           if (
@@ -72,6 +69,18 @@ const Chores = (props) => {
       setChores(
         currentChores.filter((chore) => chore.userId === selectedKid.id)
       );
+      setChildSelect(false);
+    } else if (childSelect) {
+      setExpiredChores(
+        props.chores.filter((chore) => {
+          if (chore.due && new Date(chore.due) < today && !chore.isRecurring) {
+            return chore;
+          } else {
+            currentChores.push(chore);
+          }
+        })
+      );
+      setChores(currentChores);
       setChildSelect(false);
     }
   }, [childSelect]);
@@ -128,8 +137,6 @@ const Chores = (props) => {
                 kids={props.kids}
                 setChildSelect={setChildSelect}
                 setSelectedKid={setSelectedKid}
-                setAllKids={setAllKids}
-                allKids={allKids}
                 setAddChore={setAddChore}
               />
             ) : (

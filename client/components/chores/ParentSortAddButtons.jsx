@@ -25,7 +25,8 @@ const ParentSortAddButtons = (props) => {
             })}
             <div
               onClick={() => {
-                props.setAllKids(props.allKids + 1);
+                props.setChildSelect(true);
+                props.setSelectedKid({});
               }}
             >
               All
