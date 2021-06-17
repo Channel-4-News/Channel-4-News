@@ -13,6 +13,12 @@ import Settings from './Settings';
 //CSS Imports
 import '../../public/style/navbar.css';
 
+
+/*FEEDBACK: this component can be DRYed out to avoid repetition.
+I recommend making separate navigation child components for each type of user
+and in this parent component render the relevant component based on the user type
+*/
+
 const NavBar = (props) => {
   const user = props.user.status;
 

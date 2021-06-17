@@ -8,6 +8,16 @@ import UpdateChore from './UpdateChore';
 import { Button, Menu, MenuItem } from '@material-ui/core';
 import sortBy from '../../utilities/choreSort';
 
+
+/*FEEDBACK: this component is hard to read, especially with all the different pieces of local state and
+the multiple and nested ternary operators.
+
+Can some of this state be moved to redux? Particularly the kids/selectedKid slice of the state since they are passed to other components
+
+This component can be broken up into different sub components. As sub component for a parent chore view and a child chore view, and use this as the parent component
+that mostly holds the logic of which subcomponent to render.
+
+Is the only reason for allKids to trigger a re-render when all is selected? Could you accomplish the same thing using one of the existing items in state? */
 const Chores = (props) => {
   const [kids, setKids] = useState([]);
   const [chores, setChores] = useState([]);
@@ -44,6 +54,8 @@ const Chores = (props) => {
       const today = new Date();
       const currentChores = [];
       setExpiredChores(
+        /*FEEDBACK: this can be a util function and can DRY out the code
+        since its similar to lines 70 - 81 */
         props.chores.filter((chore) => {
           if (chore.due && new Date(chore.due) < today && !chore.isRecurring) {
             return chore;
@@ -247,6 +259,8 @@ const Chores = (props) => {
                 </Menu>
               </div>
             )}
+            {/*FEEDBACK: could you map over the full list of chores from props instead of mapping over current chores and expired chores separately?
+            it seems as if you're sending the same info about the two groups of chores*/}
             {chores.map((chore) => (
               <ChoreCard
                 currUser={props.currUser}
