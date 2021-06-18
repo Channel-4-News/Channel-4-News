@@ -27,6 +27,7 @@ const curUserReducer = (state = {}, action) => {
       cardColor: action.color,
       virtualCard: action.cardNumber,
     });
+  }
   if (action.type === PURCHASE_OR_WITHDRAW) {
     return {
       ...state,
@@ -35,5 +36,4 @@ const curUserReducer = (state = {}, action) => {
   }
   return state;
 };
-
 export default curUserReducer;
