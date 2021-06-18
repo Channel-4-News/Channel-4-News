@@ -69,7 +69,7 @@ const SignUp = (props) => {
 
     //check login and sign up success
     const signedUp = await props.attemptLogin();
-    if (signedUp) props.setPage(2);
+    if (signedUp) props.history.push('/home');
   };
 
   //handles password matching, labels and errors for confirm password
@@ -193,8 +193,9 @@ const SignUp = (props) => {
           }}
           type="dark"
           label="Sign Up With Google"
-          onClick={() => {
-            console.log('Google button clicked');
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = '/api/google';
           }}
         />
         <small>

@@ -98,7 +98,7 @@ const JoinOrCreateFamily = (props) => {
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
       } else {
-        props.setPage(3);
+        props.setPage(2);
       }
     }
 
@@ -107,7 +107,7 @@ const JoinOrCreateFamily = (props) => {
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
       } else {
-        props.setPage(3);
+        props.setPage(2);
       }
     }
   };
@@ -208,6 +208,16 @@ const JoinOrCreateFamily = (props) => {
       ) : (
         <form className="createJoin" onSubmit={submitFamily}>
           <h4>JOIN FAMILY</h4>
+          <small className={classes.root}>
+            Don&apos;t have a family to join? Click
+            <span
+              id="switchToJoinFamily"
+              onClick={() => setJoinOrCreate('create')}
+            >
+              &nbsp;here&nbsp;
+            </span>
+            to create new family.
+          </small>
           <TextField
             className={classes.root}
             label={errors.familyName}

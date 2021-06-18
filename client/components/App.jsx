@@ -13,14 +13,15 @@ import ChildProfile from './child components/ChildProfile';
 import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
+import SignUp from './forms/SignUp';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
 import Chatroom from './chatComponents/Chatroom';
-import EditChildInfo from './forms/EditChildInfo';
+import EditInfo from './forms/EditInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
-import LinkPlaid from './PlaidLink';
+import LinkPlaid from './LinkPlaid';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
 import ParentLandingPage from './parentComponents/ParentLandingPage';
@@ -150,7 +151,7 @@ class App extends Component {
           <div id="mainAppContent">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/signup" component={Register} />
+              <Route exact path="/signup" component={SignUp} />
               <Route exact path="/login" component={LogIn} />
               <Route
                 exact
@@ -168,15 +169,17 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={() =>
-                  this.state.user.status === 'Child' ? (
-                    <ChildLandingPage />
-                  ) : (
-                    <ParentLandingPage />
-                  )
-                }
+                component={() => {
+                  if (this.state.user.status === 'Child') {
+                    return <ChildLandingPage />;
+                  } else if (this.state.user.status === 'Parent') {
+                    return <ParentLandingPage />;
+                  } else {
+                    return <Register />;
+                  }
+                }}
               />
-              <Route exact path="/editchildinfo" component={EditChildInfo} />
+              <Route exact path="/editchildinfo" component={EditInfo} />
               <Route exact path="/wishlist" component={WishList} />
               <Route exact path="/dummy" component={Dummy} />
               <Route exact path="/link" component={LinkPlaid} />

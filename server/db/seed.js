@@ -146,6 +146,7 @@ const syncAndSeed = async () => {
       allowance: 6,
       daysToAllowance: 7,
       allowanceInterval: 7,
+      status: 'Child',
     });
 
     const kid2 = await User.create({
@@ -164,6 +165,7 @@ const syncAndSeed = async () => {
       allowance: 8,
       daysToAllowance: 7,
       allowanceInterval: 30,
+      status: 'Child',
     });
 
     const kid3 = await User.create({
@@ -176,6 +178,7 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
+      status: 'Child',
     });
 
     const parent1 = await User.create({

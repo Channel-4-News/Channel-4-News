@@ -24,7 +24,7 @@
 
 #signupProgress {
   display: inline-grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 50% 50%;
   width: 25%;
   align-self: center;
   margin-top: 30px;
