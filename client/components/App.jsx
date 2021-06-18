@@ -40,7 +40,6 @@ import Home from './Home';
 import LinkPlaid from './PlaidLink';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
-import Test from './Test';
 
 class App extends Component {
   constructor(props) {
@@ -174,7 +173,6 @@ class App extends Component {
                 path="/chatroom"
                 component={() => <Chatroom user={this.state.user} />}
               />
-              <Route exact path="/test" component={Test} />
             </Switch>
           </div>
         </Router>
