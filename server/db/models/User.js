@@ -96,6 +96,9 @@ const User = db.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  googleId: {
+    type: DataTypes.STRING,
+  },
   allowance: {
     type: DataTypes.INTEGER,
     allowNull: true,

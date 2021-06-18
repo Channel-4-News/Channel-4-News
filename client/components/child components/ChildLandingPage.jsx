@@ -6,7 +6,6 @@ import VirtualCard from '../forms/VirtualCard';
 import Balance from './allowance components/Balance';
 import AllowanceInterval from './allowance components/AllowanceInterval';
 
-
 class ChildLandingPage extends React.Component {
   constructor() {
     super();
@@ -39,7 +38,6 @@ class ChildLandingPage extends React.Component {
   }
 
   render() {
-
     let transactions = this.categorizeTransactions();
     this.props.user.imgUrl;
     // return this.props.user.allowance ? (

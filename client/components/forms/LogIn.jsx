@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { googleLogin } from '../../store/actions/googleActions/googleLogin';
 
 import {
   attemptLogin,
@@ -9,6 +10,8 @@ import { logout } from '../../store/actions/userActions/logoutUser';
 
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import GoogleButton from 'react-google-button';
 
 const LogIn = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -68,11 +71,25 @@ const LogIn = (props) => {
           style={{
             width: '40%',
             alignSelf: 'center',
-            marginTop: '40px',
+            marginTop: '20px',
           }}
         >
           Login
         </Button>
+        <GoogleButton
+          style={{
+            width: '40%',
+            alignSelf: 'center',
+            marginTop: '15px',
+            marginBottom: '15px',
+          }}
+          type="dark"
+          label="Login With Google"
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = '/api/google';
+          }}
+        />
         <small>{loggedIn}</small>
         <small>
           Don&apos;t have an account?{' '}
@@ -92,6 +109,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
     logout: () => dispatch(logout()),
+    googleLogin: () => dispatch(googleLogin()),
   };
 };
 
