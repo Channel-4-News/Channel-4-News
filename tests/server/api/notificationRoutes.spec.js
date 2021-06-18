@@ -6,8 +6,9 @@ const { app } = require('../../../server/app');
 const request = supertest(app);
 const {
   db,
-  models: { NotificationList, Notification },
+  models: { Notification },
 } = require('../../../server/db/models/associations');
+const User = require('../../../server/db/models/User');
 
 describe('Notification Routes', () => {
   const notifications = [
@@ -15,25 +16,33 @@ describe('Notification Routes', () => {
       amount: 29.99,
       category: 'Electronics',
       isCash: false,
-      notificationListId: 1,
     },
     {
       amount: 5.0,
       category: 'Food',
       isCash: false,
-      notificationListId: 1,
     },
   ];
+  const user = {
+    username: 'hugohugo',
+    email: 'hugo@test.com',
+    password: 'password123',
+    firstName: 'Hugo',
+    lastName: 'Sanchez',
+    imgUrl:
+      'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+    status: 'Parent',
+  };
   beforeAll(async () => {
     await db.sync({ force: true });
-    await NotificationList.create();
     await Notification.bulkCreate(notifications);
+    // await User.create(user);
   });
   afterAll(async () => {
     await db.close();
   });
 
-  xtest('GET /api/notification returns all notifications', async (done) => {
+  test('GET /api/notification returns all notifications', async (done) => {
     const response = await request.get('/api/notification');
     expect(response.body.length).toBe(2);
     done();
