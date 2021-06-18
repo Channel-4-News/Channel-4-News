@@ -3,17 +3,17 @@ import { Doughnut } from 'react-chartjs-2';
 
 const SpendingGraph = (props) => {
   let transactions = {};
-  if (props.transactions) {
-    props.transactions.map((transaction) => {
+  props.transactions
+    ? props.transactions.map((transaction) => {
+
       if (!transactions[transaction.category]) {
         transactions[transaction.category] = parseInt(transaction.cost);
       } else {
         transactions[transaction.category] += parseInt(transaction.cost);
       }
-    });
-  }
 
   return props.transactions?.length ? (
+
     <div className="spendingGraph">
       <Doughnut
         data={{

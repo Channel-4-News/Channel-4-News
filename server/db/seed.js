@@ -172,8 +172,6 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Momordad',
-      // imgUrl:
-      //   'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
@@ -387,7 +385,7 @@ const syncAndSeed = async () => {
       due: '2022-07-01',
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
-      userId: kid1.id,
+      userId: kid3.id,
       createdAt: '2021-11-13',
     });
     Chore.create({
@@ -606,6 +604,16 @@ const syncAndSeed = async () => {
       { cost: 10, category: 'Toys', userId: kid2.id },
     ];
 
+    const transactions3 = [
+      { cost: 29.99, category: 'Electronics', userId: kid3.id },
+      { cost: 95.0, category: 'Clothing', userId: kid3.id },
+      { cost: 22.5, category: 'Entertainment', userId: kid3.id },
+      { cost: 139.99, category: 'Toys', userId: kid3.id },
+      { cost: 50, category: 'Miscellaneous', userId: kid3.id },
+      { cost: 3.87, category: 'Food', userId: kid3.id },
+      { cost: 100, category: 'Toys', userId: kid3.id },
+    ];
+
     await Promise.all(
       transactions.map(async (transaction) => {
         await Transaction.create(transaction);
@@ -618,28 +626,32 @@ const syncAndSeed = async () => {
       })
     );
 
+    await Promise.all(
+      transactions3.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
     await Promise.all([
       new Notification({
-        fromId: kid1.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
-      }).save(),
-      new Notification({
+        amount: 5.0,
         fromId: kid2.id,
         toId: parent1.id,
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 1,
       }).save(),
       new Notification({
+        amount: 12.0,
+        category: 'Toys',
         fromId: kid3.id,
         toId: parent1.id,
         text: 'Pay Me please',
         isCash: true,
-        amount: 5.0,
       }).save(),
       new Notification({
+        category: 'Food',
         fromId: kid2.id,
         toId: parent1.id,
         text: 'Got the bread',
@@ -647,17 +659,13 @@ const syncAndSeed = async () => {
         amount: 5.0,
       }).save(),
       new Notification({
-        fromId: kid2.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
-      }).save(),
-      new Notification({
+        amount: 33.0,
         fromId: kid3.id,
         toId: parent1.id,
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 2,
       }).save(),
     ]);
 

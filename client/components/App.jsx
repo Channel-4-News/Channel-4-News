@@ -17,23 +17,27 @@ import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
 import Chatroom from './chatComponents/Chatroom';
+import EditChildInfo from './forms/EditChildInfo';
+import Dummy from './dummyPage/dummy';
+import Home from './Home';
+import LinkPlaid from './PlaidLink';
+import VirtualCard from './forms/VirtualCard';
+import CreateCard from './forms/CreateCard';
+import ParentLandingPage from './parentComponents/ParentLandingPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
-import Notification from '../components/notifications/Notification';
 import SortNotifications from './notifications/SortNotifications';
 import store from '../store/store';
 import { sendNotification } from '../store/actions/notificationActions/sendNotification';
 import websocket from '../store/actions/notificationActions/sendNotification';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import {
-  choreSuccess,
-  choreIncomplete,
-} from './notifications/notificationUtils';
+import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
+
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
@@ -43,6 +47,7 @@ import CreateCard from './forms/CreateCard';
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
+
 
 class App extends Component {
   constructor(props) {
@@ -68,7 +73,9 @@ class App extends Component {
       if (action.id) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
-          : choreIncomplete(action.text);
+          : action.isCash
+            ? cashWithdrawl(action.text, action.amount)
+            : '';
         store.dispatch(sendNotification(action));
       }
     });
@@ -169,8 +176,12 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={
-                  this.state.user.status === 'Child' ? ChildLandingPage : ''
+                component={() =>
+                  this.state.user.status === 'Child' ? (
+                    <ChildLandingPage />
+                  ) : (
+                    <ParentLandingPage />
+                  )
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
