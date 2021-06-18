@@ -17,6 +17,13 @@ import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
 import Chatroom from './chatComponents/Chatroom';
+import EditChildInfo from './forms/EditChildInfo';
+import Dummy from './dummyPage/dummy';
+import Home from './Home';
+import LinkPlaid from './PlaidLink';
+import VirtualCard from './forms/VirtualCard';
+import CreateCard from './forms/CreateCard';
+import ParentLandingPage from './parentComponents/ParentLandingPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
@@ -30,6 +37,7 @@ import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
+
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
@@ -39,6 +47,7 @@ import CreateCard from './forms/CreateCard';
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
+
 
 class App extends Component {
   constructor(props) {
@@ -167,8 +176,12 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={
-                  this.state.user.status === 'Child' ? ChildLandingPage : ''
+                component={() =>
+                  this.state.user.status === 'Child' ? (
+                    <ChildLandingPage />
+                  ) : (
+                    <ParentLandingPage />
+                  )
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />

@@ -93,7 +93,13 @@ const NavBar = (props) => {
             {user === 'Child' ? <Settings id="settings" /> : ''}
 
             {/*----------- USER IS A PARENT --------------*/}
-
+            {user === 'Parent' ? (
+              <Button href="/#/home" color="inherit">
+                Home
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Parent' ? (
               <Button href="/#/notifications" color="inherit">
                 <Badge
