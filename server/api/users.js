@@ -153,7 +153,7 @@ router.put('/allowance/modify/:id', async (req, res, next) => {
 router.put('/allowance/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const { allowance } = req.body;
+    const { allowance, allowanceInterval } = req.body;
     await user.update({ balance: user.balance * 1 + allowance });
 
     //add allowance to scheduler
@@ -161,7 +161,7 @@ router.put('/allowance/:id', async (req, res, next) => {
       await user.update({ balance: user.balance * 1 + allowance });
       console.log('adding allowance');
     });
-    const newJob = new SimpleIntervalJob({ seconds: 10 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 14 }, add);
     scheduler.addSimpleIntervalJob(newJob);
 
     //add allowance interval to scheduler
@@ -172,7 +172,11 @@ router.put('/allowance/:id', async (req, res, next) => {
         await user.update({ daysToAllowance: user.allowanceInterval });
       }
     });
-    const intervalJob = new SimpleIntervalJob({ seconds: 10 }, addInterval);
+    const intervalJob = new SimpleIntervalJob({ seconds: 2 }, addInterval);
+
+    // //this is what we would want if the app went into productions
+    // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
+
     scheduler.addSimpleIntervalJob(intervalJob);
     res.sendStatus(200);
   } catch (err) {

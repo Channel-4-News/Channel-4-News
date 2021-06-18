@@ -71,8 +71,7 @@ const User = db.define('user', {
   imgUrl: {
     type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue:
-      'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+    defaultValue: 'public/images/avatars/blueAvatar.png',
     validate: {
       notEmpty: true,
     },
