@@ -7,6 +7,7 @@ import KidsChoreSort from './KidsChoreSort';
 import ParentSortAddButtons from './ParentSortAddButtons';
 import NoChores from './NoChores';
 
+
 const Chores = (props) => {
   const [chores, setChores] = useState([]);
   const [expiredChores, setExpiredChores] = useState([]);
@@ -28,6 +29,7 @@ const Chores = (props) => {
       setUpdateClicked(false);
     }
   };
+
 
   useEffect(() => {
     if (props.currUser.id) {
@@ -163,6 +165,7 @@ const Chores = (props) => {
                 />
               ))}
             </>
+
           </div>
         </div>
       ) : (

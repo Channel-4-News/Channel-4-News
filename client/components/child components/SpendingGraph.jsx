@@ -15,7 +15,9 @@ const SpendingGraph = (props) => {
     })
     : '';
 
-  return props.transactions ? (
+
+  return props.transactions?.length ? (
+
     <div className="spendingGraph">
       <Doughnut
         data={{
