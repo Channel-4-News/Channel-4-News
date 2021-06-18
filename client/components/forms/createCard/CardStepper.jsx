@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import {
   makeStyles,
   Stepper,
@@ -8,6 +9,7 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
+import { updateCard } from '../../../store/actions/cardActions/updateCard';
 
 const CardStepper = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -60,7 +62,9 @@ const CardStepper = (props) => {
         'Please enter your full name as it should appear on your virtual card.'
       );
     }
-    if (whichStep === 4 && props.name.length) props.history.push('/home');
+    if (whichStep === 4 && props.name.length) {
+      handleFinish();
+    }
   }, [whichStep]);
 
   const isStepOptional = (step) => {
@@ -88,6 +92,29 @@ const CardStepper = (props) => {
 
   const handleReset = () => {
     props.setReset(props.reset + 1);
+  };
+
+  //creates cardHolder and card for child
+  const handleFinish = async () => {
+    const cardHolder = (
+      await axios.post('/api/stripe/create_cardholder', {
+        name: props.name,
+        email: props.user.email,
+        id: props.user.id,
+      })
+    ).data;
+    const card = (
+      await axios.post('/api/stripe/create_card', {
+        cardholder: cardHolder.cardHolderId,
+        id: props.user.id,
+      })
+    ).data;
+    await props.updateCard(
+      card.id,
+      props.cardSettings.image,
+      props.cardSettings.color
+    );
+    props.history.push('/home');
   };
 
   return (
@@ -143,4 +170,10 @@ const CardStepper = (props) => {
   );
 };
 
-export default CardStepper;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCard: (num, image, color) => dispatch(updateCard(num, image, color)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CardStepper);

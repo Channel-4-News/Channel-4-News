@@ -1,11 +1,11 @@
 import React from 'react';
-import { Pie, Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 const SpendingGraph = (props) => {
   let transactions = {};
-  // console.log(props);
   props.transactions
     ? props.transactions.map((transaction) => {
+
       if (!transactions[transaction.category]) {
         transactions[transaction.category] = parseInt(transaction.cost);
       } else {
@@ -13,6 +13,7 @@ const SpendingGraph = (props) => {
       }
     })
     : '';
+
   return props.transactions ? (
     <div className="spendingGraph">
       <Doughnut
@@ -37,13 +38,6 @@ const SpendingGraph = (props) => {
         options={{
           maintainAspectRatio: false,
           plugins: {
-            // title: {
-            //   display: true,
-            //   text: 'Spending Snapshot',
-            //   position: 'top',
-            //   align: 'center',
-            //   padding: '5px',
-            // },
             tooltip: {
               usePointStyle: true,
               backgroundColor: 'rgb(250, 250, 250)',
@@ -53,12 +47,6 @@ const SpendingGraph = (props) => {
               bodyFont: { size: '17', family: 'main' },
               displayColors: false,
               callbacks: {
-                // afterLabel: function (tooltipItem) {
-                //   const total = tooltipItem.chart._metasets[0].total;
-                //   const amount = tooltipItem.raw;
-                //   const percentage = Math.round((amount / total) * 100);
-                //   return `(${percentage}%)`;
-                // },
                 label: function (tooltipItem) {
                   const amount = tooltipItem.raw;
                   const total = tooltipItem.chart._metasets[0].total;

@@ -25,12 +25,15 @@ class WishList extends Component {
   }
 
   componentDidMount() {
-    if (this.props.user.id && this.state.wishList.length === 0) {
+    if (this.props.user.id) {
       this.props.getWishList(this.props.user.id);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.user.id && this.props.user.id) {
+      this.props.getWishList(this.props.user.id);
+    }
     let mostExpensive, leastExpensive, alphabetically;
     if (
       this.state.sorted !== true &&
@@ -71,42 +74,58 @@ class WishList extends Component {
 
   render() {
     const { changeSort, sortToggle, reRender } = this;
-    if (this.props.wishList.length) {
-      return (
-        <div id="wishListContent">
-          <div id="wishListTopBar">
-            <div id="wishlistHeader">WISHLIST</div>
-            <SortAndFilterWishList sort={changeSort} sortToggle={sortToggle} />
-            <WithdrawMoneyDialog user={this.props.user} />
-            <CreateNewWish
-              update={sortToggle}
-              user={this.props.user}
-              newItem={reRender}
-            />
+    return (
+      <div>
+        {this.props.wishList.length ? (
+          <div id="wishListContent">
+            <div id="wishListTopBar">
+              <div id="wishlistHeader">WISHLIST</div>
+              <SortAndFilterWishList
+                sort={changeSort}
+                sortToggle={sortToggle}
+              />
+              <WithdrawMoneyDialog user={this.props.user} />
+              <CreateNewWish
+                update={sortToggle}
+                user={this.props.user}
+                newItem={reRender}
+              />
+            </div>
+            <div id="wishListWrapper">
+              {this.state.wishList.map((wishListItem, idx) => {
+                return (
+                  <WishListCard
+                    user={this.props.user}
+                    key={idx}
+                    wishListItem={wishListItem}
+                    update={sortToggle}
+                  />
+                );
+              })}
+            </div>
           </div>
-          <div id="wishListWrapper">
-            {this.state.wishList.map((wishListItem, idx) => {
-              return (
-                <WishListCard
-                  user={this.props.user}
-                  key={idx}
-                  wishListItem={wishListItem}
-                  update={sortToggle}
-                />
-              );
-            })}
+        ) : (
+          <div id="wishListContent">
+            <div id="wishListTopBar">
+              <div id="wishlistHeader">WISHLIST</div>
+              <CreateNewWish
+                update={sortToggle}
+                user={this.props.user}
+                newItem={reRender}
+              />
+            </div>
+            <h1>Currently No Wishes!</h1>
           </div>
-        </div>
-      );
-    } else {
-      return <div>No Wishes</div>;
-    }
+        )}
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     wishList: state.wishList,
+    user: state.currUser,
   };
 };
 
