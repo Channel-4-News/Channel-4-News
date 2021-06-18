@@ -98,7 +98,6 @@ const ModalItem = ({ kid }) => {
       newInterval,
     });
     setDisplay('none');
-    console.log('submitted');
   };
   const handleChange = (evt) => {
     evt.target.name === 'allowance'
@@ -113,7 +112,6 @@ const ModalItem = ({ kid }) => {
         variant={'outlined'}
         onClick={() => {
           setDisplay('block');
-          console.log(props);
         }}
       >
         Change Allowance
