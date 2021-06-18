@@ -84,11 +84,7 @@ const NavBar = (props) => {
               ''
             )}
             {user === 'Child' ? (
-              <Button
-                color="primary"
-                href="/#/childprofile"
-                variant="contained"
-              >
+              <Button color="primary" href="/#/home" variant="contained">
                 Profile
               </Button>
             ) : (

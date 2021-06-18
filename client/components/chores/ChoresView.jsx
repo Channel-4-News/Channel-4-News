@@ -5,6 +5,7 @@ import ChoreCard from './ChoreCard';
 import AddUpdateChoreContainer from './AddUpdateChoreContainer';
 import KidsChoreSort from './KidsChoreSort';
 import ParentSortAddButtons from './ParentSortAddButtons';
+import NoChores from './NoChores';
 
 const Chores = (props) => {
   const [chores, setChores] = useState([]);
@@ -101,11 +102,6 @@ const Chores = (props) => {
       );
     }
   }, [choresUpdated]);
-
-  if (!props.currUser.id) {
-    return <h1>Please LogIn/Sign Up!</h1>;
-  }
-
   return (
     <div
       id={
@@ -123,60 +119,63 @@ const Chores = (props) => {
           position: 'fixed',
         }}
       ></img>
-      <div
-        id={
-          props.currUser.status === 'Parent' ? 'choresViewParent' : 'choresView'
-        }
-      >
-        {props.chores.length ? (
+      {chores.length ? (
+        <div
+          id={
+            props.currUser.status === 'Parent'
+              ? 'choresViewParent'
+              : 'choresView'
+          }
+        >
           <div id="choreCardContainer">
-            <AddUpdateChoreContainer
-              addChore={addChore}
-              handleClose={handleClose}
-              setAddChore={setAddChore}
-              updateClicked={updateClicked}
-              choreToUpdate={choreToUpdate}
-              setUpdateClicked={setUpdateClicked}
-            />
-            {props.kids.length > 1 && props.currUser.status === 'Parent' ? (
-              <ParentSortAddButtons
-                kids={props.kids}
-                setChildSelect={setChildSelect}
-                setSelectedKid={setSelectedKid}
+            <>
+              <AddUpdateChoreContainer
+                addChore={addChore}
+                handleClose={handleClose}
                 setAddChore={setAddChore}
+                updateClicked={updateClicked}
+                choreToUpdate={choreToUpdate}
+                setUpdateClicked={setUpdateClicked}
               />
-            ) : (
-              <KidsChoreSort setChores={setChores} chores={chores} />
-            )}
-            {chores.map((chore) => (
-              <ChoreCard
-                chore={chore}
-                key={`${chore.id}chore`}
-                updateClicked={setUpdateClicked}
-                setChore={setChoreToUpdate}
-              />
-            ))}
-            {expiredChores.map((chore) => (
-              <ChoreCard
-                chore={chore}
-                key={`${chore.id}chore`}
-                updateClicked={setUpdateClicked}
-                setChore={setChoreToUpdate}
-              />
-            ))}
+              {props.currUser.status === 'Parent' ? (
+                <ParentSortAddButtons
+                  kids={props.kids}
+                  setChildSelect={setChildSelect}
+                  setSelectedKid={setSelectedKid}
+                  setAddChore={setAddChore}
+                />
+              ) : (
+                <KidsChoreSort setChores={setChores} chores={chores} />
+              )}
+              {chores.map((chore) => (
+                <ChoreCard
+                  chore={chore}
+                  key={`${chore.id}chore`}
+                  updateClicked={setUpdateClicked}
+                  setChore={setChoreToUpdate}
+                />
+              ))}
+              {expiredChores.map((chore) => (
+                <ChoreCard
+                  chore={chore}
+                  key={`${chore.id}chore`}
+                  updateClicked={setUpdateClicked}
+                  setChore={setChoreToUpdate}
+                />
+              ))}
+            </>
           </div>
-        ) : props.currUser?.status === 'Parent' ? (
-          <div>
-            You haven&apos;t added chores! Please click <span>here</span> to add
-            a chore.
-          </div>
-        ) : (
-          <div>
-            You haven&apos;t been assigned any chores. Check back after your
-            parent(s) assign you chores.
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <NoChores
+          setAddChore={setAddChore}
+          addChore={addChore}
+          handleClose={handleClose}
+          updateClicked={updateClicked}
+          choreToUpdate={choreToUpdate}
+          setUpdateClicked={setUpdateClicked}
+        />
+      )}
     </div>
   );
 };
