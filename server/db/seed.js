@@ -172,8 +172,7 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+      imgUrl: 'public/images/profilePics/kid-smile-thumbs-up-14456897.jpeg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
@@ -399,7 +398,7 @@ const syncAndSeed = async () => {
       due: '2022-07-01',
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
-      userId: kid1.id,
+      userId: kid3.id,
       createdAt: '2021-11-13',
     });
     Chore.create({
@@ -618,6 +617,16 @@ const syncAndSeed = async () => {
       { cost: 10, category: 'Toys', userId: kid2.id },
     ];
 
+    const transactions3 = [
+      { cost: 29.99, category: 'Electronics', userId: kid3.id },
+      { cost: 95.0, category: 'Clothing', userId: kid3.id },
+      { cost: 22.5, category: 'Entertainment', userId: kid3.id },
+      { cost: 139.99, category: 'Toys', userId: kid3.id },
+      { cost: 50, category: 'Miscellaneous', userId: kid3.id },
+      { cost: 3.87, category: 'Food', userId: kid3.id },
+      { cost: 100, category: 'Toys', userId: kid3.id },
+    ];
+
     await Promise.all(
       transactions.map(async (transaction) => {
         await Transaction.create(transaction);
@@ -626,6 +635,12 @@ const syncAndSeed = async () => {
 
     await Promise.all(
       transactions2.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
+    await Promise.all(
+      transactions3.map(async (transaction) => {
         await Transaction.create(transaction);
       })
     );

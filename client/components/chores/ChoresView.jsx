@@ -16,8 +16,13 @@ const Chores = (props) => {
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
-  const [childSelect, setChildSelect] = useState(false);
-  const [selectedKid, setSelectedKid] = useState({});
+  const [selectedKid, setSelectedKid] = props.location.state
+    ? useState(props.location.state.selectedKid)
+    : useState({});
+  const [childSelect, setChildSelect] = props.location.state
+    ? useState(true)
+    : useState(false);
+
   const [allKids, setAllKids] = useState(0);
   const [choresUpdated, setUpdated] = useState(1);
 
@@ -62,6 +67,7 @@ const Chores = (props) => {
     const today = new Date();
     const currentChores = [];
     if (childSelect) {
+      console.log('hook ran');
       setExpiredChores(
         props.chores.filter((chore) => {
           if (
