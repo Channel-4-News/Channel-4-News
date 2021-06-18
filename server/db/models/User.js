@@ -188,7 +188,6 @@ User.addHook('afterUpdate', async (notification) => {
   const socket = socketUtils
     .getSockets()
     .find((socket) => notification.id === socket.userId);
-  console.log(socketUtils.getSockets());
   if (socket) {
     notification = await User.findByPk(notification.id, {});
     socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));

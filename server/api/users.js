@@ -138,12 +138,9 @@ router.put('/allowance/modify/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     const { newAllowance, newInterval } = req.body;
-    console.log(newAllowance);
-    console.log(newInterval);
     user.allowance = newAllowance;
     user.allowanceInterval = newInterval;
     await user.save();
-    console.log(user);
     res.status(201).send(user);
   } catch (err) {
     next(err);
@@ -159,7 +156,6 @@ router.put('/allowance/:id', async (req, res, next) => {
     //add allowance to scheduler
     const add = new Task('allowance', async () => {
       await user.update({ balance: user.balance * 1 + allowance });
-      console.log('adding allowance');
     });
     const newJob = new SimpleIntervalJob({ seconds: 14 }, add);
     scheduler.addSimpleIntervalJob(newJob);
