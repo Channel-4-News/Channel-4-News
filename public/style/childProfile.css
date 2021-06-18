@@ -141,3 +141,8 @@ div > .edit-profile-button {
 #avatarEdit:hover {
   background-color: tomato;
 }
+
+#newCardMessage {
+  padding: 20px;
+  color: white;
+}

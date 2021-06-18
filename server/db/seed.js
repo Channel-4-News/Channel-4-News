@@ -203,18 +203,6 @@ const syncAndSeed = async () => {
       status: 'Parent',
     });
 
-    // Chore.create({
-    //   name: 'Water plants.',
-    //   description: 'Water the plants in the living room and kitchen.',
-    //   amount: 5,
-    //   isRecurring: true,
-    //   recurringInterval: 7,
-    //   icon: '/public/images/choreIcons/watering-plants.png',
-    //   familyId: myFam.id,
-    //   userId: kid3.id,
-    //   isComplete: true,
-    //   createdAt: '2020-02-12',
-    // });
     Chore.create({
       name: 'Water plants.',
       description: 'Water the plants in the living room and kitchen.',
@@ -282,7 +270,7 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       userId: kid2.id,
       isComplete: true,
-      createdAt: '2021-02-16',
+      createdAt: '2019-02-16',
     });
     Chore.create({
       name: 'Make bed.',
@@ -307,7 +295,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/car.png',
       familyId: myFam.id,
       userId: kid2.id,
-      createdAt: '2021-11-07',
+      createdAt: '2020-11-07',
     });
     Chore.create({
       name: 'Wash car.',
@@ -342,10 +330,10 @@ const syncAndSeed = async () => {
       due: '2022-08-16',
       familyId: myFam.id,
       userId: kid2.id,
-      createdAt: '2021-05-02',
+      createdAt: '2020-07-02',
     });
     Chore.create({
-      name: 'Brainstorm ideas for family movie night.',
+      name: 'Brainstorm ideas for family game night.',
       description:
         'Help to think of a movie to watch for family night that everyone will enjoy.',
       amount: 2,
@@ -353,7 +341,7 @@ const syncAndSeed = async () => {
       due: '2020-08-16',
       familyId: myFam.id,
       userId: kid1.id,
-      createdAt: '2021-05-02',
+      createdAt: '2022-08-02',
     });
     Chore.create({
       name: 'Take out trash.',
@@ -365,7 +353,7 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       userId: kid1.id,
       icon: '/public/images/choreIcons/delete.png',
-      createdAt: '2021-11-09',
+      createdAt: '2019-11-09',
     });
     Chore.create({
       name: 'Wash windows.',
@@ -387,7 +375,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/soup.png',
       familyId: myFam.id,
       userId: kid1.id,
-      createdAt: '2021-11-12',
+      createdAt: '2020-11-12',
     });
     Chore.create({
       name: 'Wash clothes.',
@@ -411,10 +399,10 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       userId: kid3.id,
       isComplete: true,
-      createdAt: '2021-11-08',
+      createdAt: '2020-11-08',
     });
     Chore.create({
-      name: 'Brainstorm ideas for family movie night.',
+      name: 'Brainstorm ideas for family game night.',
       description:
         'Help to think of a movie to watch for family night that everyone will enjoy.',
       amount: 2,
@@ -422,7 +410,7 @@ const syncAndSeed = async () => {
       due: '2022-08-16',
       familyId: myFam.id,
       userId: kid3.id,
-      createdAt: '2021-05-02',
+      createdAt: '2019-05-02',
     });
     Chore.create({
       name: 'Brainstorm ideas for family movie night.',
@@ -456,7 +444,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/window-cleaning.png',
       familyId: myFam.id,
       userId: kid3.id,
-      createdAt: '2021-11-10',
+      createdAt: '2019-11-10',
     });
     Chore.create({
       name: 'Cook dinner.',
@@ -479,7 +467,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
       userId: kid3.id,
-      createdAt: '2021-11-13',
+      createdAt: '2019-11-13',
     });
 
     const wishListItems = [

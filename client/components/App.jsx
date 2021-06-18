@@ -46,6 +46,7 @@ import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
+import { getKids } from '../store/actions/parentActions/getKids';
 
 
 class App extends Component {
@@ -86,6 +87,9 @@ class App extends Component {
         this.props.currUser.balance,
         this.props.currUser.allowanceInterval
       );
+    }
+    if (this.props.currUser.status === 'Parent') {
+      this.props.getKids(this.props.currUser.id);
     }
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
@@ -212,6 +216,7 @@ const mapDispatchToProps = (dispatch) => {
     loadNotifications: () => dispatch(loadNotificationsThunk()),
     setAllowance: (balance, allowanceInterval) =>
       dispatch(setAllowance(balance, allowanceInterval)),
+    getKids: (id) => dispatch(getKids(id)),
   };
 };
 
