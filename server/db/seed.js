@@ -172,6 +172,7 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Momordad',
+      imgUrl: 'public/images/profilePics/kid-smile-thumbs-up-14456897.jpeg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',

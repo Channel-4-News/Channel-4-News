@@ -13,7 +13,6 @@ const Chores = (props) => {
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
-  const [childSelect, setChildSelect] = useState(false);
   const [selectedKid, setSelectedKid] = props.location.state
     ? useState(props.location.state.selectedKid)
     : useState({});
@@ -28,7 +27,6 @@ const Chores = (props) => {
       setUpdateClicked(false);
     }
   };
-
 
   useEffect(() => {
     if (props.currUser.id) {
@@ -164,7 +162,6 @@ const Chores = (props) => {
                 />
               ))}
             </>
-
           </div>
         </div>
       ) : (

@@ -37,17 +37,9 @@ import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
-
-import EditChildInfo from './forms/EditChildInfo';
-import Dummy from './dummyPage/dummy';
-import Home from './Home';
-import LinkPlaid from './PlaidLink';
-import VirtualCard from './forms/VirtualCard';
-import CreateCard from './forms/CreateCard';
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
-
 
 class App extends Component {
   constructor(props) {
