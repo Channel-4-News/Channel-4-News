@@ -164,6 +164,7 @@ const Chores = (props) => {
                 />
               ))}
             </>
+
           </div>
         </div>
       ) : (

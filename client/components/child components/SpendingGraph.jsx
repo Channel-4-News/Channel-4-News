@@ -12,6 +12,10 @@ const SpendingGraph = (props) => {
         transactions[transaction.category] += parseInt(transaction.cost);
       }
 
+    })
+    : '';
+
+
   return props.transactions?.length ? (
 
     <div className="spendingGraph">

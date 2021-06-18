@@ -31,9 +31,9 @@ class WishList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.user.id && this.props.user.id) {
-      this.props.getWishList(this.props.user.id);
-    }
+    // if (this.props.user.id && this.state.wishList.length === 0) {
+    //   this.props.getWishList(this.props.user.id);
+    // }
     let mostExpensive, leastExpensive, alphabetically;
     if (
       this.state.sorted !== true &&
