@@ -9,13 +9,12 @@ import { sendNotificationThunk } from '../../store/actions/notificationActions/s
 import PayoutChore from './PayoutChore';
 import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
-
-import { store } from 'react-notifications-component';
 import 'animate.css';
 
 const ChoreCard = (props) => {
   const [complete, setComplete] = useState(props.chore.isComplete);
   const [dueDate, setDueDate] = useState('');
+  const [isParent] = useState(props.user.status === 'Parent');
 
   useEffect(() => {
     if (!props.chore.isRecurring) {
@@ -30,19 +29,23 @@ const ChoreCard = (props) => {
 
   const today = new Date();
   let expired;
-  if (props.chore.due && new Date(props.chore.due) < today) {
+  if (
+    props.chore.due &&
+    new Date(props.chore.due) < today &&
+    !props.chore.isRecurring
+  ) {
     expired = true;
   }
 
   return (
     <div
       className={
-        props.isParent && !expired
+        isParent && !expired
           ? 'choreCardParent'
           : !expired
             ? 'choreCard'
-            : props.isParent && expired
-              ? 'choreCardParent expiredCard'
+            : isParent && expired
+              ? 'choreCardParent parentExpiredCard'
               : 'choreCard expiredCard'
       }
     >
@@ -53,7 +56,7 @@ const ChoreCard = (props) => {
         onChange={() => {
           setComplete(!complete);
           if (!complete) {
-            if (props.currUser.status === 'Child') {
+            if (!isParent) {
               props.parents.map((currParent) => {
                 props.sendNotification({
                   text: `${props.chore.name} Completed by ${props.chore.user.username}`,
@@ -61,6 +64,7 @@ const ChoreCard = (props) => {
                   isChoreCompleted: true,
                   isChore: true,
                   toId: currParent.id,
+                  choreId: props.chore.id,
                 });
               });
             }
@@ -84,7 +88,7 @@ const ChoreCard = (props) => {
           <small>{dueDate}</small>
         )}
       </div>
-      {props.isParent ? (
+      {isParent ? (
         <div className="editChore">
           <IconButton
             disabled={props.chore.wasPaid ? true : false}
@@ -104,7 +108,7 @@ const ChoreCard = (props) => {
             variant="outlined"
             onClick={async () => {
               await axios.post('/api/stripe/charges', {
-                customer: props.stripeAccount,
+                customer: props.user.stripeAccount,
                 amount: parseInt(props.chore.amount) * 100,
                 kid: props.chore.user.firstName,
               });
@@ -128,6 +132,7 @@ const mapStateToProps = (state) => {
     parents: state.currUser.family.users.filter(
       (currUser) => currUser.status === 'Parent'
     ),
+    user: state.currUser,
   };
 };
 

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { logout } from '../store/actions/userActions/logoutUser';
 import { connect } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
 
 //Component Imports
 import Settings from './Settings';
@@ -83,11 +84,7 @@ const NavBar = (props) => {
               ''
             )}
             {user === 'Child' ? (
-              <Button
-                color="primary"
-                href="/#/childprofile"
-                variant="contained"
-              >
+              <Button color="primary" href="/#/home" variant="contained">
                 Profile
               </Button>
             ) : (
@@ -96,10 +93,21 @@ const NavBar = (props) => {
             {user === 'Child' ? <Settings id="settings" /> : ''}
 
             {/*----------- USER IS A PARENT --------------*/}
-
+            {user === 'Parent' ? (
+              <Button href="/#/home" color="inherit">
+                Home
+              </Button>
+            ) : (
+              ''
+            )}
             {user === 'Parent' ? (
               <Button href="/#/notifications" color="inherit">
-                Notifications({props.notifications.length})
+                <Badge
+                  badgeContent={props.notifications.length}
+                  color="secondary"
+                >
+                  Notifications
+                </Badge>
               </Button>
             ) : (
               ''

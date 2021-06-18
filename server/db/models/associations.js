@@ -11,6 +11,9 @@ const { Notification, NotificationList } = require('./Notification');
 User.belongsTo(Family);
 Family.hasMany(User);
 
+Notification.belongsTo(Chore);
+Chore.hasOne(Notification);
+
 User.hasMany(WishListItem);
 WishListItem.belongsTo(User);
 // WishListItem.belongsTo(WishList);
@@ -23,8 +26,8 @@ NotificationList.hasMany(Notification);
 Notification.belongsTo(User, { as: 'from' });
 Notification.belongsTo(User, { as: 'to' });
 
-Allowance.belongsTo(User);
-User.hasOne(Allowance);
+// Allowance.belongsTo(User);
+// User.hasOne(Allowance);
 
 // ChoreList.hasMany(Chore);
 Chore.belongsTo(ChoreList);

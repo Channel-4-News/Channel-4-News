@@ -30,6 +30,9 @@ import {
   validName,
 } from '../../utilities/utilityValidation';
 
+import axios from 'axios';
+import { setAllowance } from '../../store/actions/allowance/setAllowance';
+
 //React Notifications Components
 // import ReactNotification from 'react-notifications-component';
 // import { store } from 'react-notifications-component';
@@ -45,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '30px',
+    borderRadius: '12px',
   },
   root: {
     display: 'flex',
@@ -70,18 +74,13 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     height: '25px',
     width: '25px',
-    // marginTop: '-55px',
     zIndex: '1',
     '&:hover': { backgroundColor: 'transparent' },
-    // backgroundColor: 'grey',
-    // padding: '5px',
-    // borderRadius: '18px',
-    // border: '2px white solid',
     marginLeft: '-27px',
   },
 }));
 
-const EditChildInfo = ({ currUser, updateUser, history }) => {
+const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
   if (!currUser.id) {
     return null;
   }
@@ -248,6 +247,18 @@ const EditChildInfo = ({ currUser, updateUser, history }) => {
           imgUrl={newImgUrl}
         />
       </Paper>
+      <button
+        onClick={async () => {
+          const test = (
+            await axios.put(`/api/users/allowance/${currUser.id}`, {
+              allowance: 5,
+            })
+          ).data;
+          // setAllowance(5, 7);
+        }}
+      >
+        TEST
+      </button>
     </div>
   );
 };
@@ -260,6 +271,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateChildProfileThunk(user)),
+    setAllowance: (balance, daysToAllowance) =>
+      dispatch(setAllowance(balance, daysToAllowance)),
   };
 };
 

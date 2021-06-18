@@ -6,11 +6,14 @@ import { Button } from '@material-ui/core';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
+import { connect } from 'react-redux';
 
 const LinkPlaid = (props) => {
   const [token, setToken] = useState('');
   const [auth, setAuth] = useState(true);
   const [processing, setProcessing] = useState(false);
+
+  console.log(props.user);
 
   async function fetchToken() {
     let linkToken = (await axios.post('/api/plaid/create_link_token')).data;
@@ -23,9 +26,15 @@ const LinkPlaid = (props) => {
 
   const onSuccess = async (token, metadata) => {
     console.log('onSuccess', token, metadata);
-    await axios.post('/api/plaid/tokenExchange', {
-      token,
-      accountId: metadata.accounts[0].id,
+    const stripeBA = (
+      await axios.post('/api/plaid/tokenExchange', {
+        token,
+        accountId: metadata.accounts[0].id,
+      })
+    ).data;
+    await axios.post('/api/stripe/create_bank_account', {
+      id: props.user.stripeAccount,
+      accountToken: stripeBA.stripe_bank_account_token,
     });
     props.history.push('/home');
   };
@@ -93,4 +102,10 @@ const LinkPlaid = (props) => {
   );
 };
 
-export default LinkPlaid;
+const mapStateToProps = (state) => {
+  return {
+    user: state.currUser,
+  };
+};
+
+export default connect(mapStateToProps)(LinkPlaid);

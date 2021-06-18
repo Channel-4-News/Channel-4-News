@@ -34,7 +34,7 @@ router.get('/balance', async (req, res, next) => {
 router.post('/payouts', async (req, res, next) => {
   try {
     const { amount, destination } = req.body;
-    console.log(amount);
+    console.log('here', amount);
     const payout = await stripe.payouts.create(
       {
         amount,
@@ -105,7 +105,7 @@ router.post('/charges', async (req, res, next) => {
 //create a card holder - triggered on register
 router.post('/create_cardholder', async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, id } = req.body;
     const cardholder = await stripe.issuing.cardholders.create({
       name: name,
       email: email,
@@ -122,7 +122,12 @@ router.post('/create_cardholder', async (req, res, next) => {
       },
     });
 
-    res.send(cardholder);
+    const user = await User.findByPk(id);
+    const updatedUser = await user.update({
+      cardHolderId: cardholder.id,
+    });
+
+    res.send(updatedUser);
   } catch (err) {
     next(err);
   }
@@ -131,12 +136,17 @@ router.post('/create_cardholder', async (req, res, next) => {
 //create a card - triggered on register
 router.post('/create_card', async (req, res, next) => {
   try {
-    const { cardholder } = req.body;
+    const { cardholder, id } = req.body;
     const card = await stripe.issuing.cards.create({
       cardholder: cardholder,
       type: 'virtual',
       currency: 'usd',
       status: 'active',
+    });
+
+    const user = await User.findByPk(id);
+    await user.update({
+      virtualCard: card.id,
     });
     res.send(card);
   } catch (err) {

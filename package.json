@@ -28,6 +28,8 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material/card": "^11.0.0",
+    "@mui-treasury/components": "^1.10.1",
+    "@mui-treasury/styles": "^1.13.1",
     "@samirrayani/metascraper-shopping": "^1.3.0",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
@@ -47,6 +49,7 @@
     "metascraper-image": "^5.22.0",
     "metascraper-title": "^5.22.0",
     "morgan": "^1.10.0",
+    "node-schedule": "^2.0.0",
     "pg": "^8.3.3",
     "plaid": "^8.5.1",
     "puppeteer": "^10.0.0",
@@ -57,6 +60,7 @@
     "react-dropzone": "^11.3.2",
     "react-firebase-hooks": "^3.0.4",
     "react-google-button": "^0.7.2",
+    "react-google-font-loader": "^1.1.0",
     "react-icons": "^4.2.0",
     "react-notifications-component": "^3.1.0",
     "react-plaid-link": "^3.1.0",
@@ -69,6 +73,7 @@
     "sequelize": "^6.3.4",
     "stripe": "^8.153.0",
     "style-loader": "^2.0.0",
+    "toad-scheduler": "^1.3.0",
     "ws": "^7.4.6"
   },
   "devDependencies": {

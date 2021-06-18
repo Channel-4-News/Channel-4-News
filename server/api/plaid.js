@@ -27,14 +27,13 @@ router.post('/create_link_token', async (req, res, next) => {
         },
       },
     });
-    console.log(response);
     res.status(201).send(response.link_token);
   } catch (err) {
     next(err);
   }
 });
 
-//exhanges plaid's public token for access token and access token for stribe bank account token
+//exhanges plaid's public token for access token and access token for stripe bank account token
 router.post('/tokenExchange', async (req, res) => {
   const { token, accountId } = req.body;
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
@@ -61,7 +60,7 @@ router.post('/tokenExchange', async (req, res) => {
   // console.log('Balance response', balanceResponse);
   // console.log('---------------');
 
-  res.sendStatus(200);
+  res.status(200).send(stripeToken);
 });
 
 module.exports = router;

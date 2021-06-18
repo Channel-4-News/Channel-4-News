@@ -3,6 +3,8 @@ import SpendingGraph from './SpendingGraph';
 import { connect } from 'react-redux';
 import { Avatar } from '@material-ui/core';
 import VirtualCard from '../forms/VirtualCard';
+import Balance from './allowance components/Balance';
+import AllowanceInterval from './allowance components/AllowanceInterval';
 
 class ChildLandingPage extends React.Component {
   constructor() {
@@ -31,9 +33,15 @@ class ChildLandingPage extends React.Component {
     return transactionsArray;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   render() {
     let transactions = this.categorizeTransactions();
-    return this.props.user.allowance ? (
+    this.props.user.imgUrl;
+    // return this.props.user.allowance ? (
+    return (
       <div id="childLandingPage">
         <p>Hello, {this.props.user.firstName}!</p>
         <div id="childLandingContainer">
@@ -52,21 +60,23 @@ class ChildLandingPage extends React.Component {
             </div>
             <div id="forBorder"></div>
             <div id="childLandingVirtualCard">
-              <div style={{ fontSize: 'larger' }}>
-                BALANCE &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;$
-                {this.props.user.balance}
-              </div>
+              <Balance />
               <VirtualCard />
-              <div id="nextAllowance">
-                Next allowance in {this.props.user.allowance.interval} day(s) $
-                {this.props.user.allowance.amount}
-              </div>
+              <AllowanceInterval />
             </div>
           </div>
+          {!this.props.user?.transactions?.length ? (
+            <div id="newCardMessage">
+              New card? When you make a purchase, your spending snapshot will
+              update and this terribly boring yet somewhat informative message
+              will disappear. Use your spending snapshot to visualize how you
+              are spending money, and to save and budget.
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
-    ) : (
-      ''
     );
   }
 }
@@ -74,6 +84,7 @@ class ChildLandingPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
+    allowance: state.allowance,
   };
 };
 
