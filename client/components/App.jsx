@@ -37,7 +37,6 @@ import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
-
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
