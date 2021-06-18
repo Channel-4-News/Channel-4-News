@@ -99,7 +99,6 @@ class CalculatorButton extends Component {
           onClick={onCalculatorOpen}
           size="large"
           variant="contained"
-          color="primary"
         >
           Calculator
         </Button>

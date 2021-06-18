@@ -75,7 +75,7 @@ const JoinOrCreateFamily = (props) => {
     setFamilyCreds({ ...familyCreds, [field]: e.target.value });
   };
 
-  const submitFamily = async (e) => {
+  const submitFamily = async (e, joining) => {
     e.preventDefault();
 
     const { familyName, familySecret } = familyCreds;
@@ -85,12 +85,24 @@ const JoinOrCreateFamily = (props) => {
       familySecret,
     };
 
-    if (!confirmSecret.length || errors.confirmSecret !== 'Confirm Secret')
+    if (
+      (!joining && !confirmSecret.length) ||
+      errors.confirmSecret !== 'Confirm Secret'
+    )
       return;
 
     if (confirmSecret) {
       const created = await props.createFamily(familyValues);
       if (!created) return;
+      const didJoin = await props.joinFamily(familyValues, props.currUser.id);
+      if (!didJoin) {
+        setJoin('Invalid family name or family secret.');
+      } else {
+        props.setPage(3);
+      }
+    }
+
+    if (joining) {
       const didJoin = await props.joinFamily(familyValues, props.currUser.id);
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
@@ -219,7 +231,7 @@ const JoinOrCreateFamily = (props) => {
             variant="contained"
             color="primary"
             onClick={(e) => {
-              submitFamily(e);
+              submitFamily(e, true);
             }}
             className={classes.root}
           >

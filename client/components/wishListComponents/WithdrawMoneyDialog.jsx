@@ -12,11 +12,12 @@ import { purchaseOrWithdraw } from '../../store/actions/wishListActions/purchase
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
 
 const WithdrawMoneyDialog = (props) => {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(0);
-  const [select, setSelect] = useState('Miscelleneous');
+  const [select, setSelect] = useState('Miscellaneous');
   const handleClose = () => {
     setOpen(false);
   };
@@ -33,11 +34,11 @@ const WithdrawMoneyDialog = (props) => {
     };
   };
   return (
-    <div>
+    <div id="withdrawContainer">
       <Button
         size="large"
         color="primary"
-        variant="contained"
+        variant="outlined"
         onClick={() => setOpen(true)}
       >
         Withdraw Money
@@ -81,8 +82,8 @@ const WithdrawMoneyDialog = (props) => {
                   </div>
                   <div onClick={() => onSelectChange('Toys')}>Toys</div>
                   <div onClick={() => onSelectChange('Food')}>Food</div>
-                  <div onClick={() => onSelectChange('Miscelleneous')}>
-                    Miscelleneous
+                  <div onClick={() => onSelectChange('Miscellaneous')}>
+                    Miscellaneous
                   </div>
                 </div>
               </div>
@@ -95,7 +96,16 @@ const WithdrawMoneyDialog = (props) => {
             onClick={() => {
               return (
                 handleClose(),
-                props.purchaseOrWithdraw(props.user.id, onSubmit())
+                props.purchaseOrWithdraw(props.user.id, onSubmit()),
+                props.parents.map((currParent) => {
+                  props.sendNotification({
+                    text: `${props.user.username} withdrew $${amount} for ${select}`,
+                    amount: amount,
+                    category: select,
+                    isCash: true,
+                    toId: currParent.id,
+                  });
+                })
               );
             }}
             color="primary"
@@ -115,12 +125,23 @@ const WithdrawMoneyDialog = (props) => {
     </div>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    parents: state.currUser.family.users.filter(
+      (currUser) => currUser.status === 'Parent'
+    ),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     purchaseOrWithdraw: (id, transaction) =>
       dispatch(purchaseOrWithdraw(id, transaction)),
+    sendNotification: (message) => dispatch(sendNotificationThunk(message)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(WithdrawMoneyDialog);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WithdrawMoneyDialog);

@@ -6,10 +6,12 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const validator = require('email-validator');
+const socketUtils = require('../../../socketUtils');
 
 const { NotificationList } = require('./Notification');
 const { WishList } = require('./WishListItem');
 const Allowance = require('./Allowance');
+const { Chore } = require('./Chore');
 
 const User = db.define('user', {
   username: {
@@ -69,7 +71,7 @@ const User = db.define('user', {
   imgUrl: {
     type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue: 'default-img.jpg',
+    defaultValue: 'public/images/avatars/blueAvatar.png',
     validate: {
       notEmpty: true,
     },
@@ -95,6 +97,16 @@ const User = db.define('user', {
     allowNull: true,
   },
   googleId: {
+    type: DataTypes.STRING,
+  },
+  allowance: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  daysToAllowance: {
+    type: DataTypes.INTEGER,
+  },
+  allowanceInterval: {
     type: DataTypes.STRING,
   },
 });
@@ -153,29 +165,37 @@ User.addHook('beforeSave', async (user) => {
 //Adds a Notification List to the user
 //Adds a Wish List to the user
 //Adds an Allowance to the user
-User.addHook('afterCreate', async (user) => {
-  const notificationList = await NotificationList.create();
-  notificationList.userId = notificationList.id;
-  await notificationList.save();
-  const wishList = await WishList.create();
-  wishList.userId = wishList.id;
-  await wishList.save();
-  const allowance = await Allowance.create();
-  allowance.userId = user.id;
-  await allowance.save();
-});
+// User.addHook('afterCreate', async (user) => {
+//   const notificationList = await NotificationList.create();
+//   notificationList.userId = notificationList.id;
+//   await notificationList.save();
+//   const wishList = await WishList.create();
+//   wishList.userId = wishList.id;
+//   await wishList.save();
+//   const allowance = await Allowance.create();
+//   allowance.userId = user.id;
+//   await allowance.save();
+// });
 
 User.prototype.getNotifications = function () {
   return db.models.notification.findAll({
     where: {
       [db.Sequelize.Op.or]: [{ toId: this.id }],
     },
-    include: [
-      { model: User, as: 'from' },
-      { model: User, as: 'to' },
-    ],
+    include: [Chore, { model: User, as: 'from' }, { model: User, as: 'to' }],
     order: [['createdAt', 'DESC']],
   });
 };
+
+User.addHook('afterUpdate', async (notification) => {
+  const socket = socketUtils
+    .getSockets()
+    .find((socket) => notification.id === socket.userId);
+  console.log(socketUtils.getSockets());
+  if (socket) {
+    notification = await User.findByPk(notification.id, {});
+    socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+  }
+});
 
 module.exports = User;

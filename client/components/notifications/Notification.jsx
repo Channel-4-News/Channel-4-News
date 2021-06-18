@@ -1,40 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { sendNotification } from '../../store/actions/notificationActions/sendNotification';
 import NotificationCard from './NotificationCard';
-import { Paper } from '@material-ui/core';
+import { Paper, makeStyles } from '@material-ui/core';
 
-const Notification = ({ notifications }) => {
-  // COMMENTED FOR TESTING
-  // if (currUser.status !== 'Parent') {
-  //   return <div>You do not have permission to view this screen</div>;
-  // }
-  if (!notifications.length) {
-    return null;
+const useStyles = makeStyles((theme) => ({
+  notifications: {
+    width: '50%',
+    backgroundColor: 'cornSilk',
+  },
+  noneText: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  paperContainer: {
+    backgroundColor: 'lightGrey',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}));
+
+const Notification = ({ currUser, notifications }) => {
+  if (currUser.status !== 'Parent') {
+    return <div>You do not have permission to view this screen</div>;
   }
 
+  const classes = useStyles();
   return (
-    <Paper>
-      {notifications.map((currNote, idx) => {
-        return <NotificationCard key={idx} currNote={currNote} />;
-      })}
-    </Paper>
+    <div className={classes.paperContainer}>
+      <Paper className={classes.notifications}>
+        {Array.isArray(notifications) && notifications.length ? (
+          notifications.map((currNote, idx) => {
+            return <NotificationCard key={idx} currNote={currNote} />;
+          })
+        ) : typeof notifications === 'string' ? (
+          <h3 className={classes.noneText}>{notifications}</h3>
+        ) : (
+          ''
+        )}
+      </Paper>
+    </div>
   );
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     notifications: state.notifications,
-//     currUser: state.currUser,
-//   };
-// };
-
-const mapDispatch = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    sendNotification: (message) => {
-      dispatch(sendNotification(message));
-    },
+    currUser: state.currUser,
   };
 };
 
-export default connect(null, mapDispatch)(Notification);
+export default connect(mapStateToProps)(Notification);

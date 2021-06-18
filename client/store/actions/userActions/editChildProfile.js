@@ -13,8 +13,15 @@ export const updateChild = (updatedUser) => ({
 export const updateChildProfileThunk = (user) => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem('token');
+      const token = await window.localStorage.getItem('token');
       const { id, firstName, lastName, username, email, imgUrl } = user;
+
+      // if (imgUrl) {
+      //   console.log('an image');
+      //   const imageUpload = await axios.put(`/api/users/image/${id}`, {
+      //     file: imgUrl,
+      //   });
+      // }
 
       const { data: updateUser } = await axios.put(
         `/api/users/${id}`,
@@ -32,9 +39,11 @@ export const updateChildProfileThunk = (user) => {
           },
         }
       );
-      dispatch(updateChild(updateUser));
+
+      const getUser = (await axios.get(`/api/users/${id}`)).data;
+      dispatch(updateChild(getUser));
     } catch (err) {
-      console.err(err);
+      console.log(err);
     }
   };
 };

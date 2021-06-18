@@ -33,6 +33,10 @@ const CreateCard = (props) => {
   const [imagesStyle, setImagesStyle] = useState({
     display: 'none',
   });
+  const [customCardSettings, setCustomCardSettings] = useState({
+    color: '',
+    image: '',
+  });
   const scrollImages = useRef(null);
 
   useEffect(() => {
@@ -59,13 +63,18 @@ const CreateCard = (props) => {
 
   const handleColorClick = (color) => {
     setBackgroundColor(color);
+    setCustomCardSettings({ ...customCardSettings, color: color });
     axios.put(`/api/users/${props.currUser.id}`, { cardColor: color });
   };
 
   const handleImageClick = (e) => {
     setBackgroundImage(e.target.name);
+    setCustomCardSettings({
+      ...customCardSettings,
+      image: `public/images/cardIcons/${e.target.name}.png`,
+    });
     axios.put(`/api/users/${props.currUser.id}`, {
-      cardImage: e.target.name,
+      cardImage: `public/images/cardIcons/${e.target.name}.png`,
     });
   };
 
@@ -91,6 +100,8 @@ const CreateCard = (props) => {
         setNameError={setNameError}
         setReset={setReset}
         reset={reset}
+        user={props.currUser}
+        cardSettings={customCardSettings}
       />
       <div id="cardChooser">
         <TextField

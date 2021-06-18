@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { editWishListCard } from '../../store/actions/wishListActions/editWishListCard';
+import { TextField } from '@material-ui/core';
 
 class EditWishListCard extends Component {
   constructor(props) {
@@ -60,65 +61,73 @@ class EditWishListCard extends Component {
     const item = this.props.wishListItem;
     const { onChange, onSubmit } = this;
     return (
-      <form type="submit">
+      <form type="submit" id="editWish">
         <Card id="wishListCardWrapper">
-          <Typography
+          {/* <Typography
             className="title"
             gutterBottom
             variant="h5"
             component="h2"
-          >
-            <input
-              id="changeWishListTitle"
-              onChange={onChange}
-              name="itemName"
-              type="text"
-              defaultValue={item.itemName}
-            ></input>
-          </Typography>
+          > */}
+          <input
+            id="changeWishListTitle"
+            onChange={onChange}
+            name="itemName"
+            type="text"
+            defaultValue={item.itemName}
+          ></input>
+          {/* </Typography> */}
           <div id="itemRow">
             <Paper id="itemImage" className="itemImage" variant="outlined">
               <img name="imgUrl" src={item.imgUrl} />
-              <input
-                className="wishListFormInput"
-                onChange={onChange}
-                name="imgUrl"
-                type="text"
-                defaultValue={item.imgUrl}
-              ></input>
-            </Paper>
-            <div id="itemInfo">
-              <div>Wish Cost:</div>
-              <Paper className="itemValues" variant="outlined">
+              <div id="editImageContainer">
+                <div>Image URL:</div>
+
                 <input
                   className="wishListFormInput"
+                  id="editImage"
                   onChange={onChange}
-                  name="cost"
+                  name="imgUrl"
                   type="text"
-                  defaultValue={item.cost}
+                  defaultValue={item.imgUrl}
                 ></input>
-              </Paper>
+              </div>
+            </Paper>
+            <div id="itemInfoEdit">
+              <div className="editInput editCost">
+                <div>Cost:</div>
+                <Paper className="itemValues" variant="outlined">
+                  <input
+                    className="wishListFormInput"
+                    onChange={onChange}
+                    name="cost"
+                    type="text"
+                    defaultValue={item.cost}
+                  ></input>
+                </Paper>
+              </div>
+              <div className="editInput">
+                <div>Category:</div>
+                <Paper className="itemValues" variant="outlined">
+                  <select
+                    className="wishListFormInput"
+                    onChange={onChange}
+                    name="category"
+                    id="wishListCategorySelect"
+                    defaultValue={item.category}
+                  >
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Toys">Toys</option>
+                    <option value="Food">Food</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                  </select>
+                </Paper>
+              </div>
               <br />
-              <div>Wish Category:</div>
-              <Paper className="itemValues" variant="outlined">
-                <select
-                  className="wishListFormInput"
-                  onChange={onChange}
-                  name="category"
-                  id="wishListCategorySelect"
-                  defaultValue={item.category}
-                >
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Toys">Toys</option>
-                  <option value="Food">Food</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-              </Paper>
-              <br />
-              <div>Wish Description:</div>
-              <Paper
+              {/* <div>Description:</div> */}
+              {/* <Paper
                 id="itemDescriptionWrapper"
                 className="itemValues"
                 variant="outlined"
@@ -137,18 +146,18 @@ class EditWishListCard extends Component {
                     defaultValue={item.description}
                   ></textarea>
                 </Typography>
-              </Paper>
+              </Paper> */}
             </div>
-          </div>
-          <div>
-            <Button
-              onClick={onSubmit}
-              color="secondary"
-              size="large"
-              variant="contained"
-            >
-              Save Edit
-            </Button>
+            <div>
+              <Button
+                onClick={onSubmit}
+                color="secondary"
+                size="large"
+                variant="contained"
+              >
+                Save Edit
+              </Button>
+            </div>
           </div>
         </Card>
       </form>

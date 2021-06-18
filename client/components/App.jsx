@@ -17,29 +17,29 @@ import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
 import Chatroom from './chatComponents/Chatroom';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
-//For testing purposes
-import Notification from '../components/notifications/Notification';
-import SortNotifications from './notifications/SortNotifications';
-import store from '../store/store';
-import { sendNotification } from '../store/actions/notificationActions/sendNotification';
-import websocket from '../store/actions/notificationActions/sendNotification';
-import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import {
-  choreSuccess,
-  choreIncomplete,
-} from './notifications/notificationUtils';
-
-//Thunk Import
-import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
 import LinkPlaid from './PlaidLink';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
+import ParentLandingPage from './parentComponents/ParentLandingPage';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+//For testing purposes
+import SortNotifications from './notifications/SortNotifications';
+import store from '../store/store';
+import { sendNotification } from '../store/actions/notificationActions/sendNotification';
+import websocket from '../store/actions/notificationActions/sendNotification';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
+
+//Thunk Import
+import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
+import { updateAllowance } from '../store/actions/allowance/updateAllowance';
+import { setAllowance } from '../store/actions/allowance/setAllowance';
+import { getKids } from '../store/actions/parentActions/getKids';
 
 class App extends Component {
   constructor(props) {
@@ -54,16 +54,35 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
+      if (action.notification.firstName) {
+        store.dispatch(
+          updateAllowance(
+            action.notification.balance,
+            action.notification.daysToAllowance
+          )
+        );
+      }
       if (action.id) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
-          : choreIncomplete(action.text);
+          : action.isCash
+            ? cashWithdrawl(action.text, action.amount)
+            : '';
         store.dispatch(sendNotification(action));
       }
     });
   }
 
   componentDidUpdate() {
+    if (this.props.currUser) {
+      this.props.setAllowance(
+        this.props.currUser.balance,
+        this.props.currUser.allowanceInterval
+      );
+    }
+    if (this.props.currUser.status === 'Parent') {
+      this.props.getKids(this.props.currUser.id);
+    }
     if (this.props.currUser.status !== this.state.user.status) {
       this.setState({ ...this.state, user: this.props.currUser });
       if (this.props.currUser.status === 'Parent') {
@@ -145,25 +164,20 @@ class App extends Component {
                 path="/notifications"
                 component={SortNotifications}
               />
+              {/* {this.state.user.status === 'Child'} */}
               <Route
                 exact
                 path="/home"
                 component={() =>
                   this.state.user.status === 'Child' ? (
-                    <ChildLandingPage user={this.state.user} />
-                  ) : this.state.user.status === 'Parent' ? (
-                    ''
+                    <ChildLandingPage />
                   ) : (
-                    <Home />
+                    <ParentLandingPage />
                   )
                 }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
-              <Route
-                exact
-                path="/wishlist"
-                component={() => <WishList user={this.state.user} />}
-              />
+              <Route exact path="/wishlist" component={WishList} />
               <Route exact path="/dummy" component={Dummy} />
               <Route exact path="/link" component={LinkPlaid} />
               <Route exact path="/card" component={VirtualCard} />
@@ -192,6 +206,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: () => dispatch(attemptLogin()),
     loadNotifications: () => dispatch(loadNotificationsThunk()),
+    setAllowance: (balance, allowanceInterval) =>
+      dispatch(setAllowance(balance, allowanceInterval)),
+    getKids: (id) => dispatch(getKids(id)),
   };
 };
 

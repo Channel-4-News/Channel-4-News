@@ -136,10 +136,16 @@ const syncAndSeed = async () => {
       firstName: 'Joe',
       lastName: 'Momordad',
       imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+        'public/images/profilePics/gabriel-tovar-y9YsbrljPOw-unsplash.jpg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzueCGMLeOpoTZxygG8ap6i',
       virtualCard: 'ic_1IzufNGMLeOpoTZxPd1bYRNy',
+      cardColor: '#ff73ff',
+      cardImage: 'public/images/cardIcons/donut.png',
+      balance: 58,
+      allowance: 6,
+      daysToAllowance: 7,
+      allowanceInterval: 7,
     });
 
     const kid2 = await User.create({
@@ -148,11 +154,16 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Francis',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+      imgUrl: 'public/images/profilePics/francis.jpg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuiLGMLeOpoTZxI7NdxPkF',
       virtualCard: 'ic_1IzujAGMLeOpoTZx1wFkCcUd',
+      balance: 67,
+      cardColor: 'rgb(153, 97, 255)',
+      cardImage: 'public/images/cardIcons/catpeak.png',
+      allowance: 8,
+      daysToAllowance: 7,
+      allowanceInterval: 30,
     });
 
     const kid3 = await User.create({
@@ -161,8 +172,7 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
+      imgUrl: 'public/images/profilePics/kid-smile-thumbs-up-14456897.jpeg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
@@ -260,6 +270,19 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       userId: kid2.id,
       isComplete: true,
+      createdAt: '2019-02-16',
+    });
+    Chore.create({
+      name: 'Make bed.',
+      description:
+        'Make bed every morning before you leave to school. Weekends not included.',
+      amount: 7,
+      isRecurring: true,
+      recurringInterval: 7,
+      icon: '/public/images/choreIcons/beds.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+      isComplete: true,
       createdAt: '2021-02-16',
     });
     Chore.create({
@@ -272,6 +295,18 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/car.png',
       familyId: myFam.id,
       userId: kid2.id,
+      createdAt: '2020-11-07',
+    });
+    Chore.create({
+      name: 'Wash car.',
+      description:
+        'Help mom wash the car on saturday. You are in charge of the hose. Do not spray mom!!',
+      amount: 5,
+      isRecurring: false,
+      due: '2020-10-08',
+      icon: '/public/images/choreIcons/car.png',
+      familyId: myFam.id,
+      userId: kid1.id,
       createdAt: '2021-11-07',
     });
     Chore.create({
@@ -295,6 +330,97 @@ const syncAndSeed = async () => {
       due: '2022-08-16',
       familyId: myFam.id,
       userId: kid2.id,
+      createdAt: '2020-07-02',
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family game night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-08-16',
+      familyId: myFam.id,
+      userId: kid1.id,
+      createdAt: '2022-08-02',
+    });
+    Chore.create({
+      name: 'Take out trash.',
+      description:
+        'When the bins are full, take trash to the trash cans in the garage.',
+      amount: 2,
+      isRecurring: true,
+      recurringInterval: 3,
+      familyId: myFam.id,
+      userId: kid1.id,
+      icon: '/public/images/choreIcons/delete.png',
+      createdAt: '2019-11-09',
+    });
+    Chore.create({
+      name: 'Wash windows.',
+      description: 'Wash the windows in your room. Dad will help.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-09-11',
+      icon: '/public/images/choreIcons/window-cleaning.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+      createdAt: '2021-11-10',
+    });
+    Chore.create({
+      name: 'Cook dinner.',
+      description: 'Help mom prepare the marinade for the salmon.',
+      amount: 3,
+      isRecurring: false,
+      due: '2020-06-13',
+      icon: '/public/images/choreIcons/soup.png',
+      familyId: myFam.id,
+      userId: kid1.id,
+      createdAt: '2020-11-12',
+    });
+    Chore.create({
+      name: 'Wash clothes.',
+      description:
+        'Load clothes into washing machine and start cycle. Ask dad if you need help.',
+      amount: 3,
+      isRecurring: false,
+      due: '2022-07-01',
+      icon: '/public/images/choreIcons/clean-clothes-2.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2021-11-13',
+    });
+    Chore.create({
+      name: 'Make a snack for your baby sister.',
+      description: 'Help prepare guacomole for Lucy on Thursday after school.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-05-03',
+      icon: '/public/images/choreIcons/babysitter.png',
+      familyId: myFam.id,
+      userId: kid3.id,
+      isComplete: true,
+      createdAt: '2020-11-08',
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family game night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2022-08-16',
+      familyId: myFam.id,
+      userId: kid3.id,
+      createdAt: '2019-05-02',
+    });
+    Chore.create({
+      name: 'Brainstorm ideas for family movie night.',
+      description:
+        'Help to think of a movie to watch for family night that everyone will enjoy.',
+      amount: 2,
+      isRecurring: false,
+      due: '2020-08-16',
+      familyId: myFam.id,
+      userId: kid3.id,
       createdAt: '2021-05-02',
     });
     Chore.create({
@@ -318,7 +444,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/window-cleaning.png',
       familyId: myFam.id,
       userId: kid3.id,
-      createdAt: '2021-11-10',
+      createdAt: '2019-11-10',
     });
     Chore.create({
       name: 'Cook dinner.',
@@ -341,7 +467,7 @@ const syncAndSeed = async () => {
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
       userId: kid3.id,
-      createdAt: '2021-11-13',
+      createdAt: '2019-11-13',
     });
 
     const wishListItems = [
@@ -382,18 +508,6 @@ const syncAndSeed = async () => {
         userId: kid1.id,
       },
       {
-        itemName: 'Insignia Mini Fridge',
-        description:
-          'Keep snacks and drinks at the ready with this 2.6 cu. ft. Insignia compact refrigerator. The adjustable thermostat ensures an ideal temperature, and the flat back fits flush with your wall to make the most of tight spaces. This Insignia compact refrigerator has three shelves, in addition to can and bottle storage in the door.',
-        imgUrl:
-          'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6145/6145102_sd.jpg;maxHeight=640;maxWidth=550',
-        cost: 120.0,
-        linkUrl:
-          'https://www.bestbuy.com/site/insignia-2-6-cu-ft-mini-fridge-black/6145102.p?skuId=6145102',
-        category: 'Miscellaneous',
-        userId: kid1.id,
-      },
-      {
         itemName: 'Gucci web slide sandal',
         description:
           'Gucci products are made with carefully selected materials. Please handle with care for longer product life.',
@@ -403,6 +517,66 @@ const syncAndSeed = async () => {
         linkUrl:
           'https://www.gucci.com/us/en/pr/men/shoes-for-men/slides-sandals/web-slide-sandal-p-429469GIB109079?gclid=Cj0KCQjw16KFBhCgARIsALB0g8JepxFx4-E3Sz7VhlOU8JpTPQjIyOThMUK8zV4VpWzR74aqaQZe1RcaAspLEALw_wcB',
         category: 'Clothing',
+        userId: kid1.id,
+      },
+      {
+        itemName: 'Robot Ball',
+        description:
+          'The Nintendo Switch system transforms from home console to handheld, letting you play your favorite games at home or on the go.',
+        imgUrl:
+          'https://m.media-amazon.com/images/I/51rgS0mkFpL._AC_SL1481_.jpg',
+        cost: 49.99,
+        linkUrl:
+          'https://www.amazon.com/dp/B072KYC19V?linkCode=ogi&tag=goodhousekeeping_auto-append-20&ascsubtag=%5Bartid%7C10055.g.29419638%5Bsrc%7C%5Bch%7C%5Blt%7C&th=1',
+        category: 'Electronics',
+        userId: kid1.id,
+      },
+      {
+        itemName: 'Electric Dough Kit',
+        description:
+          'The Nintendo Switch system transforms from home console to handheld, letting you play your favorite games at home or on the go.',
+        imgUrl:
+          'https://images-na.ssl-images-amazon.com/images/I/61UBVwJBL3L._AC_SL1500_.jpg',
+        cost: 26.59,
+        linkUrl:
+          'https://www.amazon.com/dp/B06XK3NXGD?linkCode=ogi&tag=goodhousekeeping_auto-append-20&ascsubtag=%5Bartid%7C10055.g.29419638%5Bsrc%7C%5Bch%7C%5Blt%7C&th=1',
+        category: 'Toys',
+        userId: kid1.id,
+      },
+      {
+        itemName: 'Skating T Shirt',
+        description:
+          'The Nintendo Switch system transforms from home console to handheld, letting you play your favorite games at home or on the go.',
+        imgUrl:
+          'https://s7d9.scene7.com/is/image/JCPenney/DP0312202113025044M?resmode=sharp2&op_sharpen=1&wid=550&hei=550',
+        cost: 12,
+        linkUrl:
+          'https://www.jcpenney.com/p/arizona-little-big-boys-crew-neck-short-sleeve-graphic-t-shirt/ppr5007915320?pTmplType=regular&deptId=dept20000016&catId=cat100260020&rrplacementtype=pdppla1_jrecs',
+        category: 'Clothing',
+        userId: kid1.id,
+      },
+      {
+        itemName: 'Kryptonics 22" Skateboard',
+        description:
+          'The Nintendo Switch system transforms from home console to handheld, letting you play your favorite games at home or on the go.',
+        imgUrl:
+          'https://dks.scene7.com/is/image/GolfGalaxy/20KRYU22LCKRBRDXXSKT_Tentacles?qlt=70&wid=1100&fmt=webp',
+        cost: 19.98,
+        linkUrl:
+          'https://www.dickssportinggoods.com/p/kryptonics-22-locker-board-skateboard-20kryu22lckrbrdxxskt/20kryu22lckrbrdxxskt?sku=22293158&camp=CSE:DSG_92700048849652259_lia_pla-828209378061&segment=&gclid=CjwKCAjwn6GGBhADEiwAruUcKnvX1KQNGGlUbdzRtIHcUfpHAO8NdmsWBk1Snc3dH_yvBwXqmQkQTxoCASUQAvD_BwE&gclsrc=aw.ds',
+        category: 'Toys',
+        userId: kid1.id,
+      },
+      {
+        itemName: 'Insignia Mini Fridge',
+        description:
+          'Keep snacks and drinks at the ready with this 2.6 cu. ft. Insignia compact refrigerator. The adjustable thermostat ensures an ideal temperature, and the flat back fits flush with your wall to make the most of tight spaces. This Insignia compact refrigerator has three shelves, in addition to can and bottle storage in the door.',
+        imgUrl:
+          'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6145/6145102_sd.jpg;maxHeight=640;maxWidth=550',
+        cost: 120.0,
+        linkUrl:
+          'https://www.bestbuy.com/site/insignia-2-6-cu-ft-mini-fridge-black/6145102.p?skuId=6145102',
+        category: 'Miscellaneous',
         userId: kid1.id,
       },
     ];
@@ -421,34 +595,64 @@ const syncAndSeed = async () => {
       { cost: 119, category: 'Toys', userId: kid1.id },
     ];
 
+    const transactions2 = [
+      { cost: 20.99, category: 'Electronics', userId: kid2.id },
+      { cost: 35.0, category: 'Clothing', userId: kid2.id },
+      { cost: 72.5, category: 'Entertainment', userId: kid2.id },
+      { cost: 13.99, category: 'Toys', userId: kid2.id },
+      { cost: 20, category: 'Miscellaneous', userId: kid2.id },
+      { cost: 3.87, category: 'Food', userId: kid2.id },
+      { cost: 10, category: 'Toys', userId: kid2.id },
+    ];
+
+    const transactions3 = [
+      { cost: 29.99, category: 'Electronics', userId: kid3.id },
+      { cost: 95.0, category: 'Clothing', userId: kid3.id },
+      { cost: 22.5, category: 'Entertainment', userId: kid3.id },
+      { cost: 139.99, category: 'Toys', userId: kid3.id },
+      { cost: 50, category: 'Miscellaneous', userId: kid3.id },
+      { cost: 3.87, category: 'Food', userId: kid3.id },
+      { cost: 100, category: 'Toys', userId: kid3.id },
+    ];
+
     await Promise.all(
       transactions.map(async (transaction) => {
         await Transaction.create(transaction);
       })
     );
 
+    await Promise.all(
+      transactions2.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
+    await Promise.all(
+      transactions3.map(async (transaction) => {
+        await Transaction.create(transaction);
+      })
+    );
+
     await Promise.all([
       new Notification({
-        fromId: kid1.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
-      }).save(),
-      new Notification({
+        amount: 5.0,
         fromId: kid2.id,
         toId: parent1.id,
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 1,
       }).save(),
       new Notification({
+        amount: 12.0,
+        category: 'Toys',
         fromId: kid3.id,
         toId: parent1.id,
         text: 'Pay Me please',
         isCash: true,
-        amount: 5.0,
       }).save(),
       new Notification({
+        category: 'Food',
         fromId: kid2.id,
         toId: parent1.id,
         text: 'Got the bread',
@@ -456,17 +660,13 @@ const syncAndSeed = async () => {
         amount: 5.0,
       }).save(),
       new Notification({
-        fromId: kid2.id,
-        toId: parent1.id,
-        text: 'Chore Incomplete',
-        isChore: true,
-      }).save(),
-      new Notification({
+        amount: 33.0,
         fromId: kid3.id,
         toId: parent1.id,
         text: 'Chore Done!',
         isChore: true,
         isChoreCompleted: true,
+        choreId: 2,
       }).save(),
     ]);
 

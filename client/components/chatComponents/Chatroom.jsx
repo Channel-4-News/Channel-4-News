@@ -19,7 +19,6 @@ const Chatroom = (props) => {
 
   useEffect(() => {
     if (messages && !loaded) {
-      console.log('there');
       customRef.current.scrollIntoView({ behavior: 'smooth' });
       setLoaded(true);
     }

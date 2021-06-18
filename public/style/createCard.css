@@ -37,6 +37,7 @@
   background-color: white;
   margin-top: 20px;
   padding-bottom: 30px;
+  border-radius: 20px;
 }
 
 #createCardTitle {
@@ -49,10 +50,10 @@
   align-items: center;
   justify-content: center;
   width: 50%;
-  transform: scale(2, 2);
+  transform: scale(1.5, 1.5);
   /* margin-right: 100px; */
   margin-top: 120px;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
 }
 
 #tempCardView div {
@@ -68,14 +69,21 @@
   width: 100%;
   display: flex;
   /* justify-content: center; */
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   padding-left: 24px;
+}
+
+#virtualCardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* FOR THE CARD */
 
-.rccs__card--visa .rccs__card__background,
-.rccs__card-- {
+/* .rccs__card--visa  */
+.rccs__card__background
+/* .rccs__card--  */ {
   background-image: url('../images/cardIcons/bathdog.png');
   background-size: auto 170px;
   background-repeat: no-repeat;
@@ -385,7 +393,7 @@
   visibility: hidden;
 }
 .rccs--filled {
-  opacity: 0.8 !important;
+  /* opacity: 0.8 !important; */
 }
 .rccs--focused {
   font-weight: 700;

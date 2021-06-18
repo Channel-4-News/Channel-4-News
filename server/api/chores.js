@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {
-  models: { User, Chore },
+  models: { User, Chore, Notification },
 } = require('../db/models/associations');
 
 //get all chores by chorelist id
@@ -64,7 +64,9 @@ router.post('/', async (req, res, next) => {
 //update chores
 router.put('/:id', async (req, res, next) => {
   try {
-    const choreToUpdate = await Chore.findByPk(req.params.id);
+    const choreToUpdate = await Chore.findByPk(req.params.id, {
+      include: [Notification],
+    });
     const {
       icon,
       name,
@@ -101,6 +103,15 @@ router.delete('/:id', async (req, res, next) => {
     const choreToDelete = await Chore.findByPk(req.params.id);
     await choreToDelete.destroy();
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const chore = await Chore.findByPk(req.params.id);
+    res.send(chore);
   } catch (err) {
     next(err);
   }

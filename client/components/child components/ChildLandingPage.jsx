@@ -1,40 +1,91 @@
 import React from 'react';
 import SpendingGraph from './SpendingGraph';
-import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
+import { Avatar } from '@material-ui/core';
 import VirtualCard from '../forms/VirtualCard';
+import Balance from './allowance components/Balance';
+import AllowanceInterval from './allowance components/AllowanceInterval';
 
 class ChildLandingPage extends React.Component {
   constructor() {
     super();
+    this.categorizeTransactions = this.categorizeTransactions.bind(this);
   }
+  categorizeTransactions() {
+    let transactionsObject = {};
+    this.props.user.transactions.map((transaction) => {
+      if (!transactionsObject[transaction.category]) {
+        transactionsObject[transaction.category] = parseInt(transaction.cost);
+      } else {
+        transactionsObject[transaction.category] += parseInt(transaction.cost);
+      }
+    });
+    let total = 0;
+    for (const [key, value] of Object.entries(transactionsObject)) {
+      total += value;
+    }
+    let transactionsArray = [];
+    for (const [key, value] of Object.entries(transactionsObject)) {
+      let temp = {};
+      temp[key] = [value, ((value / total) * 100).toFixed(2)];
+      transactionsArray.push(temp);
+    }
+    return transactionsArray;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   render() {
-    console.log(this.props);
-    return this.props.user.allowance ? (
-      <div>
-        <div>Hello {this.props.user.firstName}</div>
-        <Avatar
-          id="avatar"
-          alt="current user pic"
-          src={this.props.user.imgUrl}
-        />
-        <SpendingGraph transactions={this.props.user.transactions} />
-        <VirtualCard />
-        <div>Categories:</div>
-        <div>Money made this month ${this.props.user.balance}</div>
-        <div>
-          Next allowance in {this.props.user.allowance.interval} day(s) $
-          {this.props.user.allowance.amount}
-        </div>
-        <div>
-          <div>Money spent this month:</div>
-          <button>Chores</button>
-          <button>Wishlist</button>
+    let transactions = this.categorizeTransactions();
+    this.props.user.imgUrl;
+    // return this.props.user.allowance ? (
+    return (
+      <div id="childLandingPage">
+        <p>Hello, {this.props.user.firstName}!</p>
+        <div id="childLandingContainer">
+          <div id="avatarWrapper">
+            <Avatar
+              style={{ width: '230px', height: '230px' }}
+              id="avatar"
+              alt="current user pic"
+              src={this.props.user.imgUrl}
+            />
+          </div>
+          <div id="childGraphics">
+            <div style={{ width: '50%' }} id="spendingSnapshot">
+              <div id="spendingSnapshotTitle">SPENDING SNAPSHOT</div>
+              <SpendingGraph transactions={this.props.user.transactions} />
+            </div>
+            <div id="forBorder"></div>
+            <div id="childLandingVirtualCard">
+              <Balance />
+              <VirtualCard />
+              <AllowanceInterval />
+            </div>
+          </div>
+          {!this.props.user?.transactions?.length ? (
+            <div id="newCardMessage">
+              New card? When you make a purchase, your spending snapshot will
+              update and this terribly boring yet somewhat informative message
+              will disappear. Use your spending snapshot to visualize how you
+              are spending money, and to save and budget.
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
-    ) : (
-      ''
     );
   }
 }
 
-export default ChildLandingPage;
+const mapStateToProps = (state) => {
+  return {
+    user: state.currUser,
+    allowance: state.allowance,
+  };
+};
+
+export default connect(mapStateToProps)(ChildLandingPage);

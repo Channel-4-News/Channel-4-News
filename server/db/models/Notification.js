@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db');
-const User = require('./User');
 const socketUtils = require('../../../socketUtils');
 const NotificationList = db.define('notification list');
 
@@ -30,6 +29,10 @@ const Notification = db.define('notification', {
     defaultValue: false,
   },
   isCash: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  chorePaid: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },

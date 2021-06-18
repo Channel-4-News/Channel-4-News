@@ -132,12 +132,13 @@ const Home = () => {
           <img src="public/images/techs/1_PY24xlr4TpOkXW04HUoqrQ.jpg" />
           <img src="public/images/techs/0_xAADmPJN52Yy6XJV.jpg" />
           <img src="public/images/techs/1_q9myzo5Au8OfsaSrCodNmw.png" />
-          <img src="public/images/techs/1200px-Plaid_logo.svg.png" />
+          <img src="public/images/techs/puppeteer.png" />
           <img src="public/images/techs/React_graphic.png" />
           <img src="public/images/techs/Redux.png" />
+          <img src="public/images/techs/1200px-Plaid_logo.svg.png" />
           <img src="public/images/techs/stripe-logo-blue.png" />
           <img src="public/images/techs/charjs.png" />
-          <img src="public/images/techs/puppeteer.png" />
+          <img src="public/images/techs/Firebase_Logo.png" />
         </div>
       </div>
     </div>
