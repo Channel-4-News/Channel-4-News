@@ -20,17 +20,13 @@ import Chatroom from './chatComponents/Chatroom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //For testing purposes
-import Notification from '../components/notifications/Notification';
 import SortNotifications from './notifications/SortNotifications';
 import store from '../store/store';
 import { sendNotification } from '../store/actions/notificationActions/sendNotification';
 import websocket from '../store/actions/notificationActions/sendNotification';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import {
-  choreSuccess,
-  choreIncomplete,
-} from './notifications/notificationUtils';
+import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
@@ -68,7 +64,9 @@ class App extends Component {
       if (action.id) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
-          : choreIncomplete(action.text);
+          : action.isCash
+            ? cashWithdrawl(action.text, action.amount)
+            : '';
         store.dispatch(sendNotification(action));
       }
     });
