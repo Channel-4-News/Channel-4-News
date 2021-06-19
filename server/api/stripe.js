@@ -68,7 +68,7 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard - untested - triggered on chore payout
+//create an ACH charge
 router.post('/charges', async (req, res, next) => {
   try {
     const { customer, amount, kid } = req.body;

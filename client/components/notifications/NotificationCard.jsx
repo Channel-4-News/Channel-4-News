@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { GrCheckboxSelected } from 'react-icons/gr';
 import { GiTakeMyMoney } from 'react-icons/gi';
+import LocalAtmOutlinedIcon from '@material-ui/icons/LocalAtmOutlined';
+import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Avatar from '@material-ui/core/Avatar';
 import { deleteNotificationThunk } from '../../store/actions/notificationActions/deleteNotification';
 import axios from 'axios';
 import { updateChore } from '../../store/actions/choreActions/updateChore';
@@ -11,13 +14,18 @@ import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   icons: {
-    height: '50px',
-    width: '50px',
+    height: '30px',
+    width: '30px',
+    alignSelf: 'center',
+  },
+  large: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
   },
   completed: {
     backgroundColor: 'deepSkyBlue',
     borderRadius: '10px',
-    margin: '1rem',
+    marginTop: '1rem',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -26,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   cash: {
     backgroundColor: 'limeGreen',
     borderRadius: '15px',
-    margin: '1rem',
+    marginTop: '1rem',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -37,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const NotificationCard = (props) => {
   const classes = useStyles();
   const [chore, setChore] = useState({});
+  const [payoutMessage, setPayoutMessage] = useState('PAYOUT');
 
   useEffect(() => {
     if (props.currNote.chore) {
@@ -54,14 +63,19 @@ const NotificationCard = (props) => {
   return (
     <div>
       {props.currNote.isChoreCompleted ? (
-        <Grid className={classes.completed}>
-          <GrCheckboxSelected className={classes.icons} /> {props.currNote.text}
-          , amount due ${props.currNote.amount}!
-          <Button
+        <div className="choreCompletedNote">
+          <Avatar className={classes.large} src={props.currNote.from.imgUrl} />
+          <div>
+            {props.currNote.from.firstName} completed:{' '}
+            {props.currNote.chore.name}
+          </div>
+          <div>${props.currNote.amount}</div>
+          <button
             disabled={props.currNote.isChore && chore.wasPaid ? true : false}
-            id="payoutButton"
-            variant="outlined"
+            className="border-gradient border-gradient-purple"
+            // variant="outlined"
             onClick={async () => {
+              setPayoutMessage('PROCESSING');
               await axios.post('/api/stripe/charges', {
                 customer: props.currNote.to.stripeAccount,
                 amount: parseInt(props.currNote.amount) * 100,
@@ -74,19 +88,28 @@ const NotificationCard = (props) => {
               });
             }}
           >
-            Payout
-          </Button>
+            {payoutMessage}
+          </button>
           <IconButton onClick={() => props.destroy(props.currNote.id)}>
             <HighlightOffIcon />
           </IconButton>
-        </Grid>
+        </div>
       ) : props.currNote.isCash ? (
-        <Grid className={classes.cash}>
-          <GiTakeMyMoney className={classes.icons} /> {props.currNote.text}!
+        <div className="withdrawalNote">
+          <Avatar className={classes.large} src={props.currNote.from.imgUrl} />
+          <div>{props.currNote.from.firstName} initiated a withdrawal.</div>
+          <div>${props.currNote.amount}</div>
+          {/* <LocalAtmOutlinedIcon className={classes.icons} /> */}
+          <div>
+            <img
+              src="public/images/icons/withdraw.png"
+              style={{ width: '85%', marginLeft: '5%' }}
+            />
+          </div>
           <IconButton onClick={() => props.destroy(props.currNote.id)}>
             <HighlightOffIcon />
           </IconButton>
-        </Grid>
+        </div>
       ) : (
         ''
       )}
