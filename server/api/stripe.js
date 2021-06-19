@@ -196,6 +196,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
       customer: req.params.id,
       amount,
       description,
+      currency: 'usd',
     });
     res.status(201).send(invoiceItem);
   } catch (err) {
@@ -209,13 +210,25 @@ const scheduler = new ToadScheduler();
 router.post('/invoice/:id', async (req, res, next) => {
   try {
     const add = new Task('invoice', async () => {
-      const invoice = await stripe.invoices.create({
+      const invoiceItems = await stripe.invoiceItems.list({
         customer: req.params.id,
-        auto_advance: true,
+        pending: true,
       });
-      res.status(201).send(invoice);
+      if (invoiceItems.data.length) {
+        const invoice = await stripe.invoices.create({
+          customer: req.params.id,
+          auto_advance: true,
+        });
+        res.status(201).send(invoice);
+      } else {
+        res.status(200);
+      }
     });
-    const newJob = new SimpleIntervalJob({ minutes: 1 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
+
+    //for production
+    // const newJob = new SimpleIntervalJob({ months: 1 }, add);
+
     scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
