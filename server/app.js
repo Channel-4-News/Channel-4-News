@@ -2,13 +2,30 @@ const express = require('express');
 const morgan = require('morgan');
 const router = require('./api/router');
 
+const passport = require('passport');
+const session = require('express-session');
+
 const path = require('path');
 
 const app = express();
 
+require('./passport')(passport);
+
 app.use(morgan('dev'));
 app.use('/public', express.static('./public'));
 app.use(express.json({ limit: '50mb' }));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/api', router);
 
 app.get('/', (req, res, next) => {
