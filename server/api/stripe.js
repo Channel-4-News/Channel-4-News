@@ -58,10 +58,7 @@ router.post('/payouts', async (req, res, next) => {
 //create bank account using stripe bank account token from plaid - untested -triggered on register/connect bank acct
 router.post('/create_bank_account', async (req, res, next) => {
   try {
-    console.log('getting there');
     const { id, accountToken } = req.body;
-    console.log('id', id);
-    console.log('accountToken', accountToken);
     const bankAccount = await stripe.customers.createSource(id, {
       source: accountToken,
     });

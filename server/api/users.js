@@ -107,6 +107,7 @@ router.put('/:id', async (req, res, next) => {
       virtualCard,
       cardColor,
       cardImage,
+      hasBankAccount,
     } = req.body;
 
     await userToUpdate.update({
@@ -124,6 +125,7 @@ router.put('/:id', async (req, res, next) => {
       virtualCard,
       cardColor,
       cardImage,
+      hasBankAccount,
     });
     res.status(200).send(userToUpdate);
   } catch (err) {

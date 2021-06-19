@@ -4,6 +4,7 @@ const UPDATE_USER = 'UPDATE_USER';
 
 const updateUser = (id, updateInfo) => {
   return async (dispatch) => {
+    console.log('update info', id, updateInfo);
     const user = (await axios.put(`/api/users/${id}`, updateInfo)).data;
     dispatch(_updateUser(user));
   };

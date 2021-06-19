@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { usePlaidLink } from 'react-plaid-link';
 import axios from 'axios';
 import BankAuth from './stripe/BankAuth';
@@ -27,7 +28,6 @@ const LinkPlaid = (props) => {
   }
 
   const onSuccess = async (token, metadata) => {
-    console.log('onSuccess', token, metadata);
     const stripeBA = (
       await axios.post('/api/plaid/tokenExchange', {
         token,
@@ -38,7 +38,7 @@ const LinkPlaid = (props) => {
       id: props.user.stripeAccount,
       accountToken: stripeBA.stripe_bank_account_token,
     });
-    props.updateUser(props.user.id, { ...props.user, hasBankAccount: true });
+    props.updateUser(props.user.id, { hasBankAccount: true });
     props.history.go(0);
   };
   const onExit = (error, metadata) => {
@@ -113,8 +113,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateUser: (user) => dispatch(updateUser(user)),
+    updateUser: (id, info) => dispatch(updateUser(id, info)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LinkPlaid);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(LinkPlaid)
+);
