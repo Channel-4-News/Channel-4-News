@@ -15,37 +15,28 @@ describe('Notification Routes', () => {
       amount: 29.99,
       category: 'Electronics',
       isCash: false,
+      toId: 1,
     },
     {
       amount: 5.0,
       category: 'Food',
       isCash: false,
+      toId: 1,
     },
   ];
   const newUser = {
     username: 'michelleO',
     email: 'mobama@gmail.com',
     password: 'password123',
+    status: 'Parent',
   };
   beforeAll(async () => {
     await db.sync({ force: true });
+    await User.authenticate(create(newUser));
     await Notification.bulkCreate(notifications);
-    await User(newUser).save();
   });
   afterAll(async () => {
     await db.close();
-  });
-
-  xtest('POST /api/auth/user creates new user and wishlist', async (done) => {
-    await supertest(app)
-      .post('/api/auth/user')
-      .send({
-        username: 'hugstest',
-        email: 'hugstest@gmail.com',
-        password: 'password123',
-      })
-      .expect(201);
-    done();
   });
 
   xtest('GET /api/notification returns all notifications', async (done) => {
@@ -54,7 +45,7 @@ describe('Notification Routes', () => {
         authorization: window.localStorage.getItem('userToken'),
       },
     });
-    // expect(response.body.length).toBe(0);
+    expect(response.body.length).toBe(2);
     done();
   });
 
