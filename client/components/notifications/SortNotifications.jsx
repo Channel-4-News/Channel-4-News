@@ -19,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SortNotifications = ({ notifications }) => {
+const SortNotifications = ({
+  allNotifications,
+  choreNotifications,
+  cashNotifications,
+}) => {
   const [val, setVal] = useState('Select');
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const [newNotifications, setNewNotifications] = useState([] || '');
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,7 +59,6 @@ const SortNotifications = ({ notifications }) => {
       >
         <MenuItem
           onClick={() => {
-            setNewNotifications(choresCompletedSort(notifications));
             handleClose();
             setVal('Chores Completed');
           }}
@@ -65,16 +67,14 @@ const SortNotifications = ({ notifications }) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setNewNotifications(cashRelated(notifications));
             handleClose();
-            setVal('Cash Withdrawls');
+            setVal('Cash Withdrawals');
           }}
         >
-          Cash Withdrawls
+          Cash Withdrawals
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setNewNotifications(notifications);
             handleClose();
             setVal('All');
           }}
@@ -82,26 +82,28 @@ const SortNotifications = ({ notifications }) => {
           All
         </MenuItem>
       </Menu>
-      {!notifications.length ? (
-        <Notification
-          notifications={
-            !newNotifications.length ? 'No New Notifications' : newNotifications
-          }
-        />
-      ) : (
-        <Notification
-          notifications={
-            !newNotifications.length ? notifications : newNotifications
-          }
-        />
-      )}
+      <Notification
+        notifications={
+          val === 'Chores Completed'
+            ? choreNotifications
+            : val === 'Cash Withdrawals'
+              ? cashNotifications
+              : val === 'All' || val === 'Select'
+                ? allNotifications
+                : ''
+        }
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    notifications: state.notifications,
+    allNotifications: state.notifications.length
+      ? state.notifications.sort((a, b) => b.id - a.id)
+      : 'No New Notifications',
+    choreNotifications: choresCompletedSort(state.notifications),
+    cashNotifications: cashRelated(state.notifications),
   };
 };
 

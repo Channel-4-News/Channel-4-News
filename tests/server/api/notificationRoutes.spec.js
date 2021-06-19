@@ -6,9 +6,8 @@ const { app } = require('../../../server/app');
 const request = supertest(app);
 const {
   db,
-  models: { Notification },
+  models: { Notification, User },
 } = require('../../../server/db/models/associations');
-const User = require('../../../server/db/models/User');
 
 describe('Notification Routes', () => {
   const notifications = [
@@ -31,11 +30,22 @@ describe('Notification Routes', () => {
   beforeAll(async () => {
     await db.sync({ force: true });
     await Notification.bulkCreate(notifications);
-    let userToken = (await request.post('/api/users').send(newUser)).body;
-    console.log(userToken);
+    await User(newUser).save();
   });
   afterAll(async () => {
     await db.close();
+  });
+
+  xtest('POST /api/auth/user creates new user and wishlist', async (done) => {
+    await supertest(app)
+      .post('/api/auth/user')
+      .send({
+        username: 'hugstest',
+        email: 'hugstest@gmail.com',
+        password: 'password123',
+      })
+      .expect(201);
+    done();
   });
 
   xtest('GET /api/notification returns all notifications', async (done) => {

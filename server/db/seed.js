@@ -668,7 +668,7 @@ const syncAndSeed = async () => {
         text: `Make a snack for your baby sister. Completed by ${kid3.username}`,
         isChore: true,
         isChoreCompleted: true,
-        choreId: 17,
+        choreId: 16,
       }).save(),
       new Notification({
         amount: 68.99,
