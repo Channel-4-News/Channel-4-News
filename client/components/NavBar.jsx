@@ -55,13 +55,13 @@ const NavBar = (props) => {
             )}
 
             {/* USER IS A CHILD */}
-            {/* {user === 'Child' ? (
+            {user === 'Child' ? (
               <Button color="inherit" href="/#/home">
                 Home
               </Button>
             ) : (
               ''
-            )} */}
+            )}
             {user === 'Child' ? (
               <Button color="inherit" href="/#/wishlist">
                 Wish List
@@ -83,13 +83,13 @@ const NavBar = (props) => {
             ) : (
               ''
             )}
-            {user === 'Child' ? (
+            {/* {user === 'Child' ? (
               <Button color="primary" href="/#/home" variant="contained">
                 Profile
               </Button>
             ) : (
               ''
-            )}
+            )} */}
             {user === 'Child' ? <Settings id="settings" /> : ''}
 
             {/*----------- USER IS A PARENT --------------*/}
@@ -127,6 +127,15 @@ const NavBar = (props) => {
               ''
             )}
             {user === 'Parent' ? <Settings id="settings" /> : ''}
+            {/*----------- USER IS ANONYMOUS --------------*/}
+            {user === 'Anonymous' ? (
+              <Button href="/#/home" color="inherit">
+                Finish Registration
+              </Button>
+            ) : (
+              ''
+            )}
+            {user === 'Anonymous' ? <Settings id="settings" /> : ''}
           </div>
         </Toolbar>
       </AppBar>

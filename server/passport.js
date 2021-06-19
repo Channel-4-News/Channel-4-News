@@ -1,5 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('./db/models/User');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 module.exports = function (passport) {
   passport.use(
@@ -24,7 +25,12 @@ module.exports = function (passport) {
           if (user) {
             done(null, user);
           } else {
+            const stripeUser = await stripe.customers.create({
+              email: profile.emails[0].value,
+            });
             user = await User.create(newUser);
+            user.stripeAccount = stripeUser.id;
+            user.save();
             done(null, user);
           }
         } catch (error) {

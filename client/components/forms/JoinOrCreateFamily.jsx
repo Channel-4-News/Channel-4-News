@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createFamily } from '../../store/actions/familyActions/createFamily';
 import { authFamily } from '../../store/actions/familyActions/joinFamily';
@@ -21,6 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { updateUser } from '../../store/actions/userActions/updateUser';
 
 const JoinOrCreateFamily = (props) => {
+  const [status, setStatus] = useState('');
   const [familySecret, setFamilySecret] = useState('');
   const [confirmSecret, setConfirmSecret] = useState('');
   const [join, setJoin] = useState('');
@@ -97,8 +99,6 @@ const JoinOrCreateFamily = (props) => {
       const didJoin = await props.joinFamily(familyValues, props.currUser.id);
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
-      } else {
-        props.setPage(3);
       }
     }
 
@@ -106,8 +106,6 @@ const JoinOrCreateFamily = (props) => {
       const didJoin = await props.joinFamily(familyValues, props.currUser.id);
       if (!didJoin) {
         setJoin('Invalid family name or family secret.');
-      } else {
-        props.setPage(3);
       }
     }
   };
@@ -147,8 +145,9 @@ const JoinOrCreateFamily = (props) => {
               label={errors.relation}
               color="secondary"
               onChange={(e) => {
-                props.setUserStatus(e.target.value);
+                // props.setUserStatus(e.target.value);
                 props.updateUser(props.currUser.id, { status: e.target.value });
+                setStatus(e.target.value);
               }}
             >
               <option aria-label="None" value="" />
@@ -208,6 +207,42 @@ const JoinOrCreateFamily = (props) => {
       ) : (
         <form className="createJoin" onSubmit={submitFamily}>
           <h4>JOIN FAMILY</h4>
+          <small className={classes.root}>
+            Don&apos;t have a family to join? Click
+            <span
+              id="switchToJoinFamily"
+              onClick={() => setJoinOrCreate('create')}
+            >
+              &nbsp;here&nbsp;
+            </span>
+            to create new family.
+          </small>
+          <FormControl variant="outlined">
+            <InputLabel
+              htmlFor="parentOrChild"
+              color="secondary"
+              className={classes.parentOrChild}
+            >
+              {errors.relation}
+            </InputLabel>
+            <Select
+              required
+              className={classes.parentOrChild}
+              native
+              label={errors.relation}
+              color="secondary"
+              onChange={(e) => {
+                // props.setUserStatus(e.target.value);
+                props.updateUser(props.currUser.id, { status: e.target.value });
+                setStatus(e.target.value);
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value="Parent">Parent</option>
+              <option value="Child">Child</option>
+            </Select>
+            <FormHelperText>Are you a parent or child?</FormHelperText>
+          </FormControl>
           <TextField
             className={classes.root}
             label={errors.familyName}
@@ -256,4 +291,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(JoinOrCreateFamily);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(JoinOrCreateFamily)
+);

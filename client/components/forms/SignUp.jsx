@@ -69,7 +69,7 @@ const SignUp = (props) => {
 
     //check login and sign up success
     const signedUp = await props.attemptLogin();
-    if (signedUp) props.setPage(2);
+    if (signedUp) props.history.push('/home');
   };
 
   //handles password matching, labels and errors for confirm password
@@ -182,19 +182,20 @@ const SignUp = (props) => {
           style={{ width: '40%', alignSelf: 'center', marginTop: '40px' }}
           onClick={submitNewUser}
         >
-          Next
+          Sign Up
         </Button>
         <GoogleButton
           style={{
-            width: '40%',
+            width: '80%',
             alignSelf: 'center',
             marginTop: '15px',
             marginBottom: '15px',
           }}
           type="dark"
           label="Sign Up With Google"
-          onClick={() => {
-            console.log('Google button clicked');
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = '/api/google';
           }}
         />
         <small>

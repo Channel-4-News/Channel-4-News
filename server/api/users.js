@@ -107,6 +107,7 @@ router.put('/:id', async (req, res, next) => {
       virtualCard,
       cardColor,
       cardImage,
+      hasBankAccount,
     } = req.body;
 
     await userToUpdate.update({
@@ -124,6 +125,7 @@ router.put('/:id', async (req, res, next) => {
       virtualCard,
       cardColor,
       cardImage,
+      hasBankAccount,
     });
     res.status(200).send(userToUpdate);
   } catch (err) {
@@ -139,12 +141,12 @@ router.put('/allowance/modify/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     const { newAllowance, newInterval } = req.body;
-    console.log(newAllowance);
-    console.log(newInterval);
+    // console.log(newAllowance);
+    // console.log(newInterval);
     user.allowance = newAllowance;
     user.allowanceInterval = newInterval;
     await user.save();
-    console.log(user);
+    // console.log(user);
     res.status(201).send(user);
   } catch (err) {
     next(err);

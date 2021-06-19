@@ -85,6 +85,8 @@ const WishListCard = (props) => {
               purchaseOrWithdraw={() => props.purchaseOrWithdraw(id, item)}
               item={item}
               state={() => props.update()}
+              user={props.user}
+              cost={item.cost}
             />
             <Button
               size="large"

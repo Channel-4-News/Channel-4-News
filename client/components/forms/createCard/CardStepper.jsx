@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import {
   makeStyles,
@@ -114,7 +115,7 @@ const CardStepper = (props) => {
       props.cardSettings.image,
       props.cardSettings.color
     );
-    props.history.push('/home');
+    props.history.go(0);
   };
 
   return (
@@ -176,4 +177,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CardStepper);
+export default withRouter(connect(null, mapDispatchToProps)(CardStepper));

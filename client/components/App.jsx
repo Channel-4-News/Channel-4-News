@@ -13,6 +13,7 @@ import ChildProfile from './child components/ChildProfile';
 import JoinOrCreateFamily from './forms/JoinOrCreateFamily';
 import LogIn from './forms/LogIn';
 import Register from './forms/Register';
+import SignUp from './forms/SignUp';
 import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
@@ -20,7 +21,7 @@ import Chatroom from './chatComponents/Chatroom';
 import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
-import LinkPlaid from './PlaidLink';
+import LinkPlaid from './LinkPlaid';
 import VirtualCard from './forms/VirtualCard';
 import CreateCard from './forms/CreateCard';
 import ParentLandingPage from './parentComponents/ParentLandingPage';
@@ -76,7 +77,10 @@ class App extends Component {
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.currUser.status !== this.props.currUser.status) {
+      this.forceUpdate();
+    }
     if (this.props.currUser) {
       this.props.setAllowance(
         this.props.currUser.balance,
@@ -153,7 +157,7 @@ class App extends Component {
           <div id="mainAppContent">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/signup" component={Register} />
+              <Route exact path="/signup" component={SignUp} />
               <Route exact path="/login" component={LogIn} />
               <Route
                 exact
@@ -171,13 +175,31 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={() =>
-                  this.state.user.status === 'Child' ? (
-                    <ChildLandingPage />
-                  ) : (
-                    <ParentLandingPage />
-                  )
-                }
+                component={() => {
+                  if (
+                    this.state.user.status === 'Child' &&
+                    this.state.user.virtualCard
+                  ) {
+                    return <ChildLandingPage />;
+                  } else if (
+                    this.state.user.status === 'Child' &&
+                    !this.state.user.virtualCard
+                  ) {
+                    return <CreateCard />;
+                  } else if (
+                    this.state.user.status === 'Parent' &&
+                    this.state.user.hasBankAccount
+                  ) {
+                    return <ParentLandingPage />;
+                  } else if (
+                    this.state.user.status === 'Parent' &&
+                    !this.state.user.hasBankAccount
+                  ) {
+                    return <LinkPlaid />;
+                  } else {
+                    return <JoinOrCreateFamily />;
+                  }
+                }}
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route exact path="/wishlist" component={WishList} />

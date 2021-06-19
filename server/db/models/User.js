@@ -57,8 +57,8 @@ const User = db.define('user', {
     },
   },
   status: {
-    type: DataTypes.ENUM(['Parent', 'Child']),
-    defaultValue: 'Child',
+    type: DataTypes.ENUM(['Parent', 'Child', 'Anonymous']),
+    defaultValue: 'Anonymous',
   },
   isAdmin: {
     type: DataTypes.BOOLEAN,
@@ -108,6 +108,10 @@ const User = db.define('user', {
   },
   allowanceInterval: {
     type: DataTypes.STRING,
+  },
+  hasBankAccount: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
 });
 
