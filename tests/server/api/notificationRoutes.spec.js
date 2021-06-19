@@ -38,7 +38,7 @@ describe('Notification Routes', () => {
     await db.close();
   });
 
-  test('GET /api/notification returns all notifications', async (done) => {
+  xtest('GET /api/notification returns all notifications', async (done) => {
     const response = await request.get('/api/notification', {
       headers: {
         authorization: window.localStorage.getItem('userToken'),
