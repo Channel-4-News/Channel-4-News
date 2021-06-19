@@ -76,8 +76,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.currUser.status !== this.props.currUser.status) {
-      console.log('prevProps', prevProps.currUser.status);
-      console.log('this.props', this.props.currUser.status);
       this.forceUpdate();
     }
     if (this.props.currUser) {
@@ -121,10 +119,10 @@ class App extends Component {
           contrastText: '#fff',
         },
         secondary: {
-          light: '#62efff',
-          main: '#00bcd4',
-          dark: '#008ba3',
-          contrastText: '#000',
+          light: '#8199ff',
+          main: '#3e6bff',
+          dark: '#0041cb',
+          contrastText: '#fff',
         },
       },
     });

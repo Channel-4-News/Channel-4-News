@@ -60,43 +60,45 @@ const LinkPlaid = (props) => {
   const { open, ready, error } = usePlaidLink(config);
 
   return token ? (
-    <div id="linkContainer">
-      <div id="linkButton">
-        <h4>CONNECT YOUR BANK ACCOUNT</h4>
-        <div id="bankConnectIcons">
-          <ImportantDevicesIcon color="secondary" />
-          <SettingsEthernetIcon color="secondary" />
-          <AccountBalanceOutlinedIcon color="secondary" />
-        </div>
-        <BankAuth setAuth={setAuth} auth={auth} />
-        <Button
-          color="secondary"
-          onClick={() => {
-            setProcessing(true);
-            open();
-          }}
-          disabled={auth}
-          variant="contained"
-        >
-          {!processing ? 'Connect Your Bank Account' : 'Processing...'}
-        </Button>
-        <div id="learnAboutPlaid" onClick={() => {}}>
-          <small>
-            We use Plaid to create a secure connection between your bank account
-            and FUNDIT. Click{' '}
-            <a
-              href="https://plaid.com/how-we-handle-data/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              here{' '}
-            </a>
-            to learn more about Plaid.{' '}
-          </small>
-          <small>
-            If you have any questions or wish to revoke authorization, please
-            contact FUNDIT at contact@fundit.com.
-          </small>
+    <div id="signup-wrapper">
+      <div id="linkContainer">
+        <div id="linkButton">
+          <h4>CONNECT YOUR BANK ACCOUNT</h4>
+          <div id="bankConnectIcons">
+            <ImportantDevicesIcon color="secondary" />
+            <SettingsEthernetIcon color="secondary" />
+            <AccountBalanceOutlinedIcon color="secondary" />
+          </div>
+          <BankAuth setAuth={setAuth} auth={auth} />
+          <Button
+            color="secondary"
+            onClick={() => {
+              setProcessing(true);
+              open();
+            }}
+            disabled={auth}
+            variant="contained"
+          >
+            {!processing ? 'Connect Your Bank Account' : 'Processing...'}
+          </Button>
+          <div id="learnAboutPlaid" onClick={() => {}}>
+            <small>
+              We use Plaid to create a secure connection between your bank
+              account and FUNDIT. Click{' '}
+              <a
+                href="https://plaid.com/how-we-handle-data/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                here{' '}
+              </a>
+              to learn more about Plaid.{' '}
+            </small>
+            <small>
+              If you have any questions or wish to revoke authorization, please
+              contact FUNDIT at contact@fundit.com.
+            </small>
+          </div>
         </div>
       </div>
     </div>

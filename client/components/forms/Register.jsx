@@ -6,7 +6,7 @@ import {
   attemptLogin,
   authUser,
 } from '../../store/actions/userActions/getCurUser';
-import LinkPlaid from '../PlaidLink';
+import LinkPlaid from '../LinkPlaid';
 import CreateCard from './CreateCard';
 import JoinOrCreateFamily from './JoinOrCreateFamily';
 import SignUp from './SignUp';

@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const {
   models: { User },
 } = require('../db/models/associations');
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
 // create stripe customerId for user
 router.post('/', async (req, res, next) => {
@@ -68,7 +69,7 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard - untested - triggered on chore payout
+//create an ACH charge
 router.post('/charges', async (req, res, next) => {
   try {
     const { customer, amount, kid } = req.body;
@@ -182,6 +183,53 @@ router.put('/card/:id/limit', async (req, res, next) => {
       },
     });
     res.send(card);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//create invoice item
+router.post('/invoiceitems/:id', async (req, res, next) => {
+  try {
+    const { amount, description } = req.body;
+    const invoiceItem = await stripe.invoiceItems.create({
+      customer: req.params.id,
+      amount,
+      description,
+      currency: 'usd',
+    });
+    res.status(201).send(invoiceItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
+const scheduler = new ToadScheduler();
+
+//create invoice
+router.post('/invoice/:id', async (req, res, next) => {
+  try {
+    const add = new Task('invoice', async () => {
+      const invoiceItems = await stripe.invoiceItems.list({
+        customer: req.params.id,
+        pending: true,
+      });
+      if (invoiceItems.data.length) {
+        const invoice = await stripe.invoices.create({
+          customer: req.params.id,
+          auto_advance: true,
+        });
+        res.status(201).send(invoice);
+      } else {
+        res.status(200);
+      }
+    });
+    const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
+
+    //for production
+    // const newJob = new SimpleIntervalJob({ months: 1 }, add);
+
+    scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
   }

@@ -162,7 +162,6 @@ router.put('/allowance/:id', async (req, res, next) => {
     //add allowance to scheduler
     const add = new Task('allowance', async () => {
       await user.update({ balance: user.balance * 1 + allowance });
-      console.log('adding allowance');
     });
     const newJob = new SimpleIntervalJob({ seconds: 14 }, add);
     scheduler.addSimpleIntervalJob(newJob);
@@ -186,16 +185,5 @@ router.put('/allowance/:id', async (req, res, next) => {
     next(err);
   }
 });
-
-// // run on particular date
-// const someDate = new Date('2021-06-14T20:07.00.000-04:00');
-// schedule.scheduleJob(someDate, () => {
-//   console.log('Job ran @', new Date().toString());
-// });
-
-// //run at interval
-// schedule.scheduleJob(' */2  * * * *', () => {
-//   console.log('I ran ...');
-// });
 
 module.exports = router;
