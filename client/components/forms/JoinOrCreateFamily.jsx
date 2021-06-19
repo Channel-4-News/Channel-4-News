@@ -217,6 +217,32 @@ const JoinOrCreateFamily = (props) => {
             </span>
             to create new family.
           </small>
+          <FormControl variant="outlined">
+            <InputLabel
+              htmlFor="parentOrChild"
+              color="secondary"
+              className={classes.parentOrChild}
+            >
+              {errors.relation}
+            </InputLabel>
+            <Select
+              required
+              className={classes.parentOrChild}
+              native
+              label={errors.relation}
+              color="secondary"
+              onChange={(e) => {
+                // props.setUserStatus(e.target.value);
+                props.updateUser(props.currUser.id, { status: e.target.value });
+                setStatus(e.target.value);
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value="Parent">Parent</option>
+              <option value="Child">Child</option>
+            </Select>
+            <FormHelperText>Are you a parent or child?</FormHelperText>
+          </FormControl>
           <TextField
             className={classes.root}
             label={errors.familyName}
