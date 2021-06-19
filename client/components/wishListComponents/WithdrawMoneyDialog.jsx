@@ -122,6 +122,38 @@ const WithdrawMoneyDialog = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Withdraw Money</DialogTitle>
+        <DialogContent id="withdrawBoxItems">
+          <FormControl fullWidth variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-amount"
+              value={amount}
+              onChange={onWithdrawChange}
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
+              labelWidth={60}
+            />
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={handleClose}
+            color="secondary"
+            autoFocus
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

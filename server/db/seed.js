@@ -192,6 +192,7 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       status: 'Parent',
       stripeAccount: 'cus_JdBOqmptzdoNis',
+      hasBankAccount: true,
     });
 
     const parent2 = await User.create({
