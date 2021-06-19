@@ -77,7 +77,7 @@ router.post('/charges', async (req, res, next) => {
       customer: customer,
       amount: amount,
       currency: 'usd',
-      description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
+      description: `FUNDIT charge for ${kid}'s virtual credit card.`,
     });
     //update kid's balance after charge is created
     const kidToCharge = await User.findOne({ where: { firstName: kid } });
