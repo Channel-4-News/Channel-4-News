@@ -184,15 +184,4 @@ router.put('/allowance/:id', async (req, res, next) => {
   }
 });
 
-// // run on particular date
-// const someDate = new Date('2021-06-14T20:07.00.000-04:00');
-// schedule.scheduleJob(someDate, () => {
-//   console.log('Job ran @', new Date().toString());
-// });
-
-// //run at interval
-// schedule.scheduleJob(' */2  * * * *', () => {
-//   console.log('I ran ...');
-// });
-
 module.exports = router;

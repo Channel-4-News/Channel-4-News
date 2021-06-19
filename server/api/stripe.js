@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const {
   models: { User },
 } = require('../db/models/associations');
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
 // create stripe customerId for user
 router.post('/', async (req, res, next) => {
@@ -202,14 +203,20 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
   }
 });
 
+const scheduler = new ToadScheduler();
+
 //create invoice
 router.post('/invoice/:id', async (req, res, next) => {
   try {
-    const invoice = await stripe.invoices.create({
-      customer: req.params.id,
-      auto_advance: true,
+    const add = new Task('invoice', async () => {
+      const invoice = await stripe.invoices.create({
+        customer: req.params.id,
+        auto_advance: true,
+      });
+      res.status(201).send(invoice);
     });
-    res.status(201).send(invoice);
+    const newJob = new SimpleIntervalJob({ minutes: 1 }, add);
+    scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
   }
