@@ -76,8 +76,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.currUser.status !== this.props.currUser.status) {
-      console.log('prevProps', prevProps.currUser.status);
-      console.log('this.props', this.props.currUser.status);
       this.forceUpdate();
     }
     if (this.props.currUser) {
