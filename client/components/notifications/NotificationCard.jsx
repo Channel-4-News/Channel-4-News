@@ -99,7 +99,6 @@ const NotificationCard = (props) => {
           <Avatar className={classes.large} src={props.currNote.from.imgUrl} />
           <div>{props.currNote.from.firstName} initiated a withdrawal.</div>
           <div>${props.currNote.amount}</div>
-          {/* <LocalAtmOutlinedIcon className={classes.icons} /> */}
           <div>
             <img
               src="public/images/icons/withdraw.png"
@@ -111,7 +110,30 @@ const NotificationCard = (props) => {
           </IconButton>
         </div>
       ) : (
-        ''
+        <div className="withdrawalNote">
+          <div className="noteInvoiceLabel">INVOICE</div>
+          {/* <Avatar className={classes.large} src={props.currNote.from.imgUrl} /> */}
+          <div>
+            <a
+              href={`${props.currNote.text}`}
+              className="clickForInvoice"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Click here to view your invoice.
+            </a>
+          </div>
+          <div>${props.currNote.amount / 100}</div>
+          <div>
+            <img
+              src="public/images/icons/invoice.png"
+              style={{ width: '65%', marginLeft: '5%', marginTop: '2%' }}
+            />
+          </div>
+          <IconButton onClick={() => props.destroy(props.currNote.id)}>
+            <HighlightOffIcon />
+          </IconButton>
+        </div>
       )}
     </div>
   );
