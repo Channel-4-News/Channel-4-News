@@ -54,13 +54,16 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
-      if (action.notification.firstName) {
+      if (action.notification?.firstName) {
         store.dispatch(
           updateAllowance(
             action.notification.balance,
             action.notification.daysToAllowance
           )
         );
+      }
+      if (action?.invoice) {
+        console.log('invoice', action.invoice);
       }
       if (action.id) {
         action.isChoreCompleted
