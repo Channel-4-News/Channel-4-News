@@ -7,11 +7,13 @@ import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import { connect } from 'react-redux';
+import { updateUser } from '../store/actions/userActions/updateUser';
 
 const LinkPlaid = (props) => {
   const [token, setToken] = useState('');
   const [auth, setAuth] = useState(true);
   const [processing, setProcessing] = useState(false);
+  const [hasBankAccount, setHasBankAccount] = useState(false);
 
   console.log(props.user);
 
@@ -36,7 +38,8 @@ const LinkPlaid = (props) => {
       id: props.user.stripeAccount,
       accountToken: stripeBA.stripe_bank_account_token,
     });
-    props.history.push('/home');
+    props.updateUser(props.user.id, { ...props.user, hasBankAccount: true });
+    props.history.go(0);
   };
   const onExit = (error, metadata) => {
     setProcessing(false);
@@ -108,4 +111,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(LinkPlaid);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LinkPlaid);

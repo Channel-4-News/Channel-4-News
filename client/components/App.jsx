@@ -74,7 +74,12 @@ class App extends Component {
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.currUser.status !== this.props.currUser.status) {
+      console.log('prevProps', prevProps.currUser.status);
+      console.log('this.props', this.props.currUser.status);
+      this.forceUpdate();
+    }
     if (this.props.currUser) {
       this.props.setAllowance(
         this.props.currUser.balance,
@@ -170,12 +175,28 @@ class App extends Component {
                 exact
                 path="/home"
                 component={() => {
-                  if (this.state.user.status === 'Child') {
+                  if (
+                    this.state.user.status === 'Child' &&
+                    this.state.user.virtualCard
+                  ) {
                     return <ChildLandingPage />;
-                  } else if (this.state.user.status === 'Parent') {
+                  } else if (
+                    this.state.user.status === 'Child' &&
+                    !this.state.user.virtualCard
+                  ) {
+                    return <CreateCard />;
+                  } else if (
+                    this.state.user.status === 'Parent' &&
+                    this.state.user.hasBankAccount
+                  ) {
                     return <ParentLandingPage />;
+                  } else if (
+                    this.state.user.status === 'Parent' &&
+                    !this.state.user.hasBankAccount
+                  ) {
+                    return <LinkPlaid />;
                   } else {
-                    return <Register />;
+                    return <JoinOrCreateFamily />;
                   }
                 }}
               />

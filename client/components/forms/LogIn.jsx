@@ -43,7 +43,7 @@ const LogIn = (props) => {
   return (
     <div id="login-wrapper">
       <form id="login" onSubmit={submitUser}>
-        <h4>LOGIN</h4>
+        <h4>LOG IN</h4>
         <TextField
           className={classes.root}
           label="Email or username"
@@ -74,17 +74,17 @@ const LogIn = (props) => {
             marginTop: '20px',
           }}
         >
-          Login
+          Log In
         </Button>
         <GoogleButton
           style={{
-            width: '40%',
+            width: '80%',
             alignSelf: 'center',
             marginTop: '15px',
             marginBottom: '15px',
           }}
           type="dark"
-          label="Login With Google"
+          label="Log In With Google"
           onClick={(event) => {
             event.preventDefault();
             window.location.href = '/api/google';

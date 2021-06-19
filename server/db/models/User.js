@@ -109,6 +109,10 @@ const User = db.define('user', {
   allowanceInterval: {
     type: DataTypes.STRING,
   },
+  hasBankAccount: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 //authenticates user
@@ -191,7 +195,7 @@ User.addHook('afterUpdate', async (notification) => {
   const socket = socketUtils
     .getSockets()
     .find((socket) => notification.id === socket.userId);
-  console.log(socketUtils.getSockets());
+  // console.log(socketUtils.getSockets());
   if (socket) {
     notification = await User.findByPk(notification.id, {});
     socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));

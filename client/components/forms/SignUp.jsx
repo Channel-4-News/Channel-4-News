@@ -182,11 +182,11 @@ const SignUp = (props) => {
           style={{ width: '40%', alignSelf: 'center', marginTop: '40px' }}
           onClick={submitNewUser}
         >
-          Next
+          Sign Up
         </Button>
         <GoogleButton
           style={{
-            width: '40%',
+            width: '80%',
             alignSelf: 'center',
             marginTop: '15px',
             marginBottom: '15px',
