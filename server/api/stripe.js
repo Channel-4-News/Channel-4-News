@@ -187,4 +187,32 @@ router.put('/card/:id/limit', async (req, res, next) => {
   }
 });
 
+//create invoice item
+router.post('/invoiceitems/:id', async (req, res, next) => {
+  try {
+    const { amount, description } = req.body;
+    const invoiceItem = await stripe.invoiceItems.create({
+      customer: req.params.id,
+      amount,
+      description,
+    });
+    res.status(201).send(invoiceItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//create invoice
+router.post('/invoice/:id', async (req, res, next) => {
+  try {
+    const invoice = await stripe.invoices.create({
+      customer: req.params.id,
+      auto_advance: true,
+    });
+    res.status(201).send(invoice);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
