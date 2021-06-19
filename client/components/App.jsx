@@ -18,7 +18,7 @@ import NavBar from './NavBar';
 import WishList from './wishListComponents/WishList';
 import ChildLandingPage from './child components/ChildLandingPage';
 import Chatroom from './chatComponents/Chatroom';
-import EditInfo from './forms/EditInfo';
+import EditChildInfo from './forms/EditChildInfo';
 import Dummy from './dummyPage/dummy';
 import Home from './Home';
 import LinkPlaid from './LinkPlaid';
@@ -198,7 +198,7 @@ class App extends Component {
                   }
                 }}
               />
-              <Route exact path="/editchildinfo" component={EditInfo} />
+              <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route exact path="/wishlist" component={WishList} />
               <Route exact path="/dummy" component={Dummy} />
               <Route exact path="/link" component={LinkPlaid} />

@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditInfo = ({ currUser, updateUser, history, setAllowance }) => {
+const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
   if (!currUser.id) {
     return null;
   }
@@ -299,4 +299,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(EditChildInfo);
