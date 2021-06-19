@@ -35,13 +35,13 @@ describe('User Routes', () => {
     await db.close();
   });
 
-  test('GET /api/users returns all users', async (done) => {
+  xtest('GET /api/users returns all users', async (done) => {
     const response = await request.get('/api/users');
     expect(response.body.length).toBe(3);
     done();
   });
 
-  test('POST /api/users creates new user and wishlist', async (done) => {
+  xtest('POST /api/users creates new user and wishlist', async (done) => {
     const newUser = {
       username: 'michelleO',
       email: 'mobama@gmail.com',

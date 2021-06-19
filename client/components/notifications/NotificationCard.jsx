@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: '65px',
+    // marginLeft:'auto',
+    // marginRight:'auto',
+    textAlign: 'center',
   },
   cash: {
     backgroundColor: 'limeGreen',
