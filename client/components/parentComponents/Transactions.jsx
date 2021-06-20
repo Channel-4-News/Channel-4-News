@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import { forEach } from 'lodash';
 
 const Transactions = (props) => {
   const [transactions, setTransactions] = useState([]);
@@ -23,7 +24,7 @@ const Transactions = (props) => {
     const getTransactions = async () => {
       const transactions = (await axios.get(`/api/stripe/transactions/${card}`))
         .data;
-      setTransactions(transactions.data);
+      await setTransactions(transactions.data);
     };
     getTransactions();
   }, []);

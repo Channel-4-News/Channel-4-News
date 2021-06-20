@@ -108,13 +108,17 @@ class WishList extends Component {
           <div id="wishListContent">
             <div id="wishListTopBar">
               <div id="wishlistHeader">WISHLIST</div>
+              <WithdrawMoneyDialog user={this.props.user} />
               <CreateNewWish
                 update={sortToggle}
                 user={this.props.user}
                 newItem={reRender}
               />
             </div>
-            <h1>Currently No Wishes!</h1>
+            <div id="noWishes">
+              <h1>THIS WISHLIST IS WISHLESS</h1>
+              <div>Click above to make a wish.</div>
+            </div>
           </div>
         )}
       </div>
