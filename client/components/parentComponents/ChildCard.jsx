@@ -13,6 +13,8 @@ import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { connect } from 'react-redux';
 import SpendingGraph from '../child components/SpendingGraph';
 import axios from 'axios';
+import EmailInviteForm from './EmailInviteForm';
+import { getKids } from '../../store/actions/parentActions/getKids';
 
 const usePersonStyles = makeStyles(() => ({
   text: {
@@ -84,19 +86,23 @@ const useModalStyles = makeStyles((props) => ({
   },
 }));
 
-const ModalItem = ({ kid }) => {
+const ModalItem = ({ kid, userID, getKids }) => {
   const [display, setDisplay] = useState('none');
   const [newAllowance, setNewAllowance] = useState(kid.allowance);
   const [newInterval, setNewInterval] = useState(kid.allowanceInterval);
+  const [isChanged, setIsChanged] = useState(false);
   let props = { display: display };
   const styles = useModalStyles(props);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(kid);
+    // console.log(kid);
     await axios.put(`/api/users/allowance/modify/${kid.id}`, {
       newAllowance,
       newInterval,
     });
+    setIsChanged(true);
+    console.log(userID);
+    getKids(userID);
     setDisplay('none');
   };
   const handleChange = (evt) => {
@@ -104,6 +110,16 @@ const ModalItem = ({ kid }) => {
       ? setNewAllowance(evt.target.value)
       : setNewInterval(evt.target.value);
   };
+  // useEffect(() => {
+  //   return (
+  //     async () => {
+  //       if (isChanged) {
+  //         setIsChanged(false);
+  //       }
+  //     },
+  //     []
+  //   );
+  // });
   return (
     <div>
       <Button
@@ -139,7 +155,22 @@ const ModalItem = ({ kid }) => {
     </div>
   );
 };
-const PersonItem = ({ src, name, balance, selectedKid, kid }) => {
+const AllowanceItem = ({ kid }) => {
+  return (
+    <div>
+      Allowance in {kid.daysToAllowance} days: ${kid.allowance}
+    </div>
+  );
+};
+const PersonItem = ({
+  src,
+  name,
+  balance,
+  selectedKid,
+  kid,
+  userID,
+  getKids,
+}) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 100 });
   const styles = usePersonStyles();
   return (
@@ -155,10 +186,8 @@ const PersonItem = ({ src, name, balance, selectedKid, kid }) => {
           </div>
         </Item>
         <Item position={'middle'}>
-          <div>
-            Allowance in {kid.allowanceInterval} days: ${kid.allowance}
-          </div>
-          <ModalItem kid={kid} />
+          <AllowanceItem kid={kid} userID={userID}></AllowanceItem>
+          <ModalItem kid={kid} userID={userID} getKids={getKids} />
           <AliasLink to={{ pathname: '/chores', state: { selectedKid } }}>
             <Button className={styles.btn} variant={'outlined'}>
               Assigned Chores
@@ -199,18 +228,9 @@ const useStyles = makeStyles(() => ({
     margin: '0 20px',
   },
 }));
-const getTransactions = async (id) => {
-  const response = await axios.get(`/api/transaction/${id}`);
-  const kidTransactions = response.data;
-  return kidTransactions;
-};
 const ChildCard = React.memo(function SocialCard(props) {
   const styles = useStyles();
-  props.kids.map(async (kid) => {
-    kid.transactions = await getTransactions(kid.id);
-    return kid;
-  });
-  return (
+  return props.kids.length ? (
     <>
       <NoSsr>
         <GoogleFontLoader fonts={[{ font: 'Barlow', weights: [400, 600] }]} />
@@ -220,10 +240,6 @@ const ChildCard = React.memo(function SocialCard(props) {
           <Item stretched className={styles.headline}>
             Your kids:
           </Item>
-          {/* <Item className={styles.actions}>
-            <Link className={styles.link}>Refresh</Link> •{' '}
-            <Link className={styles.link}>See all</Link>
-          </Item> */}
         </Row>
         {props.kids.map((kid) => {
           return (
@@ -234,6 +250,8 @@ const ChildCard = React.memo(function SocialCard(props) {
                 src={kid.imgUrl}
                 selectedKid={kid}
                 kid={kid}
+                userID={props.userID}
+                getKids={props.getKids}
               />
               <SpendingGraph transactions={kid.transactions} />
               <Divider variant={'middle'} className={styles.divider} />
@@ -242,7 +260,13 @@ const ChildCard = React.memo(function SocialCard(props) {
         })}
       </Column>
     </>
+  ) : (
+    <EmailInviteForm />
   );
 });
-
-export default connect()(ChildCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getKids: (id) => dispatch(getKids(id)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ChildCard);
