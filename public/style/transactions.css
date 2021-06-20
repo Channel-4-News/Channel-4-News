@@ -1,0 +1,25 @@
+.transactionContainer {
+  display: inline-grid;
+  grid-template-columns: 16% 12% 26% 26% 20%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+}
+
+#listTransactions {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-left: 20%;
+  margin-top: 2%;
+}
+
+#transactionHeader {
+  font-size: 30px;
+  padding-bottom: 20px;
+  align-self: center;
+}
+
+.greyTransaction {
+  background-color: rgb(211, 211, 211);
+}

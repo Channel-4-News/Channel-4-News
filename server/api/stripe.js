@@ -281,6 +281,17 @@ router.put('/invoice/:id/finalize', async (req, res, next) => {
   }
 });
 
+router.get('/transactions/:card', async (req, res, next) => {
+  try {
+    const transactions = await stripe.issuing.transactions.list({
+      card: req.params.card,
+    });
+    res.send(transactions);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
 
 // const socket = socketUtils
