@@ -234,7 +234,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
     });
 
     //create new job and add to scheduler
-    const newJob = new SimpleIntervalJob({ seconds: 5 }, invoiceItemTask);
+    const newJob = new SimpleIntervalJob({ seconds: 20 }, invoiceItemTask);
     scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);

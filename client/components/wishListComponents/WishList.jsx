@@ -114,7 +114,10 @@ class WishList extends Component {
                 newItem={reRender}
               />
             </div>
-            <h1>Currently No Wishes!</h1>
+            <div id="noWishes">
+              <h1>THIS WISHLIST IS WISHLESS</h1>
+              <div>Click above to make a wish.</div>
+            </div>
           </div>
         )}
       </div>
