@@ -31,6 +31,22 @@ const cashWithdrawl = (text) =>
     },
   });
 
+const invoiceNote = (text) => {
+  store.addNotification({
+    title: 'Invoice',
+    message: 'New invoice',
+    type: 'success',
+    insert: 'top',
+    container: 'top-right',
+    animationIn: ['animate_animated', 'animate_fadeIn'],
+    animationOut: ['anumate_animated', 'animate_fadeOut'],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+};
+
 const choresCompletedSort = (notiArr) => {
   const newArr = notiArr.filter((currNoti) => currNoti.isChoreCompleted);
   if (!newArr.length) {
@@ -47,4 +63,10 @@ const cashRelated = (notiArr) => {
   return newArr;
 };
 
-export { choreSuccess, cashWithdrawl, choresCompletedSort, cashRelated };
+export {
+  choreSuccess,
+  cashWithdrawl,
+  choresCompletedSort,
+  cashRelated,
+  invoiceNote,
+};

@@ -34,7 +34,11 @@ import { sendNotification } from '../store/actions/notificationActions/sendNotif
 import websocket from '../store/actions/notificationActions/sendNotification';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import { cashWithdrawl, choreSuccess } from './notifications/notificationUtils';
+import {
+  cashWithdrawl,
+  choreSuccess,
+  invoiceNote,
+} from './notifications/notificationUtils';
 
 //Thunk Import
 import { loadNotificationsThunk } from '../store/actions/notificationActions/loadNotification';
@@ -56,6 +60,8 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
+      console.log(action);
+
       if (action.notification?.firstName) {
         store.dispatch(
           updateAllowance(
@@ -64,15 +70,14 @@ class App extends Component {
           )
         );
       }
-      if (action?.invoice) {
-        console.log('invoice', action.invoice);
-      }
-      if (action.id) {
+
+      if (action.id || action.notification.id) {
+        console.log('hasId');
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
           : action.isCash
             ? cashWithdrawl(action.text, action.amount)
-            : '';
+            : invoiceNote(action.text);
         store.dispatch(sendNotification(action));
       }
     });

@@ -287,18 +287,6 @@ const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
       >
         INVOICE
       </button>
-      <button
-        onClick={async () => {
-          const test = (await axios.get()).data;
-          // if (test.id) {
-          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
-          //   console.log('invoice', test);
-          // }
-          console.log(test.data);
-        }}
-      >
-        GET TRANSACTION
-      </button>
     </div>
   );
 };

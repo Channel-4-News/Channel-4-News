@@ -185,48 +185,50 @@ const scheduler = new ToadScheduler();
 //create invoice item
 router.post('/invoiceitems/:id', async (req, res, next) => {
   try {
-    await stripe.invoiceItems.create({
-      customer: req.params.id,
-      amount: req.body.amount * 100,
-      currency: 'usd',
+    //create task to create invoice items every month
+    const invoiceItemTask = new Task('item', async () => {
+      let virtualCards = [
+        'ic_1IzufNGMLeOpoTZxPd1bYRNy',
+        'ic_1IzujAGMLeOpoTZx1wFkCcUd',
+      ];
+
+      //for production, this would be by the month, but for testing and demo it is by the date.
+      const currDate = new Date().getDate();
+
+      //for each virtual card in family, get transactions and filter based on yesterdays transactions
+      await virtualCards.forEach(async (card) => {
+        const transactions = await stripe.issuing.transactions.list({
+          card,
+        });
+        console.log('trans-data', transactions.data.length);
+        const currTransactions = await transactions.data.filter(
+          (transaction) => {
+            return (
+              new Date(transaction.created * 1000).getDate() === currDate - 1
+            );
+          }
+        );
+
+        invoiceTransactions = currTransactions;
+        console.log('transactions-sorted', invoiceTransactions?.length);
+      });
+
+      //if there were new transactions, create invoice items
+      if (invoiceTransactions) {
+        await invoiceTransactions.forEach(async (transaction) => {
+          await stripe.invoiceItems.create({
+            customer: req.params.id,
+            amount: Math.abs(transaction.amount),
+            currency: 'usd',
+          });
+        });
+      }
     });
-    res.status(201);
-    // let invoiceTransactions;
-
-    // try {
-    //   //create task to create invoice items every month
-    //   const invoiceItemTask = new Task('item', async () => {
-    //     let virtualCards = [
-    //       'ic_1IzufNGMLeOpoTZxPd1bYRNy',
-    //       'ic_1IzujAGMLeOpoTZx1wFkCcUd',
-    //     ];
-    //     const currMonth = new Date().getMonth();
-    //     //for each virtual card in family, get transactions and filter based on this month's transactions
-    //     virtualCards.forEach(async (card) => {
-    //       const transactions = await stripe.issuing.transactions.list({
-    //         card,
-    //       });
-    //       const currTransactions = transactions.data.filter((transaction) => {
-    //         return new Date(transaction.created * 1000).getMonth() === currMonth;
-    //       });
-    //       invoiceTransactions = currTransactions;
-    //     });
-
-    //     //if there were new transactions, create invoice items
-    //     if (invoiceTransactions) {
-    //       invoiceTransactions.forEach(async (transaction) => {
-    //         await stripe.invoiceItems.create({
-    //           customer: req.params.id,
-    //           amount: Math.abs(transaction.amount),
-    //           currency: 'usd',
-    //         });
-    //       });
-    //     }
-    // });
 
     //create new job and add to scheduler
-    // const newJob = new SimpleIntervalJob({ seconds: 5 }, invoiceItemTask);
-    // scheduler.addSimpleIntervalJob(newJob);
+    const newJob = new SimpleIntervalJob({ seconds: 40 }, invoiceItemTask);
+    scheduler.addSimpleIntervalJob(newJob);
+
   } catch (err) {
     next(err);
   }
@@ -267,7 +269,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
         return;
       }
     });
-    const newJob = new SimpleIntervalJob({ seconds: 20 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 40 }, add);
 
     //for production
     // const newJob = new SimpleIntervalJob({ months: 1 }, add);
