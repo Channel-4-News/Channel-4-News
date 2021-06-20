@@ -4,6 +4,14 @@
   width: 100%;
   padding-top: 30px;
 }
+
+#chatroomParent {
+  background-color: rgb(238, 238, 238);
+  height: 100%;
+  width: 100%;
+  padding-top: 30px;
+}
+
 #chatroomBox {
   width: 80%;
   margin-left: 10%;

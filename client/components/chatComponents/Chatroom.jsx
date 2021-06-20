@@ -15,7 +15,7 @@ const Chatroom = (props) => {
   const [loaded, setLoaded] = useState(false);
   const customRef = useRef();
 
-  const { id, imgUrl, familyId, username } = props.user;
+  const { id, imgUrl, familyId, username, status } = props.user;
 
   useEffect(() => {
     if (messages && !loaded) {
@@ -53,7 +53,7 @@ const Chatroom = (props) => {
   };
 
   return (
-    <div id="chatroom">
+    <div id={status === 'Child' ? 'chatroom' : 'chatroomParent'}>
       <Paper id="chatroomBox">
         <Paper variant="outlined" id="messageBox">
           {messages?.map((oneMessage) => (
