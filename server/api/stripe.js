@@ -38,7 +38,7 @@ router.post('/payouts', async (req, res, next) => {
   try {
     const { userId, transaction } = req.body;
     const user = await User.findOne({ where: { id: userId } });
-    const newBalance = parseInt(user.balance) - parseInt(transaction.cost);
+    const newBalance = parseFloat(user.balance) - parseFloat(transaction.cost);
     user.balance = newBalance;
     await user.save();
     console.log('user before sending', user);
