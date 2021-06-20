@@ -27,10 +27,7 @@ const Chatroom = (props) => {
   const messagesRef = db.collection('messages');
   let query;
   if (familyId) {
-    query = messagesRef
-      .where('room', '==', familyId)
-      .orderBy('createdAt')
-      .limit(20);
+    query = messagesRef.where('room', '==', familyId).orderBy('createdAt');
   }
   const [messages] = useCollectionData(query, { idField: 'id' });
 

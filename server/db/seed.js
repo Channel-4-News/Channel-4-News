@@ -187,8 +187,6 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Sonny',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
       stripeAccount: 'cus_JdBOqmptzdoNis',
@@ -201,8 +199,6 @@ const syncAndSeed = async () => {
       password: 'password123',
       firstName: 'Sandy',
       lastName: 'Momordad',
-      imgUrl:
-        'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png',
       familyId: myFam.id,
       status: 'Parent',
     });

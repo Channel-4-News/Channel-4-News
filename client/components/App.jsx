@@ -41,6 +41,7 @@ import { loadNotificationsThunk } from '../store/actions/notificationActions/loa
 import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
+import Transactions from './parentComponents/Transactions';
 
 class App extends Component {
   constructor(props) {
@@ -207,6 +208,7 @@ class App extends Component {
               <Route exact path="/link" component={LinkPlaid} />
               <Route exact path="/card" component={VirtualCard} />
               <Route exact path="/createcard" component={CreateCard} />
+              <Route exact path="/transactions" component={Transactions} />
               <Route
                 exact
                 path="/chatroom"

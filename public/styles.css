@@ -9,6 +9,7 @@
 @import url('./style/home.css');
 @import url('./style/chatroom.css');
 @import url('./style/notifications.css');
+@import url('./style/transactions.css');
 
 @font-face {
   font-family: main;
