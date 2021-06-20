@@ -5,21 +5,14 @@ import ChildCard from './ChildCard';
 export class ParentLandingPage extends Component {
   constructor() {
     super();
-    this.getKids = this.getKids.bind(this);
   }
   componentDidMount() {}
   componentDidUpdate() {}
-  getKids() {
-    const kids = this.props.user.family.users.filter(
-      (member) => member.status === 'Child'
-    );
-    return kids;
-  }
   render() {
     return this.props.user.family ? (
       <div>
         <div>Hello {this.props.user.firstName}</div>
-        <ChildCard kids={this.getKids()} />
+        <ChildCard kids={this.props.kids} userID={this.props.user.id} />
       </div>
     ) : (
       ''
@@ -30,6 +23,7 @@ export class ParentLandingPage extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
+    kids: state.kids,
   };
 };
 export default connect(mapStateToProps)(ParentLandingPage);
