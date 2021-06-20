@@ -42,6 +42,9 @@ describe('GET /', () => {
         done();
       });
   });
+  afterAll(async () => {
+    await db.close();
+  });
 
   test('GET /api/notification with token', async (done) => {
     const response = await request
