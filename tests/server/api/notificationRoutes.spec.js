@@ -43,13 +43,14 @@ describe('GET /', () => {
       });
   });
 
-  xtest('GET /api/notification with token', async () => {
+  test('GET /api/notification with token', async (done) => {
     const response = await request
       .get('/api/notification')
       .set('Authorization', token);
     expect(response.body.length).toBe(0);
+    done();
   });
-  xtest('POST /api/notification/create adds a notification with token', async (done) => {
+  test('POST /api/notification/create adds a notification with token', async (done) => {
     const newNotification = {
       amount: 5.0,
       category: 'Food',
@@ -65,7 +66,7 @@ describe('GET /', () => {
     expect(response.category).toBe(newNotification.category);
     done();
   });
-  xtest('DELETE notification /api/notification/:id', async (done) => {
+  test('DELETE notification /api/notification/:id', async (done) => {
     const response = await request.delete('/api/notification/1');
     expect(response.status).toBe(204);
     done();
