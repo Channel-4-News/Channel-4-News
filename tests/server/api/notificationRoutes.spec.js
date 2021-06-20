@@ -4,6 +4,7 @@ const supertest = require('supertest');
 const { app } = require('../../../server/app');
 const User = require('../../../server/db/models/User');
 const { Notification } = require('../../../server/db/models/Notification');
+const { db } = require('../../../server/db/models/associations');
 
 const request = supertest(app);
 
@@ -32,6 +33,7 @@ describe('GET /', () => {
     status: 'Parent',
   };
   beforeAll(async (done) => {
+    db.sync({ force: true });
     await User.create(newUser);
     // await Notification.bulkCreate(notifications);
     request
