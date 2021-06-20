@@ -31,7 +31,11 @@ const curUserReducer = (state = {}, action) => {
   if (action.type === PURCHASE_OR_WITHDRAW) {
     return {
       ...state,
-      transactions: [...state.transactions, action.transaction],
+      transactions: [
+        ...state.transactions,
+        action.transactionData.newTransaction,
+      ],
+      balance: action.transactionData.newBalance,
     };
   }
   return state;

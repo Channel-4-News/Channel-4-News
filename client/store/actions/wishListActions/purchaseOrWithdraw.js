@@ -8,15 +8,20 @@ const purchaseOrWithdraw = (userId, transaction) => {
       const newTransaction = (
         await axios.post(`/api/transaction/${userId}`, transaction)
       ).data;
-      dispatch(_purchaseOrWithdraw(newTransaction));
+      let newBalance = await axios.post('/api/stripe/payouts', {
+        userId,
+        transaction,
+      });
+      newBalance = newBalance.data.balance.toFixed(2);
+      dispatch(_purchaseOrWithdraw({ newTransaction, newBalance }));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-const _purchaseOrWithdraw = (transaction) => {
-  return { type: PURCHASE_OR_WITHDRAW, transaction };
+const _purchaseOrWithdraw = (transactionData) => {
+  return { type: PURCHASE_OR_WITHDRAW, transactionData };
 };
 
 export { PURCHASE_OR_WITHDRAW, purchaseOrWithdraw };
