@@ -18,6 +18,9 @@ class PurchaseButton extends Component {
       openWarning: false,
       buttonDisabled: this.props.item.purchased,
       balance: this.props.user.balance,
+      parent: this.props.user.family.users.filter(
+        (member) => member.status === 'Parent'
+      )[0],
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -41,7 +44,6 @@ class PurchaseButton extends Component {
   }
 
   render() {
-    console.log(this.props.user.family);
     const { handleClickOpen, handleClose, disableButton } = this;
     const { openWarning, openPurchase } = this.state;
     return (
@@ -92,6 +94,13 @@ class PurchaseButton extends Component {
                 this.props.state();
                 disableButton();
                 window.open(this.props.item.linkUrl, '_blank');
+                console.log(this.state.parent);
+                await axios.post(
+                  `/api/stripe/invoiceitems/${this.state.parent.stripeAccount}`,
+                  {
+                    amount: parseFloat(this.props.cost),
+                  }
+                );
               }}
               color="primary"
               variant="contained"

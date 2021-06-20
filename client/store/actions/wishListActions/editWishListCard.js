@@ -6,7 +6,6 @@ const editWishListCard = (wishListCard) => {
   return async (dispatch) => {
     try {
       let { id } = wishListCard;
-      id = id * 1;
       const newWishListItem = (
         await axios.put(`/api/wishlistitem/${id}`, wishListCard)
       ).data;
