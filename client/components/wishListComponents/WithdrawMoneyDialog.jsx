@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { purchaseOrWithdraw } from '../../store/actions/wishListActions/purchaseOrWithdraw';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -18,6 +17,16 @@ const WithdrawMoneyDialog = (props) => {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(0);
   const [select, setSelect] = useState('Miscellaneous');
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (props.user.balance < amount) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [amount]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -92,6 +101,7 @@ const WithdrawMoneyDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button
+            disabled={disabled}
             variant="contained"
             onClick={() => {
               return (
@@ -112,38 +122,6 @@ const WithdrawMoneyDialog = (props) => {
           >
             Withdraw
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleClose}
-            color="secondary"
-            autoFocus
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Withdraw Money</DialogTitle>
-        <DialogContent id="withdrawBoxItems">
-          <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={amount}
-              onChange={onWithdrawChange}
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              labelWidth={60}
-            />
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
           <Button
             variant="contained"
             onClick={handleClose}
