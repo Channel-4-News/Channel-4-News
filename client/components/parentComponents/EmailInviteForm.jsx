@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,11 +9,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-const EmailInviteForm = () => {
+const EmailInviteForm = (props) => {
   const [form, setForm] = useState({
     name: '',
     email: '',
     message: '',
+    parentName: props.user.firstName,
   });
 
   const handleChange = (e, field) => {
@@ -51,7 +53,14 @@ const EmailInviteForm = () => {
         />
       </CardContent>
       <CardActions id="emailFormButtons">
-        <Button size="small" variant="contained">
+        <Button
+          size="small"
+          variant="contained"
+          onClick={async () => {
+            const result = await axios.post('/api/invite/', form);
+            console.log(result);
+          }}
+        >
           Send Invite
         </Button>
         <Button
@@ -72,4 +81,10 @@ const EmailInviteForm = () => {
   );
 };
 
-export default connect()(EmailInviteForm);
+const mapStateToProps = (state) => {
+  return {
+    user: state.currUser,
+  };
+};
+
+export default connect(mapStateToProps)(EmailInviteForm);
