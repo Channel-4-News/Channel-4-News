@@ -12,7 +12,7 @@ export class ParentLandingPage extends Component {
     return this.props.user.family ? (
       <div>
         <div>Hello {this.props.user.firstName}</div>
-        <ChildCard kids={this.props.kids} />
+        <ChildCard kids={this.props.kids} userID={this.props.user.id} />
       </div>
     ) : (
       ''
@@ -23,9 +23,7 @@ export class ParentLandingPage extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
-    kids: state.currUser.family?.users.filter(
-      (member) => member.status === 'Child'
-    ),
+    kids: state.kids,
   };
 };
 export default connect(mapStateToProps)(ParentLandingPage);
