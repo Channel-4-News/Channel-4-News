@@ -13,6 +13,7 @@ import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { connect } from 'react-redux';
 import SpendingGraph from '../child components/SpendingGraph';
 import axios from 'axios';
+import EmailInviteForm from './EmailInviteForm';
 import { getKids } from '../../store/actions/parentActions/getKids';
 
 const usePersonStyles = makeStyles(() => ({
@@ -229,7 +230,7 @@ const useStyles = makeStyles(() => ({
 }));
 const ChildCard = React.memo(function SocialCard(props) {
   const styles = useStyles();
-  return (
+  return props.kids.length ? (
     <>
       <NoSsr>
         <GoogleFontLoader fonts={[{ font: 'Barlow', weights: [400, 600] }]} />
@@ -259,6 +260,8 @@ const ChildCard = React.memo(function SocialCard(props) {
         })}
       </Column>
     </>
+  ) : (
+    <EmailInviteForm />
   );
 });
 const mapDispatchToProps = (dispatch) => {

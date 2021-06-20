@@ -12,6 +12,7 @@ router.use('/notification', require('./notification'));
 router.use('/stripe', require('./stripe'));
 router.use('/google', require('./google'));
 router.use('/allowance', require('./allowanceSockets'));
+router.use('/invite', require('./invite'));
 
 router.use('/plaid', require('./plaid'));
 
