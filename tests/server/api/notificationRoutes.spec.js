@@ -2,29 +2,30 @@
 
 const supertest = require('supertest');
 const { app } = require('../../../server/app');
-const User = require('../../../server/db/models/User');
-const { Notification } = require('../../../server/db/models/Notification');
-const { db } = require('../../../server/db/models/associations');
+const {
+  db,
+  models: { User, Notification },
+} = require('../../../server/db/models/associations');
 
 const request = supertest(app);
 
 let token;
 
 describe('GET /', () => {
-  // const notifications =
-  //   {
-  //     amount: 29.99,
-  //     category: 'Electronics',
-  //     isCash: false,
-  //     toId: 1,
-  //   },
-  //   {
-  //     amount: 5.0,
-  //     category: 'Food',
-  //     isCash: false,
-  //     toId: 1,
-  //   },
-  // ];
+  const notifications = [
+    {
+      amount: 29.99,
+      category: 'Electronics',
+      isCash: false,
+      toId: 1,
+    },
+    {
+      amount: 5.0,
+      category: 'Food',
+      isCash: false,
+      toId: 1,
+    },
+  ];
 
   const newUser = {
     username: 'michelleO1',
@@ -33,9 +34,8 @@ describe('GET /', () => {
     status: 'Parent',
   };
   beforeAll(async (done) => {
-    db.sync({ force: true });
+    await db.sync({ force: true });
     await User.create(newUser);
-    // await Notification.bulkCreate(notifications);
     request
       .post('/api/auth/user')
       .send({ username: newUser.username, password: newUser.password })
@@ -43,7 +43,9 @@ describe('GET /', () => {
         token = response.body.token;
         done();
       });
+    await Notification.bulkCreate(notifications);
   });
+
   afterAll(async () => {
     await db.close();
   });
@@ -52,7 +54,7 @@ describe('GET /', () => {
     const response = await request
       .get('/api/notification')
       .set('Authorization', token);
-    expect(response.body.length).toBe(0);
+    expect(response.body.length).toBe(2);
     done();
   });
   test('POST /api/notification/create adds a notification with token', async (done) => {
