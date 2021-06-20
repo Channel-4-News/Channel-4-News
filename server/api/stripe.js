@@ -33,26 +33,16 @@ router.get('/balance', async (req, res, next) => {
   }
 });
 
-// stripe payout
+//stripe payout (creating a negative balance for parent upon withdrawawl to use as credit)
 router.post('/payouts', async (req, res, next) => {
   try {
-    const { amount, destination } = req.body;
-    console.log('here', amount);
-    const payout = await stripe.payouts.create(
-      {
-        amount,
-        currency: 'usd',
-        source_type: 'bank_account',
-        // destination: 'ba_1IzurxGMLeOpoTZxmnr0PWCS',
-      },
-      {
-        stripeAccount: 'acct_1IzAbQ4TLAmJPSen',
-      }
-    );
-    const refund = await stripe.refunds.create({
-      charge: 'ch_1J1ZYZGMLeOpoTZxnj6cjG6Q',
-    });
-    res.send(refund);
+    const { userId, transaction } = req.body;
+    const user = await User.findOne({ where: { id: userId } });
+    const newBalance = parseFloat(user.balance) - parseFloat(transaction.cost);
+    user.balance = newBalance;
+    await user.save();
+    console.log('user before sending', user);
+    res.status(201).send(user);
   } catch (ex) {
     next(ex);
   }

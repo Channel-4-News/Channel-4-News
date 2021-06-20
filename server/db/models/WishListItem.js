@@ -6,7 +6,7 @@ const WishList = db.define('wishList');
 
 const WishListItem = db.define('wishListItems', {
   itemName: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: false,
     validate: {
       notEmpty: true,
