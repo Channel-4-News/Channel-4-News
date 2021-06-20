@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import { forEach } from 'lodash';
 
 const Transactions = (props) => {
   const [transactions, setTransactions] = useState([]);
+  const [transactionUpdate, setTransactionUpdate] = useState(1);
   const days = {
     0: 'Sun',
     1: 'Mon',
@@ -23,10 +25,17 @@ const Transactions = (props) => {
     const getTransactions = async () => {
       const transactions = (await axios.get(`/api/stripe/transactions/${card}`))
         .data;
-      setTransactions(transactions.data);
+      await setTransactions(transactions.data);
+      setTransactionUpdate(transactionUpdate + 1);
     };
     getTransactions();
   }, []);
+
+  useEffect(() => {
+    transactions.forEach((transaction) => {
+      transaction.item = true;
+    });
+  }, [transactionUpdate]);
 
   return (
     <div id="listTransactions">

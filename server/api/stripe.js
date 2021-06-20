@@ -203,16 +203,21 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
         'ic_1IzufNGMLeOpoTZxPd1bYRNy',
         'ic_1IzujAGMLeOpoTZx1wFkCcUd',
       ];
-      const currMonth = new Date().getMonth();
 
-      //for each virtual card in family, get transactions and filter based on this month's transactions
+      //for production, this would be by the month, but for testing and demo it is by the date.
+      const currDate = new Date().getDate();
+
+      //for each virtual card in family, get transactions and filter based on yesterdays transactions
       virtualCards.forEach(async (card) => {
         const transactions = await stripe.issuing.transactions.list({
           card,
         });
         const currTransactions = transactions.data.filter((transaction) => {
-          return new Date(transaction.created * 1000).getMonth() === currMonth;
+          return (
+            new Date(transaction.created * 1000).getDate() === currDate - 1
+          );
         });
+
         invoiceTransactions = currTransactions;
       });
 
@@ -244,11 +249,13 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
         customer: req.params.id,
         pending: true,
       });
+      console.log('invoiceItems', invoiceItems.data.length);
       if (invoiceItems.data.length) {
         const draftInvoice = await stripe.invoices.create({
           customer: req.params.id,
           auto_advance: true,
         });
+
         if (draftInvoice.id) {
           const finalInvoice = await stripe.invoices.finalizeInvoice(
             draftInvoice.id,
@@ -269,7 +276,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
         return;
       }
     });
-    const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 20 }, add);
 
     //for production
     // const newJob = new SimpleIntervalJob({ months: 1 }, add);
