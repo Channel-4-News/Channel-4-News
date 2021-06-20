@@ -25,8 +25,6 @@ const Transactions = (props) => {
     getTransactions();
   }, []);
 
-  console.log(new Date(1624153872 * 1000));
-  console.log(transactions);
   return (
     <div id="listTransactions">
       <div id="transactionHeader">TRANSACTIONS</div>
