@@ -23,6 +23,7 @@ const SortNotifications = ({
   allNotifications,
   choreNotifications,
   cashNotifications,
+  chores,
 }) => {
   const [val, setVal] = useState('Select');
   const [anchorEl, setAnchorEl] = useState(null);
@@ -79,10 +80,12 @@ const SortNotifications = ({
             setVal('All');
           }}
         >
+          {console.log('from main', chores)}
           All
         </MenuItem>
       </Menu>
       <Notification
+        chores={chores}
         notifications={
           val === 'Chores Completed'
             ? choreNotifications
@@ -100,10 +103,11 @@ const SortNotifications = ({
 const mapStateToProps = (state) => {
   return {
     allNotifications: state.notifications.length
-      ? state.notifications.sort((a, b) => b.id - a.id)
+      ? state.notifications
       : 'No New Notifications',
     choreNotifications: choresCompletedSort(state.notifications),
     cashNotifications: cashRelated(state.notifications),
+    chores: state.chores,
   };
 };
 
