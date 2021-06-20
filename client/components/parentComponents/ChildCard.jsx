@@ -88,6 +88,7 @@ const ModalItem = ({ kid }) => {
   const [display, setDisplay] = useState('none');
   const [newAllowance, setNewAllowance] = useState(kid.allowance);
   const [newInterval, setNewInterval] = useState(kid.allowanceInterval);
+  const [isChanged, setIsChanged] = useState(false);
   let props = { display: display };
   const styles = useModalStyles(props);
   const handleSubmit = async (evt) => {
@@ -97,6 +98,7 @@ const ModalItem = ({ kid }) => {
       newAllowance,
       newInterval,
     });
+    setIsChanged(true);
     setDisplay('none');
   };
   const handleChange = (evt) => {
@@ -104,6 +106,16 @@ const ModalItem = ({ kid }) => {
       ? setNewAllowance(evt.target.value)
       : setNewInterval(evt.target.value);
   };
+  // useEffect(() => {
+  //   return (
+  //     async () => {
+  //       if (isChanged) {
+  //         setIsChanged(false);
+  //       }
+  //     },
+  //     []
+  //   );
+  // });
   return (
     <div>
       <Button
@@ -139,6 +151,13 @@ const ModalItem = ({ kid }) => {
     </div>
   );
 };
+const AllowanceItem = ({ kid }) => {
+  return (
+    <div>
+      Allowance in {kid.daysToAllowance} days: ${kid.allowance}
+    </div>
+  );
+};
 const PersonItem = ({ src, name, balance, selectedKid, kid }) => {
   const avatarStyles = useDynamicAvatarStyles({ size: 100 });
   const styles = usePersonStyles();
@@ -155,9 +174,7 @@ const PersonItem = ({ src, name, balance, selectedKid, kid }) => {
           </div>
         </Item>
         <Item position={'middle'}>
-          <div>
-            Allowance in {kid.allowanceInterval} days: ${kid.allowance}
-          </div>
+          <AllowanceItem kid={kid}></AllowanceItem>
           <ModalItem kid={kid} />
           <AliasLink to={{ pathname: '/chores', state: { selectedKid } }}>
             <Button className={styles.btn} variant={'outlined'}>
@@ -199,17 +216,8 @@ const useStyles = makeStyles(() => ({
     margin: '0 20px',
   },
 }));
-const getTransactions = async (id) => {
-  const response = await axios.get(`/api/transaction/${id}`);
-  const kidTransactions = response.data;
-  return kidTransactions;
-};
 const ChildCard = React.memo(function SocialCard(props) {
   const styles = useStyles();
-  props.kids.map(async (kid) => {
-    kid.transactions = await getTransactions(kid.id);
-    return kid;
-  });
   return (
     <>
       <NoSsr>
@@ -220,10 +228,6 @@ const ChildCard = React.memo(function SocialCard(props) {
           <Item stretched className={styles.headline}>
             Your kids:
           </Item>
-          {/* <Item className={styles.actions}>
-            <Link className={styles.link}>Refresh</Link> •{' '}
-            <Link className={styles.link}>See all</Link>
-          </Item> */}
         </Row>
         {props.kids.map((kid) => {
           return (
