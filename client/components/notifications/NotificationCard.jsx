@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: '65px',
+    // marginLeft:'auto',
+    // marginRight:'auto',
+    textAlign: 'center',
   },
   cash: {
     backgroundColor: 'limeGreen',
@@ -58,7 +61,7 @@ const NotificationCard = (props) => {
     } else {
       setChore({});
     }
-  }, []);
+  }, [props.currNote.chore]);
 
   return (
     <div>
@@ -139,6 +142,13 @@ const NotificationCard = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    chores: state.chores,
+    state,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     destroy: (currNotficationId) =>
@@ -147,4 +157,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(NotificationCard);
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationCard);
