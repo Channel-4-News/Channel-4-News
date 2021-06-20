@@ -17,7 +17,7 @@ export class ParentLandingPage extends Component {
   }
   render() {
     return this.props.user.family ? (
-      <div>
+      <div id="parentLandingPageBackground">
         <div>Hello {this.props.user.firstName}</div>
         <ChildCard kids={this.getKids()} />
       </div>

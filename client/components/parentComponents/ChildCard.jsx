@@ -13,6 +13,7 @@ import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 import { connect } from 'react-redux';
 import SpendingGraph from '../child components/SpendingGraph';
 import axios from 'axios';
+import EmailInviteForm from './EmailInviteForm';
 
 const usePersonStyles = makeStyles(() => ({
   text: {
@@ -92,7 +93,6 @@ const ModalItem = ({ kid }) => {
   const styles = useModalStyles(props);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(kid);
     await axios.put(`/api/users/allowance/modify/${kid.id}`, {
       newAllowance,
       newInterval,
@@ -210,7 +210,7 @@ const ChildCard = React.memo(function SocialCard(props) {
     kid.transactions = await getTransactions(kid.id);
     return kid;
   });
-  return (
+  return props.kids.length ? (
     <>
       <NoSsr>
         <GoogleFontLoader fonts={[{ font: 'Barlow', weights: [400, 600] }]} />
@@ -242,6 +242,8 @@ const ChildCard = React.memo(function SocialCard(props) {
         })}
       </Column>
     </>
+  ) : (
+    <EmailInviteForm />
   );
 });
 

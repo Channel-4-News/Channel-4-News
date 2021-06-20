@@ -16,8 +16,6 @@ const LinkPlaid = (props) => {
   const [processing, setProcessing] = useState(false);
   const [hasBankAccount, setHasBankAccount] = useState(false);
 
-  console.log(props.user);
-
   async function fetchToken() {
     let linkToken = (await axios.post('/api/plaid/create_link_token')).data;
     setToken(linkToken);
