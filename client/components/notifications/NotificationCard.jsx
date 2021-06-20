@@ -85,6 +85,7 @@ const NotificationCard = (props) => {
                 kid: props.currNote.from.firstName,
               });
               props.destroy(props.currNote.id);
+              setPayoutMessage('PAYOUT');
               props.updateChore(chore.id, {
                 isComplete: true,
                 wasPaid: true,
