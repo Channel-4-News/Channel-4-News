@@ -36,10 +36,6 @@ const Notification = db.define('notification', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  chorePaid: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
 });
 
 Notification.addHook('afterCreate', async (notification) => {

@@ -19,10 +19,10 @@ const Transaction = db.define('transaction', {
     defaultValue: 'Miscellaneous',
   },
   itemName: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
   },
   linkUrl: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
   },
 });
 

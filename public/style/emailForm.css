@@ -1,0 +1,27 @@
+#emailFormWrapper {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+}
+
+#parentLandingPageBackground {
+  background-color: rgb(226, 225, 225);
+  height: 100%;
+}
+
+#emailFormWrapper > div.MuiCardContent-root > div {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+#emailFormTitle {
+  text-align: center;
+  font-size: larger;
+}
+
+#emailFormButtons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 0.75rem;
+}
