@@ -7,7 +7,6 @@ export class ParentLandingPage extends Component {
     super();
   }
   render() {
-    console.log(this.state.kids);
     return this.props.user.family ? (
       <div id="parentLandingPageBackground">
         <div>Hello {this.props.user.firstName}</div>
