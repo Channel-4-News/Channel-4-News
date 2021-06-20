@@ -42,6 +42,9 @@ const WithdrawMoneyDialog = (props) => {
       category: select,
     };
   };
+  const parents = props.user.family
+    ? props.user.family.users.filter((currUser) => currUser.status === 'Parent')
+    : '';
   return (
     <div id="withdrawContainer">
       <Button
@@ -107,7 +110,7 @@ const WithdrawMoneyDialog = (props) => {
               return (
                 handleClose(),
                 props.purchaseOrWithdraw(props.user.id, onSubmit()),
-                props.parents.map((currParent) => {
+                parents.map((currParent) => {
                   props.sendNotification({
                     text: `${props.user.username} withdrew $${amount} for ${select}`,
                     amount: amount,
@@ -135,13 +138,6 @@ const WithdrawMoneyDialog = (props) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    parents: state.currUser.family.users.filter(
-      (currUser) => currUser.status === 'Parent'
-    ),
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -151,7 +147,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithdrawMoneyDialog);
+export default connect(null, mapDispatchToProps)(WithdrawMoneyDialog);
