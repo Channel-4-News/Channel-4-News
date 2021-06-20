@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Card from '@material-ui/core/Card';
@@ -9,6 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 const EmailInviteForm = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleChange = (e, field) => {
+    setForm({ ...form, [field]: e.target.value });
+  };
+
   return (
     <Card id="emailFormWrapper">
       <CardContent>
@@ -16,21 +26,45 @@ const EmailInviteForm = () => {
           Invite Your Child To <span id="navlogo">FUND</span>
           <span id="logoITparent">IT</span>!
         </Typography>
-        <TextField className="emailFormBox" label="Name" variant="outlined" />
-        <TextField className="emailFormBox" label="Email" variant="outlined" />
         <TextField
+          value={form.name}
           className="emailFormBox"
-          label="Message"
+          label="Child Name"
+          variant="outlined"
+          onChange={(e) => handleChange(e, 'name')}
+        />
+        <TextField
+          value={form.email}
+          className="emailFormBox"
+          label="Child Email"
+          variant="outlined"
+          onChange={(e) => handleChange(e, 'email')}
+        />
+        <TextField
+          value={form.message}
+          className="emailFormBox"
+          label="Send A Message"
           variant="outlined"
           multiline
           rows={8}
+          onChange={(e) => handleChange(e, 'message')}
         />
       </CardContent>
       <CardActions id="emailFormButtons">
         <Button size="small" variant="contained">
           Send Invite
         </Button>
-        <Button size="small" variant="contained">
+        <Button
+          onClick={() =>
+            setForm({
+              name: '',
+              email: '',
+              message: '',
+            })
+          }
+          size="small"
+          variant="contained"
+        >
           Clear Form
         </Button>
       </CardActions>
