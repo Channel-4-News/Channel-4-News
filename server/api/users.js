@@ -29,7 +29,13 @@ router.get('/:id', async (req, res, next) => {
         include: [
           { model: Transaction },
           // { model: Allowance },
-          { model: Family, include: [User] },
+          {
+            model: Family,
+            include: {
+              model: User,
+              include: { model: Transaction },
+            },
+          },
         ],
       })
     );
@@ -145,6 +151,8 @@ router.put('/allowance/modify/:id', async (req, res, next) => {
     // console.log(newInterval);
     user.allowance = newAllowance;
     user.allowanceInterval = newInterval;
+    //check if new allowance interval is less than days to current allowance
+    if (user.daysToAllowance > newInterval) user.daysToAllowance = newInterval;
     await user.save();
     // console.log(user);
     res.status(201).send(user);

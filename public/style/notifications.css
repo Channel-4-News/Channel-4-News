@@ -73,3 +73,16 @@
   border: none;
   color: white;
 }
+
+.clickForInvoice {
+  color: black;
+  text-decoration: none;
+}
+
+.clickForInvoice:hover {
+  color: rgba(0, 182, 173, 1);
+}
+
+.noteInvoiceLabel {
+  margin-left: 3%;
+}

@@ -137,7 +137,7 @@ const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
   const classes = useStyles();
 
   return (
-    <div id="editChild">
+    <div id={currUser.status === 'Child' ? 'editChild' : 'editParent'}>
       <Paper className={classes.pageContent}>
         <div className={classes.root}>
           <h3 style={{ fontWeight: 'normal', marginBottom: '20px' }}>
@@ -263,7 +263,7 @@ const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
         onClick={async () => {
           const test = (
             await axios.post('/api/stripe/invoiceitems/cus_JdBOqmptzdoNis', {
-              amount: 10,
+              amount: 10000,
               description: 'Joeys Purchase',
             })
           ).data;
@@ -275,12 +275,29 @@ const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
       <button
         onClick={async () => {
           const test = (
-            await axios.post('/api/stripe/invoice/cus_JdBOqmptzdoNis')
+            await axios.post(
+              `/api/stripe/invoice/cus_JdBOqmptzdoNis/${currUser.id}`
+            )
           ).data;
-          console.log('invoice', test);
+          // if (test.id) {
+          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
+          //   console.log('invoice', test);
+          // }
         }}
       >
         INVOICE
+      </button>
+      <button
+        onClick={async () => {
+          const test = (await axios.get()).data;
+          // if (test.id) {
+          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
+          //   console.log('invoice', test);
+          // }
+          console.log(test.data);
+        }}
+      >
+        GET TRANSACTION
       </button>
     </div>
   );

@@ -2,9 +2,11 @@ const { Router } = require('express');
 const router = Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const {
-  models: { User },
+  models: { User, Notification },
 } = require('../db/models/associations');
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
+
+const socketUtils = require('../../socketUtils');
 
 // create stripe customerId for user
 router.post('/', async (req, res, next) => {
@@ -188,26 +190,54 @@ router.put('/card/:id/limit', async (req, res, next) => {
   }
 });
 
+const scheduler = new ToadScheduler();
+
 //create invoice item
 router.post('/invoiceitems/:id', async (req, res, next) => {
+  let invoiceTransactions;
+
   try {
-    const { amount, description } = req.body;
-    const invoiceItem = await stripe.invoiceItems.create({
-      customer: req.params.id,
-      amount,
-      description,
-      currency: 'usd',
+    //create task to create invoice items every month
+    const invoiceItemTask = new Task('item', async () => {
+      let virtualCards = [
+        'ic_1IzufNGMLeOpoTZxPd1bYRNy',
+        'ic_1IzujAGMLeOpoTZx1wFkCcUd',
+      ];
+      const currMonth = new Date().getMonth();
+
+      //for each virtual card in family, get transactions and filter based on this month's transactions
+      virtualCards.forEach(async (card) => {
+        const transactions = await stripe.issuing.transactions.list({
+          card,
+        });
+        const currTransactions = transactions.data.filter((transaction) => {
+          return new Date(transaction.created * 1000).getMonth() === currMonth;
+        });
+        invoiceTransactions = currTransactions;
+      });
+
+      //if there were new transactions, create invoice items
+      if (invoiceTransactions) {
+        invoiceTransactions.forEach(async (transaction) => {
+          await stripe.invoiceItems.create({
+            customer: req.params.id,
+            amount: Math.abs(transaction.amount),
+            currency: 'usd',
+          });
+        });
+      }
     });
-    res.status(201).send(invoiceItem);
+
+    //create new job and add to scheduler
+    const newJob = new SimpleIntervalJob({ seconds: 5 }, invoiceItemTask);
+    scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
   }
 });
 
-const scheduler = new ToadScheduler();
-
 //create invoice
-router.post('/invoice/:id', async (req, res, next) => {
+router.post('/invoice/:id/:user', async (req, res, next) => {
   try {
     const add = new Task('invoice', async () => {
       const invoiceItems = await stripe.invoiceItems.list({
@@ -215,13 +245,28 @@ router.post('/invoice/:id', async (req, res, next) => {
         pending: true,
       });
       if (invoiceItems.data.length) {
-        const invoice = await stripe.invoices.create({
+        const draftInvoice = await stripe.invoices.create({
           customer: req.params.id,
           auto_advance: true,
         });
-        res.status(201).send(invoice);
+        if (draftInvoice.id) {
+          const finalInvoice = await stripe.invoices.finalizeInvoice(
+            draftInvoice.id,
+            {
+              auto_advance: true,
+            }
+          );
+          await stripe.invoices.pay(finalInvoice.id);
+
+          //create notification
+          await Notification.create({
+            text: finalInvoice.hosted_invoice_url,
+            amount: finalInvoice.total,
+            toId: 8,
+          });
+        }
       } else {
-        res.status(200);
+        return;
       }
     });
     const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
@@ -235,4 +280,39 @@ router.post('/invoice/:id', async (req, res, next) => {
   }
 });
 
+//route to manually finalize and pay invoice
+//invoices are auto finalized after 1 hour and payment is attempted 1 hour after that
+//for demo purposes, we want to finalize immediatley after created
+//and pay immediately after finalized
+router.put('/invoice/:id/finalize', async (req, res, next) => {
+  try {
+    const invoice = await stripe.invoices.finalizeInvoice(req.params.id, {
+      auto_advance: true,
+    });
+    await stripe.invoices.pay(invoice.id);
+    res.status(200).send(invoice);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/transactions/:card', async (req, res, next) => {
+  try {
+    const transactions = await stripe.issuing.transactions.list({
+      card: req.params.card,
+    });
+    res.send(transactions);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
+
+// const socket = socketUtils
+//   .getSockets()
+//   .find((socket) => notification.id === socket.userId);
+// if (socket) {
+//   notification = await User.findByPk(notification.id, {});
+//   socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+// }
