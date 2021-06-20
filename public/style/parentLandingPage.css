@@ -1,0 +1,20 @@
+#kidCardAvatarContainer {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+#kidCardAvatar {
+  display: inline;
+  object-fit: contain;
+  height: auto;
+  width: 200px;
+}
+
+#kidCard {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.75rem;
+}

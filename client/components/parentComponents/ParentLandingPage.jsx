@@ -3,15 +3,19 @@ import { connect } from 'react-redux';
 import ChildCard from './ChildCard';
 
 export class ParentLandingPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   render() {
-    console.log(this.state.kids);
+    const { kids } = this.props;
     return this.props.user.family ? (
       <div id="parentLandingPageBackground">
         <div>Hello {this.props.user.firstName}</div>
-        <ChildCard kids={this.props.kids} userID={this.props.user.id} />
+        <div>
+          {kids.map((kid) => {
+            return <ChildCard key={kid.id} kid={kid} />;
+          })}
+        </div>
       </div>
     ) : (
       ''
