@@ -6,7 +6,7 @@ import { choresCompletedSort, cashRelated } from './notificationUtils';
 
 const useStyles = makeStyles((theme) => ({
   notificationContainer: {
-    backgroundColor: 'lightGrey',
+    backgroundColor: 'rgb(238, 238, 238)',
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   notificationsSelect: {
-    // alignSelf: 'flex-start',
-    margin: '2rem',
+    alignSelf: 'flex-start',
+    marginLeft: '25%',
+    marginBottom: '10px',
   },
 }));
 
@@ -41,6 +42,7 @@ const SortNotifications = ({
 
   return (
     <div className={classes.notificationContainer}>
+      <div id="notificationTitle">NOTIFICATIONS</div>
       <Button
         color="secondary"
         aria-controls="simple-menu"
@@ -49,7 +51,7 @@ const SortNotifications = ({
         variant="contained"
         className={classes.notificationsSelect}
       >
-        {val}
+        Sort
       </Button>
       <Menu
         id="simple-menu"

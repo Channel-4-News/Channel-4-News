@@ -8,13 +8,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { editWishListCard } from '../../store/actions/wishListActions/editWishListCard';
+import axios from 'axios';
 
 class PurchaseButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      openPurchase: false,
+      openWarning: false,
       buttonDisabled: this.props.item.purchased,
+      balance: this.props.user.balance,
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -22,11 +25,15 @@ class PurchaseButton extends Component {
   }
 
   handleClickOpen() {
-    this.setState({ open: true });
+    if (parseFloat(this.state.balance) >= parseFloat(this.props.cost)) {
+      this.setState({ openPurchase: true });
+    } else {
+      this.setState({ openWarning: true });
+    }
   }
 
   handleClose() {
-    this.setState({ open: false });
+    this.setState({ openPurchase: false, openWarning: false });
   }
 
   disableButton() {
@@ -34,8 +41,9 @@ class PurchaseButton extends Component {
   }
 
   render() {
+    console.log(this.props.user.family);
     const { handleClickOpen, handleClose, disableButton } = this;
-    const { open } = this.state;
+    const { openWarning, openPurchase } = this.state;
     return (
       <div>
         {!this.state.buttonDisabled ? (
@@ -57,7 +65,7 @@ class PurchaseButton extends Component {
           </Button>
         )}
         <Dialog
-          open={open}
+          open={openPurchase}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -90,6 +98,21 @@ class PurchaseButton extends Component {
             >
               Fund It!
             </Button>
+            <Button onClick={handleClose} color="secondary" variant="contained">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={openWarning}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            You don&apos;t have the funds for this purchase.
+          </DialogTitle>
+          <DialogActions>
             <Button onClick={handleClose} color="secondary" variant="contained">
               Cancel
             </Button>

@@ -2,8 +2,11 @@ const { Router } = require('express');
 const router = Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const {
-  models: { User },
+  models: { User, Notification },
 } = require('../db/models/associations');
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
+
+const socketUtils = require('../../socketUtils');
 
 // create stripe customerId for user
 router.post('/', async (req, res, next) => {
@@ -68,7 +71,7 @@ router.post('/create_bank_account', async (req, res, next) => {
   }
 });
 
-//create an ACH chard - untested - triggered on chore payout
+//create an ACH charge
 router.post('/charges', async (req, res, next) => {
   try {
     const { customer, amount, kid } = req.body;
@@ -76,7 +79,7 @@ router.post('/charges', async (req, res, next) => {
       customer: customer,
       amount: amount,
       currency: 'usd',
-      description: `FUNDIT charge for ${kid}'s virtual creadit card.`,
+      description: `FUNDIT charge for ${kid}'s virtual credit card.`,
     });
     //update kid's balance after charge is created
     const kidToCharge = await User.findOne({ where: { firstName: kid } });
@@ -187,4 +190,103 @@ router.put('/card/:id/limit', async (req, res, next) => {
   }
 });
 
+//create invoice item
+router.post('/invoiceitems/:id', async (req, res, next) => {
+  try {
+    const { amount, description } = req.body;
+    const invoiceItem = await stripe.invoiceItems.create({
+      customer: req.params.id,
+      amount,
+      description,
+      currency: 'usd',
+    });
+    res.status(201).send(invoiceItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
+const scheduler = new ToadScheduler();
+
+//create invoice
+router.post('/invoice/:id/:user', async (req, res, next) => {
+  try {
+    const add = new Task('invoice', async () => {
+      const invoiceItems = await stripe.invoiceItems.list({
+        customer: req.params.id,
+        pending: true,
+      });
+      if (invoiceItems.data.length) {
+        const draftInvoice = await stripe.invoices.create({
+          customer: req.params.id,
+          auto_advance: true,
+        });
+        if (draftInvoice.id) {
+          const finalInvoice = await stripe.invoices.finalizeInvoice(
+            draftInvoice.id,
+            {
+              auto_advance: true,
+            }
+          );
+          await stripe.invoices.pay(finalInvoice.id);
+
+          // const socket = socketUtils
+          //   .getSockets()
+          //   .find((socket) => req.params.user * 1 === socket.userId);
+          // if (socket) {
+          //   socket.send(
+          //     JSON.stringify({
+          //       type: 'UPDATE_ALLOWANCE',
+          //       invoice: finalInvoice.hosted_invoice_url,
+          //     })
+          //   );
+          // }
+
+          //create notification
+          await Notification.create({
+            text: finalInvoice.hosted_invoice_url,
+            amount: finalInvoice.total,
+            toId: 8,
+          });
+        }
+      } else {
+        return;
+      }
+    });
+    const newJob = new SimpleIntervalJob({ seconds: 5 }, add);
+
+    //for production
+    // const newJob = new SimpleIntervalJob({ months: 1 }, add);
+
+    scheduler.addSimpleIntervalJob(newJob);
+    // res.status(200).send(invoice);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//route to manually finalize and pay invoice
+//invoices are auto finalized after 1 hour and payment is attempted 1 hour after that
+//for demo purposes, we want to finalize immediatley after created
+//and pay immediately after finalized
+router.put('/invoice/:id/finalize', async (req, res, next) => {
+  try {
+    const invoice = await stripe.invoices.finalizeInvoice(req.params.id, {
+      auto_advance: true,
+    });
+    await stripe.invoices.pay(invoice.id);
+    res.status(200).send(invoice);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
+
+// const socket = socketUtils
+//   .getSockets()
+//   .find((socket) => notification.id === socket.userId);
+// if (socket) {
+//   notification = await User.findByPk(notification.id, {});
+//   socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+// }

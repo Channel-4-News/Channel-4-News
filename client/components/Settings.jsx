@@ -53,16 +53,15 @@ const Settings = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {props.currUser.status === 'Parent' ? (
+        {/* {props.currUser.status === 'Parent' ? (
           console.log('Parent Page')
-        ) : (
-          <MenuItem onClick={handleClose}>
-            <Link className={classes.menuLinks} to="editchildinfo">
-              Edit Profile!
-            </Link>
-          </MenuItem>
-        )}
-
+        ) : ( */}
+        <MenuItem onClick={handleClose}>
+          <Link className={classes.menuLinks} to="editchildinfo">
+            Edit Profile!
+          </Link>
+        </MenuItem>
+        {/* )} */}
         <MenuItem onClick={handleClose}>
           {' '}
           <Button

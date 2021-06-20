@@ -6,14 +6,15 @@ import { Paper, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   notifications: {
     width: '50%',
-    backgroundColor: 'cornSilk',
+    boxShadow: 'none',
+    backgroundColor: 'transparent',
   },
   noneText: {
     display: 'flex',
     justifyContent: 'center',
   },
   paperContainer: {
-    backgroundColor: 'lightGrey',
+    backgroundColor: 'rgb(238, 238, 238)',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
