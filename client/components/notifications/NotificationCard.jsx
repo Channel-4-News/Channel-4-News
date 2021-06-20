@@ -109,7 +109,7 @@ const NotificationCard = (props) => {
             <HighlightOffIcon />
           </IconButton>
         </div>
-      ) : (
+      ) : props.currNote.isInvoice ? (
         <div className="withdrawalNote">
           <div className="noteInvoiceLabel">INVOICE</div>
           {/* <Avatar className={classes.large} src={props.currNote.from.imgUrl} /> */}
@@ -123,7 +123,7 @@ const NotificationCard = (props) => {
               Click here to view your invoice.
             </a>
           </div>
-          <div>${props.currNote.amount / 100}</div>
+          <div>${(props.currNote.amount / 100).toFixed(2)}</div>
           <div>
             <img
               src="public/images/icons/invoice.png"
@@ -134,6 +134,8 @@ const NotificationCard = (props) => {
             <HighlightOffIcon />
           </IconButton>
         </div>
+      ) : (
+        ''
       )}
     </div>
   );

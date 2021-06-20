@@ -77,7 +77,9 @@ class App extends Component {
           ? choreSuccess(action.text, action.amount)
           : action.isCash
             ? cashWithdrawl(action.text, action.amount)
-            : invoiceNote(action.text);
+            : action.isInvoice
+              ? invoiceNote(action.text)
+              : null;
         store.dispatch(sendNotification(action));
       }
     });

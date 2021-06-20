@@ -16,8 +16,6 @@ const LinkPlaid = (props) => {
   const [processing, setProcessing] = useState(false);
   const [hasBankAccount, setHasBankAccount] = useState(false);
 
-  console.log(props.user);
-
   async function fetchToken() {
     let linkToken = (await axios.post('/api/plaid/create_link_token')).data;
     setToken(linkToken);
@@ -39,8 +37,10 @@ const LinkPlaid = (props) => {
       accountToken: stripeBA.stripe_bank_account_token,
     });
     props.updateUser(props.user.id, { hasBankAccount: true });
+    await axios.post(`/api/stripe/invoiceitems/${props.user.stripeAccount}`);
     props.history.go(0);
   };
+
   const onExit = (error, metadata) => {
     setProcessing(false);
     console.log('onExit', error, metadata);

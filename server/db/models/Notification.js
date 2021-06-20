@@ -24,6 +24,10 @@ const Notification = db.define('notification', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  isInvoice: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
   isChore: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
