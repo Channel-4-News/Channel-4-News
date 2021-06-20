@@ -59,6 +59,11 @@ const EmailInviteForm = (props) => {
           onClick={async () => {
             const result = await axios.post('/api/invite/', form);
             console.log(result);
+            setForm({
+              name: '',
+              email: '',
+              message: '',
+            });
           }}
         >
           Send Invite

@@ -197,7 +197,7 @@ router.post('/', async (req, res, next) => {
     <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:15px; padding-bottom:15px; padding-right: 0px; padding-left: 0px;">
     <!--<![endif]-->
     <div align="center" class="img-container center autowidth" style="padding-right: 0px;padding-left: 0px;">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="http://www.example.com/" style="outline:none" tabindex="-1" target="_blank"><img align="center" alt="Logo" border="0" class="center autowidth" src="images/Screen_Shot_2021-06-20_at_1.04.19_AM.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 227px; display: block;" title="Logo" width="227"/></a>
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="http://www.example.com/" style="outline:none" tabindex="-1" target="_blank"><img align="center" alt="Logo" border="0" class="center autowidth" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/BeeFree/beefree-55aqbxkceem/Screen%20Shot%202021-06-20%20at%201.04.19%20AM.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 227px; display: block;" title="Logo" width="227"/></a>
     <!--[if mso]></td></tr></table><![endif]-->
     </div>
     <!--[if (!mso)&(!IE)]><!-->
@@ -231,16 +231,33 @@ router.post('/', async (req, res, next) => {
     <div style="color:#808080;font-family:Poppins, Arial, Helvetica, sans-serif;line-height:2;padding-top:5px;padding-right:0px;padding-bottom:10px;padding-left:0px;">
     <div class="txtTinyMce-wrapper" style="font-size: 12px; line-height: 2; color: #808080; font-family: Poppins, Arial, Helvetica, sans-serif; mso-line-height-alt: 24px;">
     <p style="margin: 0; font-size: 15px; line-height: 2; word-break: break-word; mso-line-height-alt: 30px; margin-top: 0; margin-bottom: 0;"><span style="font-size: 15px;">${message}-${parentName}</span></p>
-    <p style="margin: 0; font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;"></p>
-    <p style="margin: 0; font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;"></p>
-    <p style="margin: 0; font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;"></p>
-    <p style="margin: 0; font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;"></p>
-    <p style="margin: 0; font-size: 15px; line-height: 2; word-break: break-word; mso-line-height-alt: 30px; margin-top: 0; margin-bottom: 0;"><span style="font-size: 15px;">It looks like ${parentName} invited you to join FUNDIT. Click below to find out more.</span></p>
+    </div>
+    </div>
+    <!--[if mso]></td></tr></table><![endif]-->
+    <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" width="100%">
+    <tbody>
+    <tr style="vertical-align: top;" valign="top">
+    <td class="divider_inner" style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" valign="top">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px solid #BBBBBB; width: 100%;" valign="top" width="100%">
+    <tbody>
+    <tr style="vertical-align: top;" valign="top">
+    <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top"><span></span></td>
+    </tr>
+    </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 5px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
+    <div style="color:#808080;font-family:Poppins, Arial, Helvetica, sans-serif;line-height:2;padding-top:5px;padding-right:0px;padding-bottom:10px;padding-left:0px;">
+    <div class="txtTinyMce-wrapper" style="font-size: 12px; line-height: 2; color: #808080; font-family: Poppins, Arial, Helvetica, sans-serif; mso-line-height-alt: 24px;">
+    <p style="margin: 0; font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;">It looks like ${parentName} invited you to join FUNDIT. FUNDIT is a family web-app for tracking chores and allowances. It allows kids to save and fund things for themselves to help develop responsible money habits. Click below to find out more.</p>
     </div>
     </div>
     <!--[if mso]></td></tr></table><![endif]-->
     <div align="center" class="button-container" style="padding-top:0px;padding-right:0px;padding-bottom:10px;padding-left:0px;">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 10px; padding-left: 0px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://www.example.com/" style="height:31.5pt;width:135.75pt;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#c9364f"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a href="http://www.example.com/" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #c9364f; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #c9364f; border-right: 1px solid #c9364f; border-bottom: 1px solid #c9364f; border-left: 1px solid #c9364f; padding-top: 5px; padding-bottom: 5px; font-family: Poppins, Arial, Helvetica, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:25px;padding-right:25px;font-size:14px;display:inline-block;letter-spacing:undefined;"><span style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><span data-mce-style="font-size: 14px; line-height: 28px;" style="font-size: 14px; line-height: 28px;">Check It Out!</span></span></span></a>
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 10px; padding-left: 0px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/#/" style="height:31.5pt;width:135.75pt;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#c9364f"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a href="http://localhost:3000/#/" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #c9364f; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #c9364f; border-right: 1px solid #c9364f; border-bottom: 1px solid #c9364f; border-left: 1px solid #c9364f; padding-top: 5px; padding-bottom: 5px; font-family: Poppins, Arial, Helvetica, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:25px;padding-right:25px;font-size:14px;display:inline-block;letter-spacing:undefined;"><span style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><span data-mce-style="font-size: 14px; line-height: 28px;" style="font-size: 14px; line-height: 28px;">Check It Out!</span></span></span></a>
     <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
     </div>
     <!--[if (!mso)&(!IE)]><!-->
@@ -257,7 +274,7 @@ router.post('/', async (req, res, next) => {
     <!--<![endif]-->
     <div align="right" class="img-container right autowidth" style="padding-right: 10px;padding-left: 10px;">
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 10px;padding-left: 10px;" align="right"><![endif]-->
-    <div style="font-size:1px;line-height:10px"></div><img align="right" alt="Image" border="0" class="right autowidth" src="images/16b1d27e-788a-4acf-abc1-4c91efcb1711.jpg" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 320px; float: none; display: block;" title="Image" width="320"/>
+    <div style="font-size:1px;line-height:10px"></div><img align="right" alt="Image" border="0" class="right autowidth" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/BeeFree/beefree-55aqbxkceem/editor_images/16b1d27e-788a-4acf-abc1-4c91efcb1711.jpg" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 300px; float: none; display: block;" title="Image" width="300"/>
     <div style="font-size:1px;line-height:10px"></div>
     <!--[if mso]></td></tr></table><![endif]-->
     </div>
@@ -346,7 +363,6 @@ router.post('/', async (req, res, next) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: 'gmail',
-      // host: 'smtp.gmail.com',
       auth: {
         user: `${process.env.EMAIL_ADDRESS}`,
         pass: `${process.env.EMAIL_PASSWORD}`,
@@ -356,9 +372,9 @@ router.post('/', async (req, res, next) => {
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: 'noreply.fundit@gmail.com', // sender address
-      to: email, // list of receivers
+      to: `${email}`, // list of receivers
       subject: `Join FUNDIT With ${parentName}`, // Subject line
-      html: output, // html body
+      html: `${output}`, // html body
     });
 
     console.log('Message sent: %s', info.messageId);
