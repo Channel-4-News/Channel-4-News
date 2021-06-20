@@ -26,7 +26,7 @@ describe('GET /', () => {
   // ];
 
   const newUser = {
-    username: 'michelleO',
+    username: 'michelleO1',
     email: 'mobama@gmail.com',
     password: 'password123',
     status: 'Parent',
