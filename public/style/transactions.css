@@ -1,6 +1,6 @@
 .transactionContainer {
   display: inline-grid;
-  grid-template-columns: 18% 10% 26% 26% 20%;
+  grid-template-columns: 16% 12% 26% 26% 20%;
   padding-top: 12px;
   padding-bottom: 12px;
   padding-left: 10px;

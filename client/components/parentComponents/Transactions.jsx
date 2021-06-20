@@ -44,7 +44,7 @@ const Transactions = (props) => {
             <div>{`${
               days[date.getDay()]
             } ${date.getMonth()}/${date.getDate()}/${date.getFullYear()} `}</div>
-            <div>${Math.abs(transaction.amount / 100)}</div>
+            <div>${Math.abs(transaction.amount / 100).toFixed(2)}</div>
             <div>{transaction.merchant_data.name}</div>
             <div>{transaction.merchant_data.category}</div>
             <div>
