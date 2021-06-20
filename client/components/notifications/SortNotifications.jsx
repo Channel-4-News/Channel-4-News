@@ -82,7 +82,6 @@ const SortNotifications = ({
             setVal('All');
           }}
         >
-          {console.log('from main', chores)}
           All
         </MenuItem>
       </Menu>

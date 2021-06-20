@@ -12,6 +12,7 @@ import {
   passwordValid,
   passwordsMatch,
   validEmail,
+  validName,
 } from '../../utilities/utilityValidation';
 
 import { TextField, Button } from '@material-ui/core';
@@ -24,6 +25,8 @@ const SignUp = (props) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState({
     username: 'Username',
+    firstName: 'First Name',
+    lastName: 'Last Name',
     email: 'Email Address',
     password: 'Password',
     confirmPassword: 'Confirm Password',
@@ -86,7 +89,8 @@ const SignUp = (props) => {
   const handleBlur = async (e, validation, field) => {
     const value = e.target.value;
     const error = await validation(e.target);
-    if (error.error && value) setErrors({ ...errors, [field]: error.message });
+    if (error.error && value >= 0)
+      setErrors({ ...errors, [field]: error.message });
   };
 
   //checks validation, sets label, sets signUpValues
@@ -132,20 +136,30 @@ const SignUp = (props) => {
         <div className={classes.divWrap}>
           <TextField
             className={classes.firstLast}
-            label="First Name"
+            label={errors.firstName}
+            value={signUpValues.firstName}
+            error={errors.firstName !== 'First Name'}
+            onBlur={async (e) => {
+              handleBlur(e, validName, 'firstName');
+            }}
             variant="outlined"
             color="primary"
             onChange={(e) => {
-              setSignUpValues({ ...signUpValues, firstName: e.target.value });
+              handleChange(e, validName, 'firstName', 'First Name');
             }}
           />
           <TextField
             className={classes.firstLast}
-            label="Last Name"
+            label={errors.lastName}
+            value={signUpValues.lastName}
+            error={errors.lastName !== 'Last Name'}
+            onBlur={async (e) => {
+              handleBlur(e, validName, 'lastName');
+            }}
             variant="outlined"
             color="primary"
             onChange={(e) => {
-              setSignUpValues({ ...signUpValues, lastName: e.target.value });
+              handleChange(e, validName, 'lastName', 'Last Name');
             }}
           />
         </div>
