@@ -94,7 +94,6 @@ class PurchaseButton extends Component {
                 this.props.state();
                 disableButton();
                 window.open(this.props.item.linkUrl, '_blank');
-                console.log(this.state.parent);
                 await axios.post(
                   `/api/stripe/invoiceitems/${this.state.parent.stripeAccount}`,
                   {
