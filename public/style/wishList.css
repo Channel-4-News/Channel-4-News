@@ -224,6 +224,7 @@ body
   display: flex;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
 }
 
 #sortWishList {
@@ -404,4 +405,10 @@ body
 
 #editImageContainer input {
   border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+#noWishes {
+  color: white;
+  text-align: center;
+  margin-top: 8%;
 }
