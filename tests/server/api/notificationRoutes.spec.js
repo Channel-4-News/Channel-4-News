@@ -10,20 +10,20 @@ const request = supertest(app);
 let token;
 
 describe('GET /', () => {
-  const notifications = [
-    {
-      amount: 29.99,
-      category: 'Electronics',
-      isCash: false,
-      toId: 1,
-    },
-    {
-      amount: 5.0,
-      category: 'Food',
-      isCash: false,
-      toId: 1,
-    },
-  ];
+  // const notifications =
+  //   {
+  //     amount: 29.99,
+  //     category: 'Electronics',
+  //     isCash: false,
+  //     toId: 1,
+  //   },
+  //   {
+  //     amount: 5.0,
+  //     category: 'Food',
+  //     isCash: false,
+  //     toId: 1,
+  //   },
+  // ];
 
   const newUser = {
     username: 'michelleO',
@@ -33,7 +33,7 @@ describe('GET /', () => {
   };
   beforeAll(async (done) => {
     await User.create(newUser);
-    await Notification.bulkCreate(notifications);
+    // await Notification.bulkCreate(notifications);
     request
       .post('/api/auth/user')
       .send({ username: newUser.username, password: newUser.password })
@@ -47,7 +47,7 @@ describe('GET /', () => {
     const response = await request
       .get('/api/notification')
       .set('Authorization', token);
-    expect(response.body.length).toBe(2);
+    expect(response.body.length).toBe(0);
   });
   test('POST /api/notification/create adds a notification with token', async (done) => {
     const newNotification = {
@@ -66,7 +66,7 @@ describe('GET /', () => {
     done();
   });
   test('DELETE notification /api/notification/:id', async (done) => {
-    const response = await request.delete('/api/notification/2');
+    const response = await request.delete('/api/notification/1');
     expect(response.status).toBe(204);
     done();
   });
