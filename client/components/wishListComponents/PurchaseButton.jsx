@@ -41,7 +41,6 @@ class PurchaseButton extends Component {
   }
 
   render() {
-    console.log(this.props.user.family);
     const { handleClickOpen, handleClose, disableButton } = this;
     const { openWarning, openPurchase } = this.state;
     return (
