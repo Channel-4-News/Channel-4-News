@@ -33,6 +33,7 @@ describe('GET /', () => {
   };
   beforeAll(async (done) => {
     await User.create(newUser);
+    await Notification.bulkCreate(notifications);
     request
       .post('/api/auth/user')
       .send({ username: newUser.username, password: newUser.password })
@@ -40,7 +41,6 @@ describe('GET /', () => {
         token = response.body.token;
         done();
       });
-    await Notification.bulkCreate(notifications);
   });
 
   test('GET /api/notification with token', async () => {
