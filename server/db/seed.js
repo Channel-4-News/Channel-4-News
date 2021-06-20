@@ -680,6 +680,15 @@ const syncAndSeed = async () => {
         isChoreCompleted: true,
         choreId: 2,
       }).save(),
+      new Notification({
+        amount: 3.0,
+        fromId: kid3.id,
+        toId: parent1.id,
+        text: 'Chore Done!',
+        isChore: true,
+        isChoreCompleted: true,
+        choreId: 5,
+      }).save(),
     ]);
 
     // await Allowance.create()
