@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 
 import axios from 'axios';
 
@@ -33,7 +32,7 @@ const Transactions = (props) => {
     <div id="listTransactions">
       <div id="transactionHeader">TRANSACTIONS</div>
       {transactions.map((transaction, idx) => {
-        const date = new Date(1624153872 * 1000);
+        const date = new Date(transaction.created * 1000);
         return (
           <div
             key={transaction.id}
