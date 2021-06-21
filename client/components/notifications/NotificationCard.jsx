@@ -50,8 +50,6 @@ const NotificationCard = (props) => {
   const [chore, setChore] = useState({});
   const [payoutMessage, setPayoutMessage] = useState('PAYOUT');
 
-  console.log(props.currNote);
-
   useEffect(() => {
     if (props.currNote.chore) {
       const id = props.currNote.chore.id;

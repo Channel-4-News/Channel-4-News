@@ -52,7 +52,6 @@ Notification.addHook('afterCreate', async (notification) => {
       //   { model: User, where: { id: 'fromiD' }, as: 'from' },
       // ],
     });
-    console.log('note', notification);
     socket.send(JSON.stringify({ type: 'SEND_NOTIFICATION', notification }));
   }
 });
