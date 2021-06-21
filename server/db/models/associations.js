@@ -25,6 +25,7 @@ Notification.belongsTo(NotificationList);
 NotificationList.hasMany(Notification);
 Notification.belongsTo(User, { as: 'from' });
 Notification.belongsTo(User, { as: 'to' });
+User.hasMany(Notification);
 
 // Allowance.belongsTo(User);
 // User.hasOne(Allowance);

@@ -191,24 +191,24 @@ User.prototype.getNotifications = function () {
   });
 };
 
-// User.addHook('afterUpdate', async (notification) => {
-//   const socket = socketUtils
-//     .getSockets()
-//     .find((socket) => notification.id === socket.userId);
-//   if (socket) {
-//     notification = await User.findByPk(notification.id);
-//     socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
-//   }
-//   const parentsocket = socketUtils
-//     .getSockets()
-//     .find((socket) => socket.userId === 8);
-//   if (parentsocket) {
-//     notification = await User.findByPk(notification.id);
-//     parentsocket.send(
-//       JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification })
-//     );
-//   }
-// });
+User.addHook('afterUpdate', async (notification) => {
+  const socket = socketUtils
+    .getSockets()
+    .find((socket) => notification.id === socket.userId);
+  if (socket) {
+    notification = await User.findByPk(notification.id);
+    socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+  }
+  // const parentsocket = socketUtils
+  //   .getSockets()
+  //   .find((socket) => socket.userId === 8);
+  // if (parentsocket) {
+  //   notification = await User.findByPk(notification.id);
+  //   parentsocket.send(
+  //     JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification })
+  //   );
+  // }
+});
 
 User.addHook('afterUpdate', async (notification) => {
   const socket = socketUtils.getSockets().filter((socket) => {

@@ -61,7 +61,7 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
-
+      console.log(action);
       if (action.notification?.firstName) {
         store.dispatch(
           updateAllowance(
@@ -70,7 +70,7 @@ class App extends Component {
           )
         );
         store.dispatch(getKids(this.props.currUser.id));
-      } else if (action.id || action.notification.id) {
+      } else if (action.id || action.notification.isInvoice) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
           : action.isCash
