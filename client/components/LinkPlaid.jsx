@@ -37,7 +37,6 @@ const LinkPlaid = (props) => {
       accountToken: stripeBA.stripe_bank_account_token,
     });
     props.updateUser(props.user.id, { hasBankAccount: true });
-    await axios.post(`/api/stripe/invoiceitems/${props.user.stripeAccount}`);
     props.history.go(0);
   };
 
