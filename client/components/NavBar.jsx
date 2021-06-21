@@ -54,88 +54,53 @@ const NavBar = (props) => {
               ''
             )}
 
-            {/* USER IS A CHILD */}
             {user === 'Child' ? (
-              <Button color="inherit" href="/#/home">
-                Home
-              </Button>
+              <>
+                <Button color="inherit" href="/#/wishlist">
+                  Wish List
+                </Button>
+                <Button color="inherit" href="/#/chores">
+                  Chores
+                </Button>
+                <Button href="/#/chatroom" color="inherit">
+                  Chat
+                </Button>
+                <Button href="/#/home" color="primary" variant="contained">
+                  Home
+                </Button>
+                <Settings id="settings" />{' '}
+              </>
+            ) : user === 'Parent' ? (
+              <>
+                <Button href="/#/notifications" color="inherit">
+                  <Badge
+                    badgeContent={props.notifications.length}
+                    color="secondary"
+                  >
+                    Notifications
+                  </Badge>
+                </Button>
+                <Button color="inherit" href="/#/chores">
+                  Chores
+                </Button>
+                <Button href="/#/chatroom" color="inherit">
+                  Chat
+                </Button>
+                <Button href="/#/home" color="secondary" variant="contained">
+                  Home
+                </Button>
+                <Settings id="settings" />
+              </>
+            ) : user === 'Anonymous' ? (
+              <>
+                <Button href="/#/home" color="inherit">
+                  Finish Registration
+                </Button>
+                <Settings id="settings" />
+              </>
             ) : (
               ''
             )}
-            {user === 'Child' ? (
-              <Button color="inherit" href="/#/wishlist">
-                Wish List
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Child' ? (
-              <Button color="inherit" href="/#/chores">
-                Chores
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Child' ? (
-              <Button href="/#/chatroom" color="inherit">
-                Chat
-              </Button>
-            ) : (
-              ''
-            )}
-            {/* {user === 'Child' ? (
-              <Button color="primary" href="/#/home" variant="contained">
-                Profile
-              </Button>
-            ) : (
-              ''
-            )} */}
-            {user === 'Child' ? <Settings id="settings" /> : ''}
-
-            {/*----------- USER IS A PARENT --------------*/}
-            {user === 'Parent' ? (
-              <Button href="/#/home" color="inherit">
-                Home
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Parent' ? (
-              <Button href="/#/notifications" color="inherit">
-                <Badge
-                  badgeContent={props.notifications.length}
-                  color="secondary"
-                >
-                  Notifications
-                </Badge>
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Parent' ? (
-              <Button color="inherit" href="/#/chores">
-                Chores
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Parent' ? (
-              <Button href="/#/chatroom" color="inherit">
-                Chat
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Parent' ? <Settings id="settings" /> : ''}
-            {/*----------- USER IS ANONYMOUS --------------*/}
-            {user === 'Anonymous' ? (
-              <Button href="/#/home" color="inherit">
-                Finish Registration
-              </Button>
-            ) : (
-              ''
-            )}
-            {user === 'Anonymous' ? <Settings id="settings" /> : ''}
           </div>
         </Toolbar>
       </AppBar>

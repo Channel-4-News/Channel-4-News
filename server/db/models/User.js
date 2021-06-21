@@ -191,13 +191,35 @@ User.prototype.getNotifications = function () {
   });
 };
 
+// User.addHook('afterUpdate', async (notification) => {
+//   const socket = socketUtils
+//     .getSockets()
+//     .find((socket) => notification.id === socket.userId);
+//   if (socket) {
+//     notification = await User.findByPk(notification.id);
+//     socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+//   }
+//   const parentsocket = socketUtils
+//     .getSockets()
+//     .find((socket) => socket.userId === 8);
+//   if (parentsocket) {
+//     notification = await User.findByPk(notification.id);
+//     parentsocket.send(
+//       JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification })
+//     );
+//   }
+// });
+
 User.addHook('afterUpdate', async (notification) => {
-  const socket = socketUtils
-    .getSockets()
-    .find((socket) => notification.id === socket.userId);
+  const socket = socketUtils.getSockets().filter((socket) => {
+    if (notification.id === socket.userId) return socket;
+    if (socket.userId === 8) return socket;
+  });
   if (socket) {
-    notification = await User.findByPk(notification.id, {});
-    socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+    notification = await User.findByPk(notification.id);
+    socket.forEach((socket) => {
+      socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
+    });
   }
 });
 

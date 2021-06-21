@@ -61,27 +61,26 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
-      console.log(action);
 
       if (action.notification?.firstName) {
-        console.log('fristname');
         store.dispatch(
           updateAllowance(
             action.notification.balance,
             action.notification.daysToAllowance
           )
         );
-      } else {
-        if (action.id || action.notification.id) {
-          action.isChoreCompleted
-            ? choreSuccess(action.text, action.amount)
-            : action.isCash
-              ? cashWithdrawl(action.text, action.amount)
-              : action.isInvoice
-                ? invoiceNote(action.text)
-                : '';
-          store.dispatch(sendNotification(action));
-        }
+        store.dispatch(getKids(this.props.currUser.id));
+      } else if (action.id || action.notification.id) {
+        action.isChoreCompleted
+          ? choreSuccess(action.text, action.amount)
+          : action.isCash
+            ? cashWithdrawl(action.text, action.amount)
+            : action.notification.isInvoice
+              ? invoiceNote(action.text)
+              : '';
+        if (action.id) store.dispatch(sendNotification(action));
+        if (action.notification)
+          store.dispatch(sendNotification(action.notification));
       }
     });
   }

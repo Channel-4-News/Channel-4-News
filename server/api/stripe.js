@@ -248,10 +248,15 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
           });
         });
       }
+      const invoiceItems = await stripe.invoiceItems.list({
+        customer: req.params.id,
+        pending: true,
+      });
+      console.log('invoiceItems 1', invoiceItems);
     });
 
     //create new job and add to scheduler
-    const newJob = new SimpleIntervalJob({ seconds: 10 }, invoiceItemTask);
+    const newJob = new SimpleIntervalJob({ seconds: 40 }, invoiceItemTask);
     scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
