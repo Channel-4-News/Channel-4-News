@@ -247,46 +247,6 @@ const EditChildInfo = ({ currUser, updateUser, history, setAllowance }) => {
           imgUrl={newImgUrl}
         />
       </Paper>
-      <button
-        onClick={async () => {
-          const test = (
-            await axios.put(`/api/users/allowance/${currUser.id}`, {
-              allowance: 5,
-            })
-          ).data;
-          // setAllowance(5, 7);
-        }}
-      >
-        TEST
-      </button>
-      <button
-        onClick={async () => {
-          const test = (
-            await axios.post('/api/stripe/invoiceitems/cus_JdBOqmptzdoNis', {
-              amount: 10000,
-              description: 'Joeys Purchase',
-            })
-          ).data;
-          console.log('item', test);
-        }}
-      >
-        Add INVOICE item
-      </button>
-      <button
-        onClick={async () => {
-          const test = (
-            await axios.post(
-              `/api/stripe/invoice/cus_JdBOqmptzdoNis/${currUser.id}`
-            )
-          ).data;
-          // if (test.id) {
-          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
-          //   console.log('invoice', test);
-          // }
-        }}
-      >
-        INVOICE
-      </button>
     </div>
   );
 };
