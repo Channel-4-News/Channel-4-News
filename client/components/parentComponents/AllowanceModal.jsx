@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import {
   Button,
   Dialog,
@@ -18,6 +19,16 @@ const AllowanceModal = (props) => {
   const [allowance, setAllowance] = useState(0);
   const [interval, setInterval] = useState('Every Week');
   const [intervalNum, setIntervalNum] = useState(7);
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    await axios.put(`/api/allowance/modify/${props.kid.id}`, {
+      allowance,
+      intervalNum,
+    });
+    setOpen(false);
+    props.updateAllowance({ allowance, allowanceInterval: intervalNum });
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -122,11 +133,7 @@ const AllowanceModal = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            // onClick={}
-            color="primary"
-          >
+          <Button variant="contained" onClick={handleSubmit} color="primary">
             Set Allowance
           </Button>
           <Button

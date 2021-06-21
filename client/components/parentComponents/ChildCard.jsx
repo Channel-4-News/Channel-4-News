@@ -14,15 +14,25 @@ class ChildCard extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
+      allowance: '',
+      allowanceInterval: '',
     };
+    this.updateAllowance = this.updateAllowance.bind(this);
   }
 
-  shouldComponentUpdate() {
-    return false;
+  updateAllowance(obj) {
+    this.setState({
+      allowance: obj.allowance,
+      allowanceInterval: obj.allowanceInterval,
+    });
   }
 
   render() {
     const { kid } = this.props;
+    const allowanceObject = {
+      allowance: this.state.allowance,
+      allowanceInterval: this.state.allowanceInterval,
+    };
     return (
       <Card id="kidCard">
         <Avatar
@@ -38,8 +48,11 @@ class ChildCard extends React.Component {
           small={true}
           kid={kid.firstName}
         />
-        <ParentAllowanceInterval kid={kid} />
-        <AllowanceModal kid={kid} />
+        <ParentAllowanceInterval kid={kid} allowance={allowanceObject} />
+        <AllowanceModal
+          kid={kid}
+          updateAllowance={this.state.updateAllowance}
+        />
       </Card>
     );
   }

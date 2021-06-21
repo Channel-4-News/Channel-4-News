@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {
-  models: { Allowance },
+  models: { Allowance, User },
 } = require('../db/models/associations');
 
 //get all allowances
@@ -48,6 +48,23 @@ router.delete('/:id', async (req, res, next) => {
     const allowanceToDelete = await Allowance.findByPk(req.params.id);
     await allowanceToDelete.destroy();
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//route to modify allowance on parent landing page
+router.put('/modify/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const { allowance, intervalNum } = req.body;
+    user.allowance = allowance;
+    user.allowanceInterval = intervalNum;
+    user.daysToAllowance = intervalNum;
+    //check if new allowance interval is less than days to current allowance
+    // if (user.daysToAllowance > intervalNum) user.daysToAllowance = intervalNum;
+    await user.save();
+    res.status(201).send(user);
   } catch (err) {
     next(err);
   }
