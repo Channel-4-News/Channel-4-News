@@ -7,3 +7,8 @@ before_script:
   - psql -c 'create database channel_4_news_db;' -U postgres
 env:
   - JWT=12345 PLAID_CLIENT_ID=60b98sdkjhakjdfhi PLAID_SECRET=51ddbfjsdhfkjhsdkhfks GOOGLE_CLIENT_ID=mv3438g8g2j4892bgjwg2938 SESSION_SECRET=g8j438gj0gj30qjgq
+os: linux
+arch:
+  - arm64
+  - ppc64le
+  - s390x
