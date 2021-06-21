@@ -321,6 +321,7 @@ router.put('/invoice/:id/finalize', async (req, res, next) => {
   }
 });
 
+//get transaction by card ID
 router.get('/transactions/:card', async (req, res, next) => {
   try {
     const transactions = await stripe.issuing.transactions.list({

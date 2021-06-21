@@ -46,6 +46,7 @@ import { updateAllowance } from '../store/actions/allowance/updateAllowance';
 import { setAllowance } from '../store/actions/allowance/setAllowance';
 import { getKids } from '../store/actions/parentActions/getKids';
 import Transactions from './parentComponents/Transactions';
+import DemoButtons from './DemoButtons';
 
 class App extends Component {
   constructor(props) {
@@ -63,24 +64,24 @@ class App extends Component {
       console.log(action);
 
       if (action.notification?.firstName) {
+        console.log('fristname');
         store.dispatch(
           updateAllowance(
             action.notification.balance,
             action.notification.daysToAllowance
           )
         );
-      }
-
-      if (action.id || action.notification.id) {
-        console.log('hasId');
-        action.isChoreCompleted
-          ? choreSuccess(action.text, action.amount)
-          : action.isCash
-            ? cashWithdrawl(action.text, action.amount)
-            : action.isInvoice
-              ? invoiceNote(action.text)
-              : null;
-        store.dispatch(sendNotification(action));
+      } else {
+        if (action.id || action.notification.id) {
+          action.isChoreCompleted
+            ? choreSuccess(action.text, action.amount)
+            : action.isCash
+              ? cashWithdrawl(action.text, action.amount)
+              : action.isInvoice
+                ? invoiceNote(action.text)
+                : '';
+          store.dispatch(sendNotification(action));
+        }
       }
     });
   }
@@ -183,31 +184,21 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={() => {
-                  if (
-                    this.state.user.status === 'Child' &&
-                    this.state.user.virtualCard
-                  ) {
-                    return <ChildLandingPage />;
-                  } else if (
-                    this.state.user.status === 'Child' &&
-                    !this.state.user.virtualCard
-                  ) {
-                    return <CreateCard />;
-                  } else if (
-                    this.state.user.status === 'Parent' &&
-                    this.state.user.hasBankAccount
-                  ) {
-                    return <ParentLandingPage />;
-                  } else if (
-                    this.state.user.status === 'Parent' &&
-                    !this.state.user.hasBankAccount
-                  ) {
-                    return <LinkPlaid />;
-                  } else {
-                    return <JoinOrCreateFamily />;
-                  }
-                }}
+                component={
+                  this.state.user.status === 'Child' &&
+                  this.state.user.virtualCard
+                    ? ChildLandingPage
+                    : this.state.user.status === 'Child' &&
+                      !this.state.user.virtualCard
+                      ? CreateCard
+                      : this.state.user.status === 'Parent' &&
+                      this.state.user.hasBankAccount
+                        ? ParentLandingPage
+                        : this.state.user.status === 'Parent' &&
+                      !this.state.user.hasBankAccount
+                          ? LinkPlaid
+                          : JoinOrCreateFamily
+                }
               />
               <Route exact path="/editchildinfo" component={EditChildInfo} />
               <Route exact path="/wishlist" component={WishList} />
@@ -221,6 +212,7 @@ class App extends Component {
                 path="/chatroom"
                 component={() => <Chatroom user={this.state.user} />}
               />
+              <Route exact path="/demobuttons" component={DemoButtons} />
             </Switch>
           </div>
         </Router>
@@ -247,3 +239,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// component={
+//   this.state.user.status === 'Child' ? ChildLandingPage : ''
+// }
