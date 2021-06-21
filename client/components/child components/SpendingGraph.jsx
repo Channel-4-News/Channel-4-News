@@ -14,7 +14,7 @@ const SpendingGraph = (props) => {
     : '';
 
   return props.small ? (
-    <div className="spendingGraphCard">
+    <div id="childCardSpendingGraph">
       <Doughnut
         data={{
           labels: Object.keys(transactions),
@@ -60,16 +60,16 @@ const SpendingGraph = (props) => {
               font: { size: 20, family: 'main' },
             },
             legend: {
-              display: false,
-              // position: 'left',
-              // align: 'right',
-              // labels: {
-              //   font: {
-              //     size: 14,
-              //     family: 'main',
-              //   },
-              //   color: 'black',
-              // },
+              // display: false,
+              position: 'right',
+              align: 'left',
+              labels: {
+                font: {
+                  size: 14,
+                  family: 'main',
+                },
+                color: 'black',
+              },
             },
           },
         }}
