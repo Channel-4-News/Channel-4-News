@@ -7,6 +7,7 @@ const {
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 
 const socketUtils = require('../../socketUtils');
+const Family = require('../db/models/Family');
 
 // create stripe customerId for user
 router.post('/', async (req, res, next) => {
@@ -187,10 +188,22 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
   try {
     //create task to create invoice items every month
     const invoiceItemTask = new Task('item', async () => {
-      let virtualCards = [
-        'ic_1IzufNGMLeOpoTZxPd1bYRNy',
-        'ic_1IzujAGMLeOpoTZx1wFkCcUd',
-      ];
+      //finds parent and maps over children to get all virtual card Ids
+      const parent = await User.findOne({
+        where: { stripeAccount: req.params.id },
+        include: [
+          {
+            model: Family,
+            include: {
+              model: User,
+              where: { status: 'Child' },
+              attributes: ['virtualCard'],
+            },
+          },
+        ],
+      });
+
+      const virtualCards = parent.family.users.map((kid) => kid.virtualCard);
 
       //for production, this would be by the month, but for testing and demo it is by the date.
       const currDate = new Date().getDate();
@@ -226,7 +239,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
     });
 
     //create new job and add to scheduler
-    const newJob = new SimpleIntervalJob({ seconds: 40 }, invoiceItemTask);
+    const newJob = new SimpleIntervalJob({ seconds: 10 }, invoiceItemTask);
     scheduler.addSimpleIntervalJob(newJob);
 
   } catch (err) {
@@ -263,6 +276,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
             text: finalInvoice.hosted_invoice_url,
             amount: finalInvoice.total,
             toId: 8,
+            isInvoice: true,
           });
         }
       } else {

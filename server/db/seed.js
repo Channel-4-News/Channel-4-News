@@ -644,6 +644,15 @@ const syncAndSeed = async () => {
         choreId: 6,
       }).save(),
       new Notification({
+
+        amount: 1500.0,
+        toId: parent1.id,
+        text: 'invoice url',
+        isInvoice: true,
+      }).save(),
+      new Notification({
+        amount: 12.0,
+        category: 'Toys',
         amount: 7.0,
         fromId: kid1.id,
         toId: parent1.id,
@@ -687,13 +696,28 @@ const syncAndSeed = async () => {
         amount: 114.87,
       }).save(),
       new Notification({
-        amount: 5.0,
-        fromId: kid1.id,
+        amount: 9800.0,
+        toId: parent1.id,
+        text: 'invoice url',
+        isInvoice: true,
+      }).save(),
+      new Notification({
+        amount: 3.0,
+        fromId: kid3.id,
         toId: parent1.id,
         text: `Water plants. Completed by ${kid1.username}`,
         isChore: true,
         isChoreCompleted: true,
         choreId: 1,
+      }).save(),
+      new Notification({
+        amount: 3.0,
+        fromId: kid3.id,
+        toId: parent1.id,
+        text: 'Chore Done!',
+        isChore: true,
+        isChoreCompleted: true,
+        choreId: 5,
       }).save(),
     ]);
 
