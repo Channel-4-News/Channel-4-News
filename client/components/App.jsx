@@ -71,7 +71,7 @@ class App extends Component {
         );
       }
 
-      if (action.id || action.notification.id) {
+      if (action.id) {
         console.log('hasId');
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
@@ -81,6 +81,10 @@ class App extends Component {
               ? invoiceNote(action.text)
               : null;
         store.dispatch(sendNotification(action));
+      }
+      if (action.notification?.isInvoice) {
+        action.notification.isInvoice ? invoiceNote(action.text) : null;
+        store.dispatch(sendNotification(action.notification));
       }
     });
   }

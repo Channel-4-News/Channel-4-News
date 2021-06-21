@@ -186,6 +186,7 @@ const scheduler = new ToadScheduler();
 //create invoice item
 router.post('/invoiceitems/:id', async (req, res, next) => {
   try {
+    let invoiceTransactions;
     //create task to create invoice items every month
     const invoiceItemTask = new Task('item', async () => {
       //finds parent and maps over children to get all virtual card Ids
@@ -241,7 +242,6 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
     //create new job and add to scheduler
     const newJob = new SimpleIntervalJob({ seconds: 10 }, invoiceItemTask);
     scheduler.addSimpleIntervalJob(newJob);
-
   } catch (err) {
     next(err);
   }

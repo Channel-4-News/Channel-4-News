@@ -644,14 +644,12 @@ const syncAndSeed = async () => {
         choreId: 6,
       }).save(),
       new Notification({
-
         amount: 1500.0,
         toId: parent1.id,
         text: 'invoice url',
         isInvoice: true,
       }).save(),
       new Notification({
-        amount: 12.0,
         category: 'Toys',
         amount: 7.0,
         fromId: kid1.id,

@@ -62,6 +62,13 @@ const cashRelated = (notiArr) => {
   }
   return newArr;
 };
+const invoicesOnly = (notiArr) => {
+  const newArr = notiArr.filter((currNoti) => currNoti.isInvoice);
+  if (!newArr.length) {
+    return 'Currently No Invoices';
+  }
+  return newArr;
+};
 
 export {
   choreSuccess,
@@ -69,4 +76,5 @@ export {
   choresCompletedSort,
   cashRelated,
   invoiceNote,
+  invoicesOnly,
 };
