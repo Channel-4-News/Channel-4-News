@@ -2,7 +2,11 @@ import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { Button, Menu, MenuItem, makeStyles } from '@material-ui/core';
 import Notification from './Notification';
-import { choresCompletedSort, cashRelated } from './notificationUtils';
+import {
+  choresCompletedSort,
+  cashRelated,
+  onlyInvoices,
+} from './notificationUtils';
 
 const useStyles = makeStyles((theme) => ({
   notificationContainer: {
@@ -24,7 +28,7 @@ const SortNotifications = ({
   allNotifications,
   choreNotifications,
   cashNotifications,
-  chores,
+  invoices,
 }) => {
   const [val, setVal] = useState('Select');
   const [anchorEl, setAnchorEl] = useState(null);
@@ -68,6 +72,7 @@ const SortNotifications = ({
         >
           Chores Completed
         </MenuItem>
+
         <MenuItem
           onClick={() => {
             handleClose();
@@ -79,6 +84,14 @@ const SortNotifications = ({
         <MenuItem
           onClick={() => {
             handleClose();
+            setVal('Invoices');
+          }}
+        >
+          Invoices
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
             setVal('All');
           }}
         >
@@ -86,15 +99,16 @@ const SortNotifications = ({
         </MenuItem>
       </Menu>
       <Notification
-        chores={chores}
         notifications={
           val === 'Chores Completed'
             ? choreNotifications
             : val === 'Cash Withdrawals'
               ? cashNotifications
-              : val === 'All' || val === 'Select'
-                ? allNotifications
-                : ''
+              : val === 'Invoices'
+                ? invoices
+                : val === 'All' || val === 'Select'
+                  ? allNotifications
+                  : ''
         }
       />
     </div>
@@ -104,11 +118,14 @@ const SortNotifications = ({
 const mapStateToProps = (state) => {
   return {
     allNotifications: state.notifications.length
-      ? state.notifications
+      ? state.notifications.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
       : 'No New Notifications',
     choreNotifications: choresCompletedSort(state.notifications),
     cashNotifications: cashRelated(state.notifications),
-    chores: state.chores,
+    invoices: onlyInvoices(state.notifications),
   };
 };
 

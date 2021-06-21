@@ -650,7 +650,6 @@ const syncAndSeed = async () => {
         isInvoice: true,
       }).save(),
       new Notification({
-        amount: 12.0,
         category: 'Toys',
         amount: 7.0,
         fromId: kid1.id,
