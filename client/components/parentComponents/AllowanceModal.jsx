@@ -27,7 +27,7 @@ const AllowanceModal = (props) => {
       intervalNum,
     });
     setOpen(false);
-    props.updateAllowance({ allowance, allowanceInterval: intervalNum });
+    props.getKids();
   };
 
   const handleClose = () => {

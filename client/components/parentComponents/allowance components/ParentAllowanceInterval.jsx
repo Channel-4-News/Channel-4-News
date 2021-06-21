@@ -2,36 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class ParentAllowanceInterval extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      daysToAllowance: 0,
-      allowance: 0,
+      daysToAllowance: '',
+      allowance: '',
     };
   }
 
-  async componentDidMount() {
-    await this.setState({
-      allowance: this.props.allowance,
-      daysToAllowance: this.props.daysToAllowance,
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.state.daysToAllowance !== this.props.daysToAllowance) {
-      console.log('state', this.state.daysToAllowance);
-      console.log('props', this.props.daysToAllowance);
-      this.setState({ daysToAllowance: this.props.daysToAllowance });
-    }
-    if (this.state.allowance !== this.props.allowance) {
-      console.log('state', this.state.allowance);
-      console.log('props', this.props.allowance);
-      this.setState({ allowance: this.props.allowance });
-    }
-  }
-
   render() {
-    const { daysToAllowance, allowance } = this.state;
+    const { daysToAllowance, allowance } = this.props;
     return daysToAllowance ? (
       <div id="nextAllowance">
         Next allowance in {daysToAllowance}{' '}
