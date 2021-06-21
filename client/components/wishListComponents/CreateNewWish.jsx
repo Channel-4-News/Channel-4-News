@@ -112,8 +112,8 @@ const CreateNewWish = (props) => {
                       </div>
                       <div onClick={() => setSelect('Toys')}>Toys</div>
                       <div onClick={() => setSelect('Food')}>Food</div>
-                      <div onClick={() => setSelect('Miscelleneous')}>
-                        Miscelleneous
+                      <div onClick={() => setSelect('Miscellaneous')}>
+                        Miscellaneous
                       </div>
                     </div>
                   </div>
@@ -188,8 +188,8 @@ const CreateNewWish = (props) => {
                         </div>
                         <div onClick={() => setSelect('Toys')}>Toys</div>
                         <div onClick={() => setSelect('Food')}>Food</div>
-                        <div onClick={() => setSelect('Miscelleneous')}>
-                          Miscelleneous
+                        <div onClick={() => setSelect('Miscellaneous')}>
+                          Miscellaneous
                         </div>
                       </div>
                     </div>
