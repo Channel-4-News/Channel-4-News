@@ -6,6 +6,7 @@ import AddUpdateChoreContainer from './AddUpdateChoreContainer';
 import KidsChoreSort from './KidsChoreSort';
 import ParentSortAddButtons from './ParentSortAddButtons';
 import NoChores from './NoChores';
+import { setCurrentKid } from '../../store/actions/parentActions/setCurrentKid';
 
 const Chores = (props) => {
   const [chores, setChores] = useState([]);
@@ -13,12 +14,8 @@ const Chores = (props) => {
   const [addChore, setAddChore] = useState(false);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [choreToUpdate, setChoreToUpdate] = useState({});
-  const [selectedKid, setSelectedKid] = props.location.state
-    ? useState(props.location.state.selectedKid)
-    : useState({});
-  const [childSelect, setChildSelect] = props.location.state
-    ? useState(true)
-    : useState(false);
+  const [selectedKid, setSelectedKid] = useState({});
+  const [childSelect, setChildSelect] = useState(false);
   const [choresUpdated, setUpdated] = useState(1);
 
   const handleClose = (id) => {
@@ -56,7 +53,8 @@ const Chores = (props) => {
   useEffect(() => {
     const today = new Date();
     const currentChores = [];
-    if (childSelect && selectedKid.id) {
+    if (childSelect && selectedKid?.id) {
+      setExpiredChores([]);
       setExpiredChores(
         props.chores.filter((chore) => {
           if (
@@ -100,6 +98,15 @@ const Chores = (props) => {
       );
     }
   }, [choresUpdated]);
+
+  useEffect(() => {
+    if (props.currKid && props.chores.length) {
+      const mySelectedKid = props.kids.find((kid) => kid.id === props.currKid);
+      setSelectedKid(mySelectedKid);
+      setChildSelect(true);
+    }
+  }, [props.chores, props.currKid]);
+
   return (
     <div
       id={
@@ -183,12 +190,14 @@ const mapStateToProps = (state) => {
     chores: state.chores,
     currUser: state.currUser,
     kids: state.kids,
+    currKid: state.currKid,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getChores: (id) => dispatch(getChores(id)),
+    setCurrentKid: (id) => dispatch(setCurrentKid(id)),
   };
 };
 

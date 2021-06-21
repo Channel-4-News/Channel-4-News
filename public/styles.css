@@ -11,6 +11,7 @@
 @import url('./style/notifications.css');
 @import url('./style/emailForm.css');
 @import url('./style/transactions.css');
+@import url('./style/parentLandingPage.css');
 
 @font-face {
   font-family: main;
