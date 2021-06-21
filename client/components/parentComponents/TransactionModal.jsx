@@ -28,7 +28,7 @@ const TransactionModal = (props) => {
         aria-describedby="alert-dialog-description"
         maxWidth="xl"
       >
-        <DialogContent e>
+        <DialogContent>
           <Transactions kid={props.kid} />
         </DialogContent>
         <DialogActions>

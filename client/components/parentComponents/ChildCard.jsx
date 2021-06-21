@@ -4,6 +4,7 @@ import ParentAllowanceInterval from './allowance components/ParentAllowanceInter
 import ParentBalance from './allowance components/ParentBalance';
 import AllowanceModal from './AllowanceModal';
 import TransactionModal from './TransactionModal';
+import { setCurrentKid } from '../../store/actions/parentActions/setCurrentKid';
 
 import SpendingGraph from '../child components/SpendingGraph';
 import Avatar from '@material-ui/core/Avatar';
@@ -40,9 +41,24 @@ class ChildCard extends React.Component {
         <ParentAllowanceInterval kid={kid} />
         <AllowanceModal kid={kid} getKids={this.props.getKids} />
         <TransactionModal kid={kid} />
+        <Button
+          size="large"
+          color="secondary"
+          variant="contained"
+          href="/#/chores"
+          onClick={() => this.props.setCurrentKid(kid.id)}
+        >
+          {kid.firstName}&apos;s Chores
+        </Button>
       </Card>
     );
   }
 }
 
-export default connect()(ChildCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentKid: (id) => dispatch(setCurrentKid(id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ChildCard);
