@@ -5,6 +5,7 @@ import { forEach } from 'lodash';
 
 const Transactions = (props) => {
   const [transactions, setTransactions] = useState([]);
+
   const days = {
     0: 'Sun',
     1: 'Mon',
@@ -18,12 +19,13 @@ const Transactions = (props) => {
   //this should be removed after this component is placed on child card for parent landing page.
   //we should grab child card Id from user model instance virtualCard depending on which child's card we
   //are on
-  let card = 'ic_1IzufNGMLeOpoTZxPd1bYRNy';
+  // let card = 'ic_1IzufNGMLeOpoTZxPd1bYRNy';
 
   useEffect(() => {
     const getTransactions = async () => {
-      const transactions = (await axios.get(`/api/stripe/transactions/${card}`))
-        .data;
+      const transactions = (
+        await axios.get(`/api/stripe/transactions/${props.kid.virtualCard}`)
+      ).data;
       await setTransactions(transactions.data);
     };
     getTransactions();
@@ -31,7 +33,9 @@ const Transactions = (props) => {
 
   return (
     <div id="listTransactions">
-      <div id="transactionHeader">TRANSACTIONS</div>
+      <div id="transactionHeader">
+        {props.kid.firstName}&apos;s Recent Transactions
+      </div>
       {transactions.map((transaction, idx) => {
         const date = new Date(transaction.created * 1000);
         return (

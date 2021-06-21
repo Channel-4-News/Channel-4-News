@@ -9,8 +9,7 @@
 #listTransactions {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin-left: 20%;
+  width: 1000px;
   margin-top: 2%;
 }
 

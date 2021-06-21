@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ParentAllowanceInterval from './allowance components/ParentAllowanceInterval';
 import ParentBalance from './allowance components/ParentBalance';
 import AllowanceModal from './AllowanceModal';
+import TransactionModal from './TransactionModal';
 
 import SpendingGraph from '../child components/SpendingGraph';
 import Avatar from '@material-ui/core/Avatar';
@@ -38,6 +39,7 @@ class ChildCard extends React.Component {
         />
         <ParentAllowanceInterval kid={kid} />
         <AllowanceModal kid={kid} getKids={this.props.getKids} />
+        <TransactionModal kid={kid} />
       </Card>
     );
   }
