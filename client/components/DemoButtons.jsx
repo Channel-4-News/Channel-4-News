@@ -2,14 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const DemoButtons = ({ currUser }) => {
-  console.log(currUser);
+const DemoButtons = ({ currUser, kids }) => {
+  const joey = kids[2];
   return (
     <div>
       <button
         onClick={async () => {
           await axios.put(`/api/users/allowance/${currUser.id}`, {
-            allowance: 5,
+            allowance: currUser.allowance,
           });
         }}
       >
@@ -17,10 +17,9 @@ const DemoButtons = ({ currUser }) => {
       </button>
       <button
         onClick={async () => {
-          await axios.post('/api/stripe/invoiceitems/cus_JdBOqmptzdoNis', {
-            amount: 10000,
-            description: 'Joeys Purchase',
-          });
+          await axios.post(
+            `/api/stripe/invoiceitems/${currUser.stripeAccount}`
+          );
         }}
       >
         Add INVOICE item
@@ -28,7 +27,7 @@ const DemoButtons = ({ currUser }) => {
       <button
         onClick={async () => {
           await axios.post(
-            `/api/stripe/invoice/cus_JdBOqmptzdoNis/${currUser.id}`
+            `/api/stripe/invoice/${currUser.stripeAccount}/${currUser.id}`
           );
 
           // if (test.id) {
@@ -39,12 +38,13 @@ const DemoButtons = ({ currUser }) => {
       >
         INVOICE
       </button>
+      <div>{joey?.balance}</div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { currUser: state.currUser };
+  return { currUser: state.currUser, kids: state.kids };
 };
 
 export default connect(mapStateToProps)(DemoButtons);

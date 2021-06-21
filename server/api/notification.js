@@ -26,7 +26,6 @@ router.post('/create', async (req, res, next) => {
       fromId: user.id,
       ...req.body,
     });
-
     res.status(201).send(
       await Notification.findByPk(notification.id, {
         include: [

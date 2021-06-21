@@ -360,7 +360,7 @@ const syncAndSeed = async () => {
       description: 'Wash the windows in your room. Dad will help.',
       amount: 2,
       isRecurring: false,
-      due: '2022-09-11',
+      due: '2021-05-11',
       icon: '/public/images/choreIcons/window-cleaning.png',
       familyId: myFam.id,
       userId: kid1.id,
@@ -383,7 +383,7 @@ const syncAndSeed = async () => {
         'Load clothes into washing machine and start cycle. Ask dad if you need help.',
       amount: 3,
       isRecurring: false,
-      due: '2022-07-01',
+      due: '2021-06-21',
       icon: '/public/images/choreIcons/clean-clothes-2.png',
       familyId: myFam.id,
       userId: kid3.id,
@@ -433,7 +433,7 @@ const syncAndSeed = async () => {
       familyId: myFam.id,
       userId: kid3.id,
       icon: '/public/images/choreIcons/delete.png',
-      createdAt: '2021-11-09',
+      createdAt: '2021-03-09',
     });
     Chore.create({
       name: 'Wash windows.',

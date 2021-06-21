@@ -50,6 +50,8 @@ const NotificationCard = (props) => {
   const [chore, setChore] = useState({});
   const [payoutMessage, setPayoutMessage] = useState('PAYOUT');
 
+  console.log(props.currNote);
+
   useEffect(() => {
     if (props.currNote.chore) {
       const id = props.currNote.chore.id;
@@ -67,9 +69,9 @@ const NotificationCard = (props) => {
     <div>
       {props.currNote.isChoreCompleted ? (
         <div className="choreCompletedNote">
-          <Avatar className={classes.large} src={props.currNote.from.imgUrl} />
+          <Avatar className={classes.large} src={props.currNote.from?.imgUrl} />
           <div>
-            {props.currNote.from.firstName} completed:{' '}
+            {props.currNote.from?.firstName} completed:{' '}
             {props.currNote.chore.name}
           </div>
           <div>${props.currNote.amount}</div>
@@ -80,9 +82,9 @@ const NotificationCard = (props) => {
             onClick={async () => {
               setPayoutMessage('PROCESSING');
               await axios.post('/api/stripe/charges', {
-                customer: props.currNote.to.stripeAccount,
+                customer: props.currNote.to?.stripeAccount,
                 amount: parseInt(props.currNote.amount) * 100,
-                kid: props.currNote.from.firstName,
+                kid: props.currNote.from?.firstName,
               });
               props.destroy(props.currNote.id);
               setPayoutMessage('PAYOUT');
@@ -100,8 +102,8 @@ const NotificationCard = (props) => {
         </div>
       ) : props.currNote.isCash ? (
         <div className="withdrawalNote">
-          <Avatar className={classes.large} src={props.currNote.from.imgUrl} />
-          <div>{props.currNote.from.firstName} initiated a withdrawal.</div>
+          <Avatar className={classes.large} src={props.currNote.from?.imgUrl} />
+          <div>{props.currNote.from?.firstName} initiated a withdrawal.</div>
           <div>${props.currNote.amount}</div>
           <div>
             <img

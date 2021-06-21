@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db');
 const socketUtils = require('../../../socketUtils');
+const User = require('./User');
+const { Chore } = require('./Chore');
 const NotificationList = db.define('notification list');
 
 const Notification = db.define('notification', {
@@ -43,7 +45,14 @@ Notification.addHook('afterCreate', async (notification) => {
     .getSockets()
     .find((socket) => notification.toId === socket.userId);
   if (socket) {
-    notification = await Notification.findByPk(notification.id, {});
+    notification = await Notification.findByPk(notification.id, {
+      include: [Chore],
+      // include: [
+      //   { model: User, where: { id: 'toiD' } },
+      //   { model: User, where: { id: 'fromiD' }, as: 'from' },
+      // ],
+    });
+    console.log('note', notification);
     socket.send(JSON.stringify({ type: 'SEND_NOTIFICATION', notification }));
   }
 });
