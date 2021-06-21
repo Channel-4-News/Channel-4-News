@@ -44,6 +44,7 @@ const LinkPlaid = (props) => {
   const onExit = (error, metadata) => {
     setProcessing(false);
     console.log('onExit', error, metadata);
+    console.log('travis');
   };
 
   const onEvent = (eventName, metadata) => {
