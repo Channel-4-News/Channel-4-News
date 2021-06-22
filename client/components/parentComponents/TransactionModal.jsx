@@ -12,10 +12,10 @@ const TransactionModal = (props) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <div className="PLtransactModal">
       <Button
-        size="large"
-        color="secondary"
+        size="medium"
+        color="primary"
         variant="contained"
         onClick={() => setOpen(true)}
       >

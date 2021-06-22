@@ -124,9 +124,9 @@ class App extends Component {
     const parentTheme = createMuiTheme({
       palette: {
         primary: {
-          light: '#e6f2f9',
-          main: '#c9d4db',
-          dark: '#b4bfc6',
+          light: '#c9d4db',
+          main: '#b4bfc6',
+          dark: '#949da3',
           contrastText: '#fff',
         },
         secondary: {

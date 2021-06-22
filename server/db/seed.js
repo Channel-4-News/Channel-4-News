@@ -169,16 +169,23 @@ const syncAndSeed = async () => {
     });
 
     const kid3 = await User.create({
+      balance: 22,
       username: 'angryarchie',
       email: 'archie@test.com',
       password: 'password123',
       firstName: 'Archie',
       lastName: 'Momordad',
-      imgUrl: 'public/images/profilePics/kid-smile-thumbs-up-14456897.jpeg',
+      imgUrl:
+        'public/images/profilePics/garrett-jackson-LhNkJMayglI-unsplash.jpg',
       familyId: myFam.id,
       cardHolderId: 'ich_1IzuksGMLeOpoTZxDneiqZp2',
       virtualCard: 'ic_1Izul5GMLeOpoTZxdSEH1tzV',
       status: 'Child',
+      cardColor: '#00d9ff',
+      cardImage: 'public/images/cardIcons/basketball.png',
+      daysToAllowance: 7,
+      allowanceInterval: 30,
+      allowance: 5,
     });
 
     const parent1 = await User.create({

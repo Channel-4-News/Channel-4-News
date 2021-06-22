@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 const ParentBalance = (props) => {
   return (
     <div>
-      <div style={{ fontSize: 'larger' }}>
-        BALANCE &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;$
-        {props.balance}
+      <div style={{ fontSize: 'larger' }} className="parentBalance">
+        <div style={{ color: 'rgb(184, 184, 184)', fontSize: 'medium' }}>
+          BALANCE
+        </div>
+        <div>${props.balance}</div>
       </div>
     </div>
   );

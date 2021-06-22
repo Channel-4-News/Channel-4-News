@@ -10,6 +10,7 @@ const { route } = require('./families');
 //interval scheduling
 const schedule = require('node-schedule');
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
+const { Chore } = require('../db/models/Chore');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -33,7 +34,7 @@ router.get('/:id', async (req, res, next) => {
             model: Family,
             include: {
               model: User,
-              include: { model: Transaction },
+              include: [{ model: Transaction }, { model: Chore }],
             },
           },
         ],
