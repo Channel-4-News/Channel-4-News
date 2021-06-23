@@ -1,8 +1,6 @@
 import { Grid, makeStyles, IconButton, Button } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { GrCheckboxSelected } from 'react-icons/gr';
-import { GiTakeMyMoney } from 'react-icons/gi';
 import LocalAtmOutlinedIcon from '@material-ui/icons/LocalAtmOutlined';
 import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
