@@ -25,7 +25,6 @@ const AllowanceModal = (props) => {
 
     //stop old allowance from running
     await axios.put(`/api/users/allowance/stop/${props.kid.id}`);
-    console.log('stopped');
 
     await axios.put(`/api/allowance/modify/${props.kid.id}`, {
       allowance,
@@ -38,10 +37,20 @@ const AllowanceModal = (props) => {
       intervalNum,
     });
 
-    console.log('now here');
-
     setOpen(false);
     props.getKids();
+  };
+
+  const cancelAllowance = async () => {
+    //stop allowance interval from running
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`);
+
+    await axios.put(`/api/allowance/modify/${props.kid.id}`, {
+      allowance: 0,
+      intervalNum: 0,
+    });
+
+    handleClose();
   };
 
   const handleClose = () => {
@@ -148,11 +157,11 @@ const AllowanceModal = (props) => {
           </Button>
           <Button
             variant="contained"
-            onClick={handleClose}
+            onClick={cancelAllowance}
             color="secondary"
             autoFocus
           >
-            Cancel
+            Cancel Allowance
           </Button>
         </DialogActions>
       </Dialog>
