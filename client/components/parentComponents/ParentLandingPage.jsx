@@ -6,6 +6,7 @@ import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily'
 import ParentGraph from './ParentGraph';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import LandingPlaidLink from './LandingPlaidLink';
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -64,9 +65,7 @@ export class ParentLandingPage extends Component {
               />
               {/* <LinkPlaid history={props.history} /> */}
             </div>
-            <Button variant="contained" id="PLupdateBA">
-              Update Bank Account
-            </Button>
+            <LandingPlaidLink />
             <Button variant="contained" id="PLinviteFamily">
               Invite Family Members
             </Button>
