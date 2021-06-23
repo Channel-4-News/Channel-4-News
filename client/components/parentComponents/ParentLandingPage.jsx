@@ -38,14 +38,27 @@ export class ParentLandingPage extends Component {
     const { kids, user, chores } = this.props;
 
     return this.props.user.family ? (
-      <div id="parentLandingPageBackground">
+      <div
+        id={
+          kids.length
+            ? 'parentLandingPageBackground'
+            : 'newParentLandingPageBackground'
+        }
+      >
         <div id="helloParent">Hello, {user.firstName}!</div>
         <div id="PLoverviewCard">
           <div id="PLwelcomeCard1">
             <div id="familySnapshot">FAMILY SNAPSHOT</div>
-            <div id="notACompetition">
-              {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
-            </div>
+            {kids.length ? (
+              <div id="notACompetition">
+                {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
+              </div>
+            ) : (
+              <div id="notACompetition">
+                It&apos;s not a competition, but if it were, this graph would
+                make sure you know wh&apos;s winning.{' '}
+              </div>
+            )}
             <div id="parentGraph">
               <ParentGraph
                 user={user}

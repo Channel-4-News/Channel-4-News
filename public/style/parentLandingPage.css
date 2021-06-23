@@ -70,6 +70,13 @@
   flex-direction: column;
 }
 
+#newParentLandingPageBackground {
+  background-color: rgb(226, 225, 225);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .PLgraphics {
   display: flex;
   flex-direction: column;
