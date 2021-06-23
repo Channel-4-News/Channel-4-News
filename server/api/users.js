@@ -8,7 +8,6 @@ const { Transaction } = require('../db/models/Transaction');
 const { route } = require('./families');
 
 //interval scheduling
-const schedule = require('node-schedule');
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 const { Chore } = require('../db/models/Chore');
 
@@ -154,7 +153,7 @@ router.put('/allowance/:id', async (req, res, next) => {
     const add = new Task('allowance', async () => {
       await user.update({ balance: user.balance * 1 + allowance });
     });
-    const newJob = new SimpleIntervalJob({ seconds: 14 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 21 }, add);
     scheduler.addSimpleIntervalJob(newJob);
 
     //add allowance interval to scheduler
@@ -165,13 +164,23 @@ router.put('/allowance/:id', async (req, res, next) => {
         await user.update({ daysToAllowance: user.allowanceInterval });
       }
     });
-    const intervalJob = new SimpleIntervalJob({ seconds: 2 }, addInterval);
+    const intervalJob = new SimpleIntervalJob({ seconds: 3 }, addInterval);
 
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
 
     scheduler.addSimpleIntervalJob(intervalJob);
     res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put('/allowance/stop/:id', (req, res, next) => {
+  try {
+    console.log('stopping');
+    scheduler.stop();
+    console.log('stopped');
   } catch (err) {
     next(err);
   }

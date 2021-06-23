@@ -49,14 +49,18 @@ export class ParentLandingPage extends Component {
         <div id="PLoverviewCard">
           <div id="PLwelcomeCard1">
             <div id="familySnapshot">FAMILY SNAPSHOT</div>
-            {kids.length ? (
+            {kids.length > 1 ? (
               <div id="notACompetition">
                 {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
               </div>
-            ) : (
+            ) : !kids.length ? (
               <div id="notACompetition">
                 It&apos;s not a competition, but if it were, this graph would
                 make sure you know wh&apos;s winning.{' '}
+              </div>
+            ) : (
+              <div id="notACompetition">
+                Track how many chores your kid has completed.
               </div>
             )}
             <div id="parentGraph">

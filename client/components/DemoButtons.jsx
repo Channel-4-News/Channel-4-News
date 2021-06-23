@@ -17,6 +17,15 @@ const DemoButtons = ({ currUser, kids }) => {
       </button>
       <button
         onClick={async () => {
+          await axios.put(`/api/users/allowance/stop/${currUser.id}`, {
+            allowance: currUser.allowance,
+          });
+        }}
+      >
+        Stop Allowance
+      </button>
+      <button
+        onClick={async () => {
           await axios.post(
             `/api/stripe/invoiceitems/${currUser.stripeAccount}`
           );
