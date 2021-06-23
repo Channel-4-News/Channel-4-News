@@ -62,15 +62,16 @@ class App extends Component {
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
       console.log(action);
-      if (action.notification?.firstName) {
+      if (action.notification?.familyId) {
         store.dispatch(
           updateAllowance(
             action.notification.balance,
             action.notification.daysToAllowance
           )
         );
+
         store.dispatch(getKids(this.props.currUser.id));
-      } else if (action.id || action.notification.isInvoice) {
+      } else if (action.id || action.notification?.isInvoice) {
         action.isChoreCompleted
           ? choreSuccess(action.text, action.amount)
           : action.isCash
