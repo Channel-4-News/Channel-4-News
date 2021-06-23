@@ -32,7 +32,6 @@ const cashWithdrawl = (text) =>
   });
 
 const invoiceNote = (text) => {
-  console.log('test');
   store.addNotification({
     title: 'Invoice',
     message: 'New invoice',
