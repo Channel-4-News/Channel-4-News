@@ -61,7 +61,6 @@ const Settings = (props) => {
         </MenuItem>
         {/* )} */}
         <MenuItem onClick={handleClose}>
-          {' '}
           <Button
             color="inherit"
             onClick={() => {

@@ -4,6 +4,7 @@ import ChildCard from './ChildCard';
 import { getKids } from '../../store/actions/parentActions/getKids';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 import ParentGraph from './ParentGraph';
+import EmailInviteForm from './EmailInviteForm';
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export class ParentLandingPage extends Component {
   render() {
     const { kids, user, chores } = this.props;
 
-    return this.props.user.family ? (
+    return this.props.kids.length !== 0 ? (
       <div id="parentLandingPageBackground">
         <div id="helloParent">Hello, {user.firstName}!</div>
         <div id="PLoverviewCard">
@@ -67,7 +68,7 @@ export class ParentLandingPage extends Component {
         </div>
       </div>
     ) : (
-      ''
+      <EmailInviteForm />
     );
   }
 }
