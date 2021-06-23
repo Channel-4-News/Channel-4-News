@@ -61,7 +61,6 @@ class App extends Component {
     await this.setState({ ...this.state, user: this.props.currUser });
     websocket.addEventListener('message', (ev) => {
       const action = JSON.parse(ev.data);
-      console.log(action);
       if (action.notification?.familyId) {
         store.dispatch(
           updateAllowance(
