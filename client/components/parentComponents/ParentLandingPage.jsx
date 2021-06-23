@@ -24,9 +24,10 @@ export class ParentLandingPage extends Component {
     this.props.getChores(this.props.user.familyId);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return false;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props;
+  }
+
   setWinner(winner) {
     this.setState({ ...this.state, winner: winner });
   }
