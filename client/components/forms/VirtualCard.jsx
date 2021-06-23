@@ -18,9 +18,26 @@ const VirtualCard = (props) => {
     number: '',
   });
   const [flipped, setFlipped] = useState(false);
+  const [cardHolder, setCardHolder] = useState({});
+  const [cardIdx, setCardIdx] = useState(null);
 
   useEffect(() => {
-    if (flipped) {
+    if (props.currUser.status === 'Child') setCardHolder(props.currUser);
+    if (props.currUser.status === 'Parent') setCardHolder(props.kid);
+  }, [props.currUser, props.kid]);
+
+  useEffect(() => {
+    if (props.kids?.length && props.kid.id) {
+      const idx = props.kids.findIndex(
+        (kid) => kid.firstName === cardHolder.firstName
+      );
+      const kidIdx = idx * 2;
+      setCardIdx(kidIdx);
+    }
+  }, [props.kids, cardHolder]);
+
+  useEffect(() => {
+    if (flipped && cardHolder.cardColor) {
       setCardDetails({ ...cardDetails, focus: 'cvc' });
       cardBackground[1].style.backgroundColor = props.currUser.cardColor;
       cardBackground[1].style.backgroundImage = 'url()';
@@ -29,18 +46,27 @@ const VirtualCard = (props) => {
   }, [flipped]);
 
   useEffect(() => {
-    cardBackground[0].style.backgroundColor = props.currUser.cardColor;
-    cardBackground[0].style.backgroundImage = `url(${props.currUser.cardImage})`;
-  }, [cardBackground]);
+    // console.log(cardHolder.cardColor, cardIdx);
+    if (cardHolder.cardColor && props.kid?.id && cardIdx >= 0) {
+      cardBackground[cardIdx].style.backgroundColor = cardHolder.cardColor;
+      cardBackground[
+        cardIdx
+      ].style.backgroundImage = `url(${cardHolder.cardImage})`;
+    }
+    if (cardHolder.id && !props.kid?.id) {
+      cardBackground[0].style.backgroundColor = cardHolder.cardColor;
+      cardBackground[0].style.backgroundImage = `url(${cardHolder.cardImage})`;
+    }
+  }, [cardBackground, cardHolder, cardIdx]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    if (props.currUser.id) {
+    if (cardHolder.id) {
       const getCardInfo = async () => {
         let info;
         try {
           info = (
-            await axios.get(`/api/stripe/card/${props.currUser.virtualCard}`, {
+            await axios.get(`/api/stripe/card/${cardHolder.virtualCard}`, {
               cancelToken: source.token,
             })
           ).data;
@@ -57,7 +83,7 @@ const VirtualCard = (props) => {
     return () => {
       source.cancel('Component unmounted');
     };
-  }, [props.currUser]);
+  }, [cardHolder]);
 
   useEffect(() => {
     if (inf?.cvc)
@@ -79,20 +105,24 @@ const VirtualCard = (props) => {
         name={cardDetails.name}
         number={cardDetails.number}
       />
-      <Button
-        style={{ width: '30%', alignSelf: 'center' }}
-        variant="contained"
-        color="secondary"
-        onClick={() => setFlipped(!flipped)}
-      >
-        Flip
-      </Button>
+      {!props.kid?.id ? (
+        <Button
+          style={{ width: '30%', alignSelf: 'center' }}
+          variant="contained"
+          color="secondary"
+          onClick={() => setFlipped(!flipped)}
+        >
+          Flip
+        </Button>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { currUser: state.currUser };
+  return { currUser: state.currUser, kids: state.kids };
 };
 
 export default connect(mapStateToProps)(VirtualCard);

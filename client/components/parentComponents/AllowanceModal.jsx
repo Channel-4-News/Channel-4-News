@@ -39,10 +39,10 @@ const AllowanceModal = (props) => {
   };
 
   return (
-    <div>
+    <div id="PLallowanceModal">
       <Button
-        size="large"
-        color="secondary"
+        size="medium"
+        color="primary"
         variant="contained"
         onClick={() => setOpen(true)}
       >

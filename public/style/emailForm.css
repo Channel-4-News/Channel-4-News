@@ -5,11 +5,6 @@
   margin-top: 3rem;
 }
 
-#parentLandingPageBackground {
-  background-color: rgb(226, 225, 225);
-  height: 100%;
-}
-
 #emailFormWrapper > div.MuiCardContent-root > div {
   width: 100%;
   margin-top: 1rem;

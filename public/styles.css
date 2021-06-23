@@ -82,15 +82,15 @@ body {
 }
 
 #parentPrimary .light {
-  background-color: #e6f2f9;
-}
-
-#parentPrimary .main {
   background-color: #c9d4db;
 }
 
-#parentPrimary .dark {
+#parentPrimary .main {
   background-color: #b4bfc6;
+}
+
+#parentPrimary .dark {
+  background-color: #949da3;
 }
 
 #parentSecondary div {

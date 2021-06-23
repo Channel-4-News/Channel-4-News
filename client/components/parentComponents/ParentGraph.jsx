@@ -1,40 +1,79 @@
-import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import React, { useEffect, useState } from 'react';
+import { Doughnut, Bar } from 'react-chartjs-2';
 
-const SpendingGraph = (props) => {
-  let transactions = {};
-  props.transactions
-    ? props.transactions.map((transaction) => {
-      if (!transactions[transaction.category]) {
-        transactions[transaction.category] = parseInt(transaction.cost);
-      } else {
-        transactions[transaction.category] += parseInt(transaction.cost);
+const ParentGraph = (props) => {
+  const [maxChores, setMaxChores] = useState(100);
+  const [kids, setKids] = useState({});
+
+  useEffect(() => {
+    if (props.kids.length) {
+      const kidDets = {};
+      props.kids.map((kid) => {
+        const totalChores = kid.chores.length;
+        const choresComplete = kid.chores.filter((chore) => chore.isComplete);
+        const percentComplete = (choresComplete.length / totalChores) * 100;
+        kidDets[kid.firstName] = {
+          complete: percentComplete,
+          unfinished: 100 - percentComplete,
+        };
+      });
+      setKids(kidDets);
+    }
+  }, [props.kids]);
+
+  useEffect(() => {
+    let kidName = '';
+    let max = 0;
+    for (let kid in kids) {
+      if (kids[kid].complete > max) {
+        max = kids[kid].complete;
+        kidName = kid;
       }
-    })
-    : '';
+    }
+    props.setWinner(kidName);
+  }, [kids]);
 
   return props.small ? (
     <div id="childCardSpendingGraph">
-      <Doughnut
+      <Bar
         data={{
-          labels: Object.keys(transactions),
+          labels: Object.keys(kids),
           datasets: [
             {
-              data: Object.values(transactions),
+              label: 'Complete',
+              data: Object.values(kids).map((kid) => [kid.complete]),
+              backgroundColor: ['tomato', 'rgb(153, 97, 255)', '#3e6bff'],
+            },
+            {
+              label: 'Unfinished',
+              data: Object.values(kids).map((kid) => [kid.unfinished * -1]),
               backgroundColor: [
-                'rgb(252, 77, 54)',
-                'rgb(153, 97, 255)',
-                '#3e6bff',
-                'rgb(138, 138, 138)',
-                'rgb(255, 0, 140)',
-                'rgb(255, 251, 0)',
+                'rgb(192, 62, 39)',
+                'rgb(114, 69, 196)',
+                'rgb(33, 68, 182)',
               ],
             },
           ],
         }}
-        height={220}
-        width={220}
+        height={280}
+        // width={220}
         options={{
+          scales: {
+            x: {
+              stacked: true,
+              grid: {
+                display: false,
+              },
+            },
+            y: {
+              stacked: true,
+              max: maxChores || 100,
+              ticks: { display: false },
+              grid: {
+                display: false,
+              },
+            },
+          },
           maintainAspectRatio: false,
           plugins: {
             tooltip: {
@@ -44,24 +83,28 @@ const SpendingGraph = (props) => {
               borderColor: 'rgb(0, 0, 0)',
               bodyColor: 'rgb(0, 0, 0)',
               bodyFont: { size: '15', family: 'main' },
+              titleColor: 'rgb(0, 0, 0)',
+              titleFont: { family: 'main' },
               displayColors: false,
               callbacks: {
                 label: function (tooltipItem) {
+                  const total =
+                    kids[tooltipItem.label].complete +
+                    kids[tooltipItem.label].unfinished;
                   const amount = tooltipItem.raw;
-                  const total = tooltipItem.chart._metasets[0].total;
                   const percentage = Math.round((amount / total) * 100);
-                  return `${tooltipItem.label}: $${amount} (${percentage}%)`;
+                  return `${tooltipItem.dataset.label}: ${Math.abs(
+                    percentage
+                  )}% `;
                 },
               },
             },
             title: {
-              display: false,
-              text: `${props.kid}'s Spending Chart`,
-              font: { size: 20, family: 'main' },
+              display: true,
             },
             legend: {
               display: false,
-              position: 'right',
+              position: 'top',
               align: 'left',
               labels: {
                 font: {
@@ -79,10 +122,10 @@ const SpendingGraph = (props) => {
     <div className="spendingGraph">
       <Doughnut
         data={{
-          labels: Object.keys(transactions),
+          labels: Object.keys(kids),
           datasets: [
             {
-              data: Object.values(transactions),
+              data: Object.values(kids),
               backgroundColor: [
                 'rgb(252, 77, 54)',
                 'rgb(153, 97, 255)',
@@ -107,14 +150,15 @@ const SpendingGraph = (props) => {
               bodyColor: 'rgb(0, 0, 0)',
               bodyFont: { size: '17', family: 'main' },
               displayColors: false,
-              callbacks: {
-                label: function (tooltipItem) {
-                  const amount = tooltipItem.raw;
-                  const total = tooltipItem.chart._metasets[0].total;
-                  const percentage = Math.round((amount / total) * 100);
-                  return `${tooltipItem.label}: $${amount} (${percentage}%)`;
-                },
-              },
+              titleColor: 'rgb(0, 0, 0)',
+              //   callbacks: {
+              //     label: function (tooltipItem) {
+              //       const amount = tooltipItem.raw;
+              //       const total = tooltipItem.chart._metasets[0].total;
+              //       const percentage = Math.round((amount / total) * 100);
+              //       return `${tooltipItem.label}: $${amount} (${percentage}%)`;
+              //     },
+              //   },
             },
             legend: {
               position: 'right',
@@ -133,7 +177,7 @@ const SpendingGraph = (props) => {
     </div>
   ) : (
     <div className="spendingGraph">
-      <Doughnut
+      <Bar
         data={{
           labels: ['No Data'],
           datasets: [
@@ -175,4 +219,4 @@ const SpendingGraph = (props) => {
   );
 };
 
-export default SpendingGraph;
+export default ParentGraph;
