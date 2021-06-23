@@ -36,7 +36,6 @@ class ChildCard extends React.Component {
             src={kid.imgUrl}
           />
           {/* <TransactionModal kid={kid} /> */}
-
           {/* <div> */}
           {/* <div className="PLspendingSnapshotTitle">SPENDING SNAPSHOT</div> */}
           {/* <SpendingGraph
