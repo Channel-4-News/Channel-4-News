@@ -22,19 +22,34 @@ const AllowanceModal = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
+    //stop old allowance from running
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`);
+    console.log('stopped');
+
     await axios.put(`/api/allowance/modify/${props.kid.id}`, {
       allowance,
       intervalNum,
     });
+
+    //starts interval for new allowance
+    await axios.put(`/api/users/allowance/${props.kid.id}`, {
+      allowance: allowance * 1,
+      intervalNum,
+    });
+
+    console.log('now here');
+
     setOpen(false);
     props.getKids();
   };
 
   const handleClose = () => {
+    console.log('test');
     setOpen(false);
   };
 
-  const onAllowanceChange = (e) => {
+  const onAllowanceChange = async (e) => {
     setAllowance(e.target.value);
   };
 

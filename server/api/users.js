@@ -146,14 +146,14 @@ const scheduler = new ToadScheduler();
 router.put('/allowance/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const { allowance, allowanceInterval } = req.body;
+    const { allowance, intervalNum } = req.body;
     await user.update({ balance: user.balance * 1 + allowance });
 
     //add allowance to scheduler
     const add = new Task('allowance', async () => {
       await user.update({ balance: user.balance * 1 + allowance });
     });
-    const newJob = new SimpleIntervalJob({ seconds: 21 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: intervalNum * 2 }, add);
     scheduler.addSimpleIntervalJob(newJob);
 
     //add allowance interval to scheduler
@@ -164,7 +164,7 @@ router.put('/allowance/:id', async (req, res, next) => {
         await user.update({ daysToAllowance: user.allowanceInterval });
       }
     });
-    const intervalJob = new SimpleIntervalJob({ seconds: 3 }, addInterval);
+    const intervalJob = new SimpleIntervalJob({ seconds: 2 }, addInterval);
 
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
@@ -178,9 +178,8 @@ router.put('/allowance/:id', async (req, res, next) => {
 
 router.put('/allowance/stop/:id', (req, res, next) => {
   try {
-    console.log('stopping');
-    scheduler.stop();
-    console.log('stopped');
+    if (scheduler) scheduler.stop();
+    res.send(200);
   } catch (err) {
     next(err);
   }
