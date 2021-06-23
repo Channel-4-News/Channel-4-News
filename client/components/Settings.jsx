@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 
 //Material UI Imports
 import { Button, Menu, MenuItem, makeStyles } from '@material-ui/core';
-
-//React Icons
-import { IoMdSettings } from 'react-icons/Io';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 //Store Imports
 import { logout } from '../store/actions/userActions/logoutUser';
@@ -45,7 +43,7 @@ const Settings = (props) => {
         onClick={handleClick}
         // variant="contained"
       >
-        <IoMdSettings id="settings" />
+        <SettingsIcon id="settings" />
       </Button>
       <Menu
         anchorEl={anchorEl}

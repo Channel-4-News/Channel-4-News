@@ -17,7 +17,6 @@ import {
 } from '@material-ui/core';
 
 //React Icons
-import { FiEdit } from 'react-icons/fi';
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
 
 //Component Imports
