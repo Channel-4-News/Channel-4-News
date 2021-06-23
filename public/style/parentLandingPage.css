@@ -11,6 +11,7 @@
 
 #childCardSpendingGraph {
   width: 250px;
+  margin-top: -30px;
 }
 
 #PLspendingSnapshot {
@@ -165,7 +166,7 @@
 }
 
 #PLoverviewCard {
-  width: 30%;
+  width: 32%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0.75rem;
@@ -185,4 +186,5 @@
 
 #notACompetition {
   padding-top: 20px;
+  margin-left: 20px;
 }
