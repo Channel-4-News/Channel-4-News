@@ -27,7 +27,7 @@ const VirtualCard = (props) => {
   }, [props.currUser, props.kid]);
 
   useEffect(() => {
-    if (props.kids?.length && props.kid.id) {
+    if (props.kids?.length && props.kid?.id) {
       const idx = props.kids.findIndex(
         (kid) => kid.firstName === cardHolder.firstName
       );
@@ -53,7 +53,7 @@ const VirtualCard = (props) => {
         cardIdx
       ].style.backgroundImage = `url(${cardHolder.cardImage})`;
     }
-    if (cardHolder.id && !props.kid?.id) {
+    if (cardHolder?.id && !props.kid?.id) {
       cardBackground[0].style.backgroundColor = cardHolder.cardColor;
       cardBackground[0].style.backgroundImage = `url(${cardHolder.cardImage})`;
     }

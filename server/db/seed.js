@@ -189,6 +189,8 @@ const syncAndSeed = async () => {
     });
 
     const parent1 = await User.create({
+      imgUrl:
+        'public/images/profilePics/daniil-kuzelev-AkGd_YB6Q2c-unsplash.jpg',
       username: 'Sonny',
       email: 'mom@test.com',
       password: 'password123',

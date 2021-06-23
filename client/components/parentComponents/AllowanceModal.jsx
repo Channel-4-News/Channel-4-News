@@ -40,12 +40,7 @@ const AllowanceModal = (props) => {
 
   return (
     <div id="PLallowanceModal">
-      <Button
-        size="medium"
-        color="primary"
-        variant="contained"
-        onClick={() => setOpen(true)}
-      >
+      <Button size="medium" variant="contained" onClick={() => setOpen(true)}>
         {props.kid.allowance ? 'Update Allowance' : 'Add Allowance'}
       </Button>
       <Dialog

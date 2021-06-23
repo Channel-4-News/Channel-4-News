@@ -4,6 +4,8 @@ import ChildCard from './ChildCard';
 import { getKids } from '../../store/actions/parentActions/getKids';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 import ParentGraph from './ParentGraph';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -38,18 +40,36 @@ export class ParentLandingPage extends Component {
       <div id="parentLandingPageBackground">
         <div id="helloParent">Hello, {user.firstName}!</div>
         <div id="PLoverviewCard">
-          <div id="familySnapshot">FAMILY SNAPSHOT</div>
-          <div id="notACompetition">
-            {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
+          <div id="PLwelcomeCard1">
+            <div id="familySnapshot">FAMILY SNAPSHOT</div>
+            <div id="notACompetition">
+              {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
+            </div>
+            <div id="parentGraph">
+              <ParentGraph
+                user={user}
+                kids={kids}
+                small={true}
+                setWinner={this.setWinner}
+              />
+            </div>
           </div>
-          {/* <div>Next allowance is in</div> */}
-          <div id="parentGraph">
-            <ParentGraph
-              user={user}
-              kids={kids}
-              small={true}
-              setWinner={this.setWinner}
-            />
+          <div id="PLwelcomeCard2">
+            <div id="parentAvatar">
+              <Avatar
+                style={{ width: '170px', height: '170px' }}
+                id="avatar"
+                alt="current user pic"
+                src={user.imgUrl}
+              />
+              {/* <LinkPlaid history={props.history} /> */}
+            </div>
+            <Button variant="contained" id="PLupdateBA">
+              Update Bank Account
+            </Button>
+            <Button variant="contained" id="PLinviteFamily">
+              Invite Family Members
+            </Button>
           </div>
         </div>
         <div>

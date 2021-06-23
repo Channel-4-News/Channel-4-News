@@ -13,12 +13,7 @@ const TransactionModal = (props) => {
 
   return (
     <div className="PLtransactModal">
-      <Button
-        size="medium"
-        color="primary"
-        variant="contained"
-        onClick={() => setOpen(true)}
-      >
+      <Button size="medium" variant="contained" onClick={() => setOpen(true)}>
         Transactions
       </Button>
       <Dialog
@@ -32,12 +27,7 @@ const TransactionModal = (props) => {
           <Transactions kid={props.kid} />
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            onClick={() => setOpen(false)}
-            color="secondary"
-            autoFocus
-          >
+          <Button variant="contained" onClick={() => setOpen(false)} autoFocus>
             Cancel
           </Button>
         </DialogActions>

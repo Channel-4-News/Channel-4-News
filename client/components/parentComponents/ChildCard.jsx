@@ -68,7 +68,6 @@ class ChildCard extends React.Component {
               <AllowanceModal kid={kid} getKids={this.props.getKids} />
               <Button
                 size="medium"
-                color="primary"
                 variant="contained"
                 href="/#/chores"
                 onClick={() => this.props.setCurrentKid(kid.id)}

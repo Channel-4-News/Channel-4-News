@@ -56,8 +56,10 @@ const ParentGraph = (props) => {
           ],
         }}
         height={280}
-        // width={220}
         options={{
+          animation: {
+            duration: 0,
+          },
           scales: {
             x: {
               stacked: true,
