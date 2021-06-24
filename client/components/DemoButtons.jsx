@@ -10,10 +10,21 @@ const DemoButtons = ({ currUser, kids }) => {
         onClick={async () => {
           await axios.put(`/api/users/allowance/${currUser.id}`, {
             allowance: currUser.allowance,
+            intervalNum: 7,
+            name: currUser.firstName,
           });
         }}
       >
         Allowance
+      </button>
+      <button
+        onClick={async () => {
+          await axios.put(`/api/users/allowance/stop/${currUser.id}`, {
+            allowance: currUser.allowance,
+          });
+        }}
+      >
+        Stop Allowance
       </button>
       <button
         onClick={async () => {

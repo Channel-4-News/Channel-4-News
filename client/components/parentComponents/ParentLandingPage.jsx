@@ -4,7 +4,12 @@ import ChildCard from './ChildCard';
 import { getKids } from '../../store/actions/parentActions/getKids';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 import ParentGraph from './ParentGraph';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import LandingPlaidLink from './LandingPlaidLink';
+import EmailInviteModal from './EmailInviteModal';
 import EmailInviteForm from './EmailInviteForm';
+
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -36,22 +41,55 @@ export class ParentLandingPage extends Component {
   render() {
     const { kids, user, chores } = this.props;
 
-    return this.props.kids.length !== 0 ? (
-      <div id="parentLandingPageBackground">
+    return this.props.user.family ? (
+      <div
+        id={
+          kids.length
+            ? 'parentLandingPageBackground'
+            : 'newParentLandingPageBackground'
+        }
+      >
         <div id="helloParent">Hello, {user.firstName}!</div>
         <div id="PLoverviewCard">
-          <div id="familySnapshot">FAMILY SNAPSHOT</div>
-          <div id="notACompetition">
-            {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
+          <div id="PLwelcomeCard1">
+            <div id="familySnapshot">FAMILY SNAPSHOT</div>
+            {kids.length > 1 ? (
+              <div id="notACompetition">
+                {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
+              </div>
+            ) : !kids.length ? (
+              <div id="notACompetition">
+                It&apos;s not a competition, but if it were, this graph would
+                make sure you know who&apos;s winning.{' '}
+              </div>
+            ) : (
+              <div id="notACompetition">
+                Track how many chores your kid has completed.
+              </div>
+            )}
+            <div id="parentGraph">
+              <ParentGraph
+                user={user}
+                kids={kids}
+                small={true}
+                setWinner={this.setWinner}
+              />
+            </div>
           </div>
-          {/* <div>Next allowance is in</div> */}
-          <div id="parentGraph">
-            <ParentGraph
-              user={user}
-              kids={kids}
-              small={true}
-              setWinner={this.setWinner}
-            />
+          <div id="PLwelcomeCard2">
+            <div id="parentAvatar">
+              <Avatar
+                style={{ width: '170px', height: '170px' }}
+                id="avatar"
+                alt="current user pic"
+                src={user.imgUrl}
+              />
+            </div>
+            <LandingPlaidLink />
+            <EmailInviteModal />
+            {/* <Button variant="contained" id="PLinviteFamily">
+              Invite Family Members
+            </Button> */}
           </div>
         </div>
         <div>
@@ -77,7 +115,15 @@ export class ParentLandingPage extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
-    kids: state.kids,
+    kids: state.kids.sort((a, b) => {
+      if (b.id > a.id) {
+        return -1;
+      }
+      if (b.id < a.id) {
+        return 1;
+      }
+      return 0;
+    }),
     chores: state.chores,
   };
 };

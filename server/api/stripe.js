@@ -220,26 +220,37 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
         console.log('trans-data', transactions.data.length);
         const currTransactions = await transactions.data.filter(
           (transaction) => {
-            return (
-              new Date(transaction.created * 1000).getDate() === currDate - 1
-            );
+            return new Date(transaction.created * 1000).getDate() === currDate;
           }
         );
 
         invoiceTransactions = currTransactions;
         console.log('transactions-sorted', invoiceTransactions?.length);
+
+        if (currTransactions?.length) {
+          await currTransactions.forEach(async (transaction) => {
+            const completed = await stripe.invoiceItems.create({
+              customer: req.params.id,
+              amount: Math.abs(transaction.amount),
+              currency: 'usd',
+            });
+            console.log('completed', completed);
+          });
+        }
       });
 
       //if there were new transactions, create invoice items
-      if (invoiceTransactions) {
-        await invoiceTransactions.forEach(async (transaction) => {
-          await stripe.invoiceItems.create({
-            customer: req.params.id,
-            amount: Math.abs(transaction.amount),
-            currency: 'usd',
-          });
-        });
-      }
+      // if (invoiceTransactions?.length) {
+      //   await invoiceTransactions.forEach(async (transaction) => {
+      //     console.log('trans', transaction);
+      //     const completed = await stripe.invoiceItems.create({
+      //       customer: req.params.id,
+      //       amount: Math.abs(transaction.amount),
+      //       currency: 'usd',
+      //     });
+      //     console.log('completed', completed);
+      //   });
+      // }
       const invoiceItems = await stripe.invoiceItems.list({
         customer: req.params.id,
         pending: true,
@@ -248,7 +259,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
     });
 
     //create new job and add to scheduler
-    const newJob = new SimpleIntervalJob({ seconds: 40 }, invoiceItemTask);
+    const newJob = new SimpleIntervalJob({ seconds: 20 }, invoiceItemTask);
     scheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
@@ -291,7 +302,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
         return;
       }
     });
-    const newJob = new SimpleIntervalJob({ seconds: 40 }, add);
+    const newJob = new SimpleIntervalJob({ seconds: 20 }, add);
 
     //for production
     // const newJob = new SimpleIntervalJob({ months: 1 }, add);

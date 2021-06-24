@@ -22,30 +22,56 @@ const AllowanceModal = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
+    //stop old allowance from running
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`, {
+      name: props.kid.firstName,
+      email: props.kid.email,
+    });
+
     await axios.put(`/api/allowance/modify/${props.kid.id}`, {
       allowance,
       intervalNum,
     });
+
+    //starts interval for new allowance
+    await axios.put(`/api/users/allowance/${props.kid.id}`, {
+      allowance: allowance * 1,
+      intervalNum,
+      name: props.kid.firstName,
+      email: props.kid.email,
+    });
+
     setOpen(false);
     props.getKids(props.parentID);
+  };
+
+  const cancelAllowance = async () => {
+    //stop allowance interval from running
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`, {
+      name: props.kid.firstName,
+      email: props.kid.email,
+    });
+
+    await axios.put(`/api/allowance/modify/${props.kid.id}`, {
+      allowance: 0,
+      intervalNum: 0,
+    });
+
+    handleClose();
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const onAllowanceChange = (e) => {
+  const onAllowanceChange = async (e) => {
     setAllowance(e.target.value);
   };
 
   return (
     <div id="PLallowanceModal">
-      <Button
-        size="medium"
-        color="primary"
-        variant="contained"
-        onClick={() => setOpen(true)}
-      >
+      <Button size="medium" variant="contained" onClick={() => setOpen(true)}>
         {props.kid.allowance ? 'Update Allowance' : 'Add Allowance'}
       </Button>
       <Dialog
@@ -138,11 +164,11 @@ const AllowanceModal = (props) => {
           </Button>
           <Button
             variant="contained"
-            onClick={handleClose}
+            onClick={cancelAllowance}
             color="secondary"
             autoFocus
           >
-            Cancel
+            Cancel Allowance
           </Button>
         </DialogActions>
       </Dialog>
