@@ -10,7 +10,6 @@ import LandingPlaidLink from './LandingPlaidLink';
 import EmailInviteModal from './EmailInviteModal';
 import EmailInviteForm from './EmailInviteForm';
 
-
 export class ParentLandingPage extends Component {
   constructor(props) {
     super(props);
@@ -58,10 +57,7 @@ export class ParentLandingPage extends Component {
                 {` It's not a competition, but if it were, ${this.state.winner} would be winning.`}
               </div>
             ) : !kids.length ? (
-              <div id="notACompetition">
-                It&apos;s not a competition, but if it were, this graph would
-                make sure you know who&apos;s winning.{' '}
-              </div>
+              <div id="notACompetition">It&apos;s not a competition...</div>
             ) : (
               <div id="notACompetition">
                 Track how many chores your kid has completed.
@@ -87,9 +83,6 @@ export class ParentLandingPage extends Component {
             </div>
             <LandingPlaidLink />
             <EmailInviteModal />
-            {/* <Button variant="contained" id="PLinviteFamily">
-              Invite Family Members
-            </Button> */}
           </div>
         </div>
         <div>

@@ -261,7 +261,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
     });
 
     //create new job and add to scheduler
-    const newJob = new SimpleIntervalJob({ seconds: 20 }, invoiceItemTask);
+    const newJob = new SimpleIntervalJob({ minutes: 1 }, invoiceItemTask);
     invoiceScheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
@@ -304,7 +304,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
         return;
       }
     });
-    const newJob = new SimpleIntervalJob({ seconds: 20 }, add);
+    const newJob = new SimpleIntervalJob({ minutes: 1 }, add);
 
     //for production
     // const newJob = new SimpleIntervalJob({ months: 1 }, add);
@@ -347,7 +347,7 @@ router.get('/transactions/:card', async (req, res, next) => {
 router.put('/invoice/stopall', async (req, res, next) => {
   try {
     if (invoiceScheduler) await invoiceScheduler.stop();
-    res.send(200);
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }
