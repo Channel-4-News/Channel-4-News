@@ -33,6 +33,7 @@ const EmailInviteForm = (props) => {
           className="emailFormBox"
           label="Child Name"
           variant="outlined"
+          color="secondary"
           onChange={(e) => handleChange(e, 'name')}
         />
         <TextField
@@ -40,6 +41,7 @@ const EmailInviteForm = (props) => {
           className="emailFormBox"
           label="Child Email"
           variant="outlined"
+          color="secondary"
           onChange={(e) => handleChange(e, 'email')}
         />
         <TextField
@@ -47,6 +49,7 @@ const EmailInviteForm = (props) => {
           className="emailFormBox"
           label="Send A Message"
           variant="outlined"
+          color="secondary"
           multiline
           rows={8}
           onChange={(e) => handleChange(e, 'message')}
@@ -58,7 +61,7 @@ const EmailInviteForm = (props) => {
           variant="contained"
           onClick={async () => {
             const result = await axios.post('/api/invite/', form);
-            console.log(result);
+            props.setOpen(false);
             setForm({
               name: '',
               email: '',

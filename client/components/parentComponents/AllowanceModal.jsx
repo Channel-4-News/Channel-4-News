@@ -62,7 +62,6 @@ const AllowanceModal = (props) => {
   };
 
   const handleClose = () => {
-    console.log('test');
     setOpen(false);
   };
 

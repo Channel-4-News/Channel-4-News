@@ -7,6 +7,7 @@ import ParentGraph from './ParentGraph';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import LandingPlaidLink from './LandingPlaidLink';
+import EmailInviteModal from './EmailInviteModal';
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -80,12 +81,12 @@ export class ParentLandingPage extends Component {
                 alt="current user pic"
                 src={user.imgUrl}
               />
-              {/* <LinkPlaid history={props.history} /> */}
             </div>
             <LandingPlaidLink />
-            <Button variant="contained" id="PLinviteFamily">
+            <EmailInviteModal />
+            {/* <Button variant="contained" id="PLinviteFamily">
               Invite Family Members
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div>

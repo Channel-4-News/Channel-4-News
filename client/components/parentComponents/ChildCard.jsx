@@ -8,7 +8,6 @@ import { setCurrentKid } from '../../store/actions/parentActions/setCurrentKid';
 import VirtualCard from '../forms/VirtualCard';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 
-import SpendingGraph from '../child components/SpendingGraph';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
@@ -35,20 +34,6 @@ class ChildCard extends React.Component {
             alt="current user pic"
             src={kid.imgUrl}
           />
-          {/* <TransactionModal kid={kid} /> */}
-          {/* <div> */}
-          {/* <div className="PLspendingSnapshotTitle">SPENDING SNAPSHOT</div> */}
-          {/* <SpendingGraph
-              transactions={kid.transactions}
-              small={true}
-              kid={kid.firstName}
-            /> */}
-          {/* </div> */}
-          {/* <SpendingGraph
-            transactions={kid.transactions}
-            small={true}
-            kid={kid.firstName}
-          /> */}
         </div>
         <div className="PLcardHolder">
           <VirtualCard kid={kid} />
@@ -56,13 +41,8 @@ class ChildCard extends React.Component {
         <div className="PLbalanceAllowance">
           <ParentBalance kid={kid} />
           <ParentAllowanceInterval kid={kid} />
-          {/* <AllowanceModal kid={kid} getKids={this.props.getKids} /> */}
           <div className="">
-            {/* <TransactionModal kid={kid} /> */}
-            <div className="PLnumChores">
-              {' '}
-              {/* {kid.firstName} has completed {this.props.chores.length} chores */}
-            </div>
+            <div className="PLnumChores"> </div>
             <div className="PLbuttons">
               <TransactionModal kid={kid} />
               <AllowanceModal kid={kid} getKids={this.props.getKids} />
@@ -75,44 +55,8 @@ class ChildCard extends React.Component {
                 Chores
               </Button>
             </div>
-            {/* <Button
-              size="large"
-              color="primary"
-              variant="contained"
-              href="/#/chores"
-              onClick={() => this.props.setCurrentKid(kid.id)}
-            >
-              {kid.firstName}&apos;s Chores
-            </Button> */}
           </div>
         </div>
-        {/* <div id="PLspending"> */}
-        {/* <AllowanceModal kid={kid} getKids={this.props.getKids} />
-          <Button
-            size="large"
-            color="primary"
-            variant="contained"
-            href="/#/chores"
-            onClick={() => this.props.setCurrentKid(kid.id)}
-          >
-            {kid.firstName}&apos;s Chores
-          </Button> */}
-        {/* <div className="PLspendingSnapshotTitle">SPENDING SNAPSHOT</div>
-          <SpendingGraph
-            transactions={kid.transactions}
-            small={true}
-            kid={kid.firstName}
-          /> */}
-        {/* </div> */}
-        {/* <div id="PLspendingSnapshot">
-          <div className="PLspendingSnapshotTitle">SPENDING SNAPSHOT</div>
-
-          <SpendingGraph
-            transactions={kid.transactions}
-            small={true}
-            kid={kid.firstName}
-          />
-        </div> */}
       </Card>
     );
   }
