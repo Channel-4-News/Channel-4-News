@@ -146,7 +146,8 @@ const scheduler = new ToadScheduler();
 router.put('/allowance/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const { allowance, intervalNum } = req.body;
+    const { allowance, intervalNum, name, email } = req.body;
+
     await user.update({ balance: user.balance * 1 + allowance });
 
     //add allowance to scheduler
@@ -154,17 +155,24 @@ router.put('/allowance/:id', async (req, res, next) => {
       await user.update({ balance: user.balance * 1 + allowance });
     });
     const newJob = new SimpleIntervalJob({ seconds: intervalNum * 2 }, add);
+
+    newJob.id = email;
     scheduler.addSimpleIntervalJob(newJob);
 
     //add allowance interval to scheduler
-    const addInterval = new Task('interval', async () => {
+    const addInterval = new Task(name, async () => {
       if (user.daysToAllowance > 1) {
         await user.update({ daysToAllowance: user.daysToAllowance - 1 });
       } else {
         await user.update({ daysToAllowance: user.allowanceInterval });
       }
     });
+
     const intervalJob = new SimpleIntervalJob({ seconds: 2 }, addInterval);
+
+    intervalJob.id = name;
+
+    console.log('intervalJob', intervalJob);
 
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
@@ -176,9 +184,19 @@ router.put('/allowance/:id', async (req, res, next) => {
   }
 });
 
-router.put('/allowance/stop/:id', (req, res, next) => {
+router.put('/allowance/stop/:id', async (req, res, next) => {
   try {
-    if (scheduler) scheduler.stop();
+    const { name, email } = req.body;
+    if (name in scheduler.jobRegistry) {
+      console.log('1', scheduler);
+      await scheduler.stopById(name);
+      await scheduler.stopById(email);
+      // await scheduler.stop();
+      console.log('2', scheduler);
+      await delete scheduler.jobRegistry[name];
+      await delete scheduler.jobRegistry[email];
+      console.log('3', scheduler);
+    }
     res.send(200);
   } catch (err) {
     next(err);

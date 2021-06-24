@@ -56,7 +56,7 @@ export class ParentLandingPage extends Component {
             ) : !kids.length ? (
               <div id="notACompetition">
                 It&apos;s not a competition, but if it were, this graph would
-                make sure you know wh&apos;s winning.{' '}
+                make sure you know who&apos;s winning.{' '}
               </div>
             ) : (
               <div id="notACompetition">
@@ -110,7 +110,15 @@ export class ParentLandingPage extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.currUser,
-    kids: state.kids,
+    kids: state.kids.sort((a, b) => {
+      if (b.id > a.id) {
+        return -1;
+      }
+      if (b.id < a.id) {
+        return 1;
+      }
+      return 0;
+    }),
     chores: state.chores,
   };
 };

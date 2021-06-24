@@ -11,6 +11,7 @@ const DemoButtons = ({ currUser, kids }) => {
           await axios.put(`/api/users/allowance/${currUser.id}`, {
             allowance: currUser.allowance,
             intervalNum: 7,
+            name: currUser.firstName,
           });
         }}
       >

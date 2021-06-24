@@ -24,7 +24,10 @@ const AllowanceModal = (props) => {
     evt.preventDefault();
 
     //stop old allowance from running
-    await axios.put(`/api/users/allowance/stop/${props.kid.id}`);
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`, {
+      name: props.kid.firstName,
+      email: props.kid.email,
+    });
 
     await axios.put(`/api/allowance/modify/${props.kid.id}`, {
       allowance,
@@ -35,6 +38,8 @@ const AllowanceModal = (props) => {
     await axios.put(`/api/users/allowance/${props.kid.id}`, {
       allowance: allowance * 1,
       intervalNum,
+      name: props.kid.firstName,
+      email: props.kid.email,
     });
 
     setOpen(false);
@@ -43,7 +48,10 @@ const AllowanceModal = (props) => {
 
   const cancelAllowance = async () => {
     //stop allowance interval from running
-    await axios.put(`/api/users/allowance/stop/${props.kid.id}`);
+    await axios.put(`/api/users/allowance/stop/${props.kid.id}`, {
+      name: props.kid.firstName,
+      email: props.kid.email,
+    });
 
     await axios.put(`/api/allowance/modify/${props.kid.id}`, {
       allowance: 0,

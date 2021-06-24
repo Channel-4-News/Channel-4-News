@@ -226,7 +226,6 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
 
         if (currTransactions?.length) {
           await currTransactions.forEach(async (transaction) => {
-            console.log('trans', transaction);
             const completed = await stripe.invoiceItems.create({
               customer: req.params.id,
               amount: Math.abs(transaction.amount),
