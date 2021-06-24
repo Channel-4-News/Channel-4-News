@@ -16,13 +16,6 @@ export const updateChildProfileThunk = (user) => {
       const token = await window.localStorage.getItem('token');
       const { id, firstName, lastName, username, email, imgUrl } = user;
 
-      // if (imgUrl) {
-      //   console.log('an image');
-      //   const imageUpload = await axios.put(`/api/users/image/${id}`, {
-      //     file: imgUrl,
-      //   });
-      // }
-
       const { data: updateUser } = await axios.put(
         `/api/users/${id}`,
         {

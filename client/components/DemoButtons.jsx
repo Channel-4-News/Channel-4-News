@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const DemoButtons = ({ currUser, kids }) => {
-  const joey = kids[2];
+const DemoButtons = ({ currUser }) => {
   return (
     <div>
       <button
@@ -19,9 +18,7 @@ const DemoButtons = ({ currUser, kids }) => {
       </button>
       <button
         onClick={async () => {
-          await axios.put(`/api/users/allowance/stop/${currUser.id}`, {
-            allowance: currUser.allowance,
-          });
+          await axios.put('/api/users/stop/allowance');
         }}
       >
         Stop Allowance
@@ -40,16 +37,17 @@ const DemoButtons = ({ currUser, kids }) => {
           await axios.post(
             `/api/stripe/invoice/${currUser.stripeAccount}/${currUser.id}`
           );
-
-          // if (test.id) {
-          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
-          //   console.log('invoice', test);
-          // }
         }}
       >
         INVOICE
       </button>
-      <div>{joey?.balance}</div>
+      <button
+        onClick={async () => {
+          await axios.put('/api/stripe/invoice/stopall');
+        }}
+      >
+        Stop Invoices
+      </button>
     </div>
   );
 };

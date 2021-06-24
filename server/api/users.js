@@ -172,8 +172,6 @@ router.put('/allowance/:id', async (req, res, next) => {
 
     intervalJob.id = name;
 
-    console.log('intervalJob', intervalJob);
-
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
 
@@ -184,20 +182,28 @@ router.put('/allowance/:id', async (req, res, next) => {
   }
 });
 
+//stops single allowance interval job from running
 router.put('/allowance/stop/:id', async (req, res, next) => {
   try {
     const { name, email } = req.body;
     if (name in scheduler.jobRegistry) {
-      console.log('1', scheduler);
       await scheduler.stopById(name);
       await scheduler.stopById(email);
       // await scheduler.stop();
-      console.log('2', scheduler);
       await delete scheduler.jobRegistry[name];
       await delete scheduler.jobRegistry[email];
-      console.log('3', scheduler);
     }
-    res.send(200);
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//stops all allowance intervals from running
+router.put('/stop/allowance', async (req, res, next) => {
+  try {
+    if (scheduler) await scheduler.stop();
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { editWishListCard } from '../../store/actions/wishListActions/editWishListCard';
-import { TextField } from '@material-ui/core';
 
 class EditWishListCard extends Component {
   constructor(props) {
@@ -63,12 +61,6 @@ class EditWishListCard extends Component {
     return (
       <form type="submit" id="editWish">
         <Card id="wishListCardWrapper">
-          {/* <Typography
-            className="title"
-            gutterBottom
-            variant="h5"
-            component="h2"
-          > */}
           <input
             id="changeWishListTitle"
             onChange={onChange}
@@ -76,7 +68,6 @@ class EditWishListCard extends Component {
             type="text"
             defaultValue={item.itemName}
           ></input>
-          {/* </Typography> */}
           <div id="itemRow">
             <Paper id="itemImage" className="itemImage" variant="outlined">
               <img name="imgUrl" src={item.imgUrl} />
@@ -126,27 +117,6 @@ class EditWishListCard extends Component {
                 </Paper>
               </div>
               <br />
-              {/* <div>Description:</div> */}
-              {/* <Paper
-                id="itemDescriptionWrapper"
-                className="itemValues"
-                variant="outlined"
-              >
-                <Typography
-                  id="itemDescription"
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                >
-                  <textarea
-                    className="wishListFormInput"
-                    id="wishListTextAreaEdit"
-                    onChange={onChange}
-                    name="description"
-                    defaultValue={item.description}
-                  ></textarea>
-                </Typography>
-              </Paper> */}
             </div>
             <div>
               <Button

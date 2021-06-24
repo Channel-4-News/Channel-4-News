@@ -133,7 +133,7 @@ const JoinOrCreateFamily = (props) => {
           <FormControl variant="outlined">
             <InputLabel
               htmlFor="parentOrChild"
-              color="secondary"
+              color="primary"
               className={classes.parentOrChild}
             >
               {errors.relation}
@@ -143,7 +143,7 @@ const JoinOrCreateFamily = (props) => {
               className={classes.parentOrChild}
               native
               label={errors.relation}
-              color="secondary"
+              color="primary"
               onChange={(e) => {
                 // props.setUserStatus(e.target.value);
                 props.updateUser(props.currUser.id, { status: e.target.value });
@@ -160,7 +160,7 @@ const JoinOrCreateFamily = (props) => {
             className={classes.root}
             label={errors.familyName}
             variant="outlined"
-            color="secondary"
+            color="primary"
             error={errors.familyName !== 'Family Name'}
             onBlur={(e) =>
               handleBlur(e, validUsername, 'familyName', 'Family name')
@@ -174,7 +174,7 @@ const JoinOrCreateFamily = (props) => {
             type="password"
             label={errors.familySecret}
             variant="outlined"
-            color="secondary"
+            color="primary"
             error={errors.familySecret !== 'Family Secret'}
             onBlur={(e) => handleBlur(e, secretValid, 'familySecret')}
             onChange={(e) => {
@@ -187,7 +187,7 @@ const JoinOrCreateFamily = (props) => {
             type="password"
             label={errors.confirmSecret}
             variant="outlined"
-            color="secondary"
+            color="primary"
             error={errors.confirmSecret !== 'Confirm Secret'}
             onChange={(e) => {
               setConfirmSecret(e.target.value);
@@ -220,7 +220,7 @@ const JoinOrCreateFamily = (props) => {
           <FormControl variant="outlined">
             <InputLabel
               htmlFor="parentOrChild"
-              color="secondary"
+              color="primary"
               className={classes.parentOrChild}
             >
               {errors.relation}
@@ -230,7 +230,7 @@ const JoinOrCreateFamily = (props) => {
               className={classes.parentOrChild}
               native
               label={errors.relation}
-              color="secondary"
+              color="primary"
               onChange={(e) => {
                 // props.setUserStatus(e.target.value);
                 props.updateUser(props.currUser.id, { status: e.target.value });
@@ -247,7 +247,7 @@ const JoinOrCreateFamily = (props) => {
             className={classes.root}
             label={errors.familyName}
             variant="outlined"
-            color="secondary"
+            color="primary"
             onChange={(e) => {
               setFamilyCreds({ ...familyCreds, familyName: e.target.value });
             }}

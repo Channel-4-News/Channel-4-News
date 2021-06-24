@@ -213,9 +213,9 @@ const SignUp = (props) => {
           }}
         />
         <small>
-          Already have an account? Login{' '}
+          Already have an account?{' '}
           <a id="goToLogin" href="/#/login">
-            here
+            Login
           </a>
           .
         </small>

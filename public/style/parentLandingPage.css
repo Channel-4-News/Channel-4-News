@@ -251,3 +251,11 @@
   width: 50%;
   margin-top: 20px;
 }
+
+#closeEmailModal {
+  background-color: white;
+  border-radius: 50%;
+  margin-left: 67.4%;
+  margin-bottom: -80px;
+  cursor: pointer;
+}

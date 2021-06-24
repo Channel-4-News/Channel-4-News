@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { HashRouter as Router, Link } from 'react-router-dom';
 
 //Redux Imports
@@ -51,9 +51,6 @@ const Settings = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {/* {props.currUser.status === 'Parent' ? (
-          console.log('Parent Page')
-        ) : ( */}
         <MenuItem onClick={handleClose}>
           <Link className={classes.menuLinks} to="editchildinfo">
             Edit Profile!

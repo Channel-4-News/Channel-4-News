@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link as AliasLink } from 'react-router-dom';
 import cx from 'clsx';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -6,7 +6,6 @@ import GoogleFontLoader from 'react-google-font-loader';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import { Column, Row, Item } from '@mui-treasury/components/flex';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
@@ -95,13 +94,11 @@ const ModalItem = ({ kid, userID, getKids }) => {
   const styles = useModalStyles(props);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    // console.log(kid);
     await axios.put(`/api/users/allowance/modify/${kid.id}`, {
       newAllowance,
       newInterval,
     });
     setIsChanged(true);
-    console.log(userID);
     getKids(userID);
     setDisplay('none');
   };
@@ -110,16 +107,7 @@ const ModalItem = ({ kid, userID, getKids }) => {
       ? setNewAllowance(evt.target.value)
       : setNewInterval(evt.target.value);
   };
-  // useEffect(() => {
-  //   return (
-  //     async () => {
-  //       if (isChanged) {
-  //         setIsChanged(false);
-  //       }
-  //     },
-  //     []
-  //   );
-  // });
+
   return (
     <div>
       <Button

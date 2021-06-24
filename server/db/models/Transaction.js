@@ -26,9 +26,4 @@ const Transaction = db.define('transaction', {
   },
 });
 
-// Transaction.addHook('afterCreate', async (transaction) => {
-//   transaction.userId = 5;
-//   console.log(transaction);
-//   // await transaction.save();
-// });
 module.exports = { Transaction };

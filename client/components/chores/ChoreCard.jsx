@@ -6,7 +6,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CreateIcon from '@material-ui/icons/Create';
 import { deleteChore } from '../../store/actions/choreActions/deleteChore';
 import { sendNotificationThunk } from '../../store/actions/notificationActions/sendNotification';
-import PayoutChore from './PayoutChore';
 import { Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 import 'animate.css';

@@ -163,10 +163,8 @@ const CreateCard = (props) => {
               &nbsp;
             </Button>
             <Button
-              // color="secondary"
               aria-controls="simple-menu"
               aria-haspopup="true"
-              // onClick={handleClick}
               onClick={() => handleColorClick('#00d9ff')}
               variant="contained"
               style={{ backgroundColor: '#00d9ff' }}
@@ -174,10 +172,8 @@ const CreateCard = (props) => {
               &nbsp;
             </Button>
             <Button
-              // color="secondary"
               aria-controls="simple-menu"
               aria-haspopup="true"
-              // onClick={handleClick}
               onClick={() => handleColorClick('#00ff6a')}
               variant="contained"
               style={{ backgroundColor: '#00ff6a' }}

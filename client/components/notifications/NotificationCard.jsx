@@ -1,8 +1,6 @@
-import { Grid, makeStyles, IconButton, Button } from '@material-ui/core';
+import { makeStyles, IconButton } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import LocalAtmOutlinedIcon from '@material-ui/icons/LocalAtmOutlined';
-import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Avatar from '@material-ui/core/Avatar';
 import { deleteNotificationThunk } from '../../store/actions/notificationActions/deleteNotification';
@@ -114,7 +112,6 @@ const NotificationCard = (props) => {
       ) : props.currNote.isInvoice ? (
         <div className="withdrawalNote">
           <div className="noteInvoiceLabel">INVOICE</div>
-          {/* <Avatar className={classes.large} src={props.currNote.from.imgUrl} /> */}
           <div>
             <a
               href={`${props.currNote.text}`}

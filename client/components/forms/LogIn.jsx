@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 
 const LogIn = (props) => {
-  const [passwordShown, setPasswordShown] = useState(false);
   const [loggedIn, setLoggedIn] = useState('');
   const [loginValues, setLoginValues] = useState({
     username: '',
@@ -48,7 +47,7 @@ const LogIn = (props) => {
           className={classes.root}
           label="Email or username"
           variant="outlined"
-          color="secondary"
+          color="primary"
           onChange={(e) => {
             setLoginValues({ ...loginValues, username: e.target.value });
           }}
@@ -58,7 +57,7 @@ const LogIn = (props) => {
           type="password"
           label="Password"
           variant="outlined"
-          color="secondary"
+          color="primary"
           onChange={(e) => {
             setLoginValues({ ...loginValues, password: e.target.value });
           }}
@@ -66,7 +65,7 @@ const LogIn = (props) => {
         <Button
           className={classes.root}
           onClick={submitUser}
-          color="secondary"
+          color="primary"
           variant="contained"
           style={{
             width: '40%',

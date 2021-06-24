@@ -1,8 +1,5 @@
 import React from 'react';
 import {
-  InputLabel,
-  FormControl,
-  Select,
   TextField,
   Button,
   NativeSelect,
