@@ -45,28 +45,7 @@ const Home = () => {
         >
           <Button style={{ marginRight: '12vw' }}>GITHUB REPO</Button>
         </a>
-        {/* <Button
-          type="button"
-          onClick={handleOpen}
-          style={{ backgroundColor: 'white', marginRight: '270px' }}
-        >
-          TEAM
-        </Button> */}
         <div id="tagline">Not your average piggy bank.</div>
-        {/* <a
-          href="https://github.com/Channel-4-News/Channel-4-News"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Button style={{ backgroundColor: 'white' }}>GITHUB REPO</Button>
-        </a>
-        <Button
-          type="button"
-          onClick={handleOpen}
-          style={{ backgroundColor: 'white' }}
-        >
-          TEAM
-        </Button> */}
       </div>
       <div id="homeCard">
         <img src="public/images/homecardyellow.png"></img>
@@ -119,13 +98,13 @@ const Home = () => {
           <div></div> */}
           <img src="public/images/techs/sequelize-logo.png" />
           <img src="public/images/techs/1_PY24xlr4TpOkXW04HUoqrQ.jpg" />
-          <img src="public/images/techs/0_xAADmPJN52Yy6XJV.jpg" />
           <img src="public/images/techs/1_q9myzo5Au8OfsaSrCodNmw.png" />
+          <img src="public/images/techs/stripe-logo-blue.png" />
           <img src="public/images/techs/puppeteer.png" />
           <img src="public/images/techs/React_graphic.png" />
           <img src="public/images/techs/Redux.png" />
           <img src="public/images/techs/1200px-Plaid_logo.svg.png" />
-          <img src="public/images/techs/stripe-logo-blue.png" />
+          <img src="public/images/techs/passport.png" />
           <img src="public/images/techs/charjs.png" />
           <img src="public/images/techs/Firebase_Logo.png" />
         </div>
