@@ -20,7 +20,7 @@ const WithdrawMoneyDialog = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    if (props.user.balance < amount) {
+    if (props.user.balance * 1 < amount * 1) {
       setDisabled(true);
     } else {
       setDisabled(false);
