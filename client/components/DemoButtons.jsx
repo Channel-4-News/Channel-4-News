@@ -19,9 +19,7 @@ const DemoButtons = ({ currUser, kids }) => {
       </button>
       <button
         onClick={async () => {
-          await axios.put(`/api/users/allowance/stop/${currUser.id}`, {
-            allowance: currUser.allowance,
-          });
+          await axios.put('/api/users/stop/allowance');
         }}
       >
         Stop Allowance
@@ -49,7 +47,13 @@ const DemoButtons = ({ currUser, kids }) => {
       >
         INVOICE
       </button>
-      <div>{joey?.balance}</div>
+      <button
+        onClick={async () => {
+          await axios.put('/api/stripe/invoice/stopall');
+        }}
+      >
+        Stop Invoices
+      </button>
     </div>
   );
 };

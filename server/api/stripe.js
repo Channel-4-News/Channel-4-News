@@ -184,7 +184,7 @@ router.put('/card/:id/limit', async (req, res, next) => {
   }
 });
 
-const scheduler = new ToadScheduler();
+const invoiceScheduler = new ToadScheduler();
 
 //create invoice item
 router.post('/invoiceitems/:id', async (req, res, next) => {
@@ -220,7 +220,9 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
         console.log('trans-data', transactions.data.length);
         const currTransactions = await transactions.data.filter(
           (transaction) => {
-            return new Date(transaction.created * 1000).getDate() === currDate;
+            return (
+              new Date(transaction.created * 1000).getDate() === currDate - 1
+            );
           }
         );
 
@@ -260,7 +262,7 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
 
     //create new job and add to scheduler
     const newJob = new SimpleIntervalJob({ seconds: 20 }, invoiceItemTask);
-    scheduler.addSimpleIntervalJob(newJob);
+    invoiceScheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
   }
@@ -307,7 +309,7 @@ router.post('/invoice/:id/:user', async (req, res, next) => {
     //for production
     // const newJob = new SimpleIntervalJob({ months: 1 }, add);
 
-    scheduler.addSimpleIntervalJob(newJob);
+    invoiceScheduler.addSimpleIntervalJob(newJob);
   } catch (err) {
     next(err);
   }
@@ -336,6 +338,16 @@ router.get('/transactions/:card', async (req, res, next) => {
       card: req.params.card,
     });
     res.send(transactions);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//stops all invoice intervals from running
+router.put('/invoice/stopall', async (req, res, next) => {
+  try {
+    if (invoiceScheduler) await invoiceScheduler.stop();
+    res.send(200);
   } catch (err) {
     next(err);
   }
