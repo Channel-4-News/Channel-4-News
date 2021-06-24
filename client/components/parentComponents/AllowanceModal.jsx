@@ -43,7 +43,7 @@ const AllowanceModal = (props) => {
     });
 
     setOpen(false);
-    props.getKids();
+    props.getKids(props.parentID);
   };
 
   const cancelAllowance = async () => {
