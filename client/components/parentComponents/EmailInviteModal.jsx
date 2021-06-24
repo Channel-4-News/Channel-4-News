@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from '@material-ui/core';
 import EmailInviteForm from './EmailInviteForm';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 const EmailModal = () => {
   const [open, setOpen] = useState(false);
@@ -26,7 +27,10 @@ const EmailModal = () => {
           handleClose();
         }}
       >
-        <EmailInviteForm setOpen={setOpen}></EmailInviteForm>
+        <>
+          <CancelOutlinedIcon id="closeEmailModal" onClick={handleClose} />
+          <EmailInviteForm setOpen={setOpen}></EmailInviteForm>
+        </>
       </Modal>
     </>
   );

@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { createUser } from '../../store/actions/userActions/createUser';
-import {
-  attemptLogin,
-  authUser,
-} from '../../store/actions/userActions/getCurUser';
+import { attemptLogin } from '../../store/actions/userActions/getCurUser';
 import LinkPlaid from '../LinkPlaid';
 import CreateCard from './CreateCard';
 import JoinOrCreateFamily from './JoinOrCreateFamily';
