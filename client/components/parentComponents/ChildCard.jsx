@@ -65,7 +65,11 @@ class ChildCard extends React.Component {
             </div>
             <div className="PLbuttons">
               <TransactionModal kid={kid} />
-              <AllowanceModal kid={kid} getKids={this.props.getKids} />
+              <AllowanceModal
+                kid={kid}
+                getKids={this.props.getKids}
+                parentID={this.props.parentID}
+              />
               <Button
                 size="medium"
                 color="primary"
