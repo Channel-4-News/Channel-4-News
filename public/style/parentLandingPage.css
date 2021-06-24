@@ -179,9 +179,7 @@
   margin-bottom: 0.75rem;
   display: flex;
   flex-direction: row;
-  /* border-radius: 12px; */
   height: 370px;
-  /* background-color: white; */
   justify-content: space-around;
   align-items: center;
 }

@@ -61,7 +61,7 @@ const VirtualCard = (props) => {
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    if (cardHolder.id) {
+    if (cardHolder?.id) {
       const getCardInfo = async () => {
         let info;
         try {

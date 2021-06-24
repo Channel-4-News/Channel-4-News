@@ -8,6 +8,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import LandingPlaidLink from './LandingPlaidLink';
 import EmailInviteModal from './EmailInviteModal';
+import EmailInviteForm from './EmailInviteForm';
+
 
 export class ParentLandingPage extends Component {
   constructor(props) {
@@ -28,9 +30,10 @@ export class ParentLandingPage extends Component {
     this.props.getChores(this.props.user.familyId);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return false;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props;
+  }
+
   setWinner(winner) {
     this.setState({ ...this.state, winner: winner });
   }
@@ -103,7 +106,7 @@ export class ParentLandingPage extends Component {
         </div>
       </div>
     ) : (
-      ''
+      <EmailInviteForm />
     );
   }
 }

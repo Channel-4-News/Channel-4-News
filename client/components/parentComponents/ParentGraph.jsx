@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Doughnut, Bar } from 'react-chartjs-2';
 
-const ParentGraph = (props) => {
+const ParentGraph = React.memo((props) => {
   const [maxChores, setMaxChores] = useState(100);
   const [kids, setKids] = useState({});
 
@@ -167,6 +167,6 @@ const ParentGraph = (props) => {
       />
     </div>
   );
-};
+});
 
 export default ParentGraph;

@@ -165,6 +165,9 @@ router.get('/card/:id', async (req, res, next) => {
 router.put('/card/:id/limit', async (req, res, next) => {
   try {
     const { cardId, limit } = req.body;
+    const card_details = await stripe.issuing.cards.retrieve(cardId, {
+      expand: ['number', 'cvc'],
+    });
     const card = await stripe.issuing.cards.update(cardId, {
       spending_controls: {
         spending_limits: [
