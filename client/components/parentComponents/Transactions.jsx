@@ -16,11 +16,6 @@ const Transactions = (props) => {
     6: 'Sat',
   };
 
-  //this should be removed after this component is placed on child card for parent landing page.
-  //we should grab child card Id from user model instance virtualCard depending on which child's card we
-  //are on
-  // let card = 'ic_1IzufNGMLeOpoTZxPd1bYRNy';
-
   useEffect(() => {
     const getTransactions = async () => {
       const transactions = (

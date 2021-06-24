@@ -29,14 +29,7 @@ import {
   validName,
 } from '../../utilities/utilityValidation';
 
-import axios from 'axios';
 import { setAllowance } from '../../store/actions/allowance/setAllowance';
-
-//React Notifications Components
-// import ReactNotification from 'react-notifications-component';
-// import { store } from 'react-notifications-component';
-// import 'react-notifications-component/dist/theme.css';
-// import { validUsername } from '../../utilities/utilityValidation';
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {

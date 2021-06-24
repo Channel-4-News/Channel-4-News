@@ -42,7 +42,6 @@ router.post('/payouts', async (req, res, next) => {
     const newBalance = parseFloat(user.balance) - parseFloat(transaction.cost);
     user.balance = newBalance;
     await user.save();
-    console.log('user before sending', user);
     res.status(201).send(user);
   } catch (ex) {
     next(ex);
@@ -87,7 +86,6 @@ router.post('/charges', async (req, res, next) => {
         ],
       },
     });
-    console.log(card.spending_controls.spending_limits);
     res.status(201).send(charge);
   } catch (err) {
     next(err);
@@ -217,7 +215,6 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
         const transactions = await stripe.issuing.transactions.list({
           card,
         });
-        console.log('trans-data', transactions.data.length);
         const currTransactions = await transactions.data.filter(
           (transaction) => {
             return (
@@ -241,23 +238,10 @@ router.post('/invoiceitems/:id', async (req, res, next) => {
         }
       });
 
-      //if there were new transactions, create invoice items
-      // if (invoiceTransactions?.length) {
-      //   await invoiceTransactions.forEach(async (transaction) => {
-      //     console.log('trans', transaction);
-      //     const completed = await stripe.invoiceItems.create({
-      //       customer: req.params.id,
-      //       amount: Math.abs(transaction.amount),
-      //       currency: 'usd',
-      //     });
-      //     console.log('completed', completed);
-      //   });
-      // }
       const invoiceItems = await stripe.invoiceItems.list({
         customer: req.params.id,
         pending: true,
       });
-      console.log('invoiceItems 1', invoiceItems);
     });
 
     //create new job and add to scheduler
@@ -354,11 +338,3 @@ router.put('/invoice/stopall', async (req, res, next) => {
 });
 
 module.exports = router;
-
-// const socket = socketUtils
-//   .getSockets()
-//   .find((socket) => notification.id === socket.userId);
-// if (socket) {
-//   notification = await User.findByPk(notification.id, {});
-//   socket.send(JSON.stringify({ type: 'UPDATE_ALLOWANCE', notification }));
-// }

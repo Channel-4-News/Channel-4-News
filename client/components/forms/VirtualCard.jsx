@@ -46,7 +46,6 @@ const VirtualCard = (props) => {
   }, [flipped]);
 
   useEffect(() => {
-    // console.log(cardHolder.cardColor, cardIdx);
     if (cardHolder.cardColor && props.kid?.id && cardIdx >= 0) {
       cardBackground[cardIdx].style.backgroundColor = cardHolder.cardColor;
       cardBackground[

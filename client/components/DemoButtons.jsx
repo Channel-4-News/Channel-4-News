@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const DemoButtons = ({ currUser, kids }) => {
-  const joey = kids[2];
+const DemoButtons = ({ currUser }) => {
   return (
     <div>
       <button
@@ -38,11 +37,6 @@ const DemoButtons = ({ currUser, kids }) => {
           await axios.post(
             `/api/stripe/invoice/${currUser.stripeAccount}/${currUser.id}`
           );
-
-          // if (test.id) {
-          //   await axios.put(`/api/stripe/invoice/${test.id}/finalize`);
-          //   console.log('invoice', test);
-          // }
         }}
       >
         INVOICE

@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  makeStyles,
-  Popover,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Modal,
-} from '@material-ui/core';
+import { Button, Modal } from '@material-ui/core';
 
 const Home = () => {
   const [open, setOpen] = useState(false);

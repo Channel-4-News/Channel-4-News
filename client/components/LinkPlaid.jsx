@@ -55,7 +55,7 @@ const LinkPlaid = (props) => {
     onEvent,
   };
 
-  const { open, ready, error } = usePlaidLink(config);
+  const { open } = usePlaidLink(config);
 
   return token ? (
     <div id="signup-wrapper">

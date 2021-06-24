@@ -179,7 +179,6 @@ class App extends Component {
                 path="/notifications"
                 component={SortNotifications}
               />
-              {/* {this.state.user.status === 'Child'} */}
               <Route
                 exact
                 path="/home"

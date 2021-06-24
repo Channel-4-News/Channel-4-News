@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { HashRouter as Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import CalculatorButton from './CalculatorButton';
@@ -27,20 +26,11 @@ const WishListCard = (props) => {
               rel="noreferrer"
               href={item.linkUrl}
             >
-              {/* <Typography
-              className="title"
-              gutterBottom
-              variant="h5"
-              component="h2"
-              id="wishListTitleText"
-            > */}
               {item.itemName}
 
               {item.purchased ? (
                 <span id="purchased-tag">Purchased! </span>
               ) : null}
-
-              {/* </Typography> */}
             </a>
           </div>
           <div id="itemRow">
@@ -57,26 +47,6 @@ const WishListCard = (props) => {
                 ${item.cost}
               </Paper>
               <br />
-              {/* <div>Category:</div>
-              <Paper className="itemValues" variant="outlined">
-                {item.category}
-              </Paper> */}
-              {/* <br /> */}
-              {/* <div>Description:</div> */}
-              {/* <Paper
-                id="itemDescriptionWrapper"
-                className="itemValues"
-                variant="outlined"
-              >
-                <Typography
-                  id="itemDescription"
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                >
-                  {item.description}
-                </Typography>
-              </Paper> */}
             </div>
           </div>
           <div id="buttonRow">

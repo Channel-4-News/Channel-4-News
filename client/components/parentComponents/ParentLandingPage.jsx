@@ -5,7 +5,6 @@ import { getKids } from '../../store/actions/parentActions/getKids';
 import { getChores } from '../../store/actions/choreActions/fetchChoresByFamily';
 import ParentGraph from './ParentGraph';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import LandingPlaidLink from './LandingPlaidLink';
 import EmailInviteModal from './EmailInviteModal';
 import EmailInviteForm from './EmailInviteForm';

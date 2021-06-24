@@ -172,8 +172,6 @@ router.put('/allowance/:id', async (req, res, next) => {
 
     intervalJob.id = name;
 
-    console.log('intervalJob', intervalJob);
-
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
 

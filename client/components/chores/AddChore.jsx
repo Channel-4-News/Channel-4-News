@@ -8,11 +8,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
-import {
-  makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { addChore } from '../../store/actions/choreActions/addChore';
 
 const AddChore = (props) => {
