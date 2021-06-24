@@ -62,6 +62,7 @@ export class ParentLandingPage extends Component {
                 kid={kid}
                 getKids={this.props.getKids}
                 chores={chores.filter((chore) => chore.userId === kid.id)}
+                parentID={this.props.user.id}
               />
             );
           })}
