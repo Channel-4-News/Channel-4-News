@@ -9,7 +9,7 @@
   flex-direction: row;
   align-items: center;
   color: white;
-  padding-left: 18%;
+  padding-left: 6%;
 }
 
 #homeBanner button {
@@ -149,4 +149,23 @@
   color: rgba(255, 0, 0, 0.5);
   color: rgb(0, 0, 0), rgba(0, 0, 255, 0.5), rgb(138, 138, 138),
     rgb(255, 0, 140), rgb(250, 250, 250), rgba(0, 0, 0, 0.8);
+}
+
+#demoCreds {
+  font-size: larger;
+}
+
+#childDemoLogin {
+  border: 2px white solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 15px;
+}
+
+#parentDemoLogin {
+  border: 2px white solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
 }

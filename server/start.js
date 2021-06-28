@@ -5,12 +5,18 @@ const ws = require('ws');
 const User = require('../server/db/models/User');
 
 const syncAndSeed = require('./db/seed');
+const {
+  startAllowanceTasks,
+  startInvoiceTasks,
+} = require('./taskIntervalUtils');
 
 const PORT = process.env.PORT || 3000;
 
-const init = () => {
+const init = async () => {
   try {
-    syncAndSeed();
+    await syncAndSeed();
+    startAllowanceTasks();
+    startInvoiceTasks();
     const server = app.listen(PORT, () =>
       console.log(`now listening to port ${PORT}`)
     );

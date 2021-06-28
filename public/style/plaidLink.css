@@ -14,6 +14,7 @@
   margin-top: 10px;
   background-color: white;
   padding-top: 20px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
 
 #linkButton h4 {

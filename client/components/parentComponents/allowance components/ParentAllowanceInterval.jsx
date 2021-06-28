@@ -20,7 +20,10 @@ class ParentAllowanceInterval extends React.Component {
         <span style={{ color: 'tomato' }}>|</span> &nbsp; ${allowance}
       </div>
     ) : (
-      ''
+      <div id="PLnextAllowance">
+        Allowance today &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;
+        ${allowance}
+      </div>
     );
   }
 }

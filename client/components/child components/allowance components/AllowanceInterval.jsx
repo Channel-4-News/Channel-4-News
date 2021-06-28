@@ -10,7 +10,10 @@ const AllowanceInterval = (props) => {
       <span style={{ color: 'tomato' }}>|</span> &nbsp; ${props.user.allowance}
     </div>
   ) : (
-    ''
+    <div id="nextAllowance">
+      Allowance today &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp; $
+      {props.user.allowance}
+    </div>
   );
 };
 

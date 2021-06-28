@@ -43,8 +43,28 @@ const Home = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <Button style={{ marginRight: '12vw' }}>GITHUB REPO</Button>
+          <Button
+            style={{ marginRight: '6vw', width: '10vw', fontSize: '1.1vw' }}
+          >
+            GITHUB REPO
+          </Button>
         </a>
+        <div style={{ marginRight: '6vw', width: '13vw', fontSize: '1vw' }}>
+          <div>
+            Child login{' '}
+            <div id="childDemoLogin">
+              <div>Email: joey@test.com</div>
+              <div>Password: password123</div>
+            </div>
+          </div>
+          <div>
+            Parent login
+            <div id="parentDemoLogin">
+              <div>Email: mom@test.com</div>
+              <div>Password: password123</div>
+            </div>
+          </div>
+        </div>
         <div id="tagline">Not your average piggy bank.</div>
       </div>
       <div id="homeCard">
@@ -93,9 +113,6 @@ const Home = () => {
         </div>
 
         <div id="techUsed">
-          {/* <div></div>
-          <h3>BUILT WITH</h3>
-          <div></div> */}
           <img src="public/images/techs/sequelize-logo.png" />
           <img src="public/images/techs/1_PY24xlr4TpOkXW04HUoqrQ.jpg" />
           <img src="public/images/techs/1_q9myzo5Au8OfsaSrCodNmw.png" />
