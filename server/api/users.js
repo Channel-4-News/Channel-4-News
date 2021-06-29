@@ -176,7 +176,9 @@ router.put('/allowance/:id', async (req, res, next) => {
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
 
-    startScheduler.addSimpleIntervalJob(intervalJob);
+    setTimeout(() => {
+      startScheduler.addSimpleIntervalJob(intervalJob);
+    }, 1700);
     res.sendStatus(200);
   } catch (err) {
     next(err);

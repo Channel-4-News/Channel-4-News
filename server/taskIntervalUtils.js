@@ -16,7 +16,7 @@ const startAllowanceTasks = async () => {
     });
 
     const newAllowanceJob = new SimpleIntervalJob(
-      { seconds: user.allowanceInterval * 3 + 3 },
+      { seconds: user.allowanceInterval * 2 },
       addAllowance
     );
 
@@ -25,20 +25,20 @@ const startAllowanceTasks = async () => {
 
     //add allowance interval
     const addInterval = new Task(`interval${user.firstName}`, async () => {
-      if (user.daysToAllowance > 0) {
+      if (user.daysToAllowance > 1) {
         await user.update({ daysToAllowance: user.daysToAllowance - 1 });
       } else {
         await user.update({ daysToAllowance: user.allowanceInterval });
       }
     });
 
-    const intervalJob = new SimpleIntervalJob({ seconds: 3 }, addInterval);
+    const intervalJob = new SimpleIntervalJob({ seconds: 2 }, addInterval);
 
     intervalJob.id = user.email;
 
     setTimeout(() => {
       startScheduler.addSimpleIntervalJob(intervalJob);
-    }, 3000);
+    }, 1800);
   });
 };
 
@@ -67,7 +67,7 @@ const startInvoiceTasks = async () => {
   const addInvoiceItem = new Task('invoiceItem', async () => {
     await stripe.invoiceItems.create(getRandomItem());
   });
-  const invoiceItemJob = new SimpleIntervalJob({ seconds: 10 }, addInvoiceItem);
+  const invoiceItemJob = new SimpleIntervalJob({ seconds: 5 }, addInvoiceItem);
   startScheduler.addSimpleIntervalJob(invoiceItemJob);
 
   //creates invoice, finalizes, and submits ACH payment
