@@ -259,7 +259,8 @@ body
   z-index: 100;
 }
 
-#wishDropdownContent {
+#wishDropdownContent,
+#sortWishDropdownContent {
   position: absolute;
   display: none;
   /* padding: 10px; */
@@ -281,11 +282,18 @@ body
   position: fixed;
 }
 
-#wishDropdownContent div:hover {
+#chooseWishHover:hover #sortWishDropdownContent {
+  display: block;
+  position: absolute;
+}
+
+#wishDropdownContent div:hover,
+#sortWishDropdownContent div:hover {
   background-color: rgb(158, 158, 158);
 }
 
-#wishDropdownContent div {
+#wishDropdownContent div,
+#sortWishDropdownContent div {
   padding: 20px;
   padding-left: 20px;
   cursor: pointer;
