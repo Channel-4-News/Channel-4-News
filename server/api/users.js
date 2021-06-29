@@ -188,8 +188,6 @@ router.put('/allowance/:id', async (req, res, next) => {
 //stops single allowance interval job from running
 router.put('/allowance/stop/:id', async (req, res, next) => {
   try {
-    console.log('test');
-    console.log(startScheduler);
     const { name, email } = req.body;
     if (name in startScheduler.jobRegistry) {
       await startScheduler.stopById(name);
