@@ -53,7 +53,7 @@ const Settings = (props) => {
       >
         <MenuItem onClick={handleClose}>
           <Link className={classes.menuLinks} to="editchildinfo">
-            Edit Profile!
+            Edit Profile
           </Link>
         </MenuItem>
         {/* )} */}
