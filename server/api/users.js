@@ -10,6 +10,7 @@ const { route } = require('./families');
 //interval scheduling
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 const { Chore } = require('../db/models/Chore');
+const { startScheduler } = require('../taskIntervalUtils');
 
 //get all users
 router.get('/', async (req, res, next) => {
@@ -157,7 +158,7 @@ router.put('/allowance/:id', async (req, res, next) => {
     const newJob = new SimpleIntervalJob({ seconds: intervalNum * 2 }, add);
 
     newJob.id = email;
-    scheduler.addSimpleIntervalJob(newJob);
+    startScheduler.addSimpleIntervalJob(newJob);
 
     //add allowance interval to scheduler
     const addInterval = new Task(name, async () => {
@@ -175,7 +176,9 @@ router.put('/allowance/:id', async (req, res, next) => {
     // //this is what we would want if the app went into productions
     // const intervalJob = new SimpleIntervalJob({ days: 1 }, addInterval);
 
-    scheduler.addSimpleIntervalJob(intervalJob);
+    setTimeout(() => {
+      startScheduler.addSimpleIntervalJob(intervalJob);
+    }, 1700);
     res.sendStatus(200);
   } catch (err) {
     next(err);
@@ -186,12 +189,11 @@ router.put('/allowance/:id', async (req, res, next) => {
 router.put('/allowance/stop/:id', async (req, res, next) => {
   try {
     const { name, email } = req.body;
-    if (name in scheduler.jobRegistry) {
-      await scheduler.stopById(name);
-      await scheduler.stopById(email);
-      // await scheduler.stop();
-      await delete scheduler.jobRegistry[name];
-      await delete scheduler.jobRegistry[email];
+    if (name in startScheduler.jobRegistry) {
+      await startScheduler.stopById(name);
+      await startScheduler.stopById(email);
+      await delete startScheduler.jobRegistry[name];
+      await delete startScheduler.jobRegistry[email];
     }
     res.sendStatus(200);
   } catch (err) {
@@ -202,7 +204,17 @@ router.put('/allowance/stop/:id', async (req, res, next) => {
 //stops all allowance intervals from running
 router.put('/stop/allowance', async (req, res, next) => {
   try {
-    if (scheduler) await scheduler.stop();
+    if (startScheduler) await startScheduler.stop();
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//stop all task jobs
+router.put('/stop/all', async (req, res, next) => {
+  try {
+    await startScheduler.stop();
     res.sendStatus(200);
   } catch (err) {
     next(err);

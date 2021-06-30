@@ -15,7 +15,7 @@ const SortAndFilterWishList = (props) => {
           <Button size="large" color="primary" variant="outlined">
             &nbsp;&nbsp;Sort By&nbsp;&nbsp;
           </Button>
-          <div id="wishDropdownContent">
+          <div id="sortWishDropdownContent">
             <div
               className="wishSelector"
               onClick={() => handleChange('alphabetically')}

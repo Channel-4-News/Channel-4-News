@@ -12,15 +12,18 @@ class ParentAllowanceInterval extends React.Component {
 
   render() {
     const { daysToAllowance, allowance } = this.props;
-    return daysToAllowance ? (
+    return daysToAllowance > 1 ? (
       <div id="PLnextAllowance">
-        Next allowance in {daysToAllowance}{' '}
+        Next allowance in {daysToAllowance - 1}{' '}
         {daysToAllowance > 1 ? 'days' : 'day'}
         &nbsp;&nbsp;
         <span style={{ color: 'tomato' }}>|</span> &nbsp; ${allowance}
       </div>
     ) : (
-      ''
+      <div id="PLnextAllowance">
+        Allowance today &nbsp;<span style={{ color: 'tomato' }}>|</span> &nbsp;
+        ${allowance}
+      </div>
     );
   }
 }

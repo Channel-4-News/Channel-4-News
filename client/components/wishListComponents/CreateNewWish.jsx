@@ -12,11 +12,11 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import PulseLoader from 'react-spinners/PulseLoader';
 import {
   addNewWish,
   fillForm,
 } from '../../store/actions/wishListActions/addNewWish';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const CreateNewWish = (props) => {
   const [open, setOpen] = useState(false);
@@ -32,12 +32,22 @@ const CreateNewWish = (props) => {
   const [description, setDescription] = useState('');
   const [userId, setUserId] = useState(props.user.id);
   const [purchased, setPurchased] = useState(false);
+  const [badUrl, setBadUrl] = useState(false);
 
   useEffect(() => {
     if (itemName.length > 35) {
       setItemName(itemName.slice(0, 35));
     }
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (loading) {
+        setLoading(false);
+        setBadUrl(true);
+      }
+    }, 12000);
+  }, [loading]);
 
   const handleClose = () => {
     setOpen(false);
@@ -49,7 +59,11 @@ const CreateNewWish = (props) => {
         variant="outlined"
         color="primary"
         size="large"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          setBadUrl(false);
+          setUrl('');
+        }}
       >
         Make A Wish
       </Button>
@@ -120,12 +134,20 @@ const CreateNewWish = (props) => {
                 </div>
               </div>
             </DialogContent>
-            <PulseLoader
+            {/* <PulseLoader
               id="pulseLoader"
               color="blue"
               loading={loading}
               size={20}
-            />
+            /> */}
+            {loading ? <LinearProgress /> : <div style={{ height: '5px' }} />}
+            {badUrl ? (
+              <div style={{ textAlign: 'center' }}>
+                <small>Please use the input form.</small>
+              </div>
+            ) : (
+              ''
+            )}
             <DialogActions>
               <Button
                 onClick={async () => {
@@ -162,9 +184,9 @@ const CreateNewWish = (props) => {
         ) : (
           <div>
             <DialogContent id="createWishBoxItems1">
-              <DialogContentText id="alert-dialog-description">
-                Pick a Category
-              </DialogContentText>
+              {/* <DialogContentText id="alert-dialog-description"> */}
+              <div> Pick a Category</div>
+              {/* </DialogContentText> */}
               <div id="costAndCategory">
                 <div id="wishListDropdown" className="secondCreateDropdown">
                   <div id="filterAndSortWishes">

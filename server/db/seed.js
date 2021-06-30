@@ -163,7 +163,7 @@ const syncAndSeed = async () => {
       cardColor: 'rgb(153, 97, 255)',
       cardImage: 'public/images/cardIcons/catpeak.png',
       allowance: 8,
-      daysToAllowance: 7,
+      daysToAllowance: 30,
       allowanceInterval: 30,
       status: 'Child',
     });
@@ -183,7 +183,7 @@ const syncAndSeed = async () => {
       status: 'Child',
       cardColor: '#00d9ff',
       cardImage: 'public/images/cardIcons/basketball.png',
-      daysToAllowance: 7,
+      daysToAllowance: 30,
       allowanceInterval: 30,
       allowance: 5,
     });
@@ -655,7 +655,7 @@ const syncAndSeed = async () => {
       new Notification({
         amount: 1500.0,
         toId: parent1.id,
-        text: 'invoice url',
+        text: 'https://invoice.stripe.com/i/acct_1InSufGMLeOpoTZx/invst_JkzXOcZLvnu7wfzoR0JKx9f8nEbzLI8',
         isInvoice: true,
       }).save(),
       new Notification({
@@ -705,7 +705,7 @@ const syncAndSeed = async () => {
       new Notification({
         amount: 9800.0,
         toId: parent1.id,
-        text: 'invoice url',
+        text: 'https://invoice.stripe.com/i/acct_1InSufGMLeOpoTZx/invst_JkzXOcZLvnu7wfzoR0JKx9f8nEbzLI8',
         isInvoice: true,
       }).save(),
       new Notification({

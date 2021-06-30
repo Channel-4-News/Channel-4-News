@@ -44,7 +44,7 @@ const WishListCard = (props) => {
                 variant="outlined"
                 style={{ marginTop: '10px' }}
               >
-                ${item.cost}
+                ${(item.cost * 1).toFixed(2)}
               </Paper>
               <br />
             </div>

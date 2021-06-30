@@ -48,6 +48,13 @@ const DemoButtons = ({ currUser }) => {
       >
         Stop Invoices
       </button>
+      <button
+        onClick={async () => {
+          await axios.put('/api/users/stop/all');
+        }}
+      >
+        Stop All Task Jobs
+      </button>
     </div>
   );
 };
