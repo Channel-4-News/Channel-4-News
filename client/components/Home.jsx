@@ -123,7 +123,11 @@ const Home = () => {
           <img src="public/images/techs/1200px-Plaid_logo.svg.png" />
           <img src="public/images/techs/passport.png" />
           <img src="public/images/techs/charjs.png" />
-          <img src="public/images/techs/Firebase_Logo.png" />
+          <img src="public/images/techs/material-ui.png" />
+          <img
+            src="public/images/techs/Firebase_Logo.png"
+            // style={{ marginLeft: '-70px' }}
+          />
         </div>
       </div>
     </div>

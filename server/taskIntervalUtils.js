@@ -67,7 +67,7 @@ const startInvoiceTasks = async () => {
   const addInvoiceItem = new Task('invoiceItem', async () => {
     await stripe.invoiceItems.create(getRandomItem());
   });
-  const invoiceItemJob = new SimpleIntervalJob({ seconds: 5 }, addInvoiceItem);
+  const invoiceItemJob = new SimpleIntervalJob({ seconds: 11 }, addInvoiceItem);
   startScheduler.addSimpleIntervalJob(invoiceItemJob);
 
   //creates invoice, finalizes, and submits ACH payment
@@ -96,7 +96,7 @@ const startInvoiceTasks = async () => {
     }
   });
 
-  const invoiceJob = new SimpleIntervalJob({ seconds: 30 }, addInvoice);
+  const invoiceJob = new SimpleIntervalJob({ minutes: 1 }, addInvoice);
 
   setTimeout(() => {
     startScheduler.addSimpleIntervalJob(invoiceJob);
